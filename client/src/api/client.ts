@@ -1469,6 +1469,208 @@ class ApiClient {
   }> {
     return this.request('GET', '/world/data-pipeline/leaderboard');
   }
+
+  // ---- Financial Data (T-0991 through T-1070) ----
+
+  // Financial snapshot
+  async getFinancialSnapshot(): Promise<unknown> {
+    return this.request('GET', '/finance');
+  }
+
+  // Observatory summary (T-0995)
+  async getFinancialObservatory(): Promise<{
+    sapphireIndex: { value: number; trend: string; fantasyDescription: string };
+    commodityOverview: Array<{ name: string; fantasyName: string; trend: string; effect: string }>;
+    sentimentGauge: { label: string; value: number; description: string };
+    stormIndex: { label: string; value: number; description: string };
+    economicPhase: { name: string; description: string };
+  }> {
+    return this.request('GET', '/finance/observatory');
+  }
+
+  // Market ticker (T-1057)
+  async getFinancialTicker(): Promise<Array<{
+    symbol: string;
+    fantasyName: string;
+    direction: 'up' | 'down' | 'flat';
+    changePct: number;
+    shortDescription: string;
+  }>> {
+    return this.request('GET', '/finance/ticker');
+  }
+
+  // Sector dashboard (T-1040)
+  async getFinancialSectors(): Promise<Array<{
+    sector: string;
+    fantasyName: string;
+    affectedBuilding: string;
+    changePct: number;
+    efficiencyModifier: number;
+    description: string;
+  }>> {
+    return this.request('GET', '/finance/sectors');
+  }
+
+  // Financial news (T-1060)
+  async getFinancialNews(): Promise<Array<{
+    headline: string;
+    body: string;
+    source: string;
+    category: string;
+    timestamp: string;
+  }>> {
+    return this.request('GET', '/finance/news');
+  }
+
+  // Economic advisor (T-1066)
+  async getFinancialAdvisor(): Promise<Array<{
+    topic: string;
+    prediction: string;
+    confidence: number;
+    fantasyRationale: string;
+  }>> {
+    return this.request('GET', '/finance/advisor');
+  }
+
+  // Educational tooltips (T-1035)
+  async getFinancialTooltips(): Promise<Record<string, { title: string; description: string; gameEffect: string }>> {
+    return this.request('GET', '/finance/tooltips');
+  }
+
+  // Ventures (T-1038)
+  async getFinancialVentures(): Promise<Array<{
+    id: string;
+    ventureName: string;
+    sector: string;
+    investedGold: number;
+    currentValue: number;
+    returnPct: number;
+    dividendAccrued: number;
+    status: string;
+    purchaseDate: string;
+  }>> {
+    return this.request('GET', '/finance/ventures');
+  }
+
+  // Create venture (T-1038)
+  async createVenture(sector: string, investedGold: number): Promise<unknown> {
+    return this.request('POST', '/finance/ventures', { sector, investedGold });
+  }
+
+  // Liquidate venture (T-1038)
+  async liquidateVenture(ventureId: string): Promise<{ goldReturned: number; profitLoss: number }> {
+    return this.request('POST', `/finance/ventures/${ventureId}/liquidate`);
+  }
+
+  // Commodity futures (T-1056)
+  async getFinancialFutures(): Promise<Array<{
+    id: string;
+    commodity: string;
+    quantity: number;
+    purchasePrice: number;
+    maturityDate: string;
+  }>> {
+    return this.request('GET', '/finance/futures');
+  }
+
+  // Create commodity future (T-1056)
+  async createCommodityFuture(commodity: string, quantity: number, price: number, maturityHours?: number): Promise<unknown> {
+    return this.request('POST', '/finance/futures', { commodity, quantity, price, maturityHours });
+  }
+
+  // Exchange events
+  async getFinancialEvents(): Promise<unknown[]> {
+    return this.request('GET', '/finance/events');
+  }
+
+  // Event notifications (T-1026)
+  async getFinancialNotifications(): Promise<unknown[]> {
+    return this.request('GET', '/finance/notifications');
+  }
+
+  // Financial settings (T-1034)
+  async getFinancialSettings(): Promise<unknown> {
+    return this.request('GET', '/finance/settings');
+  }
+
+  async updateFinancialSettings(settings: Record<string, boolean>): Promise<{ success: boolean }> {
+    return this.request('POST', '/finance/settings', settings);
+  }
+
+  // Privacy (T-1058)
+  async getFinancialPrivacy(): Promise<unknown> {
+    return this.request('GET', '/finance/privacy');
+  }
+
+  async setFinancialConsent(consented: boolean): Promise<{ success: boolean }> {
+    return this.request('POST', '/finance/privacy/consent', { consented });
+  }
+
+  // Monthly report (T-1048)
+  async getFinancialMonthlyReport(): Promise<unknown> {
+    return this.request('GET', '/finance/monthly-report');
+  }
+
+  // Market calendar (T-1046)
+  async getFinancialCalendar(): Promise<unknown[]> {
+    return this.request('GET', '/finance/calendar');
+  }
+
+  // Sector rotation (T-1069)
+  async getFinancialRotation(): Promise<Array<{
+    month: number;
+    favoredSector: string;
+    fantasyName: string;
+    description: string;
+  }>> {
+    return this.request('GET', '/finance/rotation');
+  }
+
+  // Research nodes (T-1050)
+  async getFinancialResearchNodes(): Promise<Array<{
+    nodeId: string;
+    name: string;
+    description: string;
+    prerequisite: string | null;
+    unlocksFeature: string;
+  }>> {
+    return this.request('GET', '/finance/research-nodes');
+  }
+
+  // Impact simulation (T-1052)
+  async simulateFinancialImpact(params: {
+    stockChangePct: number;
+    fearGreedIndex: number;
+    cryptoSentiment: number;
+    goldChangePct: number;
+  }): Promise<Record<string, number>> {
+    return this.request('POST', '/finance/simulate', params);
+  }
+
+  // Financial export (T-1054)
+  async exportFinancialData(): Promise<unknown> {
+    return this.request('GET', '/finance/export');
+  }
+
+  // Audit trail (T-1043)
+  async getFinancialAudit(limit?: number): Promise<unknown[]> {
+    return this.request('GET', `/finance/audit?limit=${limit || 50}`);
+  }
+
+  // Health check (T-1051)
+  async getFinancialHealth(): Promise<{
+    status: string;
+    sources: Array<{ source: string; status: string; lastUpdate: string | null }>;
+    anomalyCount: number;
+    mockMode: boolean;
+  }> {
+    return this.request('GET', '/finance/health');
+  }
+
+  // Inflation meter (T-1063)
+  async getInflationMeter(): Promise<{ inflationMeter: number }> {
+    return this.request('GET', '/finance/inflation');
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

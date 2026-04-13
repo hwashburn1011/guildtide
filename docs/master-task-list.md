@@ -1045,86 +1045,86 @@
 ## Epic 14: Financial Data Integration
 > Stock market influence on merchant guilds, commodity prices, economic indicators, crypto sentiment, and trade volatility mechanics.
 
-- [ ] T-0991: Set up Alpha Vantage or Yahoo Finance API integration for stock data
-- [ ] T-0992: Implement stock data fetch service with symbol lookup and price history
-- [ ] T-0993: Create stock data caching with end-of-day refresh schedule
-- [ ] T-0994: Implement stock market open/close detection for fetch timing
-- [ ] T-0995: Build stock market summary display in Observatory building
-- [ ] T-0996: Create S&P 500 daily change mapping to merchant guild prosperity
-- [ ] T-0997: Implement positive market day effect: +15% trade values in marketplace
-- [ ] T-0998: Implement negative market day effect: -10% trade values, +5% rare item chance
-- [ ] T-0999: Create commodity price tracking (gold, silver, oil, wheat)
-- [ ] T-1000: Map real gold price changes to in-game gold value fluctuation
-- [ ] T-1001: Map real oil price changes to in-game fuel resource cost
-- [ ] T-1002: Map real wheat price changes to in-game food production modifier
-- [ ] T-1003: Map real silver price changes to in-game equipment material cost
-- [ ] T-1004: Build commodity price chart in market scene with real-world comparison
-- [ ] T-1005: Implement economic indicator dashboard (GDP growth, unemployment, inflation)
-- [ ] T-1006: Create economic indicator mapping to in-game economic cycle phase
-- [ ] T-1007: Build economic forecast display based on real indicators
-- [ ] T-1008: Set up cryptocurrency market data API integration
-- [ ] T-1009: Implement Bitcoin price fetch with hourly caching
-- [ ] T-1010: Create crypto volatility index calculation from price swings
-- [ ] T-1011: Map crypto bull market to in-game risk/reward expedition modifier
-- [ ] T-1012: Map crypto bear market to in-game defensive strategy bonus
-- [ ] T-1013: Build crypto sentiment gauge widget (extreme fear to extreme greed)
-- [ ] T-1014: Implement Fear & Greed Index detailed breakdown display
-- [ ] T-1015: Create Fear index effect: NPC merchants offer defensive items cheaply
-- [ ] T-1016: Create Greed index effect: NPC merchants inflate luxury item prices
-- [ ] T-1017: Implement VIX (volatility index) mapping to expedition danger modifier
-- [ ] T-1018: Build market volatility indicator in expedition planning screen
-- [ ] T-1019: Create currency exchange rate tracking (USD/EUR, USD/JPY)
-- [ ] T-1020: Map exchange rate fluctuations to cross-region trade modifiers
-- [ ] T-1021: Implement interest rate data fetch and caching
-- [ ] T-1022: Create interest rate effect on in-game loan/credit system
-- [ ] T-1023: Build financial data refresh scheduler with market hours awareness
-- [ ] T-1024: Implement financial data fallback to cached data on API failure
-- [ ] T-1025: Create financial data anomaly detection for extreme values
-- [ ] T-1026: Build financial event notification (market crash, record high)
-- [ ] T-1027: Implement financial data normalization to percentage-based modifiers
-- [ ] T-1028: Create financial sector rotation mapping to building efficiency
-- [ ] T-1029: Build tech sector performance effect on Observatory building bonuses
-- [ ] T-1030: Create healthcare sector performance effect on Temple building bonuses
-- [ ] T-1031: Create energy sector performance effect on Mine building bonuses
-- [ ] T-1032: Create agriculture sector performance effect on Farm building bonuses
-- [ ] T-1033: Implement financial data historical comparison (today vs 7-day average)
-- [ ] T-1034: Build financial data integration settings (choose which data to use)
-- [ ] T-1035: Create financial data educational tooltips explaining each indicator
-- [ ] T-1036: Implement financial event: IPO frenzy boosts market activity temporarily
-- [ ] T-1037: Create financial event: recession warnings trigger stockpiling behavior in NPCs
-- [ ] T-1038: Build portfolio tracker for in-game investments linked to real markets
-- [ ] T-1039: Implement dividend payment system from in-game investments
-- [ ] T-1040: Create market sector dashboard showing all sector impacts at a glance
-- [ ] T-1041: Implement bond yield data integration for stability modifier
-- [ ] T-1042: Build financial data mock mode for development environment
-- [ ] T-1043: Create financial data audit trail for debugging modifier calculations
-- [ ] T-1044: Implement financial holiday handling (market closed = use previous day)
-- [ ] T-1045: Build financial data API key management with rotation support
-- [ ] T-1046: Create real-world market event calendar integration
-- [ ] T-1047: Implement earnings season detection for merchant guild special events
-- [ ] T-1048: Build financial data contribution to monthly guild report
-- [ ] T-1049: Create financial sentiment shift notification when trend reverses
-- [ ] T-1050: Implement financial data visualization in research tree (Economic branch)
-- [ ] T-1051: Build financial data health check and monitoring endpoint
-- [ ] T-1052: Create financial data impact simulation tool for balance testing
-- [ ] T-1053: Implement bankruptcy protection mechanic during extreme market events
-- [ ] T-1054: Build financial data export for player analysis
-- [ ] T-1055: Create gold standard toggle: peg in-game currency to real gold price
-- [ ] T-1056: Implement commodity futures in-game trading linked to real commodity trends
-- [ ] T-1057: Build real-world market ticker scrolling display in market scene
-- [ ] T-1058: Create financial data privacy notice and opt-in consent flow
-- [ ] T-1059: Implement financial data aggregate anonymized reporting
-- [ ] T-1060: Build economic newspaper NPC delivering daily financial briefing in-game
-- [ ] T-1061: Create quarterly economic event based on real GDP data
-- [ ] T-1062: Implement trade war event triggered by international trade news
-- [ ] T-1063: Build inflation meter affecting all in-game prices gradually
-- [ ] T-1064: Create deflation event reversing price trends temporarily
-- [ ] T-1065: Implement market manipulation detection for in-game auction abuse
-- [ ] T-1066: Build economic advisor NPC offering predictions based on real data
-- [ ] T-1067: Create stock split event analogy for in-game resource doubling mechanics
-- [ ] T-1068: Implement financial data loading skeleton for slow API responses
-- [ ] T-1069: Build financial sector rotation calendar display
-- [ ] T-1070: Create end-of-quarter financial summary event with bonuses
+- [x] T-0991: Set up Alpha Vantage or Yahoo Finance API integration for stock data
+- [x] T-0992: Implement stock data fetch service with symbol lookup and price history
+- [x] T-0993: Create stock data caching with end-of-day refresh schedule
+- [x] T-0994: Implement stock market open/close detection for fetch timing
+- [x] T-0995: Build stock market summary display in Observatory building
+- [x] T-0996: Create S&P 500 daily change mapping to merchant guild prosperity
+- [x] T-0997: Implement positive market day effect: +15% trade values in marketplace
+- [x] T-0998: Implement negative market day effect: -10% trade values, +5% rare item chance
+- [x] T-0999: Create commodity price tracking (gold, silver, oil, wheat)
+- [x] T-1000: Map real gold price changes to in-game gold value fluctuation
+- [x] T-1001: Map real oil price changes to in-game fuel resource cost
+- [x] T-1002: Map real wheat price changes to in-game food production modifier
+- [x] T-1003: Map real silver price changes to in-game equipment material cost
+- [x] T-1004: Build commodity price chart in market scene with real-world comparison
+- [x] T-1005: Implement economic indicator dashboard (GDP growth, unemployment, inflation)
+- [x] T-1006: Create economic indicator mapping to in-game economic cycle phase
+- [x] T-1007: Build economic forecast display based on real indicators
+- [x] T-1008: Set up cryptocurrency market data API integration
+- [x] T-1009: Implement Bitcoin price fetch with hourly caching
+- [x] T-1010: Create crypto volatility index calculation from price swings
+- [x] T-1011: Map crypto bull market to in-game risk/reward expedition modifier
+- [x] T-1012: Map crypto bear market to in-game defensive strategy bonus
+- [x] T-1013: Build crypto sentiment gauge widget (extreme fear to extreme greed)
+- [x] T-1014: Implement Fear & Greed Index detailed breakdown display
+- [x] T-1015: Create Fear index effect: NPC merchants offer defensive items cheaply
+- [x] T-1016: Create Greed index effect: NPC merchants inflate luxury item prices
+- [x] T-1017: Implement VIX (volatility index) mapping to expedition danger modifier
+- [x] T-1018: Build market volatility indicator in expedition planning screen
+- [x] T-1019: Create currency exchange rate tracking (USD/EUR, USD/JPY)
+- [x] T-1020: Map exchange rate fluctuations to cross-region trade modifiers
+- [x] T-1021: Implement interest rate data fetch and caching
+- [x] T-1022: Create interest rate effect on in-game loan/credit system
+- [x] T-1023: Build financial data refresh scheduler with market hours awareness
+- [x] T-1024: Implement financial data fallback to cached data on API failure
+- [x] T-1025: Create financial data anomaly detection for extreme values
+- [x] T-1026: Build financial event notification (market crash, record high)
+- [x] T-1027: Implement financial data normalization to percentage-based modifiers
+- [x] T-1028: Create financial sector rotation mapping to building efficiency
+- [x] T-1029: Build tech sector performance effect on Observatory building bonuses
+- [x] T-1030: Create healthcare sector performance effect on Temple building bonuses
+- [x] T-1031: Create energy sector performance effect on Mine building bonuses
+- [x] T-1032: Create agriculture sector performance effect on Farm building bonuses
+- [x] T-1033: Implement financial data historical comparison (today vs 7-day average)
+- [x] T-1034: Build financial data integration settings (choose which data to use)
+- [x] T-1035: Create financial data educational tooltips explaining each indicator
+- [x] T-1036: Implement financial event: IPO frenzy boosts market activity temporarily
+- [x] T-1037: Create financial event: recession warnings trigger stockpiling behavior in NPCs
+- [x] T-1038: Build portfolio tracker for in-game investments linked to real markets
+- [x] T-1039: Implement dividend payment system from in-game investments
+- [x] T-1040: Create market sector dashboard showing all sector impacts at a glance
+- [x] T-1041: Implement bond yield data integration for stability modifier
+- [x] T-1042: Build financial data mock mode for development environment
+- [x] T-1043: Create financial data audit trail for debugging modifier calculations
+- [x] T-1044: Implement financial holiday handling (market closed = use previous day)
+- [x] T-1045: Build financial data API key management with rotation support
+- [x] T-1046: Create real-world market event calendar integration
+- [x] T-1047: Implement earnings season detection for merchant guild special events
+- [x] T-1048: Build financial data contribution to monthly guild report
+- [x] T-1049: Create financial sentiment shift notification when trend reverses
+- [x] T-1050: Implement financial data visualization in research tree (Economic branch)
+- [x] T-1051: Build financial data health check and monitoring endpoint
+- [x] T-1052: Create financial data impact simulation tool for balance testing
+- [x] T-1053: Implement bankruptcy protection mechanic during extreme market events
+- [x] T-1054: Build financial data export for player analysis
+- [x] T-1055: Create gold standard toggle: peg in-game currency to real gold price
+- [x] T-1056: Implement commodity futures in-game trading linked to real commodity trends
+- [x] T-1057: Build real-world market ticker scrolling display in market scene
+- [x] T-1058: Create financial data privacy notice and opt-in consent flow
+- [x] T-1059: Implement financial data aggregate anonymized reporting
+- [x] T-1060: Build economic newspaper NPC delivering daily financial briefing in-game
+- [x] T-1061: Create quarterly economic event based on real GDP data
+- [x] T-1062: Implement trade war event triggered by international trade news
+- [x] T-1063: Build inflation meter affecting all in-game prices gradually
+- [x] T-1064: Create deflation event reversing price trends temporarily
+- [x] T-1065: Implement market manipulation detection for in-game auction abuse
+- [x] T-1066: Build economic advisor NPC offering predictions based on real data
+- [x] T-1067: Create stock split event analogy for in-game resource doubling mechanics
+- [x] T-1068: Implement financial data loading skeleton for slow API responses
+- [x] T-1069: Build financial sector rotation calendar display
+- [x] T-1070: Create end-of-quarter financial summary event with bonuses
 
 ## Epic 15: World Map & Regions
 > Interactive world map, region details, region-specific content, biome visualization, and travel system.
