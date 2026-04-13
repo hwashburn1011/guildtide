@@ -156,6 +156,40 @@ class ApiClient {
     return this.request('POST', `/expeditions/${expeditionId}/collect`);
   }
 
+  // Market
+  async getMarketPrices(): Promise<{
+    date: string;
+    confidence: number;
+    items: Array<{
+      resource: string;
+      basePrice: number;
+      currentPrice: number;
+      trend: 'rising' | 'falling' | 'stable';
+    }>;
+  }> {
+    return this.request('GET', '/market');
+  }
+
+  async marketBuy(resource: string, quantity: number): Promise<{
+    success: boolean;
+    resource: string;
+    quantity: number;
+    totalPrice: number;
+    resources: Record<string, number>;
+  }> {
+    return this.request('POST', '/market/buy', { resource, quantity });
+  }
+
+  async marketSell(resource: string, quantity: number): Promise<{
+    success: boolean;
+    resource: string;
+    quantity: number;
+    totalPrice: number;
+    resources: Record<string, number>;
+  }> {
+    return this.request('POST', '/market/sell', { resource, quantity });
+  }
+
   // World state
   async getWorldState(): Promise<{
     regionId: string;
