@@ -8,6 +8,7 @@ import { ExpeditionScene } from './scenes/ExpeditionScene';
 import { MarketScene } from './scenes/MarketScene';
 import { ResearchScene } from './scenes/ResearchScene';
 import { WorldMapScene } from './scenes/WorldMapScene';
+import { AccountSettingsScene } from './scenes/AccountSettingsScene';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -22,7 +23,7 @@ const config: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [BootScene, LoginScene, RegionSelectScene, GuildHallScene, ExpeditionScene, MarketScene, ResearchScene, WorldMapScene],
+  scene: [BootScene, LoginScene, RegionSelectScene, GuildHallScene, ExpeditionScene, MarketScene, ResearchScene, WorldMapScene, AccountSettingsScene],
 };
 
 new Phaser.Game(config);

@@ -8,15 +8,23 @@ datasource db {
 }
 
 model Player {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  username     String   @unique
-  regionId     String   @default("")
-  createdAt    DateTime @default(now())
-  lastLoginAt  DateTime @default(now())
-  lastTickAt   DateTime @default(now())
-  guild        Guild?
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  passwordHash        String
+  username            String    @unique
+  regionId            String    @default("")
+  bio                 String    @default("")
+  avatarUrl           String    @default("")
+  isGuest             Boolean   @default(false)
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+  notificationPrefs   String    @default("{\"email_login\":true,\"email_expedition\":true,\"email_market\":true,\"email_events\":true}")
+  createdAt           DateTime  @default(now())
+  lastLoginAt         DateTime  @default(now())
+  lastTickAt          DateTime  @default(now())
+  guild               Guild?
 }
 
 model Guild {

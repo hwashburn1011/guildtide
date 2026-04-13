@@ -156,6 +156,17 @@ export class GuildHallScene extends Phaser.Scene {
       this.heroRoster?.show();
     });
 
+    // Settings button
+    const settingsBtn = this.add.text(GAME_WIDTH - 90, 20, 'Settings', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.small}px`,
+      color: COLORS.textSecondary,
+    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
+
+    settingsBtn.on('pointerup', () => {
+      this.scene.start('AccountSettingsScene');
+    });
+
     // Logout button
     const logoutText = this.add.text(GAME_WIDTH - 20, 20, 'Logout', {
       fontFamily: FONTS.primary,
@@ -165,6 +176,8 @@ export class GuildHallScene extends Phaser.Scene {
 
     logoutText.on('pointerup', () => {
       localStorage.removeItem('guildtide_token');
+      localStorage.removeItem('guildtide_remember');
+      localStorage.removeItem('guildtide_is_guest');
       this.scene.start('LoginScene');
     });
 

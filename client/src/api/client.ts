@@ -43,6 +43,30 @@ class ApiClient {
     return localStorage.getItem('guildtide_token');
   }
 
+  /** T-0104: Attempt to refresh the JWT token silently */
+  private async tryRefreshToken(): Promise<boolean> {
+    const token = this.getToken();
+    if (!token) return false;
+    try {
+      const resp = await fetch(`${this.baseUrl}/auth/refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (!resp.ok) return false;
+      const data = await resp.json();
+      if (data.token) {
+        localStorage.setItem('guildtide_token', data.token);
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  }
+
   private async request<T>(
     method: string,
     path: string,
@@ -81,8 +105,25 @@ class ApiClient {
 
     this.setOnlineStatus(true);
 
-    if (response.status === 401) {
+    // T-0104/T-0105: Auto-refresh token on 401, unless this IS the refresh call
+    if (response.status === 401 && !path.includes('/auth/refresh')) {
+      // Try to refresh token once
+      const refreshed = await this.tryRefreshToken();
+      if (refreshed) {
+        // Retry the original request with the new token
+        try {
+          response = await doFetch();
+        } catch {
+          this.setOnlineStatus(false);
+          throw new Error('Network error after token refresh');
+        }
+        if (response.ok) {
+          this.setOnlineStatus(true);
+          return response.json();
+        }
+      }
       localStorage.removeItem('guildtide_token');
+      localStorage.removeItem('guildtide_remember');
       window.location.hash = '';
       window.location.reload();
       throw new Error('Session expired. Please log in again.');
@@ -97,12 +138,65 @@ class ApiClient {
   }
 
   // Auth
-  async login(data: LoginRequest): Promise<AuthResponse> {
+  async login(data: LoginRequest & { rememberMe?: boolean }): Promise<AuthResponse> {
     return this.request<AuthResponse>('POST', '/auth/login', data);
   }
 
   async register(data: RegisterRequest): Promise<AuthResponse> {
     return this.request<AuthResponse>('POST', '/auth/register', data);
+  }
+
+  async refreshToken(): Promise<{ token: string; player: any }> {
+    return this.request('POST', '/auth/refresh');
+  }
+
+  async forgotPassword(email: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', '/auth/forgot-password', { email });
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', '/auth/reset-password', { token, newPassword });
+  }
+
+  async guestLogin(): Promise<AuthResponse> {
+    return this.request<AuthResponse>('POST', '/auth/guest');
+  }
+
+  async upgradeGuest(data: RegisterRequest): Promise<{ token: string; player: any }> {
+    return this.request('POST', '/auth/upgrade-guest', data);
+  }
+
+  // Account management
+  async getProfile(): Promise<any> {
+    return this.request('GET', '/account/profile');
+  }
+
+  async updateProfile(data: { username?: string; bio?: string; avatarUrl?: string }): Promise<any> {
+    return this.request('POST', '/account/profile', data);
+  }
+
+  async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', '/account/change-password', { currentPassword, newPassword });
+  }
+
+  async changeEmail(newEmail: string, password: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', '/account/change-email', { newEmail, password });
+  }
+
+  async deleteAccount(password: string, confirmation: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', '/account/delete', { password, confirmation });
+  }
+
+  async exportData(): Promise<any> {
+    return this.request('GET', '/account/export');
+  }
+
+  async getNotificationPrefs(): Promise<{ prefs: Record<string, boolean> }> {
+    return this.request('GET', '/account/notifications');
+  }
+
+  async updateNotificationPrefs(prefs: Record<string, boolean>): Promise<{ success: boolean; prefs: Record<string, boolean> }> {
+    return this.request('POST', '/account/notifications', { prefs });
   }
 
   // Player
