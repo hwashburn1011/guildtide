@@ -14,6 +14,7 @@ import { researchRouter } from './routes/research';
 import { itemsRouter } from './routes/items';
 import { accountRouter } from './routes/account';
 import { resourcesRouter } from './routes/resources';
+import { financeRouter } from './routes/finance';
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use('/api/research', researchRouter);
 app.use('/api/items', itemsRouter);
 app.use('/api/account', accountRouter);
 app.use('/api/resources', resourcesRouter);
+app.use('/api/finance', financeRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
