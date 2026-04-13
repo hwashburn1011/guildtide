@@ -1129,76 +1129,76 @@
 ## Epic 15: World Map & Regions
 > Interactive world map, region details, region-specific content, biome visualization, and travel system.
 
-- [ ] T-1071: Design world map layout with 8 distinct regions
-- [ ] T-1072: Build world map canvas renderer with zoom and pan controls
-- [ ] T-1073: Implement region boundary drawing with clickable area detection
-- [ ] T-1074: Create Forest region with green biome theme and wood resources
-- [ ] T-1075: Create Mountain region with rocky biome theme and ore resources
-- [ ] T-1076: Create Desert region with sand biome theme and gem resources
-- [ ] T-1077: Create Coastal region with ocean biome theme and trade resources
-- [ ] T-1078: Create Tundra region with ice biome theme and rare materials
-- [ ] T-1079: Create Swamp region with murky biome theme and herb resources
-- [ ] T-1080: Create Plains region with grassland biome theme and food resources
-- [ ] T-1081: Create Volcanic region with lava biome theme and metal resources
-- [ ] T-1082: Build region info panel with name, biome, resources, and difficulty
-- [ ] T-1083: Implement region discovery system (fog-of-war revealed by exploration)
-- [ ] T-1084: Create region fog-of-war rendering on world map
-- [ ] T-1085: Build region discovery animation when first explored
-- [ ] T-1086: Implement region-specific expedition encounter tables
-- [ ] T-1087: Create region-specific NPC merchant inventories
-- [ ] T-1088: Implement region-specific weather effects (desert has no rain)
-- [ ] T-1089: Build region travel system with movement time between regions
-- [ ] T-1090: Implement travel route visualization with path lines on map
-- [ ] T-1091: Create travel time reduction through research and hero skills
-- [ ] T-1092: Build region outpost system (establish presence in discovered regions)
-- [ ] T-1093: Implement outpost building with limited building slots
-- [ ] T-1094: Create outpost resource production for remote regions
-- [ ] T-1095: Build region danger level system scaling with distance from guild hall
-- [ ] T-1096: Implement region event pools (region-specific random events)
-- [ ] T-1097: Create region lore entries discovered through exploration
-- [ ] T-1098: Build region achievement system (fully explore all regions)
-- [ ] T-1099: Implement region resource node markers on map
-- [ ] T-1100: Create region faction system (friendly/neutral/hostile NPCs per region)
-- [ ] T-1101: Build faction reputation tracker per region
-- [ ] T-1102: Implement faction reputation effects on trade and expedition difficulty
-- [ ] T-1103: Create region boss markers for boss expedition locations
-- [ ] T-1104: Build world map legend explaining icons and symbols
-- [ ] T-1105: Implement world map search for specific locations
-- [ ] T-1106: Create region weather overlay showing current conditions per region
-- [ ] T-1107: Build region comparison panel for expedition planning
-- [ ] T-1108: Implement region seasonal visual changes (snow in winter, flowers in spring)
-- [ ] T-1109: Create region connectivity graph (which regions border which)
-- [ ] T-1110: Build world map minimap in expedition view
-- [ ] T-1111: Implement region unlock requirements (guild level, research, quest completion)
-- [ ] T-1112: Create hidden region discovery from rare expedition findings
-- [ ] T-1113: Build region resource depletion and regeneration system
-- [ ] T-1114: Implement region political map overlay showing faction territories
-- [ ] T-1115: Create region trade route visualization between connected regions
-- [ ] T-1116: Build world map pin system for player-created markers
-- [ ] T-1117: Implement region zoom-in view with detailed terrain features
-- [ ] T-1118: Create world map night/day overlay synchronized with real time
-- [ ] T-1119: Build region population display showing NPC activity levels
-- [ ] T-1120: Create world map event indicator showing active events per region
-- [ ] T-1121: Implement region exploration percentage tracker
-- [ ] T-1122: Build region-specific crafting recipe availability
-- [ ] T-1123: Create region biome transition zones between adjacent regions
-- [ ] T-1124: Implement world map tooltip on hover showing quick region info
-- [ ] T-1125: Build region gallery showing discovered region artwork
-- [ ] T-1126: Create world map share feature exporting map state as image
-- [ ] T-1127: Implement region fast-travel system between established outposts
-- [ ] T-1128: Build world map animation for expedition party travel
-- [ ] T-1129: Create region-specific ambient music themes
-- [ ] T-1130: Implement world map tutorial introducing regions and travel
-- [ ] T-1131: Build region claim system for guild territory control
-- [ ] T-1132: Create region defense mission when territory is threatened
-- [ ] T-1133: Implement world map grid coordinate system for location reference
-- [ ] T-1134: Build world map distance calculator between two points
-- [ ] T-1135: Create region trade embargo effect blocking routes to specific regions
-- [ ] T-1136: Implement world map weather forecast overlay per region
-- [ ] T-1137: Build region NPC caravan routes showing trade movement on map
-- [ ] T-1138: Create world map landmark discovery system with unique points of interest
-- [ ] T-1139: Implement landmark info popup with lore and gameplay benefits
-- [ ] T-1140: Build world map performance optimization for smooth pan and zoom
+- [x] T-1071: Design world map layout with 8 distinct regions
+- [x] T-1072: Build world map canvas renderer with zoom and pan controls
+- [x] T-1073: Implement region boundary drawing with clickable area detection
+- [x] T-1074: Create Forest region with green biome theme and wood resources
+- [x] T-1075: Create Mountain region with rocky biome theme and ore resources
+- [x] T-1076: Create Desert region with sand biome theme and gem resources
+- [x] T-1077: Create Coastal region with ocean biome theme and trade resources
+- [x] T-1078: Create Tundra region with ice biome theme and rare materials
+- [x] T-1079: Create Swamp region with murky biome theme and herb resources
+- [x] T-1080: Create Plains region with grassland biome theme and food resources
+- [x] T-1081: Create Volcanic region with lava biome theme and metal resources
+- [x] T-1082: Build region info panel with name, biome, resources, and difficulty
+- [x] T-1083: Implement region discovery system (fog-of-war revealed by exploration)
+- [x] T-1084: Create region fog-of-war rendering on world map
+- [x] T-1085: Build region discovery animation when first explored
+- [x] T-1086: Implement region-specific expedition encounter tables
+- [x] T-1087: Create region-specific NPC merchant inventories
+- [x] T-1088: Implement region-specific weather effects (desert has no rain)
+- [x] T-1089: Build region travel system with movement time between regions
+- [x] T-1090: Implement travel route visualization with path lines on map
+- [x] T-1091: Create travel time reduction through research and hero skills
+- [x] T-1092: Build region outpost system (establish presence in discovered regions)
+- [x] T-1093: Implement outpost building with limited building slots
+- [x] T-1094: Create outpost resource production for remote regions
+- [x] T-1095: Build region danger level system scaling with distance from guild hall
+- [x] T-1096: Implement region event pools (region-specific random events)
+- [x] T-1097: Create region lore entries discovered through exploration
+- [x] T-1098: Build region achievement system (fully explore all regions)
+- [x] T-1099: Implement region resource node markers on map
+- [x] T-1100: Create region faction system (friendly/neutral/hostile NPCs per region)
+- [x] T-1101: Build faction reputation tracker per region
+- [x] T-1102: Implement faction reputation effects on trade and expedition difficulty
+- [x] T-1103: Create region boss markers for boss expedition locations
+- [x] T-1104: Build world map legend explaining icons and symbols
+- [x] T-1105: Implement world map search for specific locations
+- [x] T-1106: Create region weather overlay showing current conditions per region
+- [x] T-1107: Build region comparison panel for expedition planning
+- [x] T-1108: Implement region seasonal visual changes (snow in winter, flowers in spring)
+- [x] T-1109: Create region connectivity graph (which regions border which)
+- [x] T-1110: Build world map minimap in expedition view
+- [x] T-1111: Implement region unlock requirements (guild level, research, quest completion)
+- [x] T-1112: Create hidden region discovery from rare expedition findings
+- [x] T-1113: Build region resource depletion and regeneration system
+- [x] T-1114: Implement region political map overlay showing faction territories
+- [x] T-1115: Create region trade route visualization between connected regions
+- [x] T-1116: Build world map pin system for player-created markers
+- [x] T-1117: Implement region zoom-in view with detailed terrain features
+- [x] T-1118: Create world map night/day overlay synchronized with real time
+- [x] T-1119: Build region population display showing NPC activity levels
+- [x] T-1120: Create world map event indicator showing active events per region
+- [x] T-1121: Implement region exploration percentage tracker
+- [x] T-1122: Build region-specific crafting recipe availability
+- [x] T-1123: Create region biome transition zones between adjacent regions
+- [x] T-1124: Implement world map tooltip on hover showing quick region info
+- [x] T-1125: Build region gallery showing discovered region artwork
+- [x] T-1126: Create world map share feature exporting map state as image
+- [x] T-1127: Implement region fast-travel system between established outposts
+- [x] T-1128: Build world map animation for expedition party travel
+- [x] T-1129: Create region-specific ambient music themes
+- [x] T-1130: Implement world map tutorial introducing regions and travel
+- [x] T-1131: Build region claim system for guild territory control
+- [x] T-1132: Create region defense mission when territory is threatened
+- [x] T-1133: Implement world map grid coordinate system for location reference
+- [x] T-1134: Build world map distance calculator between two points
+- [x] T-1135: Create region trade embargo effect blocking routes to specific regions
+- [x] T-1136: Implement world map weather forecast overlay per region
+- [x] T-1137: Build region NPC caravan routes showing trade movement on map
+- [x] T-1138: Create world map landmark discovery system with unique points of interest
+- [x] T-1139: Implement landmark info popup with lore and gameplay benefits
+- [x] T-1140: Build world map performance optimization for smooth pan and zoom
 
 ## Epic 16: Social & Multiplayer
 > Async guild cooperation, trade between players, alliances, leaderboards, chat, guild wars, and regional synergy.
