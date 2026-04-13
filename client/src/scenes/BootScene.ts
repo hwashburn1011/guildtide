@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH, GAME_HEIGHT } from '../config';
 
 export class BootScene extends Phaser.Scene {
@@ -39,8 +39,12 @@ export class BootScene extends Phaser.Scene {
   }
 
   create(): void {
+    console.log('[BootScene] create() called');
+
     // Check for stored auth token
     const token = localStorage.getItem('guildtide_token');
+    console.log('[BootScene] token:', token ? 'exists' : 'none');
+
     if (token) {
       this.scene.start('GuildHallScene');
     } else {

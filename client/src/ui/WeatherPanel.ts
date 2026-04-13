@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH } from '../config';
 
 const WEATHER_EMOTES: Record<string, string> = {

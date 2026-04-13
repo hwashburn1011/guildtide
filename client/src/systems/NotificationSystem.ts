@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import * as Phaser from 'phaser';
 import { FONTS, GAME_WIDTH } from '../config';
 
 export type NotificationType = 'success' | 'warning' | 'error' | 'info';

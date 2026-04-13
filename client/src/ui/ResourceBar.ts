@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH } from '../config';
 import { ResourceType } from '@shared/enums';
 import type { Resources } from '@shared/types';

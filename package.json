@@ -9,5 +9,24 @@
     "build:client": "cd client && npm run build",
     "build:server": "cd server && npm run build",
     "install:all": "cd shared && npm install && cd ../server && npm install && cd ../client && npm install"
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hwashburn1011/guildtide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hwashburn1011/guildtide/issues"
+  },
+  "homepage": "https://github.com/hwashburn1011/guildtide#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
   }
 }

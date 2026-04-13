@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH } from '../config';
 import { BuildingType, ResourceType } from '@shared/enums';
 import { BUILDING_DEFINITIONS, BUILDING_COST_MULTIPLIER, BUILDING_LEVEL_BONUS } from '@shared/constants';

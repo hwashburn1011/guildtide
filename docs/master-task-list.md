@@ -1,0 +1,2211 @@
+# Guildtide Master Task List
+
+## Epic 1: UI/UX Foundation & Polish
+> Responsive layouts, animations, transitions, loading states, error states, tooltips, and accessibility across the entire application.
+
+- [ ] T-0001: Create base responsive grid layout system with breakpoints for mobile, tablet, and desktop
+- [ ] T-0002: Implement CSS custom property theme system with light/dark mode variables
+- [ ] T-0003: Build reusable Button component with primary, secondary, danger, and ghost variants
+- [ ] T-0004: Build reusable Modal component with open/close animations and backdrop click handling
+- [ ] T-0005: Build reusable Tooltip component with configurable placement (top, bottom, left, right)
+- [ ] T-0006: Build reusable Toast notification system with success, warning, error, and info types
+- [ ] T-0007: Build reusable ProgressBar component with animated fill and label support
+- [ ] T-0008: Build reusable TabPanel component with keyboard navigation between tabs
+- [ ] T-0009: Build reusable Dropdown/Select component with search filtering
+- [ ] T-0010: Build reusable Card component with header, body, and footer slots
+- [ ] T-0011: Build reusable Badge component for counts, statuses, and notifications
+- [ ] T-0012: Build reusable Accordion component with expand/collapse animations
+- [ ] T-0013: Build reusable Spinner/Loading component with multiple size variants
+- [ ] T-0014: Build reusable Skeleton loader component for content placeholder states
+- [ ] T-0015: Build reusable ConfirmDialog component for destructive action confirmations
+- [ ] T-0016: Build reusable Pagination component with page size selector
+- [ ] T-0017: Build reusable Breadcrumb navigation component
+- [ ] T-0018: Build reusable ContextMenu component with nested submenus
+- [ ] T-0019: Build reusable Slider/Range input component with value display
+- [ ] T-0020: Build reusable Toggle/Switch component with label and disabled state
+- [ ] T-0021: Implement global loading overlay for full-page transitions
+- [ ] T-0022: Implement inline loading spinners for individual component data fetches
+- [ ] T-0023: Create empty state illustrations and messages for lists with no data
+- [ ] T-0024: Create error boundary component that catches rendering errors gracefully
+- [ ] T-0025: Implement 404 page with navigation back to main scenes
+- [ ] T-0026: Implement 500 error page with retry and report options
+- [ ] T-0027: Implement network disconnection banner with auto-reconnect indicator
+- [ ] T-0028: Add fade-in animation for scene transitions
+- [ ] T-0029: Add slide-in animation for side panels and drawers
+- [ ] T-0030: Add scale-up animation for modal and dialog appearances
+- [ ] T-0031: Add bounce animation for notification badge updates
+- [ ] T-0032: Add shimmer animation for loading skeleton placeholders
+- [ ] T-0033: Add pulse animation for active/selected elements
+- [ ] T-0034: Add particle burst animation for reward popups
+- [ ] T-0035: Implement smooth number counter animation for resource changes
+- [ ] T-0036: Implement typewriter text animation for narrative event displays
+- [ ] T-0037: Build main navigation bar with scene links and active state indicators
+- [ ] T-0038: Build sidebar navigation for sub-sections within scenes
+- [ ] T-0039: Build bottom navigation bar for mobile layout
+- [ ] T-0040: Implement keyboard shortcut system for common actions (Ctrl+1 through Ctrl+9 for scenes)
+- [ ] T-0041: Add keyboard shortcut overlay panel toggled by pressing "?"
+- [ ] T-0042: Create global search/command palette (Ctrl+K) for quick navigation
+- [ ] T-0043: Implement drag-and-drop utility for item and hero rearrangement
+- [ ] T-0044: Build scroll-to-top button for long scrollable content areas
+- [ ] T-0045: Implement pull-to-refresh gesture handler for mobile views
+- [ ] T-0046: Add hover state previews for heroes, items, and buildings
+- [ ] T-0047: Build info panel slide-out for detailed entity inspection
+- [ ] T-0048: Implement responsive typography scale that adjusts to viewport width
+- [ ] T-0049: Create icon system with SVG sprite sheet and icon component
+- [ ] T-0050: Build color-coded rarity system (common, uncommon, rare, epic, legendary)
+- [ ] T-0051: Implement focus ring styles for keyboard navigation accessibility
+- [ ] T-0052: Add reduced-motion media query support to disable animations when preferred
+- [ ] T-0053: Create consistent form layout with validation message display
+- [ ] T-0054: Build form input component with label, placeholder, and error state
+- [ ] T-0055: Build textarea component with character count and max length
+- [ ] T-0056: Build checkbox and radio group components with accessible labels
+- [ ] T-0057: Implement form validation utility with required, min/max, and pattern rules
+- [ ] T-0058: Create notification center dropdown with read/unread states
+- [ ] T-0059: Build notification preference settings panel
+- [ ] T-0060: Implement in-app notification queue with auto-dismiss timers
+- [ ] T-0061: Build resource bar header component showing all 8 resources with icons
+- [ ] T-0062: Add animated resource change indicators (+/- floating numbers)
+- [ ] T-0063: Implement resource bar overflow handling for small screens
+- [ ] T-0064: Build clock/time display component showing in-game time and season
+- [ ] T-0065: Create weather indicator widget in the header bar
+- [ ] T-0066: Build mini-map widget showing current region context
+- [ ] T-0067: Implement tutorial overlay system with step-by-step highlights
+- [ ] T-0068: Create first-time user onboarding flow with 5 guided steps
+- [ ] T-0069: Build tooltip tour system for introducing new features
+- [ ] T-0070: Implement user preference for UI density (compact, normal, comfortable)
+- [ ] T-0071: Add CSS grid layout for guild hall building placement view
+- [ ] T-0072: Add CSS grid layout for hero roster list/grid toggle view
+- [ ] T-0073: Add CSS grid layout for market trading interface
+- [ ] T-0074: Add CSS grid layout for research tree visualization
+- [ ] T-0075: Add CSS grid layout for expedition planning screen
+- [ ] T-0076: Add CSS grid layout for inventory/equipment management
+- [ ] T-0077: Implement pinch-to-zoom support for map and research tree on touch devices
+- [ ] T-0078: Build image lazy-loading utility for hero portraits and building sprites
+- [ ] T-0079: Create placeholder image component for assets not yet loaded
+- [ ] T-0080: Implement virtual scrolling for long lists (hero roster, item inventory)
+- [ ] T-0081: Build data table component with sortable columns and row selection
+- [ ] T-0082: Build filter bar component with tag-based active filter display
+- [ ] T-0083: Implement undo/redo toast for reversible actions
+- [ ] T-0084: Create consistent spacing and margin utility classes
+- [ ] T-0085: Build responsive image component with srcset for different resolutions
+- [ ] T-0086: Implement CSS transition for theme switching (light to dark)
+- [ ] T-0087: Build split-pane layout component for side-by-side views
+- [ ] T-0088: Create z-index management system to prevent stacking context issues
+- [ ] T-0089: Implement print stylesheet for guild reports and expedition logs
+- [ ] T-0090: Build copy-to-clipboard utility with visual feedback
+- [ ] T-0091: Implement relative time display (e.g., "3 minutes ago") with auto-update
+- [ ] T-0092: Build countdown timer component for event and expedition timers
+- [ ] T-0093: Create visual diff component for comparing before/after stat changes
+- [ ] T-0094: Build star rating component for hero satisfaction and item quality
+- [ ] T-0095: Implement gesture recognizer for swipe navigation between tabs on mobile
+- [ ] T-0096: Create floating action button component for primary actions on mobile
+- [ ] T-0097: Build status indicator dot component (online, idle, busy, offline)
+- [ ] T-0098: Implement sticky header behavior for scrollable content sections
+- [ ] T-0099: Add CSS animations for weather-based UI theme tinting
+- [ ] T-0100: Comprehensive visual regression audit across all breakpoints
+
+## Epic 2: Login & Account System
+> OAuth integration, password reset flow, account settings, profile management, and secure session handling.
+
+- [ ] T-0101: Design login page layout with email/password form and OAuth buttons
+- [ ] T-0102: Implement email/password registration endpoint with validation
+- [ ] T-0103: Implement email/password login endpoint with JWT token generation
+- [ ] T-0104: Create JWT token refresh endpoint for seamless session renewal
+- [ ] T-0105: Implement secure token storage in httpOnly cookies
+- [ ] T-0106: Build login form frontend with email and password fields
+- [ ] T-0107: Build registration form frontend with email, username, and password
+- [ ] T-0108: Add client-side validation for registration (password strength, email format)
+- [ ] T-0109: Implement Google OAuth2 login flow backend (redirect, callback, token exchange)
+- [ ] T-0110: Implement Google OAuth2 login button and redirect on frontend
+- [ ] T-0111: Implement Discord OAuth2 login flow backend
+- [ ] T-0112: Implement Discord OAuth2 login button and redirect on frontend
+- [ ] T-0113: Implement GitHub OAuth2 login flow backend
+- [ ] T-0114: Implement GitHub OAuth2 login button and redirect on frontend
+- [ ] T-0115: Build OAuth account linking to allow connecting multiple providers
+- [ ] T-0116: Create forgot password page with email input
+- [ ] T-0117: Implement password reset token generation and email sending backend
+- [ ] T-0118: Build password reset confirmation page with new password form
+- [ ] T-0119: Implement password reset token validation and password update endpoint
+- [ ] T-0120: Add rate limiting to password reset requests (max 3 per hour)
+- [ ] T-0121: Build account settings page layout with navigation tabs
+- [ ] T-0122: Implement change password form and backend endpoint
+- [ ] T-0123: Implement change email form with verification email
+- [ ] T-0124: Implement email verification flow (send code, verify code)
+- [ ] T-0125: Build profile page with username, avatar, and bio fields
+- [ ] T-0126: Implement avatar upload with image cropping and size validation
+- [ ] T-0127: Build avatar selection from preset avatar gallery
+- [ ] T-0128: Implement username change with uniqueness validation
+- [ ] T-0129: Build active sessions list showing login devices and locations
+- [ ] T-0130: Implement revoke session endpoint for logging out other devices
+- [ ] T-0131: Add "log out all devices" button with confirmation
+- [ ] T-0132: Implement session expiration after 30 days of inactivity
+- [ ] T-0133: Build account deletion flow with confirmation and grace period
+- [ ] T-0134: Implement data export endpoint (GDPR compliance) for user data download
+- [ ] T-0135: Add two-factor authentication setup with TOTP (authenticator app)
+- [ ] T-0136: Build 2FA verification step during login
+- [ ] T-0137: Implement 2FA recovery codes generation and display
+- [ ] T-0138: Build login history page showing recent login attempts
+- [ ] T-0139: Implement suspicious login detection (new device/location notification)
+- [ ] T-0140: Add remember-me checkbox extending session duration
+- [ ] T-0141: Build guest/demo account mode for trying the game without registration
+- [ ] T-0142: Implement guest-to-full account upgrade flow preserving game progress
+- [ ] T-0143: Add CAPTCHA integration on registration to prevent bot accounts
+- [ ] T-0144: Implement account lockout after 5 failed login attempts (15-minute cooldown)
+- [ ] T-0145: Build notification preferences page (email notifications on/off per category)
+- [ ] T-0146: Implement email notification for login from new device
+- [ ] T-0147: Add last-login timestamp display on profile page
+- [ ] T-0148: Build connected accounts section showing linked OAuth providers
+- [ ] T-0149: Implement OAuth provider unlinking with password requirement
+- [ ] T-0150: Create account creation success onboarding redirect to guild setup
+
+## Epic 3: Guild Hall Scene
+> Building placement grid, visual building upgrades, guild XP and leveling, and unlock progression within the guild hall.
+
+- [ ] T-0151: Design guild hall main scene layout with building grid area
+- [ ] T-0152: Implement isometric grid system for building placement (8x8 grid)
+- [ ] T-0153: Build grid cell highlighting on hover to indicate valid placement zones
+- [ ] T-0154: Implement building placement drag-and-drop from build menu to grid
+- [ ] T-0155: Add placement validation (no overlap, correct terrain type, resource check)
+- [ ] T-0156: Implement building removal/demolish action with resource refund (50%)
+- [ ] T-0157: Build building relocation drag from placed position to new grid cell
+- [ ] T-0158: Create guild hall background with parallax scrolling layers
+- [ ] T-0159: Implement day/night cycle visual overlay on guild hall scene
+- [ ] T-0160: Add weather visual effects overlay (rain, snow, sun rays) on guild hall
+- [ ] T-0161: Build guild info panel showing guild name, level, XP bar, and emblem
+- [ ] T-0162: Implement guild naming system with profanity filter and uniqueness check
+- [ ] T-0163: Build guild emblem editor with shape, color, and symbol selectors
+- [ ] T-0164: Implement guild XP calculation from completed expeditions
+- [ ] T-0165: Implement guild XP calculation from building construction
+- [ ] T-0166: Implement guild XP calculation from research completion
+- [ ] T-0167: Implement guild XP calculation from market trades
+- [ ] T-0168: Create guild level-up reward table (levels 1-50)
+- [ ] T-0169: Implement guild level-up celebration animation and reward display
+- [ ] T-0170: Build guild milestone achievements list with unlock requirements
+- [ ] T-0171: Implement building unlock progression tied to guild level
+- [ ] T-0172: Implement feature unlock progression (expeditions at level 3, market at level 5)
+- [ ] T-0173: Build build menu panel listing available buildings with costs
+- [ ] T-0174: Add building preview tooltip showing stats and production info
+- [ ] T-0175: Implement building construction animation (scaffolding to complete)
+- [ ] T-0176: Create building visual upgrade stages (level 1, 2, 3 sprite variations)
+- [ ] T-0177: Implement building upgrade UI with cost and stat comparison
+- [ ] T-0178: Build building detail panel showing production rates, workers, and level
+- [ ] T-0179: Implement worker assignment UI for buildings (drag heroes to buildings)
+- [ ] T-0180: Add worker count display on each building sprite
+- [ ] T-0181: Create idle worker animation for heroes assigned to buildings
+- [ ] T-0182: Implement building production tick display (floating +resource icons)
+- [ ] T-0183: Build guild hall decoration system with cosmetic placement items
+- [ ] T-0184: Implement decorative item shop with cosmetic items purchasable with resources
+- [ ] T-0185: Add ambient NPC characters wandering in guild hall
+- [ ] T-0186: Create guild hall expansion system (unlock additional grid rows/columns)
+- [ ] T-0187: Implement guild hall expansion cost scaling
+- [ ] T-0188: Build guild hall zoom controls (zoom in/out with mouse wheel or pinch)
+- [ ] T-0189: Implement mini-map overview of entire guild hall for zoomed-in navigation
+- [ ] T-0190: Add sound effects for building placement, construction, and upgrade
+- [ ] T-0191: Build guild activity feed showing recent events (building built, hero recruited)
+- [ ] T-0192: Implement guild daily login reward calendar
+- [ ] T-0193: Create guild hall seasonal decorations (snow in winter, flowers in spring)
+- [ ] T-0194: Build building quick-action buttons (upgrade, repair, assign, demolish)
+- [ ] T-0195: Implement building durability/repair system with maintenance costs
+- [ ] T-0196: Add building efficiency modifier based on adjacent building synergies
+- [ ] T-0197: Create building blueprint discovery system from research or expeditions
+- [ ] T-0198: Implement guild hall screenshot/share feature
+- [ ] T-0199: Build guild statistics dashboard (total buildings, heroes, resources, expeditions)
+- [ ] T-0200: Add guild hall tutorial walkthrough for first-time players
+- [ ] T-0201: Implement building queue system for constructing multiple buildings sequentially
+- [ ] T-0202: Build construction progress bar overlay on buildings under construction
+- [ ] T-0203: Create building special ability activation UI (e.g., tavern recruitment event)
+- [ ] T-0204: Implement guild hall visitor NPC system (random visitors with quests)
+- [ ] T-0205: Build guild hall notification indicators on buildings needing attention
+- [ ] T-0206: Implement guild motto editor displayed on guild hall banner
+- [ ] T-0207: Create guild hall prestige system for resetting with permanent bonuses
+- [ ] T-0208: Build building collection completion tracker
+- [ ] T-0209: Implement guild hall comparison view (view other players' guild halls)
+- [ ] T-0210: Add haptic feedback on mobile for building placement actions
+- [ ] T-0211: Create guild hall ambient particle effects (fireflies at night, leaves in autumn)
+- [ ] T-0212: Implement building production boost events from real-world data triggers
+- [ ] T-0213: Build guild hall resource collection animation (click-to-collect floating icons)
+- [ ] T-0214: Create building info cards for the build menu with stat summaries
+- [ ] T-0215: Implement guild hall idle income summary displayed on return
+- [ ] T-0216: Build guild hall changelog/history showing all player actions
+- [ ] T-0217: Create building repair animation and visual damage states
+- [ ] T-0218: Implement guild hall boundary walls that upgrade with guild level
+- [ ] T-0219: Build guild hall entrance gate with visitor counter display
+- [ ] T-0220: Create guild achievement wall decoration unlocked by milestones
+- [ ] T-0221: Implement guild hall environment biome selection (forest, mountain, coastal)
+- [ ] T-0222: Build building tooltip with real-time production rate display
+- [ ] T-0223: Create guild hall quick-build mode for rapid building placement
+- [ ] T-0224: Implement guild hall layout save/load system for multiple arrangements
+- [ ] T-0225: Build guild hall sharing system to export layout as shareable link
+- [ ] T-0226: Create guild hall ambient sound system based on placed buildings
+- [ ] T-0227: Implement guild hall day counter showing guild age in days
+- [ ] T-0228: Build building sorting/filtering in the build menu by type and cost
+- [ ] T-0229: Create guild hall event notification popup for triggered events
+- [ ] T-0230: Implement guild hall performance optimization for large building counts
+
+## Epic 4: Resource System
+> Storage caps, resource decay mechanics, conversion recipes, and resource visualization including charts and indicators.
+
+- [ ] T-0231: Define all 8 resource types with icons, colors, and descriptions
+- [ ] T-0232: Implement resource storage model in database with current amount and cap
+- [ ] T-0233: Create resource service with add, subtract, and check balance methods
+- [ ] T-0234: Implement storage cap enforcement preventing resource gain beyond cap
+- [ ] T-0235: Build resource overflow notification when production is wasted due to cap
+- [ ] T-0236: Implement storage cap increase through building upgrades
+- [ ] T-0237: Create resource cap display on resource bar (current / max format)
+- [ ] T-0238: Implement resource decay system for perishable resources (food decay at 2%/hour)
+- [ ] T-0239: Create resource decay rate modifiers from building effects (cold storage)
+- [ ] T-0240: Build resource decay warning notification when resources are decaying
+- [ ] T-0241: Implement resource production rate calculation from all sources
+- [ ] T-0242: Create resource consumption rate calculation from all drains
+- [ ] T-0243: Build net resource rate display (production minus consumption per hour)
+- [ ] T-0244: Implement resource conversion recipe system (e.g., 5 ore -> 1 metal)
+- [ ] T-0245: Create recipe list UI showing available conversions and costs
+- [ ] T-0246: Build recipe execution endpoint with resource validation
+- [ ] T-0247: Implement batch conversion UI with quantity selector
+- [ ] T-0248: Create auto-conversion toggle for setting up recurring resource conversions
+- [ ] T-0249: Build resource conversion animation showing input transforming to output
+- [ ] T-0250: Implement resource history tracking (hourly snapshots for charts)
+- [ ] T-0251: Build resource history chart component using Canvas line graphs
+- [ ] T-0252: Add time range selector for resource charts (1h, 6h, 24h, 7d)
+- [ ] T-0253: Implement resource forecast projection based on current rates
+- [ ] T-0254: Build resource alert system (notify when resource drops below threshold)
+- [ ] T-0255: Create resource alert configuration UI per resource type
+- [ ] T-0256: Implement resource trading between resources at variable exchange rates
+- [ ] T-0257: Build resource detailed breakdown panel (sources and sinks list)
+- [ ] T-0258: Create resource production multiplier system (weather bonuses, season bonuses)
+- [ ] T-0259: Implement resource bonus display showing active multipliers
+- [ ] T-0260: Build resource collection mini-game for active play bonus
+- [ ] T-0261: Implement resource gifting between allied guild players
+- [ ] T-0262: Create resource milestone rewards (first 1000 gold collected, etc.)
+- [ ] T-0263: Build resource efficiency rating based on storage usage percentage
+- [ ] T-0264: Implement resource priority system for allocation during shortages
+- [ ] T-0265: Create resource event modifiers (famine reduces food production 50%)
+- [ ] T-0266: Build resource comparison widget showing relative values
+- [ ] T-0267: Implement resource tooltip showing production/consumption breakdown
+- [ ] T-0268: Create resource scarcity indicators changing icon color when low
+- [ ] T-0269: Build resource storage upgrade path UI for each resource
+- [ ] T-0270: Implement resource batch collection endpoint for idle gains
+- [ ] T-0271: Create resource audit log showing all transactions with timestamps
+- [ ] T-0272: Build resource dashboard summary page with all resources at a glance
+- [ ] T-0273: Implement resource balance snapshot on logout for offline calculation
+- [ ] T-0274: Create resource offline production calculation on login
+- [ ] T-0275: Build offline production summary dialog shown on return
+- [ ] T-0276: Implement resource production cap per tick to prevent exploit
+- [ ] T-0277: Create seasonal resource bonuses (spring: +food, winter: +fuel)
+- [ ] T-0278: Build resource icon animation for active production state
+- [ ] T-0279: Implement resource transfer endpoint between player's own storage locations
+- [ ] T-0280: Create resource value index influenced by global player economy
+- [ ] T-0281: Build resource tutorial explaining each resource type and its uses
+- [ ] T-0282: Implement resource achievement badges (hoarder, trader, converter)
+- [ ] T-0283: Create resource emergency reserve system (locked reserve for critical needs)
+- [ ] T-0284: Build resource production queue visualization
+- [ ] T-0285: Implement resource webhook notifications for critical thresholds
+- [ ] T-0286: Create resource analytics API endpoint for external tracking
+- [ ] T-0287: Build resource comparison between players in alliance view
+- [ ] T-0288: Implement resource donation to guild treasury from personal stores
+- [ ] T-0289: Create resource treasure chest random reward from exploration
+- [ ] T-0290: Build resource management guide NPC with tips based on current state
+
+## Epic 5: Building System
+> All 10 buildings fully functional with visual states, worker animations, production chains, and upgrade paths.
+
+- [ ] T-0291: Define building data schema with name, type, level, cost, production, and capacity fields
+- [ ] T-0292: Create building base class with shared upgrade, produce, and render logic
+- [ ] T-0293: Implement Tavern building — hero recruitment source
+- [ ] T-0294: Design Tavern sprite with 3 upgrade-level visual variations
+- [ ] T-0295: Implement Tavern recruitment pool refresh mechanic (new heroes every 4 hours)
+- [ ] T-0296: Build Tavern UI panel with available recruits list and hire button
+- [ ] T-0297: Implement Tavern upgrade effects (more recruit slots, higher quality heroes)
+- [ ] T-0298: Implement Workshop building — equipment crafting station
+- [ ] T-0299: Design Workshop sprite with 3 upgrade-level visual variations
+- [ ] T-0300: Build Workshop UI with crafting recipe browser and craft button
+- [ ] T-0301: Implement Workshop production queue with crafting time per item
+- [ ] T-0302: Implement Workshop upgrade effects (faster crafting, unlock rare recipes)
+- [ ] T-0303: Implement Farm building — food resource production
+- [ ] T-0304: Design Farm sprite with 3 upgrade-level visual variations
+- [ ] T-0305: Build Farm UI showing crop cycle progress and harvest button
+- [ ] T-0306: Implement Farm seasonal yield modifier (spring: +30%, winter: -20%)
+- [ ] T-0307: Implement Farm weather yield modifier (rain: +15%, drought: -25%)
+- [ ] T-0308: Implement Farm upgrade effects (more plots, faster growth, better seeds)
+- [ ] T-0309: Implement Mine building — ore and gem resource production
+- [ ] T-0310: Design Mine sprite with 3 upgrade-level visual variations
+- [ ] T-0311: Build Mine UI showing vein depletion and extraction rate
+- [ ] T-0312: Implement Mine rare gem discovery chance on production ticks
+- [ ] T-0313: Implement Mine upgrade effects (deeper veins, better tools, gem chance)
+- [ ] T-0314: Implement Marketplace building — trade interface and NPC merchants
+- [ ] T-0315: Design Marketplace sprite with 3 upgrade-level visual variations
+- [ ] T-0316: Build Marketplace UI with buy/sell tabs and price display
+- [ ] T-0317: Implement Marketplace trade commission reduction on upgrade
+- [ ] T-0318: Implement Marketplace upgrade effects (more merchants, lower fees)
+- [ ] T-0319: Implement Library building — research speed bonus
+- [ ] T-0320: Design Library sprite with 3 upgrade-level visual variations
+- [ ] T-0321: Build Library UI showing current research boost and book collection
+- [ ] T-0322: Implement Library research speed multiplier per level
+- [ ] T-0323: Implement Library upgrade effects (faster research, unlock branches)
+- [ ] T-0324: Implement Barracks building — hero training and stat improvement
+- [ ] T-0325: Design Barracks sprite with 3 upgrade-level visual variations
+- [ ] T-0326: Build Barracks UI with training slot assignment and progress display
+- [ ] T-0327: Implement Barracks training time calculation based on hero and stat
+- [ ] T-0328: Implement Barracks upgrade effects (more slots, faster training, higher cap)
+- [ ] T-0329: Implement Warehouse building — resource storage cap increase
+- [ ] T-0330: Design Warehouse sprite with 3 upgrade-level visual variations
+- [ ] T-0331: Build Warehouse UI showing storage allocation per resource
+- [ ] T-0332: Implement Warehouse resource-specific storage boost configuration
+- [ ] T-0333: Implement Warehouse upgrade effects (higher caps, reduced decay)
+- [ ] T-0334: Implement Temple building — morale and blessing effects
+- [ ] T-0335: Design Temple sprite with 3 upgrade-level visual variations
+- [ ] T-0336: Build Temple UI showing active blessings and prayer schedule
+- [ ] T-0337: Implement Temple blessing system with timed buffs for guild
+- [ ] T-0338: Implement Temple upgrade effects (stronger blessings, more slots)
+- [ ] T-0339: Implement Observatory building — real-world data insight bonuses
+- [ ] T-0340: Design Observatory sprite with 3 upgrade-level visual variations
+- [ ] T-0341: Build Observatory UI showing current real-world data readings
+- [ ] T-0342: Implement Observatory prediction accuracy bonus per level
+- [ ] T-0343: Implement Observatory upgrade effects (more data sources, better predictions)
+- [ ] T-0344: Implement Expedition Hall building — expedition launch and management
+- [ ] T-0345: Design Expedition Hall sprite with 3 upgrade-level visual variations
+- [ ] T-0346: Build Expedition Hall UI with expedition queue and party formation
+- [ ] T-0347: Implement Expedition Hall simultaneous expedition cap per level
+- [ ] T-0348: Implement Expedition Hall upgrade effects (more slots, longer range, faster return)
+- [ ] T-0349: Create building production chain system (Farm food -> Tavern hero recruitment fuel)
+- [ ] T-0350: Implement production chain visualization showing resource flow arrows
+- [ ] T-0351: Build production chain optimizer suggestion engine
+- [ ] T-0352: Create building worker assignment effects on production rate
+- [ ] T-0353: Implement hero skill bonus when assigned to matching building (Miner in Mine)
+- [ ] T-0354: Build worker happiness system affecting building efficiency
+- [ ] T-0355: Create worker rotation schedule for fatigue prevention
+- [ ] T-0356: Implement building adjacency bonus system (+10% when related buildings adjacent)
+- [ ] T-0357: Build adjacency bonus indicator overlay on grid
+- [ ] T-0358: Create building special event trigger (Tavern brawl event at night)
+- [ ] T-0359: Implement building maintenance cost system (periodic resource drain)
+- [ ] T-0360: Build building maintenance overdue warning and efficiency penalty
+- [ ] T-0361: Create building auto-collect toggle for production output
+- [ ] T-0362: Implement building production notification when storage is full
+- [ ] T-0363: Build building comparison tool for upgrade decision making
+- [ ] T-0364: Create building lore entries unlocked by upgrading
+- [ ] T-0365: Implement building destruction animation for demolish action
+- [ ] T-0366: Build building quick-upgrade button with cost confirmation
+- [ ] T-0367: Create building achievement system (max level all buildings, etc.)
+- [ ] T-0368: Implement building event modifier (festival boosts Tavern output)
+- [ ] T-0369: Build building status icon overlay (producing, idle, broken, upgrading)
+- [ ] T-0370: Create building info card with stat comparison for current vs next level
+
+## Epic 6: Hero System
+> Hero progression, skill trees, hero quests, retirement, hero stories, and portrait generation system.
+
+- [ ] T-0371: Define hero data schema (name, role, level, stats, skills, equipment, morale, XP)
+- [ ] T-0372: Create hero generation service with randomized names, stats, and backstories
+- [ ] T-0373: Implement name generation pool with fantasy first and last name banks
+- [ ] T-0374: Build hero stat system with 6 core stats (Strength, Agility, Intellect, Endurance, Charisma, Luck)
+- [ ] T-0375: Implement hero role system with 10 roles (Warrior, Mage, Ranger, Healer, Rogue, Scholar, Merchant, Smith, Scout, Bard)
+- [ ] T-0376: Create role-specific stat growth rates per level
+- [ ] T-0377: Implement hero XP gain from expeditions, training, and building work
+- [ ] T-0378: Build hero level-up system with stat point allocation
+- [ ] T-0379: Create hero level-up notification with stat comparison display
+- [ ] T-0380: Implement hero recruitment from Tavern with cost and interview preview
+- [ ] T-0381: Build hero recruitment panel with stat bars, role badge, and personality
+- [ ] T-0382: Create hero dismissal system with farewell dialog
+- [ ] T-0383: Implement hero roster page with grid/list view toggle
+- [ ] T-0384: Build hero sort options (by level, role, stat, name, morale)
+- [ ] T-0385: Build hero filter options (by role, availability, level range)
+- [ ] T-0386: Create hero detail page with full stat display, equipment, and history
+- [ ] T-0387: Build hero stat radar chart visualization
+- [ ] T-0388: Implement hero skill tree data structure (branching paths per role)
+- [ ] T-0389: Create Warrior skill tree with 15 skills across 3 branches
+- [ ] T-0390: Create Mage skill tree with 15 skills across 3 branches
+- [ ] T-0391: Create Ranger skill tree with 15 skills across 3 branches
+- [ ] T-0392: Create Healer skill tree with 15 skills across 3 branches
+- [ ] T-0393: Create Rogue skill tree with 15 skills across 3 branches
+- [ ] T-0394: Create Scholar skill tree with 15 skills across 3 branches
+- [ ] T-0395: Create Merchant skill tree with 15 skills across 3 branches
+- [ ] T-0396: Create Smith skill tree with 15 skills across 3 branches
+- [ ] T-0397: Create Scout skill tree with 15 skills across 3 branches
+- [ ] T-0398: Create Bard skill tree with 15 skills across 3 branches
+- [ ] T-0399: Build skill tree UI with node connections and unlock indicators
+- [ ] T-0400: Implement skill point allocation on level-up (1 point per level)
+- [ ] T-0401: Create skill effect application system (passive buffs, active abilities)
+- [ ] T-0402: Build skill tooltip showing effect description, requirements, and cost
+- [ ] T-0403: Implement skill prerequisite validation (unlock parent first)
+- [ ] T-0404: Create skill respec system with increasing gold cost per respec
+- [ ] T-0405: Build hero portrait system with layered facial feature composition
+- [ ] T-0406: Create portrait feature sets (hairstyle, face shape, eyes, mouth, accessories)
+- [ ] T-0407: Implement portrait color palette per feature (skin tone, hair color, eye color)
+- [ ] T-0408: Build portrait preview component with randomize button
+- [ ] T-0409: Implement portrait customization editor for player-created portraits
+- [ ] T-0410: Create role-specific portrait frame decorations
+- [ ] T-0411: Implement hero morale system affected by events, rest, and victories
+- [ ] T-0412: Build morale indicator on hero card (happy, neutral, unhappy, angry)
+- [ ] T-0413: Create morale effects on hero performance (high morale: +10% stats)
+- [ ] T-0414: Implement morale recovery through rest and Temple blessings
+- [ ] T-0415: Build hero quest system — personal quests for each hero based on backstory
+- [ ] T-0416: Create quest generation templates with 5 quest types (fetch, rescue, discover, defeat, negotiate)
+- [ ] T-0417: Implement hero quest dialog UI with objective display and progress
+- [ ] T-0418: Build hero quest reward system (XP, items, skill points, lore)
+- [ ] T-0419: Create hero quest chain system (multi-part storylines)
+- [ ] T-0420: Implement hero retirement system at max level with legacy bonus
+- [ ] T-0421: Build retirement ceremony UI with hero achievement summary
+- [ ] T-0422: Create retired hero hall of fame display
+- [ ] T-0423: Implement retirement legacy bonuses (permanent guild stat boosts)
+- [ ] T-0424: Build hero story/journal system tracking notable achievements
+- [ ] T-0425: Create hero relationship system (friendship/rivalry between heroes)
+- [ ] T-0426: Build relationship indicator on hero interaction screens
+- [ ] T-0427: Implement relationship effects on expedition performance
+- [ ] T-0428: Create hero trait system (brave, greedy, cautious, loyal, etc.)
+- [ ] T-0429: Build trait display badges on hero cards
+- [ ] T-0430: Implement trait effects on expedition events and building work
+- [ ] T-0431: Create hero injury system from failed expeditions
+- [ ] T-0432: Build injury recovery timer and Hospital building healing
+- [ ] T-0433: Implement hero specialization at level 10 (choose sub-role)
+- [ ] T-0434: Create specialization effect modifiers per role
+- [ ] T-0435: Build hero experience breakdown panel (XP per source)
+- [ ] T-0436: Implement hero auto-assignment suggestion for optimal building placement
+- [ ] T-0437: Create hero comparison tool for side-by-side stat evaluation
+- [ ] T-0438: Build hero quick-equip UI for swapping gear sets
+- [ ] T-0439: Implement hero favorite/pin system for quick access
+- [ ] T-0440: Create hero activity log showing recent actions and XP gains
+- [ ] T-0441: Build hero recruitment event (double quality heroes during festivals)
+- [ ] T-0442: Implement hero mood dialog bubbles on guild hall scene
+- [ ] T-0443: Create hero birthday event with morale boost and gift
+- [ ] T-0444: Build hero nickname system (player-assigned display names)
+- [ ] T-0445: Implement hero power score calculation combining stats, skills, and gear
+- [ ] T-0446: Create hero idle animation set per role (warrior practices sword, mage reads)
+- [ ] T-0447: Build hero status effects display (buffed, injured, tired, inspired)
+- [ ] T-0448: Implement hero recruitment cost scaling based on hero quality
+- [ ] T-0449: Create hero mentor system (high-level hero trains low-level hero)
+- [ ] T-0450: Build hero attribute reroll token system from premium currency
+- [ ] T-0451: Implement hero affinity system — heroes perform better in certain biomes
+- [ ] T-0452: Create hero rival NPC system (hero-specific antagonists in expeditions)
+- [ ] T-0453: Build hero memorial when a hero is permanently lost
+- [ ] T-0454: Implement hero class evolution system at level 20 (advanced role)
+- [ ] T-0455: Create hero stat soft cap with diminishing returns at high values
+- [ ] T-0456: Build hero wish list system (heroes request items or quest completions)
+- [ ] T-0457: Implement hero voice line text system for interactions
+- [ ] T-0458: Create hero compatibility matrix for expedition squad synergies
+- [ ] T-0459: Build hero recruitment history log showing all past recruits
+- [ ] T-0460: Create hero overview dashboard showing roster stats and averages
+- [ ] T-0461: Implement hero name generation influenced by real-world cultural calendar
+- [ ] T-0462: Build hero training montage animation for Barracks activities
+- [ ] T-0463: Create hero rest mechanic requiring downtime after expeditions
+- [ ] T-0464: Implement hero aging system with stat peak and eventual decline
+- [ ] T-0465: Build hero genealogy tree for retired heroes' successors
+- [ ] T-0466: Create hero mastery system for repeated expedition success in role
+- [ ] T-0467: Implement hero loyalty system with desertion risk at very low morale
+- [ ] T-0468: Build hero search by name or trait functionality
+- [ ] T-0469: Create hero batch actions (assign all idle, rest all, equip recommended)
+- [ ] T-0470: Implement hero portrait background color based on rarity tier
+
+## Epic 7: Expedition System
+> Expedition log, route visualization, encounter narratives, rare discoveries, and boss expedition events.
+
+- [ ] T-0471: Define expedition data schema (destination, party, duration, status, log, rewards)
+- [ ] T-0472: Create expedition service with launch, tick, resolve, and return methods
+- [ ] T-0473: Implement expedition party formation UI with hero slot selection
+- [ ] T-0474: Build party composition validator (role requirements, minimum heroes)
+- [ ] T-0475: Create party power score calculation from member stats and synergies
+- [ ] T-0476: Implement expedition destination selector with region list and difficulty
+- [ ] T-0477: Build destination info panel with environment, enemies, and reward preview
+- [ ] T-0478: Create expedition duration calculator based on distance and party speed
+- [ ] T-0479: Implement expedition launch confirmation with cost and time summary
+- [ ] T-0480: Build expedition launch animation showing party departing guild hall
+- [ ] T-0481: Create expedition progress tracker showing elapsed/remaining time
+- [ ] T-0482: Implement expedition progress bar on main UI header
+- [ ] T-0483: Build expedition log system recording events during expedition
+- [ ] T-0484: Create expedition encounter engine with weighted random event selection
+- [ ] T-0485: Implement combat encounter resolution using party stats vs enemy stats
+- [ ] T-0486: Create treasure encounter with loot table and roll mechanics
+- [ ] T-0487: Implement trap encounter with agility/perception check mechanics
+- [ ] T-0488: Create NPC encounter with dialog options and charisma checks
+- [ ] T-0489: Implement rest encounter for party healing during long expeditions
+- [ ] T-0490: Create weather encounter modifying expedition difficulty
+- [ ] T-0491: Build expedition encounter narrative text generation system
+- [ ] T-0492: Implement expedition encounter outcome effects (damage, loot, morale change)
+- [ ] T-0493: Create expedition rare discovery system (unique artifacts, lore fragments)
+- [ ] T-0494: Build rare discovery collection page showing all discovered artifacts
+- [ ] T-0495: Implement rare discovery trigger conditions (specific party, weather, date)
+- [ ] T-0496: Create expedition boss system with special boss expeditions
+- [ ] T-0497: Build boss expedition unlock requirements (guild level, research, prerequisite)
+- [ ] T-0498: Implement boss encounter mechanics with multi-phase combat
+- [ ] T-0499: Create boss loot table with exclusive rewards
+- [ ] T-0500: Build boss expedition debriefing screen with battle summary
+- [ ] T-0501: Implement expedition route visualization on world map
+- [ ] T-0502: Create route waypoint system with encounter points marked
+- [ ] T-0503: Build route progress animation showing party movement between waypoints
+- [ ] T-0504: Implement expedition supply system (carry food and materials for duration)
+- [ ] T-0505: Create supply consumption rate based on party size and duration
+- [ ] T-0506: Build supply shortage penalties (reduced stats, morale loss)
+- [ ] T-0507: Implement expedition return event with reward distribution
+- [ ] T-0508: Build expedition return celebration animation at guild hall
+- [ ] T-0509: Create expedition reward detail screen with item and XP breakdown
+- [ ] T-0510: Implement expedition failure states (party defeated, supplies exhausted)
+- [ ] T-0511: Build expedition failure consequences (hero injuries, lost supplies)
+- [ ] T-0512: Create expedition retreat option available before boss encounters
+- [ ] T-0513: Implement expedition diary UI showing complete log of all past expeditions
+- [ ] T-0514: Build expedition statistics page (total expeditions, success rate, loot value)
+- [ ] T-0515: Create expedition difficulty rating system (1-5 stars)
+- [ ] T-0516: Implement expedition difficulty modifiers from real-world data
+- [ ] T-0517: Build expedition recommendation engine based on party strength
+- [ ] T-0518: Create expedition speed boost from Scout heroes in party
+- [ ] T-0519: Implement expedition scouting pre-check revealing partial encounter list
+- [ ] T-0520: Build expedition hero selection quick-filter by available/rested status
+- [ ] T-0521: Create expedition party template save/load for repeated runs
+- [ ] T-0522: Implement expedition chain system (multi-destination journey)
+- [ ] T-0523: Build expedition chain progress tracker with checkpoints
+- [ ] T-0524: Create expedition environmental hazard system (poison swamp, lava field)
+- [ ] T-0525: Implement hazard mitigation through party skills and items
+- [ ] T-0526: Build expedition milestone rewards (10th expedition, 100th expedition)
+- [ ] T-0527: Create expedition seasonal content (winter expeditions have unique encounters)
+- [ ] T-0528: Implement expedition notification when complete (toast + badge)
+- [ ] T-0529: Build expedition auto-repeat toggle for farming specific routes
+- [ ] T-0530: Create expedition leaderboard for fastest completion times
+- [ ] T-0531: Implement expedition companion NPC hire for temporary party boost
+- [ ] T-0532: Build expedition lore discovery system unlocking world history entries
+- [ ] T-0533: Create expedition map fog-of-war system (reveal areas through exploration)
+- [ ] T-0534: Implement expedition party morale tracking separate from base morale
+- [ ] T-0535: Build expedition camping scene between long journey legs
+- [ ] T-0536: Create expedition random event influenced by real-world news sentiment
+- [ ] T-0537: Implement expedition resource node discovery for new gathering locations
+- [ ] T-0538: Build expedition post-mortem analysis showing optimal party suggestion
+- [ ] T-0539: Create expedition achievement badges (explorer, treasure hunter, boss slayer)
+- [ ] T-0540: Implement expedition quick-launch from destination list for repeat runs
+- [ ] T-0541: Build expedition encounter history for each destination
+- [ ] T-0542: Create expedition hero performance rating after completion
+- [ ] T-0543: Implement expedition weather forecast display before launch
+- [ ] T-0544: Build expedition danger zone warnings for party under-level destinations
+- [ ] T-0545: Create expedition narrative summary generator from log entries
+- [ ] T-0546: Implement expedition reward multiplier from Observatory predictions
+- [ ] T-0547: Build expedition tutorial for first-time expedition launch
+- [ ] T-0548: Create expedition event: merchant caravan encounter for mid-route trading
+- [ ] T-0549: Implement expedition timed challenge mode with bonus rewards
+- [ ] T-0550: Build expedition fleet system for launching multiple parties to same destination
+
+## Epic 8: Market & Economy
+> Price history charts, trade routes, NPC merchants, auction system, and economic cycles influenced by real-world data.
+
+- [ ] T-0551: Define market data schema (item listings, price history, trade records)
+- [ ] T-0552: Create market service with buy, sell, list, and price calculation methods
+- [ ] T-0553: Implement dynamic pricing engine based on supply and demand
+- [ ] T-0554: Build price calculation formula with base price, supply modifier, and event modifier
+- [ ] T-0555: Create price history storage with hourly snapshots per item
+- [ ] T-0556: Implement price history chart component with line graph and time axis
+- [ ] T-0557: Build price trend indicators (rising, falling, stable) with color coding
+- [ ] T-0558: Create market UI main page with category tabs (resources, items, equipment)
+- [ ] T-0559: Build buy panel with item list, quantity selector, and total cost display
+- [ ] T-0560: Build sell panel with inventory items, quantity selector, and total value display
+- [ ] T-0561: Implement buy order placement with confirmation dialog
+- [ ] T-0562: Implement sell order placement with confirmation dialog
+- [ ] T-0563: Create market transaction history log per player
+- [ ] T-0564: Build transaction history page with date filter and export option
+- [ ] T-0565: Implement NPC merchant system with 5 merchant types (general, rare, exotic, bulk, traveling)
+- [ ] T-0566: Create NPC merchant inventory rotation (new stock every 6 hours)
+- [ ] T-0567: Build NPC merchant dialog UI with greeting and trade interface
+- [ ] T-0568: Implement NPC merchant reputation system (better prices with more trades)
+- [ ] T-0569: Create traveling merchant event (arrives randomly, sells rare items)
+- [ ] T-0570: Build traveling merchant notification when arriving
+- [ ] T-0571: Implement auction system with listing, bidding, and buyout
+- [ ] T-0572: Build auction house UI with search, filter, and sort
+- [ ] T-0573: Create auction listing form with starting price, buyout, and duration
+- [ ] T-0574: Implement auction bidding endpoint with outbid notification
+- [ ] T-0575: Build auction timer display with countdown to close
+- [ ] T-0576: Implement auction resolution (highest bidder wins, mail delivery)
+- [ ] T-0577: Create auction history showing won and lost auctions
+- [ ] T-0578: Implement trade route system between regions with transport time
+- [ ] T-0579: Build trade route visualization on world map
+- [ ] T-0580: Create trade route profit calculator showing buy/sell spread
+- [ ] T-0581: Implement trade route risk system (bandits, weather delays)
+- [ ] T-0582: Build trade route caravan tracking with progress indicator
+- [ ] T-0583: Create economic cycle system with boom, bust, and stability phases
+- [ ] T-0584: Implement economic cycle effects on all market prices
+- [ ] T-0585: Build economic indicator dashboard showing current cycle phase
+- [ ] T-0586: Create market event system (trade festival: -20% fees, shortage: +50% prices)
+- [ ] T-0587: Implement market event notification and duration display
+- [ ] T-0588: Build market watchlist for tracking specific item prices
+- [ ] T-0589: Create price alert system (notify when item reaches target price)
+- [ ] T-0590: Implement market fee system (listing fee + transaction fee)
+- [ ] T-0591: Build fee reduction through Marketplace building upgrades
+- [ ] T-0592: Create market analytics page (most traded items, biggest movers)
+- [ ] T-0593: Implement market item search with autocomplete
+- [ ] T-0594: Build market bulk trade UI for large quantity transactions
+- [ ] T-0595: Create market seasonal price modifiers (winter: heating fuel expensive)
+- [ ] T-0596: Implement real-world stock market influence on in-game metal prices
+- [ ] T-0597: Build market comparison tool (compare prices across merchants)
+- [ ] T-0598: Create market tutorial NPC explaining trade basics
+- [ ] T-0599: Implement market order book showing pending buy/sell orders
+- [ ] T-0600: Build market mini-widget for quick-trade from any scene
+- [ ] T-0601: Create market achievement system (volume trader, price predictor)
+- [ ] T-0602: Implement commodity futures system for advance purchasing
+- [ ] T-0603: Build market news ticker showing recent major trades and events
+- [ ] T-0604: Create market crash event triggered by extreme real-world market drops
+- [ ] T-0605: Implement market stabilization mechanics to prevent runaway inflation
+- [ ] T-0606: Build merchant guild reputation impacting trade advantages
+- [ ] T-0607: Create market stall rental system for player-run shops
+- [ ] T-0608: Implement trade embargo events affecting specific regions
+- [ ] T-0609: Build market profit/loss tracker for player trading performance
+- [ ] T-0610: Create market currency exchange for future multi-currency support
+- [ ] T-0611: Implement market tax system contributing to guild treasury
+- [ ] T-0612: Build market quick-sell button for common items at floor price
+- [ ] T-0613: Create market demand forecast based on historical patterns
+- [ ] T-0614: Implement market rare item spotlight with limited availability
+- [ ] T-0615: Build market trading post upgrade path (more slots, lower fees)
+- [ ] T-0616: Create market arbitrage detection warning for suspicious trades
+- [ ] T-0617: Implement market escrow system for high-value player trades
+- [ ] T-0618: Build market daily deals rotation with discounted items
+- [ ] T-0619: Create market inflation tracking metric displayed in economy dashboard
+- [ ] T-0620: Implement market circuit breaker halting trades during extreme volatility
+
+## Epic 9: Research System
+> Visual tech tree rendering, research animations, branch specialization, and research event triggers.
+
+- [ ] T-0621: Define research node data schema (name, cost, time, prerequisites, effects)
+- [ ] T-0622: Create research service with start, progress, complete, and unlock methods
+- [ ] T-0623: Implement research tree data structure with 5 branches
+- [ ] T-0624: Create Military research branch with 12 nodes (combat upgrades)
+- [ ] T-0625: Create Economic research branch with 12 nodes (resource and trade upgrades)
+- [ ] T-0626: Create Exploration research branch with 12 nodes (expedition upgrades)
+- [ ] T-0627: Create Arcane research branch with 12 nodes (magic and special abilities)
+- [ ] T-0628: Create Civic research branch with 12 nodes (guild and social upgrades)
+- [ ] T-0629: Build research tree visual renderer using canvas with node positioning
+- [ ] T-0630: Implement research node connection lines between prerequisite nodes
+- [ ] T-0631: Create research node visual states (locked, available, in-progress, completed)
+- [ ] T-0632: Build research node tooltip with description, cost, time, and effects
+- [ ] T-0633: Implement research node click to start research with confirmation
+- [ ] T-0634: Build research progress timer display with time remaining
+- [ ] T-0635: Implement research progress acceleration through Library building bonus
+- [ ] T-0636: Create research completion notification with effects summary
+- [ ] T-0637: Build research completion animation (glow, sparkle, unlock cascade)
+- [ ] T-0638: Implement research effect application system (global modifier updates)
+- [ ] T-0639: Create research queue system allowing 1 active + queued nodes
+- [ ] T-0640: Build research queue UI showing current and next researches
+- [ ] T-0641: Implement research cancel with partial resource refund (50%)
+- [ ] T-0642: Create research branch specialization at branch tier 3 (choose sub-path)
+- [ ] T-0643: Build specialization choice dialog with comparison of sub-paths
+- [ ] T-0644: Implement research boost events (Scholar hero assigned: -10% time)
+- [ ] T-0645: Create research breakthrough random event (instant complete one node)
+- [ ] T-0646: Build research tree overview statistics (% completed per branch)
+- [ ] T-0647: Implement research tree search function to find nodes by name
+- [ ] T-0648: Create research tree zoom and pan controls for navigation
+- [ ] T-0649: Build research tree mini-map for large tree orientation
+- [ ] T-0650: Implement research synergy system (completing nodes in both branches gives bonus)
+- [ ] T-0651: Create research milestone rewards at 25%, 50%, 75%, 100% completion
+- [ ] T-0652: Build research advisor NPC suggesting next research based on playstyle
+- [ ] T-0653: Implement research tree reset with prestige system (keep some unlocks)
+- [ ] T-0654: Create research-gated building unlocks
+- [ ] T-0655: Create research-gated expedition destinations
+- [ ] T-0656: Create research-gated item recipes
+- [ ] T-0657: Implement research cost scaling formula per branch depth
+- [ ] T-0658: Build research tree comparison between players in alliance
+- [ ] T-0659: Create research event: ancient library discovery reduces all costs for 24h
+- [ ] T-0660: Implement research tree export/share as image
+- [ ] T-0661: Build research progress notification preferences
+- [ ] T-0662: Create research tree legend explaining node types and symbols
+- [ ] T-0663: Implement research tree A/B path comparison tool
+- [ ] T-0664: Build research dependency visualizer highlighting what unlocks what
+- [ ] T-0665: Create research lore entries unlocked alongside node completion
+- [ ] T-0666: Implement research tree seasonal modifiers (winter: Arcane +20% speed)
+- [ ] T-0667: Build research tree achievement badges (completionist, specialist)
+- [ ] T-0668: Create research collaboration system (alliance members contribute)
+- [ ] T-0669: Implement research tree undo last research within grace period
+- [ ] T-0670: Build research tree filter by branch, status, and effect type
+- [ ] T-0671: Create research event triggered by real-world data (market crash boosts Economic branch)
+- [ ] T-0672: Implement research node flavor text and lore descriptions
+- [ ] T-0673: Build research tree tutorial walkthrough for new players
+- [ ] T-0674: Create research speed modifier display on tree header
+- [ ] T-0675: Implement research tree progress persistence across sessions
+- [ ] T-0676: Build research tree accessibility — keyboard navigation between nodes
+- [ ] T-0677: Create research tree node animation for currently researching node
+- [ ] T-0678: Implement research tree batch info display (all effects of a branch)
+- [ ] T-0679: Build research tree recommended path visualization
+- [ ] T-0680: Create research completion celebration with guild announcement
+
+## Epic 10: Items & Equipment
+> Full crafting system, item sets, enchanting, item trading, and visual equipment previews on heroes.
+
+- [ ] T-0681: Define item data schema (name, type, rarity, stats, slot, requirements, lore)
+- [ ] T-0682: Create item database with 100+ base items across all categories
+- [ ] T-0683: Implement weapon category items (swords, staves, bows, daggers, maces)
+- [ ] T-0684: Implement armor category items (helmets, chestplates, leggings, boots, shields)
+- [ ] T-0685: Implement accessory category items (rings, amulets, cloaks, belts)
+- [ ] T-0686: Implement consumable category items (potions, scrolls, food, bombs)
+- [ ] T-0687: Implement material category items (crafting ingredients, ores, herbs, gems)
+- [ ] T-0688: Build inventory UI with grid layout and category tabs
+- [ ] T-0689: Implement item tooltip with stat display, flavor text, and comparison
+- [ ] T-0690: Build item comparison overlay showing stat differences with equipped item
+- [ ] T-0691: Implement item equip/unequip system with slot validation
+- [ ] T-0692: Build hero equipment panel with paper-doll slot display
+- [ ] T-0693: Create equipment stat bonus calculation and display
+- [ ] T-0694: Implement item rarity tiers with color-coded borders (5 tiers)
+- [ ] T-0695: Create item rarity drop rate configuration per expedition difficulty
+- [ ] T-0696: Build crafting recipe data structure with ingredients and result
+- [ ] T-0697: Implement crafting service with recipe lookup and material validation
+- [ ] T-0698: Create 50 crafting recipes across all item categories
+- [ ] T-0699: Build crafting UI with recipe browser, ingredient display, and craft button
+- [ ] T-0700: Implement crafting progress timer based on recipe complexity
+- [ ] T-0701: Build crafting queue system with multiple items in sequence
+- [ ] T-0702: Create crafting quality system (normal, fine, masterwork based on Smith skill)
+- [ ] T-0703: Implement crafting critical success chance for bonus stats
+- [ ] T-0704: Build crafting history log showing recent crafted items
+- [ ] T-0705: Create crafting material source tracker (where to find each ingredient)
+- [ ] T-0706: Implement item set system with set bonuses for wearing matching pieces
+- [ ] T-0707: Create 10 item sets with 3-5 pieces each and tiered set bonuses
+- [ ] T-0708: Build set collection tracker showing owned/missing pieces
+- [ ] T-0709: Implement set bonus activation display on hero equipment panel
+- [ ] T-0710: Create enchanting system with enchantment scrolls and gem sockets
+- [ ] T-0711: Implement enchantment application to equipment with cost
+- [ ] T-0712: Build enchanting UI with scroll selection and target item selection
+- [ ] T-0713: Create 20 enchantment types (fire damage, cold resist, speed boost, etc.)
+- [ ] T-0714: Implement gem socketing system for adding gem bonuses to items
+- [ ] T-0715: Build gem socketing UI with drag-drop gem to socket
+- [ ] T-0716: Create gem types and effects (ruby: strength, sapphire: intellect, etc.)
+- [ ] T-0717: Implement item durability system with repair mechanic
+- [ ] T-0718: Build item repair UI at Workshop with cost display
+- [ ] T-0719: Create item salvage/disenchant system for recovering materials
+- [ ] T-0720: Build salvage UI with material recovery preview
+- [ ] T-0721: Implement item upgrade system (combine 3 items to higher rarity)
+- [ ] T-0722: Build item upgrade UI with item selection slots and result preview
+- [ ] T-0723: Create item lore system with unlockable backstory per unique item
+- [ ] T-0724: Build item lore collection page (compendium)
+- [ ] T-0725: Implement item visual preview on hero portrait when equipped
+- [ ] T-0726: Create weapon visual variations per type and rarity
+- [ ] T-0727: Create armor visual variations per type and rarity
+- [ ] T-0728: Build item sorting options (by type, rarity, level, value, name)
+- [ ] T-0729: Implement item filtering by type, rarity, and equippable role
+- [ ] T-0730: Create item search by name functionality
+- [ ] T-0731: Build item mass-sell UI for bulk selling vendor trash
+- [ ] T-0732: Implement item lock/favorite to prevent accidental sell or salvage
+- [ ] T-0733: Create item trading between players with trade window UI
+- [ ] T-0734: Build trade window with offer/request panels and accept/decline
+- [ ] T-0735: Implement item gift system for sending items to alliance members
+- [ ] T-0736: Create legendary item system with unique named items and special effects
+- [ ] T-0737: Build legendary item discovery notification with fanfare animation
+- [ ] T-0738: Implement item achievement system (collect all legendaries, craft 100 items)
+- [ ] T-0739: Create item tooltip comparison mode (hold Shift to compare with equipped)
+- [ ] T-0740: Build gear score calculation combining all equipped item stats
+- [ ] T-0741: Implement recommended gear suggestions based on hero role and level
+- [ ] T-0742: Create item aging system where ancient items gain patina visual
+- [ ] T-0743: Build item collection completion percentage per category
+- [ ] T-0744: Implement item quest reward integration for hero personal quests
+- [ ] T-0745: Create item crafting event (crafting festival: double quality chance)
+- [ ] T-0746: Build item storage chest system for overflow inventory
+- [ ] T-0747: Implement item stat randomization within rarity-defined ranges
+- [ ] T-0748: Create item transmog system for visual appearance override
+- [ ] T-0749: Build transmog UI with appearance library and preview
+- [ ] T-0750: Implement item auction integration (list equipment on auction house)
+- [ ] T-0751: Create item durability warning notification before breakage
+- [ ] T-0752: Build equipment loadout save/swap system for quick gear changes
+- [ ] T-0753: Implement item drop animation from expedition loot
+- [ ] T-0754: Create item price estimation based on market average
+- [ ] T-0755: Build item detail card export as shareable image
+- [ ] T-0756: Implement item recipe discovery from expedition rare finds
+- [ ] T-0757: Create item seasonal crafting materials available only in certain seasons
+- [ ] T-0758: Build item inventory capacity system with expandable storage
+- [ ] T-0759: Implement item auto-equip best gear button per hero
+- [ ] T-0760: Create item quick-craft button for previously crafted recipes
+
+## Epic 11: Weather & Real-World Data
+> OpenWeatherMap integration, financial APIs, news API, sports events, global celebrations, data pipeline with caching and fallbacks.
+
+- [ ] T-0761: Set up OpenWeatherMap API key configuration and environment variable
+- [ ] T-0762: Implement weather data fetch service with city/coordinates parameter
+- [ ] T-0763: Create weather data model (temperature, condition, humidity, wind, pressure)
+- [ ] T-0764: Implement weather data caching layer with 30-minute TTL
+- [ ] T-0765: Build weather cache invalidation and refresh mechanism
+- [ ] T-0766: Create weather fallback system returning last known data on API failure
+- [ ] T-0767: Implement weather condition mapping to in-game effects table
+- [ ] T-0768: Create rain weather effect: +20% farm production, -10% expedition speed
+- [ ] T-0769: Create sunny weather effect: +10% morale, +15% market activity
+- [ ] T-0770: Create storm weather effect: -30% expedition safety, +20% mine yield
+- [ ] T-0771: Create snow weather effect: -20% food production, +10% research speed
+- [ ] T-0772: Create fog weather effect: +15% rogue effectiveness, -10% scout range
+- [ ] T-0773: Create heatwave weather effect: -15% worker efficiency, +25% water resource value
+- [ ] T-0774: Create wind weather effect: +10% travel speed, -5% construction speed
+- [ ] T-0775: Build weather display widget with icon, temperature, and condition text
+- [ ] T-0776: Implement weather change notification when conditions shift
+- [ ] T-0777: Create weather forecast display showing next 24 hours of conditions
+- [ ] T-0778: Build weather history log showing past 7 days of conditions
+- [ ] T-0779: Implement weather-based visual changes to guild hall scene (rain particles, sun glow)
+- [ ] T-0780: Create weather-based ambient sound changes (rain sounds, wind sounds)
+- [ ] T-0781: Implement weather location setting in player profile (city selection)
+- [ ] T-0782: Build weather location auto-detect using browser geolocation API
+- [ ] T-0783: Create weather-based expedition modifier display on launch screen
+- [ ] T-0784: Implement weather-based market price modifier application
+- [ ] T-0785: Build weather API rate limiter (max 60 calls per minute)
+- [ ] T-0786: Create weather data validation and sanitization layer
+- [ ] T-0787: Implement weather webhook for real-time severe weather alerts
+- [ ] T-0788: Build weather comparison between player locations in alliance
+- [ ] T-0789: Create weather achievement system (play during 10 different conditions)
+- [ ] T-0790: Implement weather pattern analysis for prediction accuracy bonuses
+- [ ] T-0791: Set up Fear & Greed Index API integration
+- [ ] T-0792: Implement Fear & Greed data fetch with daily caching
+- [ ] T-0793: Create Fear & Greed mapping to market volatility modifier
+- [ ] T-0794: Build Fear & Greed indicator display in Observatory building
+- [ ] T-0795: Set up major stock index API integration (S&P 500 daily close)
+- [ ] T-0796: Implement stock index data fetch with daily caching
+- [ ] T-0797: Create stock index mapping to merchant guild prosperity modifier
+- [ ] T-0798: Build stock market sentiment display in Observatory
+- [ ] T-0799: Set up crypto market sentiment API integration
+- [ ] T-0800: Implement crypto sentiment data fetch with hourly caching
+- [ ] T-0801: Create crypto volatility mapping to in-game trade volatility
+- [ ] T-0802: Build crypto sentiment widget in market scene
+- [ ] T-0803: Set up news headline API integration (top headlines)
+- [ ] T-0804: Implement news data fetch with 2-hour caching
+- [ ] T-0805: Create news sentiment analysis (positive/negative/neutral classification)
+- [ ] T-0806: Map news sentiment to world event generation triggers
+- [ ] T-0807: Build news ticker display in guild hall scene
+- [ ] T-0808: Set up sports results API integration (major leagues)
+- [ ] T-0809: Implement sports data fetch with event-based caching
+- [ ] T-0810: Create sports event mapping to in-game tournament events
+- [ ] T-0811: Build sports event notification for in-game tournament triggers
+- [ ] T-0812: Set up moon phase calculation service (algorithmic, no API needed)
+- [ ] T-0813: Implement moon phase display with current phase icon
+- [ ] T-0814: Create moon phase effects (full moon: +20% magic, new moon: +20% stealth)
+- [ ] T-0815: Build lunar calendar display in Calendar scene
+- [ ] T-0816: Create data pipeline orchestrator managing all external API fetches
+- [ ] T-0817: Implement data pipeline scheduling with staggered fetch intervals
+- [ ] T-0818: Build data pipeline health dashboard showing API status per source
+- [ ] T-0819: Create data pipeline error logging and alerting system
+- [ ] T-0820: Implement data pipeline fallback chain (primary API -> backup API -> cached data -> defaults)
+- [ ] T-0821: Build data source configuration admin panel
+- [ ] T-0822: Create real-world data modifier summary panel showing all active effects
+- [ ] T-0823: Implement real-world data opt-out toggle for players who prefer fixed values
+- [ ] T-0824: Build real-world data tutorial explaining how reality affects the game
+- [ ] T-0825: Create global celebration detection (World Cup, Olympics, major holidays)
+- [ ] T-0826: Implement celebration event generation from detected global events
+- [ ] T-0827: Build celebration event visual overlay with themed decorations
+- [ ] T-0828: Create API usage tracking and budget monitoring dashboard
+- [ ] T-0829: Implement API key rotation system for multiple provider accounts
+- [ ] T-0830: Build data freshness indicator showing last update time per source
+- [ ] T-0831: Create historical real-world data archive for pattern analysis
+- [ ] T-0832: Implement cross-data correlation engine (weather + market = compound effect)
+- [ ] T-0833: Build compound effect display showing combined real-world modifiers
+- [ ] T-0834: Create data source reliability scoring for weighted fallback decisions
+- [ ] T-0835: Implement real-world data changelog showing what changed each day
+- [ ] T-0836: Build Observatory building research upgrades to unlock more data sources
+- [ ] T-0837: Create earthquake/natural disaster data mapping to in-game calamity events
+- [ ] T-0838: Implement solar/astronomical event tracking (eclipses, solstices)
+- [ ] T-0839: Build astronomical event in-game bonus system
+- [ ] T-0840: Create tide data integration for coastal region expedition modifiers
+- [ ] T-0841: Implement air quality data mapping to atmospheric effects
+- [ ] T-0842: Build real-world data feed aggregation API endpoint for frontend
+- [ ] T-0843: Create data pipeline retry logic with exponential backoff
+- [ ] T-0844: Implement data pipeline circuit breaker for repeatedly failing APIs
+- [ ] T-0845: Build real-world data impact report showing historical effects on gameplay
+- [ ] T-0846: Create sunrise/sunset data integration for day/night cycle synchronization
+- [ ] T-0847: Implement UV index data mapping to outdoor expedition modifiers
+- [ ] T-0848: Build pollen count data mapping to nature-based resource production
+- [ ] T-0849: Create real-world event correlation leaderboard (who predicted effects best)
+- [ ] T-0850: Implement data pipeline unit tests for all fetch, cache, and fallback paths
+- [ ] T-0851: Build data source mock mode for development and testing environments
+- [ ] T-0852: Create real-world data integration documentation for new data sources
+- [ ] T-0853: Implement global event significance scoring for prioritizing game impact
+- [ ] T-0854: Build data pipeline batch processing for low-priority data sources
+- [ ] T-0855: Create real-world data anonymization ensuring no personal location data leaks
+- [ ] T-0856: Implement weather-to-biome mapping for region-specific weather effects
+- [ ] T-0857: Build real-world data A/B test framework for balancing data impact
+- [ ] T-0858: Create data source health check endpoint for monitoring
+- [ ] T-0859: Implement data pipeline graceful degradation during partial outages
+- [ ] T-0860: Build real-world data impact toggle per modifier for balance testing
+
+## Epic 12: Events System
+> 50+ event templates, event chains, branching narratives, seasonal events, and player-driven events.
+
+- [ ] T-0861: Define event data schema (type, title, description, effects, duration, conditions)
+- [ ] T-0862: Create event engine service with trigger, evaluate, resolve, and expire methods
+- [ ] T-0863: Implement event trigger system checking conditions each game tick
+- [ ] T-0864: Build event condition evaluator (time, weather, resource level, guild state)
+- [ ] T-0865: Create event queue system managing concurrent events with priority
+- [ ] T-0866: Implement event display popup with title, narrative, and options
+- [ ] T-0867: Build event choice UI with 2-4 option buttons and outcome preview hints
+- [ ] T-0868: Create event outcome resolution based on player choice and RNG
+- [ ] T-0869: Implement event effect application (resource change, hero stat change, etc.)
+- [ ] T-0870: Build event log page showing all past events and outcomes
+- [ ] T-0871: Create event template: Merchant Caravan — trade opportunity event
+- [ ] T-0872: Create event template: Bandit Raid — defense challenge event
+- [ ] T-0873: Create event template: Wandering Scholar — research boost event
+- [ ] T-0874: Create event template: Festival — morale boost with mini-game
+- [ ] T-0875: Create event template: Plague — health crisis requiring resources
+- [ ] T-0876: Create event template: Drought — water scarcity affecting farms
+- [ ] T-0877: Create event template: Treasure Map — special expedition trigger
+- [ ] T-0878: Create event template: Diplomatic Envoy — alliance opportunity
+- [ ] T-0879: Create event template: Monster Sighting — boss expedition unlock
+- [ ] T-0880: Create event template: Harvest Festival — seasonal food bonus
+- [ ] T-0881: Create event template: Earthquake — building damage event
+- [ ] T-0882: Create event template: Eclipse — magical boost event
+- [ ] T-0883: Create event template: Tax Collector — gold drain or resistance choice
+- [ ] T-0884: Create event template: Hero Duel — PvP challenge event
+- [ ] T-0885: Create event template: Artifact Discovery — unique item reward
+- [ ] T-0886: Create event template: Trade Embargo — market disruption event
+- [ ] T-0887: Create event template: Refugee Influx — population growth event
+- [ ] T-0888: Create event template: Magical Storm — arcane resource surge
+- [ ] T-0889: Create event template: Mining Collapse — mine disruption event
+- [ ] T-0890: Create event template: Celestial Alignment — global buff event
+- [ ] T-0891: Create event template: Thieves Guild — crime wave event
+- [ ] T-0892: Create event template: Royal Decree — forced policy change event
+- [ ] T-0893: Create event template: Dragon Sighting — legendary expedition event
+- [ ] T-0894: Create event template: Merchant Competition — market price war event
+- [ ] T-0895: Create event template: Plague Cure — research opportunity event
+- [ ] T-0896: Create event template: Ancient Ruins — exploration opportunity
+- [ ] T-0897: Create event template: Guild Challenge — competitive event with leaderboard
+- [ ] T-0898: Create event template: Seasonal Migration — animal herding mini-event
+- [ ] T-0899: Create event template: Black Market — rare item availability event
+- [ ] T-0900: Create event template: War Declaration — military preparation event
+- [ ] T-0901: Create event template: Peace Treaty — trade bonus event
+- [ ] T-0902: Create event template: Volcano Eruption — regional destruction event
+- [ ] T-0903: Create event template: Sea Serpent — coastal expedition special
+- [ ] T-0904: Create event template: Goblin Market — unusual trade event
+- [ ] T-0905: Create event template: Lunar Festival — moon phase celebration
+- [ ] T-0906: Create event template: Frost Giant Approach — winter danger event
+- [ ] T-0907: Create event template: Spring Bloom — nature resource bonanza
+- [ ] T-0908: Create event template: Summer Solstice — daylight bonus event
+- [ ] T-0909: Create event template: Autumn Harvest — food stockpile event
+- [ ] T-0910: Create event template: Comet Sighting — rare astronomical event
+- [ ] T-0911: Create event template: Dungeon Discovery — new expedition area unlock
+- [ ] T-0912: Create event template: Hero Reunion — returning retired hero visit
+- [ ] T-0913: Create event template: Prophecy — cryptic hint about upcoming events
+- [ ] T-0914: Create event template: Innovation Fair — research speed event
+- [ ] T-0915: Create event template: Market Crash — economic disruption event
+- [ ] T-0916: Create event template: Gold Rush — mining bonanza event
+- [ ] T-0917: Create event template: Tournament Arc — multi-day competition event
+- [ ] T-0918: Create event template: Cursed Artifact — risk/reward decision event
+- [ ] T-0919: Create event template: Alliance Offer — multiplayer cooperation event
+- [ ] T-0920: Create event template: Traveling Circus — entertainment and morale event
+- [ ] T-0921: Implement event chain system linking related events in sequence
+- [ ] T-0922: Create 5 event chains with 3-5 linked events each
+- [ ] T-0923: Build event chain progress tracker showing completed/remaining events
+- [ ] T-0924: Implement branching narrative within events (choice A leads to event X, choice B leads to event Y)
+- [ ] T-0925: Create event outcome memory system (past choices affect future events)
+- [ ] T-0926: Build event reputation tracker (merciful, ruthless, wise, etc.)
+- [ ] T-0927: Implement seasonal event scheduling (certain events only in certain seasons)
+- [ ] T-0928: Create holiday-specific event content for 8 major real-world holidays
+- [ ] T-0929: Build player-driven event system (player actions trigger events for others)
+- [ ] T-0930: Implement event cooldown system preventing repeat events too quickly
+- [ ] T-0931: Create event rarity tiers (common, uncommon, rare, legendary events)
+- [ ] T-0932: Build event prediction system in Observatory (forecast upcoming events)
+- [ ] T-0933: Implement event modifier stacking rules (multiple active events)
+- [ ] T-0934: Create event achievement system (experience all event types)
+- [ ] T-0935: Build event statistics page (most common event, best outcomes)
+- [ ] T-0936: Implement event notification preferences (which events to alert on)
+- [ ] T-0937: Create event visual theme system (seasonal decorations during events)
+- [ ] T-0938: Build event countdown timer for upcoming scheduled events
+- [ ] T-0939: Implement event reward scaling based on guild level
+- [ ] T-0940: Create event difficulty scaling based on guild progression
+
+## Epic 13: Calendar & Seasons
+> 4 seasons with visual changes, holiday festivals with unique content, and lunar cycle mechanics.
+
+- [ ] T-0941: Implement calendar system synchronized with real-world date
+- [ ] T-0942: Create season determination logic based on hemisphere and date
+- [ ] T-0943: Build calendar UI component showing current month with event markers
+- [ ] T-0944: Implement season visual theme for Spring (green palette, flower particles)
+- [ ] T-0945: Implement season visual theme for Summer (warm palette, sun effects)
+- [ ] T-0946: Implement season visual theme for Autumn (orange palette, falling leaves)
+- [ ] T-0947: Implement season visual theme for Winter (blue palette, snow particles)
+- [ ] T-0948: Create season transition animation between seasonal themes
+- [ ] T-0949: Implement season effect on Farm production rates per crop type
+- [ ] T-0950: Create season effect on expedition difficulty and encounter tables
+- [ ] T-0951: Implement season effect on market prices for seasonal goods
+- [ ] T-0952: Create season effect on hero morale (some heroes prefer certain seasons)
+- [ ] T-0953: Build season indicator display showing current season and days remaining
+- [ ] T-0954: Implement hemisphere selection in player settings (affects season)
+- [ ] T-0955: Create New Year celebration event with fireworks animation
+- [ ] T-0956: Create Valentine's Day event with hero relationship bonuses
+- [ ] T-0957: Create Easter/Spring Festival event with egg hunt mini-game
+- [ ] T-0958: Create Summer Solstice event with daylight bonuses
+- [ ] T-0959: Create Halloween event with spooky expedition content
+- [ ] T-0960: Create Thanksgiving/Harvest event with food bonus
+- [ ] T-0961: Create Winter Solstice event with gift exchange mechanic
+- [ ] T-0962: Create New Year's Eve event with year-in-review summary
+- [ ] T-0963: Implement lunar cycle calculation (29.5-day cycle)
+- [ ] T-0964: Build moon phase display widget with current phase icon
+- [ ] T-0965: Create full moon gameplay effects (magic +25%, werewolf encounters)
+- [ ] T-0966: Create new moon gameplay effects (stealth +25%, dark encounters)
+- [ ] T-0967: Create waxing/waning gameplay effects (gradual modifier scaling)
+- [ ] T-0968: Build lunar calendar view showing upcoming full and new moons
+- [ ] T-0969: Implement daily login calendar with streak rewards
+- [ ] T-0970: Build daily challenge system with rotating objectives
+- [ ] T-0971: Create weekly recap summary email with guild progress
+- [ ] T-0972: Implement month-end report with statistics and achievements
+- [ ] T-0973: Build seasonal leaderboard reset with rewards for top performers
+- [ ] T-0974: Create cultural holiday detection for player's region
+- [ ] T-0975: Implement regional holiday events based on player location
+- [ ] T-0976: Build event calendar preview showing upcoming events this week
+- [ ] T-0977: Create season-specific ambient sounds (birds in spring, crickets in summer)
+- [ ] T-0978: Implement season-specific building visual changes (snow on roofs in winter)
+- [ ] T-0979: Build calendar notification system for upcoming events and holidays
+- [ ] T-0980: Create anniversary event for guild creation date
+- [ ] T-0981: Implement equinox events with day/night balance theme
+- [ ] T-0982: Build time-of-day synchronization with real clock
+- [ ] T-0983: Create dawn/dusk transition effects in guild hall
+- [ ] T-0984: Implement weekend bonus events (Saturday/Sunday extra rewards)
+- [ ] T-0985: Build custom player anniversary celebration event
+- [ ] T-0986: Create month-specific event pool rotation
+- [ ] T-0987: Implement season pass progression system with seasonal rewards
+- [ ] T-0988: Build season pass reward track UI with milestone indicators
+- [ ] T-0989: Create end-of-season summary with achievement highlights
+- [ ] T-0990: Implement calendar sharing feature for guild event coordination
+
+## Epic 14: Financial Data Integration
+> Stock market influence on merchant guilds, commodity prices, economic indicators, crypto sentiment, and trade volatility mechanics.
+
+- [ ] T-0991: Set up Alpha Vantage or Yahoo Finance API integration for stock data
+- [ ] T-0992: Implement stock data fetch service with symbol lookup and price history
+- [ ] T-0993: Create stock data caching with end-of-day refresh schedule
+- [ ] T-0994: Implement stock market open/close detection for fetch timing
+- [ ] T-0995: Build stock market summary display in Observatory building
+- [ ] T-0996: Create S&P 500 daily change mapping to merchant guild prosperity
+- [ ] T-0997: Implement positive market day effect: +15% trade values in marketplace
+- [ ] T-0998: Implement negative market day effect: -10% trade values, +5% rare item chance
+- [ ] T-0999: Create commodity price tracking (gold, silver, oil, wheat)
+- [ ] T-1000: Map real gold price changes to in-game gold value fluctuation
+- [ ] T-1001: Map real oil price changes to in-game fuel resource cost
+- [ ] T-1002: Map real wheat price changes to in-game food production modifier
+- [ ] T-1003: Map real silver price changes to in-game equipment material cost
+- [ ] T-1004: Build commodity price chart in market scene with real-world comparison
+- [ ] T-1005: Implement economic indicator dashboard (GDP growth, unemployment, inflation)
+- [ ] T-1006: Create economic indicator mapping to in-game economic cycle phase
+- [ ] T-1007: Build economic forecast display based on real indicators
+- [ ] T-1008: Set up cryptocurrency market data API integration
+- [ ] T-1009: Implement Bitcoin price fetch with hourly caching
+- [ ] T-1010: Create crypto volatility index calculation from price swings
+- [ ] T-1011: Map crypto bull market to in-game risk/reward expedition modifier
+- [ ] T-1012: Map crypto bear market to in-game defensive strategy bonus
+- [ ] T-1013: Build crypto sentiment gauge widget (extreme fear to extreme greed)
+- [ ] T-1014: Implement Fear & Greed Index detailed breakdown display
+- [ ] T-1015: Create Fear index effect: NPC merchants offer defensive items cheaply
+- [ ] T-1016: Create Greed index effect: NPC merchants inflate luxury item prices
+- [ ] T-1017: Implement VIX (volatility index) mapping to expedition danger modifier
+- [ ] T-1018: Build market volatility indicator in expedition planning screen
+- [ ] T-1019: Create currency exchange rate tracking (USD/EUR, USD/JPY)
+- [ ] T-1020: Map exchange rate fluctuations to cross-region trade modifiers
+- [ ] T-1021: Implement interest rate data fetch and caching
+- [ ] T-1022: Create interest rate effect on in-game loan/credit system
+- [ ] T-1023: Build financial data refresh scheduler with market hours awareness
+- [ ] T-1024: Implement financial data fallback to cached data on API failure
+- [ ] T-1025: Create financial data anomaly detection for extreme values
+- [ ] T-1026: Build financial event notification (market crash, record high)
+- [ ] T-1027: Implement financial data normalization to percentage-based modifiers
+- [ ] T-1028: Create financial sector rotation mapping to building efficiency
+- [ ] T-1029: Build tech sector performance effect on Observatory building bonuses
+- [ ] T-1030: Create healthcare sector performance effect on Temple building bonuses
+- [ ] T-1031: Create energy sector performance effect on Mine building bonuses
+- [ ] T-1032: Create agriculture sector performance effect on Farm building bonuses
+- [ ] T-1033: Implement financial data historical comparison (today vs 7-day average)
+- [ ] T-1034: Build financial data integration settings (choose which data to use)
+- [ ] T-1035: Create financial data educational tooltips explaining each indicator
+- [ ] T-1036: Implement financial event: IPO frenzy boosts market activity temporarily
+- [ ] T-1037: Create financial event: recession warnings trigger stockpiling behavior in NPCs
+- [ ] T-1038: Build portfolio tracker for in-game investments linked to real markets
+- [ ] T-1039: Implement dividend payment system from in-game investments
+- [ ] T-1040: Create market sector dashboard showing all sector impacts at a glance
+- [ ] T-1041: Implement bond yield data integration for stability modifier
+- [ ] T-1042: Build financial data mock mode for development environment
+- [ ] T-1043: Create financial data audit trail for debugging modifier calculations
+- [ ] T-1044: Implement financial holiday handling (market closed = use previous day)
+- [ ] T-1045: Build financial data API key management with rotation support
+- [ ] T-1046: Create real-world market event calendar integration
+- [ ] T-1047: Implement earnings season detection for merchant guild special events
+- [ ] T-1048: Build financial data contribution to monthly guild report
+- [ ] T-1049: Create financial sentiment shift notification when trend reverses
+- [ ] T-1050: Implement financial data visualization in research tree (Economic branch)
+- [ ] T-1051: Build financial data health check and monitoring endpoint
+- [ ] T-1052: Create financial data impact simulation tool for balance testing
+- [ ] T-1053: Implement bankruptcy protection mechanic during extreme market events
+- [ ] T-1054: Build financial data export for player analysis
+- [ ] T-1055: Create gold standard toggle: peg in-game currency to real gold price
+- [ ] T-1056: Implement commodity futures in-game trading linked to real commodity trends
+- [ ] T-1057: Build real-world market ticker scrolling display in market scene
+- [ ] T-1058: Create financial data privacy notice and opt-in consent flow
+- [ ] T-1059: Implement financial data aggregate anonymized reporting
+- [ ] T-1060: Build economic newspaper NPC delivering daily financial briefing in-game
+- [ ] T-1061: Create quarterly economic event based on real GDP data
+- [ ] T-1062: Implement trade war event triggered by international trade news
+- [ ] T-1063: Build inflation meter affecting all in-game prices gradually
+- [ ] T-1064: Create deflation event reversing price trends temporarily
+- [ ] T-1065: Implement market manipulation detection for in-game auction abuse
+- [ ] T-1066: Build economic advisor NPC offering predictions based on real data
+- [ ] T-1067: Create stock split event analogy for in-game resource doubling mechanics
+- [ ] T-1068: Implement financial data loading skeleton for slow API responses
+- [ ] T-1069: Build financial sector rotation calendar display
+- [ ] T-1070: Create end-of-quarter financial summary event with bonuses
+
+## Epic 15: World Map & Regions
+> Interactive world map, region details, region-specific content, biome visualization, and travel system.
+
+- [ ] T-1071: Design world map layout with 8 distinct regions
+- [ ] T-1072: Build world map canvas renderer with zoom and pan controls
+- [ ] T-1073: Implement region boundary drawing with clickable area detection
+- [ ] T-1074: Create Forest region with green biome theme and wood resources
+- [ ] T-1075: Create Mountain region with rocky biome theme and ore resources
+- [ ] T-1076: Create Desert region with sand biome theme and gem resources
+- [ ] T-1077: Create Coastal region with ocean biome theme and trade resources
+- [ ] T-1078: Create Tundra region with ice biome theme and rare materials
+- [ ] T-1079: Create Swamp region with murky biome theme and herb resources
+- [ ] T-1080: Create Plains region with grassland biome theme and food resources
+- [ ] T-1081: Create Volcanic region with lava biome theme and metal resources
+- [ ] T-1082: Build region info panel with name, biome, resources, and difficulty
+- [ ] T-1083: Implement region discovery system (fog-of-war revealed by exploration)
+- [ ] T-1084: Create region fog-of-war rendering on world map
+- [ ] T-1085: Build region discovery animation when first explored
+- [ ] T-1086: Implement region-specific expedition encounter tables
+- [ ] T-1087: Create region-specific NPC merchant inventories
+- [ ] T-1088: Implement region-specific weather effects (desert has no rain)
+- [ ] T-1089: Build region travel system with movement time between regions
+- [ ] T-1090: Implement travel route visualization with path lines on map
+- [ ] T-1091: Create travel time reduction through research and hero skills
+- [ ] T-1092: Build region outpost system (establish presence in discovered regions)
+- [ ] T-1093: Implement outpost building with limited building slots
+- [ ] T-1094: Create outpost resource production for remote regions
+- [ ] T-1095: Build region danger level system scaling with distance from guild hall
+- [ ] T-1096: Implement region event pools (region-specific random events)
+- [ ] T-1097: Create region lore entries discovered through exploration
+- [ ] T-1098: Build region achievement system (fully explore all regions)
+- [ ] T-1099: Implement region resource node markers on map
+- [ ] T-1100: Create region faction system (friendly/neutral/hostile NPCs per region)
+- [ ] T-1101: Build faction reputation tracker per region
+- [ ] T-1102: Implement faction reputation effects on trade and expedition difficulty
+- [ ] T-1103: Create region boss markers for boss expedition locations
+- [ ] T-1104: Build world map legend explaining icons and symbols
+- [ ] T-1105: Implement world map search for specific locations
+- [ ] T-1106: Create region weather overlay showing current conditions per region
+- [ ] T-1107: Build region comparison panel for expedition planning
+- [ ] T-1108: Implement region seasonal visual changes (snow in winter, flowers in spring)
+- [ ] T-1109: Create region connectivity graph (which regions border which)
+- [ ] T-1110: Build world map minimap in expedition view
+- [ ] T-1111: Implement region unlock requirements (guild level, research, quest completion)
+- [ ] T-1112: Create hidden region discovery from rare expedition findings
+- [ ] T-1113: Build region resource depletion and regeneration system
+- [ ] T-1114: Implement region political map overlay showing faction territories
+- [ ] T-1115: Create region trade route visualization between connected regions
+- [ ] T-1116: Build world map pin system for player-created markers
+- [ ] T-1117: Implement region zoom-in view with detailed terrain features
+- [ ] T-1118: Create world map night/day overlay synchronized with real time
+- [ ] T-1119: Build region population display showing NPC activity levels
+- [ ] T-1120: Create world map event indicator showing active events per region
+- [ ] T-1121: Implement region exploration percentage tracker
+- [ ] T-1122: Build region-specific crafting recipe availability
+- [ ] T-1123: Create region biome transition zones between adjacent regions
+- [ ] T-1124: Implement world map tooltip on hover showing quick region info
+- [ ] T-1125: Build region gallery showing discovered region artwork
+- [ ] T-1126: Create world map share feature exporting map state as image
+- [ ] T-1127: Implement region fast-travel system between established outposts
+- [ ] T-1128: Build world map animation for expedition party travel
+- [ ] T-1129: Create region-specific ambient music themes
+- [ ] T-1130: Implement world map tutorial introducing regions and travel
+- [ ] T-1131: Build region claim system for guild territory control
+- [ ] T-1132: Create region defense mission when territory is threatened
+- [ ] T-1133: Implement world map grid coordinate system for location reference
+- [ ] T-1134: Build world map distance calculator between two points
+- [ ] T-1135: Create region trade embargo effect blocking routes to specific regions
+- [ ] T-1136: Implement world map weather forecast overlay per region
+- [ ] T-1137: Build region NPC caravan routes showing trade movement on map
+- [ ] T-1138: Create world map landmark discovery system with unique points of interest
+- [ ] T-1139: Implement landmark info popup with lore and gameplay benefits
+- [ ] T-1140: Build world map performance optimization for smooth pan and zoom
+
+## Epic 16: Social & Multiplayer
+> Async guild cooperation, trade between players, alliances, leaderboards, chat, guild wars, and regional synergy.
+
+- [ ] T-1141: Design multiplayer architecture with WebSocket connection management
+- [ ] T-1142: Implement WebSocket server with connection pooling and heartbeat
+- [ ] T-1143: Build WebSocket client with reconnection logic and offline queue
+- [ ] T-1144: Create player presence system (online, idle, offline statuses)
+- [ ] T-1145: Implement player search by username with results list
+- [ ] T-1146: Build player profile public view with guild info and stats
+- [ ] T-1147: Create friend request system with send, accept, decline endpoints
+- [ ] T-1148: Build friend list UI with online status and quick actions
+- [ ] T-1149: Implement friend activity feed showing recent friend actions
+- [ ] T-1150: Create alliance system with create, invite, join, leave endpoints
+- [ ] T-1151: Build alliance creation form with name, emblem, and description
+- [ ] T-1152: Implement alliance invitation system with pending invites list
+- [ ] T-1153: Build alliance member list with role display (leader, officer, member)
+- [ ] T-1154: Create alliance role permission system (who can invite, kick, manage)
+- [ ] T-1155: Implement alliance chat channel with message history
+- [ ] T-1156: Build alliance chat UI with message input and scrollable history
+- [ ] T-1157: Create global chat channel with rate limiting and moderation
+- [ ] T-1158: Implement chat message filtering (profanity filter, spam detection)
+- [ ] T-1159: Build chat notification system with unread message count
+- [ ] T-1160: Create private messaging system between players
+- [ ] T-1161: Build private message UI with conversation threads
+- [ ] T-1162: Implement player blocking system to hide messages from blocked users
+- [ ] T-1163: Create player reporting system for chat abuse
+- [ ] T-1164: Build moderation tools for alliance leaders (mute, kick members)
+- [ ] T-1165: Implement player-to-player trade system with trade window
+- [ ] T-1166: Build trade request UI with offer and request slots
+- [ ] T-1167: Create trade confirmation flow with both parties accepting
+- [ ] T-1168: Implement trade history log between players
+- [ ] T-1169: Create guild cooperation system: joint expeditions with alliance members
+- [ ] T-1170: Build joint expedition UI showing allied party contribution
+- [ ] T-1171: Implement joint expedition reward splitting system
+- [ ] T-1172: Create alliance leaderboard ranked by combined guild level
+- [ ] T-1173: Build individual leaderboard categories (expedition count, trade volume, hero power)
+- [ ] T-1174: Implement leaderboard UI with rank display, filters, and search
+- [ ] T-1175: Create weekly leaderboard reset with rewards for top rankings
+- [ ] T-1176: Build leaderboard notification for rank changes
+- [ ] T-1177: Implement guild wars system: async competitive events between guilds
+- [ ] T-1178: Create guild war declaration with wager and duration settings
+- [ ] T-1179: Build guild war progress tracker with score display
+- [ ] T-1180: Implement guild war objective system (most expeditions, highest trade volume)
+- [ ] T-1181: Create guild war reward distribution for winning guild
+- [ ] T-1182: Build guild war history log with results and statistics
+- [ ] T-1183: Implement regional synergy system (alliances controlling regions get bonuses)
+- [ ] T-1184: Create regional synergy bonus calculation from allied outpost network
+- [ ] T-1185: Build regional synergy map overlay showing alliance territory
+- [ ] T-1186: Implement alliance treasury for shared resource pooling
+- [ ] T-1187: Build alliance treasury management UI with deposit and withdraw
+- [ ] T-1188: Create alliance research system (shared research tree for alliance)
+- [ ] T-1189: Implement alliance event system (alliance-wide challenges)
+- [ ] T-1190: Build alliance event participation tracker
+- [ ] T-1191: Create social notification system (friend online, trade request, war declared)
+- [ ] T-1192: Implement player gifting system for resource donations to friends
+- [ ] T-1193: Build gift history log showing sent and received gifts
+- [ ] T-1194: Create alliance recruitment board for posting open alliance listings
+- [ ] T-1195: Build alliance recruitment browser with search and filter
+- [ ] T-1196: Implement alliance merge system for combining two alliances
+- [ ] T-1197: Create social achievement system (make 10 friends, complete 5 joint expeditions)
+- [ ] T-1198: Build player comparison tool for comparing stats with friends
+- [ ] T-1199: Implement alliance daily challenge with shared objective
+- [ ] T-1200: Create alliance chat emoji reaction system
+- [ ] T-1201: Build alliance announcement board for leader posts
+- [ ] T-1202: Implement player mentorship system (veteran guides new player)
+- [ ] T-1203: Create mentorship reward system for mentor engagement
+- [ ] T-1204: Build social hub scene with chat, friends, and alliance access
+- [ ] T-1205: Implement multiplayer event: world boss requiring alliance cooperation
+- [ ] T-1206: Create world boss damage contribution tracker
+- [ ] T-1207: Build world boss reward distribution based on contribution
+- [ ] T-1208: Implement alliance banner display in guild hall
+- [ ] T-1209: Create alliance territory war (compete for region control with other alliances)
+- [ ] T-1210: Build territory war map with contested regions highlighted
+- [ ] T-1211: Implement alliance diplomacy system (non-aggression pacts, trade agreements)
+- [ ] T-1212: Create alliance ranking system with tiered prestige levels
+- [ ] T-1213: Build alliance statistics dashboard (member count, total power, activity)
+- [ ] T-1214: Implement social feed with recent friend and alliance activity
+- [ ] T-1215: Create multiplayer sync for shared world events across all players
+- [ ] T-1216: Build spectator mode for watching ally expeditions
+- [ ] T-1217: Implement alliance weekly report with contribution highlights
+- [ ] T-1218: Create social referral system with rewards for inviting new players
+- [ ] T-1219: Build player card shareable link with stats and guild info
+- [ ] T-1220: Implement anti-cheat validation for multiplayer actions
+- [ ] T-1221: Create matchmaking system for guild wars based on power level
+- [ ] T-1222: Build alliance calendar for scheduling cooperative events
+- [ ] T-1223: Implement player achievement showcase on profile
+- [ ] T-1224: Create social tutorial introducing multiplayer features
+- [ ] T-1225: Build alliance officer promotion/demotion system
+- [ ] T-1226: Implement alliance description and rules editor
+- [ ] T-1227: Create alliance member activity score tracking
+- [ ] T-1228: Build inactive member auto-kick settings for alliance leaders
+- [ ] T-1229: Implement alliance emblem customization with layers and colors
+- [ ] T-1230: Create multiplayer season system with ranked competitive periods
+- [ ] T-1231: Build seasonal reward track for multiplayer engagement
+- [ ] T-1232: Implement alliance resource donation leaderboard
+- [ ] T-1233: Create cross-alliance trade fair event
+- [ ] T-1234: Build social notification preferences (per category mute/unmute)
+- [ ] T-1235: Implement player status message (custom text shown to friends)
+- [ ] T-1236: Create alliance level system with XP from member contributions
+- [ ] T-1237: Build alliance perk unlocks at alliance level milestones
+- [ ] T-1238: Implement chat image/screenshot sharing in alliance chat
+- [ ] T-1239: Create player follow system for tracking non-friend players
+- [ ] T-1240: Build multiplayer performance optimization for large alliances
+
+## Epic 17: Combat & Encounters
+> Auto-battler combat system, squad composition, enemy types, boss fights, combat log, and combat rewards.
+
+- [ ] T-1241: Define combat data schema (attacker, defender, rounds, log, outcome)
+- [ ] T-1242: Create combat engine with turn-based auto-resolution
+- [ ] T-1243: Implement initiative system determining turn order by speed stat
+- [ ] T-1244: Build combat round processing (attack, defend, skill use, item use)
+- [ ] T-1245: Create damage calculation formula (attack - defense * modifier)
+- [ ] T-1246: Implement critical hit system with Luck stat influence
+- [ ] T-1247: Create dodge/evasion system with Agility stat influence
+- [ ] T-1248: Implement healing ability for Healer role heroes
+- [ ] T-1249: Create buff/debuff system for combat status effects
+- [ ] T-1250: Implement 10 combat status effects (poison, burn, freeze, stun, shield, regen, haste, slow, blind, berserk)
+- [ ] T-1251: Build combat UI with hero portraits and HP bars on left, enemies on right
+- [ ] T-1252: Implement combat animation system (attack swing, spell cast, hit flash)
+- [ ] T-1253: Create combat damage number floating text display
+- [ ] T-1254: Build combat action log panel showing turn-by-turn narrative
+- [ ] T-1255: Implement combat speed controls (1x, 2x, skip to result)
+- [ ] T-1256: Create squad composition system with front row and back row
+- [ ] T-1257: Implement row-based targeting (front row takes melee, back row takes ranged)
+- [ ] T-1258: Build squad formation UI with drag-drop hero positioning
+- [ ] T-1259: Create squad synergy bonuses (2 Warriors: +10% defense, etc.)
+- [ ] T-1260: Implement synergy display on squad formation screen
+- [ ] T-1261: Create 20 enemy types across different regions
+- [ ] T-1262: Implement Goblin enemy type with swarm attack pattern
+- [ ] T-1263: Implement Skeleton enemy type with resurrection ability
+- [ ] T-1264: Implement Wolf enemy type with pack bonus mechanic
+- [ ] T-1265: Implement Bandit enemy type with steal ability
+- [ ] T-1266: Implement Elemental enemy type with elemental resistance
+- [ ] T-1267: Implement Dragon enemy type with breath attack AoE
+- [ ] T-1268: Implement Troll enemy type with regeneration passive
+- [ ] T-1269: Implement Ghost enemy type with physical damage resistance
+- [ ] T-1270: Implement Golem enemy type with high defense low speed
+- [ ] T-1271: Implement Slime enemy type with split-on-death mechanic
+- [ ] T-1272: Implement Spider enemy type with web (slow) debuff
+- [ ] T-1273: Implement Orc enemy type with berserk on low HP
+- [ ] T-1274: Implement Witch enemy type with curse debuff
+- [ ] T-1275: Implement Giant enemy type with crushing blow mechanic
+- [ ] T-1276: Implement Imp enemy type with magic steal ability
+- [ ] T-1277: Implement Mimic enemy type disguised as treasure chest
+- [ ] T-1278: Implement Wraith enemy type with life drain attack
+- [ ] T-1279: Implement Hydra enemy type with multi-head attacks
+- [ ] T-1280: Implement Assassin enemy type with guaranteed critical first strike
+- [ ] T-1281: Implement Necromancer enemy type summoning minions
+- [ ] T-1282: Create boss encounter system with multi-phase mechanics
+- [ ] T-1283: Implement Dragon Lord boss with 3 phases (fire, ice, thunder)
+- [ ] T-1284: Implement Lich King boss with minion summoning phases
+- [ ] T-1285: Implement Kraken boss with tentacle mechanics
+- [ ] T-1286: Implement Ancient Golem boss with armor break phases
+- [ ] T-1287: Implement Shadow Lord boss with darkness mechanic
+- [ ] T-1288: Build boss HP bar with phase indicators
+- [ ] T-1289: Create boss special attack warning system (telegraph before big hits)
+- [ ] T-1290: Implement combat loot drop system with roll per enemy
+- [ ] T-1291: Create loot rarity roll using weighted random system
+- [ ] T-1292: Build combat reward screen with XP, gold, and item display
+- [ ] T-1293: Implement combat XP distribution to participating heroes
+- [ ] T-1294: Create combat MVP display (highest damage, most heals, etc.)
+- [ ] T-1295: Build combat replay system to rewatch past battles
+- [ ] T-1296: Implement combat difficulty scaling based on party average level
+- [ ] T-1297: Create combat terrain effects (forest: +evasion, mountain: +defense)
+- [ ] T-1298: Implement weather effects on combat (rain: -fire damage, snow: -speed)
+- [ ] T-1299: Build combat tutorial introducing mechanics step by step
+- [ ] T-1300: Create combat challenge mode with preset difficult encounters
+- [ ] T-1301: Implement combat flee mechanic with success chance based on speed
+- [ ] T-1302: Build combat statistics tracker (total kills, damage dealt, battles won)
+- [ ] T-1303: Create enemy bestiary unlocked by defeating each enemy type
+- [ ] T-1304: Build bestiary UI with enemy stats, lore, and drop tables
+- [ ] T-1305: Implement combat morale effect (high morale: +5% all stats in combat)
+- [ ] T-1306: Create combat equipment durability drain per battle
+- [ ] T-1307: Build auto-battle toggle for repeated encounters
+- [ ] T-1308: Implement combat power prediction before engagement
+- [ ] T-1309: Create combat modifier from real-world data (storm: +lightning damage)
+- [ ] T-1310: Build combat death/defeat animation for heroes and enemies
+- [ ] T-1311: Implement hero revival mechanic from Healer skill
+- [ ] T-1312: Create combat combo system for sequential hero attacks
+- [ ] T-1313: Build combat ultimate ability system charged over multiple rounds
+- [ ] T-1314: Implement combat element system (fire, water, earth, air, light, dark)
+- [ ] T-1315: Create elemental weakness/resistance chart
+- [ ] T-1316: Build element indicator on combat UI
+- [ ] T-1317: Implement combat AI behavior patterns per enemy type
+- [ ] T-1318: Create combat achievement system (first boss kill, no-damage clear)
+- [ ] T-1319: Build combat sound effects for attacks, skills, and impacts
+- [ ] T-1320: Implement combat background scenes per region biome
+
+## Epic 18: Narrative & Discovery
+> Hidden pattern system, lore entries, world history, NPC dialogue, quest lines, and journal tracking.
+
+- [ ] T-1321: Design narrative data schema (lore entries, quest stages, dialog trees)
+- [ ] T-1322: Create lore database with 50 world history entries
+- [ ] T-1323: Implement lore discovery system triggered by exploration and events
+- [ ] T-1324: Build lore codex UI with categorized entries (history, creatures, places, people)
+- [ ] T-1325: Create lore entry detail view with text, related entries, and discovery info
+- [ ] T-1326: Implement lore search and filter in codex
+- [ ] T-1327: Create hidden pattern system: real-world data combinations unlock secrets
+- [ ] T-1328: Implement 10 hidden patterns (e.g., full moon + rainstorm = hidden dungeon)
+- [ ] T-1329: Build pattern discovery notification with dramatic reveal animation
+- [ ] T-1330: Create pattern journal tracking discovered and hinted patterns
+- [ ] T-1331: Implement pattern hint system through NPC dialog and event text
+- [ ] T-1332: Build pattern completion rewards (unique items, lore, achievements)
+- [ ] T-1333: Create NPC dialog system with branching conversation trees
+- [ ] T-1334: Implement dialog tree data structure with nodes and choice edges
+- [ ] T-1335: Build dialog UI with NPC portrait, text box, and choice buttons
+- [ ] T-1336: Create 15 named NPCs with unique personalities and dialog trees
+- [ ] T-1337: Implement NPC relationship tracking based on dialog choices
+- [ ] T-1338: Create NPC gift system to improve relationships
+- [ ] T-1339: Build NPC shop integration within dialog flow
+- [ ] T-1340: Implement NPC quest offering through dialog
+- [ ] T-1341: Create quest system data structure (objectives, stages, rewards)
+- [ ] T-1342: Implement main quest line with 10 story chapters
+- [ ] T-1343: Create side quest pool with 20 procedural side quests
+- [ ] T-1344: Build quest log UI with active, completed, and failed tabs
+- [ ] T-1345: Implement quest objective tracking with progress display
+- [ ] T-1346: Create quest turn-in system with NPC dialog and reward screen
+- [ ] T-1347: Build quest chain system linking quests in narrative sequence
+- [ ] T-1348: Implement quest requirement system (level, items, reputation prerequisites)
+- [ ] T-1349: Create quest marker system on world map for active quests
+- [ ] T-1350: Build quest notification for new quest availability
+- [ ] T-1351: Create world history timeline displaying major events in chronological order
+- [ ] T-1352: Implement timeline discovery through quest completion and lore finds
+- [ ] T-1353: Build timeline UI with scrollable visual layout
+- [ ] T-1354: Create prophecy system with cryptic hints about future game events
+- [ ] T-1355: Implement prophecy revelation when conditions are met
+- [ ] T-1356: Build prophecy display in Temple building
+- [ ] T-1357: Create rumor system where NPCs share hints about nearby opportunities
+- [ ] T-1358: Implement rumor accuracy variability (some rumors are false)
+- [ ] T-1359: Build rumor log with verified/unverified status
+- [ ] T-1360: Create narrative event narrator text for expedition encounters
+- [ ] T-1361: Implement narrative text variation system (multiple descriptions for same event)
+- [ ] T-1362: Build narrative text fade-in presentation with pacing
+- [ ] T-1363: Create hero personal story arcs triggered by level milestones
+- [ ] T-1364: Implement hero story dialog sequences at key story beats
+- [ ] T-1365: Build hero story completion rewards (unique items, titles)
+- [ ] T-1366: Create world mythology entries about gods and creation
+- [ ] T-1367: Implement mythology discovery through Temple research
+- [ ] T-1368: Build mythology gallery with illustration and text pairs
+- [ ] T-1369: Create region-specific lore pools unlocked by exploring each region
+- [ ] T-1370: Implement lore completion percentage per region
+- [ ] T-1371: Build narrative achievement system (complete all lore in a category)
+- [ ] T-1372: Create NPC daily dialog that changes based on weather and events
+- [ ] T-1373: Implement NPC remembrance of past player choices in dialog
+- [ ] T-1374: Build journal quick-reference for tracking narrative progress
+- [ ] T-1375: Create Easter egg discovery system with obscure real-world data triggers
+- [ ] T-1376: Implement Easter egg collection page
+- [ ] T-1377: Build narrative recap summary when returning after absence
+- [ ] T-1378: Create in-game book collection with readable text content
+- [ ] T-1379: Build book reading UI with page-turn animation
+- [ ] T-1380: Implement book discovery in expeditions and shops
+
+## Epic 19: Art & Visual Design
+> Sprite sheets, building illustrations, hero portraits, weather particles, UI themes, and animation sets.
+
+- [ ] T-1381: Create art style guide document defining visual language
+- [ ] T-1382: Design color palette for each biome (forest green, desert gold, tundra blue, etc.)
+- [ ] T-1383: Create UI color palette for interface elements (primary, secondary, accent)
+- [ ] T-1384: Design icon set for all 8 resource types (32x32 and 64x64)
+- [ ] T-1385: Design icon set for building types (48x48 for build menu)
+- [ ] T-1386: Design icon set for hero roles (32x32 badges)
+- [ ] T-1387: Design icon set for item categories (32x32 inventory icons)
+- [ ] T-1388: Design icon set for status effects (24x24 buff/debuff icons)
+- [ ] T-1389: Design icon set for navigation and UI actions (24x24 toolbar icons)
+- [ ] T-1390: Create Tavern building illustration with 3 upgrade level variations
+- [ ] T-1391: Create Workshop building illustration with 3 upgrade level variations
+- [ ] T-1392: Create Farm building illustration with 3 upgrade level variations
+- [ ] T-1393: Create Mine building illustration with 3 upgrade level variations
+- [ ] T-1394: Create Marketplace building illustration with 3 upgrade level variations
+- [ ] T-1395: Create Library building illustration with 3 upgrade level variations
+- [ ] T-1396: Create Barracks building illustration with 3 upgrade level variations
+- [ ] T-1397: Create Warehouse building illustration with 3 upgrade level variations
+- [ ] T-1398: Create Temple building illustration with 3 upgrade level variations
+- [ ] T-1399: Create Observatory building illustration with 3 upgrade level variations
+- [ ] T-1400: Create Expedition Hall building illustration with 3 upgrade level variations
+- [ ] T-1401: Design hero portrait base templates for 10 roles
+- [ ] T-1402: Create hairstyle sprite set (20 variations) for portrait system
+- [ ] T-1403: Create face shape sprite set (10 variations) for portrait system
+- [ ] T-1404: Create eye style sprite set (15 variations) for portrait system
+- [ ] T-1405: Create mouth/expression sprite set (10 variations) for portrait system
+- [ ] T-1406: Create accessory sprite set (15 variations: hats, earrings, scars)
+- [ ] T-1407: Create skin tone palette (12 tones) for portrait system
+- [ ] T-1408: Create hair color palette (15 colors) for portrait system
+- [ ] T-1409: Design weapon sprites for all weapon types (5 types x 5 rarities)
+- [ ] T-1410: Design armor sprites for all armor types (5 types x 5 rarities)
+- [ ] T-1411: Design accessory sprites for all accessory types (3 types x 5 rarities)
+- [ ] T-1412: Create rain particle effect system with variable intensity
+- [ ] T-1413: Create snow particle effect system with accumulation visual
+- [ ] T-1414: Create sun ray light beam effect
+- [ ] T-1415: Create fog overlay effect with transparency gradient
+- [ ] T-1416: Create storm lightning flash effect
+- [ ] T-1417: Create wind particle effect (leaves, dust)
+- [ ] T-1418: Create firefly particle effect for night scenes
+- [ ] T-1419: Create ember particle effect for volcanic regions
+- [ ] T-1420: Create bubble particle effect for coastal/underwater areas
+- [ ] T-1421: Create magical sparkle particle effect for enchanting
+- [ ] T-1422: Design world map region illustrations (8 region artworks)
+- [ ] T-1423: Create world map terrain textures for each biome
+- [ ] T-1424: Design minimap region thumbnails
+- [ ] T-1425: Create loading screen illustrations (4 seasonal themed)
+- [ ] T-1426: Design login page background artwork
+- [ ] T-1427: Create guild hall background illustration with parallax layers
+- [ ] T-1428: Design UI panel backgrounds with parchment/wood textures
+- [ ] T-1429: Create UI button sprite states (normal, hover, pressed, disabled)
+- [ ] T-1430: Design UI border and frame decorations
+- [ ] T-1431: Create notification icon set (exclamation, checkmark, star, warning)
+- [ ] T-1432: Design quest marker icons for world map
+- [ ] T-1433: Create expedition route path visual (dotted line with direction)
+- [ ] T-1434: Design combat background illustrations for each biome
+- [ ] T-1435: Create enemy sprites for all 20 enemy types
+- [ ] T-1436: Design boss sprites for 5 boss encounters
+- [ ] T-1437: Create combat hit effect animations (slash, explosion, magic burst)
+- [ ] T-1438: Design NPC character portraits (15 unique NPCs)
+- [ ] T-1439: Create seasonal decoration sprites (20 seasonal items)
+- [ ] T-1440: Design achievement badge icons (30 achievement types)
+- [ ] T-1441: Create gem and enchantment visual effect sprites
+- [ ] T-1442: Design rarity border glow effects for each tier
+- [ ] T-1443: Create research tree node icons (60 research nodes)
+- [ ] T-1444: Design research tree branch decorations
+- [ ] T-1445: Create item set visual indicators (matching glow for set pieces)
+- [ ] T-1446: Design tutorial illustration panels
+- [ ] T-1447: Create empty state illustrations for lists and pages
+- [ ] T-1448: Design error state illustrations (404, 500, offline)
+- [ ] T-1449: Create celebration animation sprites (fireworks, confetti, sparkle)
+- [ ] T-1450: Design favicon and app icon in multiple sizes
+- [ ] T-1451: Create social media preview image (Open Graph image)
+- [ ] T-1452: Design email template header and footer graphics
+- [ ] T-1453: Create hero idle animation sprites (10 roles x 4 frames)
+- [ ] T-1454: Create building construction animation sprites
+- [ ] T-1455: Design market stall and merchant booth illustrations
+- [ ] T-1456: Create currency/coin animation sprites
+- [ ] T-1457: Design guild emblem component sprites (shapes, symbols, borders)
+- [ ] T-1458: Create scroll/parchment UI background for narrative text
+- [ ] T-1459: Design tooltip and popup visual frames
+- [ ] T-1460: Create sprite atlas packing configuration for optimal loading
+
+## Epic 20: Audio & Sound Design
+> Ambient music, weather sounds, UI SFX, event stingers, combat sounds, and notification sounds.
+
+- [ ] T-1461: Set up Web Audio API integration with Phaser sound manager
+- [ ] T-1462: Implement audio volume controls (master, music, SFX, ambient)
+- [ ] T-1463: Build audio settings UI with volume sliders and mute toggles
+- [ ] T-1464: Create audio crossfade system for smooth music transitions
+- [ ] T-1465: Implement ambient music system with scene-based track selection
+- [ ] T-1466: Compose/source guild hall ambient music track (calm, medieval)
+- [ ] T-1467: Compose/source market scene ambient music track (bustling, lively)
+- [ ] T-1468: Compose/source expedition scene ambient music track (adventurous)
+- [ ] T-1469: Compose/source combat music track (intense, rhythmic)
+- [ ] T-1470: Compose/source research/library ambient music track (contemplative)
+- [ ] T-1471: Compose/source world map ambient music track (epic, sweeping)
+- [ ] T-1472: Compose/source login/menu music track (inviting)
+- [ ] T-1473: Create seasonal music variations (spring: light, winter: somber)
+- [ ] T-1474: Implement day/night music variation (brighter day, softer night)
+- [ ] T-1475: Create rain ambient sound loop with intensity variation
+- [ ] T-1476: Create wind ambient sound loop with intensity variation
+- [ ] T-1477: Create thunder sound effect for storm weather
+- [ ] T-1478: Create snow/blizzard ambient sound loop
+- [ ] T-1479: Create bird chirp ambient sound for clear day weather
+- [ ] T-1480: Create crackling fire ambient sound for guild hall hearth
+- [ ] T-1481: Create UI button click sound effect
+- [ ] T-1482: Create UI button hover sound effect
+- [ ] T-1483: Create UI modal open sound effect
+- [ ] T-1484: Create UI modal close sound effect
+- [ ] T-1485: Create UI tab switch sound effect
+- [ ] T-1486: Create UI error/invalid action sound effect
+- [ ] T-1487: Create UI success/completion sound effect
+- [ ] T-1488: Create UI notification popup sound effect
+- [ ] T-1489: Create resource gain sound effect (coin clink for gold, etc.)
+- [ ] T-1490: Create resource insufficient/error sound effect
+- [ ] T-1491: Create building placement sound effect
+- [ ] T-1492: Create building construction sound effect (hammering, sawing)
+- [ ] T-1493: Create building upgrade completion sound effect (fanfare)
+- [ ] T-1494: Create building demolish sound effect
+- [ ] T-1495: Create hero recruitment sound effect (welcome fanfare)
+- [ ] T-1496: Create hero level-up sound effect (triumphant jingle)
+- [ ] T-1497: Create hero dismiss sound effect (farewell tone)
+- [ ] T-1498: Create expedition launch sound effect (horn blast)
+- [ ] T-1499: Create expedition return sound effect (arrival jingle)
+- [ ] T-1500: Create combat sword attack sound effect
+- [ ] T-1501: Create combat magic spell cast sound effect
+- [ ] T-1502: Create combat bow shot sound effect
+- [ ] T-1503: Create combat hit/impact sound effect
+- [ ] T-1504: Create combat heal spell sound effect
+- [ ] T-1505: Create combat victory fanfare
+- [ ] T-1506: Create combat defeat sound
+- [ ] T-1507: Create combat critical hit sound effect
+- [ ] T-1508: Create event notification stinger (attention-grabbing musical phrase)
+- [ ] T-1509: Create achievement unlocked sound effect
+- [ ] T-1510: Implement audio sprite system for efficient SFX loading
+
+## Epic 21: Backend Infrastructure
+> Cron jobs, background workers, rate limiting, logging, error tracking, and API versioning.
+
+- [ ] T-1511: Set up Express middleware chain (cors, helmet, compression, body-parser)
+- [ ] T-1512: Implement request logging middleware with timestamp, method, path, and duration
+- [ ] T-1513: Create structured logging service with log levels (debug, info, warn, error)
+- [ ] T-1514: Implement log file rotation (daily rotation, 30-day retention)
+- [ ] T-1515: Build error tracking integration (Sentry or similar service)
+- [ ] T-1516: Create global error handler middleware catching unhandled exceptions
+- [ ] T-1517: Implement error response formatter with consistent error object shape
+- [ ] T-1518: Build health check endpoint returning server status and dependencies
+- [ ] T-1519: Create readiness probe endpoint checking database and cache connectivity
+- [ ] T-1520: Implement API rate limiting middleware (100 requests/minute per user)
+- [ ] T-1521: Create rate limit tier system (standard, premium with higher limits)
+- [ ] T-1522: Build rate limit response headers (X-RateLimit-Limit, Remaining, Reset)
+- [ ] T-1523: Implement API versioning with /api/v1/ prefix routing
+- [ ] T-1524: Create API version deprecation warning headers
+- [ ] T-1525: Build API documentation generation with Swagger/OpenAPI
+- [ ] T-1526: Implement cron job scheduler for recurring tasks
+- [ ] T-1527: Create resource production cron job (runs every 5 minutes)
+- [ ] T-1528: Create resource decay cron job (runs every 15 minutes)
+- [ ] T-1529: Create market price update cron job (runs every hour)
+- [ ] T-1530: Create expedition progress cron job (runs every minute)
+- [ ] T-1531: Create weather data refresh cron job (runs every 30 minutes)
+- [ ] T-1532: Create daily reset cron job (daily challenges, merchant refresh)
+- [ ] T-1533: Create session cleanup cron job (purge expired sessions daily)
+- [ ] T-1534: Create database backup cron job (daily automated backup)
+- [ ] T-1535: Implement background worker queue using Bull or similar
+- [ ] T-1536: Create email sending worker (password reset, notifications)
+- [ ] T-1537: Create data pipeline worker (fetch and process external APIs)
+- [ ] T-1538: Create event generation worker (evaluate and trigger game events)
+- [ ] T-1539: Create notification dispatch worker (process and send notifications)
+- [ ] T-1540: Build worker health monitoring dashboard
+- [ ] T-1541: Implement request validation middleware using Joi or Zod schemas
+- [ ] T-1542: Create request sanitization middleware (strip XSS, trim strings)
+- [ ] T-1543: Implement response compression for large payloads
+- [ ] T-1544: Create API response pagination utility (offset + limit)
+- [ ] T-1545: Build API response caching layer with Redis or memory cache
+- [ ] T-1546: Implement cache invalidation strategy per resource type
+- [ ] T-1547: Create database connection pool configuration with limits
+- [ ] T-1548: Implement database query timeout protection
+- [ ] T-1549: Build database migration runner with rollback support
+- [ ] T-1550: Create seed data generator for development environment
+- [ ] T-1551: Implement graceful server shutdown handling (finish requests, close connections)
+- [ ] T-1552: Create server startup validation (check required env vars, DB connection)
+- [ ] T-1553: Build configuration management with environment-based config files
+- [ ] T-1554: Implement feature flag system for gradual feature rollout
+- [ ] T-1555: Create admin API endpoints with role-based access control
+- [ ] T-1556: Build admin dashboard for monitoring server metrics
+- [ ] T-1557: Implement webhook system for external integrations
+- [ ] T-1558: Create API changelog endpoint returning version history
+- [ ] T-1559: Implement request correlation ID for tracing requests through system
+- [ ] T-1560: Build automated database schema validation on startup
+- [ ] T-1561: Create API response time monitoring and alerting
+- [ ] T-1562: Implement retry logic for transient database failures
+- [ ] T-1563: Build server metrics collection (request count, error rate, response time)
+- [ ] T-1564: Create server metrics visualization dashboard
+- [ ] T-1565: Implement API rate limit bypass for internal service calls
+- [ ] T-1566: Create data archival system for old game data
+- [ ] T-1567: Build automated SSL certificate renewal check
+- [ ] T-1568: Implement API key authentication for service-to-service calls
+- [ ] T-1569: Create database read replica routing for read-heavy queries
+- [ ] T-1570: Build server cluster management with PM2 or similar
+- [ ] T-1571: Implement WebSocket message queuing for offline clients
+- [ ] T-1572: Create server-side event validation preventing impossible game states
+- [ ] T-1573: Build automated dependency vulnerability scanning
+- [ ] T-1574: Implement API idempotency key system for safe retries
+- [ ] T-1575: Create server load testing configuration and baseline benchmarks
+- [ ] T-1576: Build automated server restart on critical error detection
+- [ ] T-1577: Implement request body size limit configuration
+- [ ] T-1578: Create file upload handling with size and type validation
+- [ ] T-1579: Build server timezone configuration for consistent date handling
+- [ ] T-1580: Implement database transaction wrapper with automatic rollback on error
+
+## Epic 22: Database & Performance
+> Indexing, query optimization, data migration, backup system, and caching layer.
+
+- [ ] T-1581: Audit all Prisma models and add missing database indexes
+- [ ] T-1582: Add composite index on (userId, type) for resource lookups
+- [ ] T-1583: Add index on createdAt for time-based queries
+- [ ] T-1584: Add index on expedition status for active expedition queries
+- [ ] T-1585: Add index on hero guildId for roster lookups
+- [ ] T-1586: Add index on marketListing price for sorted market queries
+- [ ] T-1587: Add index on event triggerTime for event scheduling queries
+- [ ] T-1588: Add index on research status for active research lookups
+- [ ] T-1589: Implement query profiling to identify slow queries
+- [ ] T-1590: Optimize hero roster query with selective field loading
+- [ ] T-1591: Optimize market listing query with pagination and filtering
+- [ ] T-1592: Optimize expedition list query with status-based partitioning
+- [ ] T-1593: Optimize resource calculation query with aggregation
+- [ ] T-1594: Optimize event evaluation query with pre-filtered condition checks
+- [ ] T-1595: Implement N+1 query detection and prevention
+- [ ] T-1596: Create eager loading strategy for related entity queries
+- [ ] T-1597: Implement database query result caching with TTL per query type
+- [ ] T-1598: Build cache hit/miss ratio monitoring
+- [ ] T-1599: Create cache warming strategy on server startup
+- [ ] T-1600: Implement selective cache invalidation on data mutation
+- [ ] T-1601: Create Prisma migration for initial schema version
+- [ ] T-1602: Build database migration testing pipeline
+- [ ] T-1603: Implement zero-downtime migration strategy for schema changes
+- [ ] T-1604: Create data migration scripts for schema evolution
+- [ ] T-1605: Build migration rollback testing procedure
+- [ ] T-1606: Implement automated database backup to file system
+- [ ] T-1607: Create backup encryption for sensitive player data
+- [ ] T-1608: Build backup restoration procedure and testing script
+- [ ] T-1609: Implement point-in-time recovery capability
+- [ ] T-1610: Create backup health check verifying backup integrity
+- [ ] T-1611: Implement database connection pooling optimization
+- [ ] T-1612: Create connection pool monitoring and alerting
+- [ ] T-1613: Build database size monitoring with growth projections
+- [ ] T-1614: Implement data retention policy (archive data older than 90 days)
+- [ ] T-1615: Create data export utility for player data requests
+- [ ] T-1616: Implement soft delete pattern for recoverable data removal
+- [ ] T-1617: Build database vacuum/optimization scheduled task
+- [ ] T-1618: Create query timeout configuration per endpoint criticality
+- [ ] T-1619: Implement database connection retry with backoff
+- [ ] T-1620: Build database schema documentation generation
+- [ ] T-1621: Create database seeding scripts for test environments
+- [ ] T-1622: Implement bulk insert optimization for batch operations
+- [ ] T-1623: Create database read/write split configuration
+- [ ] T-1624: Build query performance regression test suite
+- [ ] T-1625: Implement database deadlock detection and recovery
+- [ ] T-1626: Create database statistics collection for query planner
+- [ ] T-1627: Build data consistency validation scripts
+- [ ] T-1628: Implement foreign key constraint audit
+- [ ] T-1629: Create database entity relationship diagram generation
+- [ ] T-1630: Build database health dashboard with key metrics
+- [ ] T-1631: Implement query batching for related data fetches
+- [ ] T-1632: Create database snapshot for development environment reset
+- [ ] T-1633: Build data anonymization script for staging environments
+- [ ] T-1634: Implement database WAL mode configuration for SQLite performance
+- [ ] T-1635: Create database file size monitoring with cleanup alerts
+- [ ] T-1636: Build query explain plan analysis tool
+- [ ] T-1637: Implement connection idle timeout configuration
+- [ ] T-1638: Create database table partition strategy for large tables
+- [ ] T-1639: Build automated slow query log analysis report
+- [ ] T-1640: Implement database integrity check scheduled task
+
+## Epic 23: Security & Auth
+> CSRF protection, XSS prevention, input validation, rate limiting, encryption, and audit logging.
+
+- [ ] T-1641: Implement CSRF token generation and validation middleware
+- [ ] T-1642: Add CSRF token to all state-changing form submissions
+- [ ] T-1643: Implement Content Security Policy (CSP) headers
+- [ ] T-1644: Configure X-Content-Type-Options: nosniff header
+- [ ] T-1645: Configure X-Frame-Options: DENY header
+- [ ] T-1646: Configure Strict-Transport-Security (HSTS) header
+- [ ] T-1647: Implement XSS sanitization for all user text inputs
+- [ ] T-1648: Create HTML entity encoding for rendered user content
+- [ ] T-1649: Implement SQL injection prevention audit (parameterized queries check)
+- [ ] T-1650: Create input validation schemas for all API endpoints
+- [ ] T-1651: Implement file upload validation (type whitelist, size limit, content check)
+- [ ] T-1652: Create password hashing with bcrypt (12 salt rounds)
+- [ ] T-1653: Implement password complexity requirements (min 8 chars, mixed case, number)
+- [ ] T-1654: Create secure session token generation with crypto.randomBytes
+- [ ] T-1655: Implement JWT signature validation on every authenticated request
+- [ ] T-1656: Create JWT expiration and refresh token rotation
+- [ ] T-1657: Implement secure cookie flags (httpOnly, secure, sameSite)
+- [ ] T-1658: Create API authentication middleware with token extraction
+- [ ] T-1659: Implement role-based access control (RBAC) with user, mod, admin roles
+- [ ] T-1660: Create permission check middleware for admin endpoints
+- [ ] T-1661: Implement account lockout after repeated failed login attempts
+- [ ] T-1662: Create IP-based rate limiting for authentication endpoints
+- [ ] T-1663: Implement brute force detection and auto-blocking
+- [ ] T-1664: Create security audit log recording auth events and admin actions
+- [ ] T-1665: Build audit log viewer for admin dashboard
+- [ ] T-1666: Implement sensitive data encryption at rest (API keys, tokens)
+- [ ] T-1667: Create environment variable validation preventing default/empty secrets
+- [ ] T-1668: Implement secure API key storage with hashing
+- [ ] T-1669: Create data privacy compliance system (consent tracking, data access)
+- [ ] T-1670: Implement user data deletion endpoint with cascade handling
+- [ ] T-1671: Create security headers middleware combining all header configurations
+- [ ] T-1672: Implement CORS policy with strict origin whitelist
+- [ ] T-1673: Create dependency vulnerability scanning in CI pipeline
+- [ ] T-1674: Implement subresource integrity (SRI) for CDN-loaded scripts
+- [ ] T-1675: Create clickjacking protection with frame-busting script
+- [ ] T-1676: Implement session fixation prevention (regenerate session on login)
+- [ ] T-1677: Create suspicious activity detection (impossible travel, unusual patterns)
+- [ ] T-1678: Implement user notification for suspicious login activity
+- [ ] T-1679: Create admin impersonation audit logging
+- [ ] T-1680: Implement API endpoint authorization matrix documentation
+- [ ] T-1681: Create security incident response procedure document
+- [ ] T-1682: Implement password breach check against Have I Been Pwned API
+- [ ] T-1683: Create rate limit configuration per endpoint sensitivity
+- [ ] T-1684: Implement request body schema validation rejecting unknown fields
+- [ ] T-1685: Create automated security header scan and compliance check
+- [ ] T-1686: Implement OAuth state parameter validation for CSRF protection
+- [ ] T-1687: Create secure redirect URL validation preventing open redirect
+- [ ] T-1688: Implement API response sanitization removing internal data
+- [ ] T-1689: Create database query parameterization audit script
+- [ ] T-1690: Implement security monitoring alerting for critical events
+
+## Epic 24: Playwright Testing
+> Install, configure, and write E2E tests for every scene, flow, and edge case with screenshot comparisons.
+
+- [ ] T-1691: Install Playwright and configure project with TypeScript support
+- [ ] T-1692: Set up Playwright test directory structure and configuration file
+- [ ] T-1693: Configure browser targets (Chromium, Firefox, WebKit)
+- [ ] T-1694: Set up test base URL and environment variable configuration
+- [ ] T-1695: Create test fixtures for authenticated user session
+- [ ] T-1696: Create test fixtures for seeded database state
+- [ ] T-1697: Build test helper utilities (login, navigate, wait-for-load)
+- [ ] T-1698: Set up screenshot comparison baseline capture workflow
+- [ ] T-1699: Configure visual regression threshold settings (0.1% pixel diff)
+- [ ] T-1700: Create Playwright reporter configuration (HTML, JSON, CI)
+- [ ] T-1701: Write E2E test: registration form submission with valid data
+- [ ] T-1702: Write E2E test: registration form validation error display
+- [ ] T-1703: Write E2E test: login with valid credentials redirects to guild hall
+- [ ] T-1704: Write E2E test: login with invalid credentials shows error message
+- [ ] T-1705: Write E2E test: password reset flow end-to-end
+- [ ] T-1706: Write E2E test: logout clears session and redirects to login
+- [ ] T-1707: Write E2E test: OAuth login button redirects to provider
+- [ ] T-1708: Write E2E test: guild hall scene loads with correct buildings
+- [ ] T-1709: Write E2E test: building placement on grid cell
+- [ ] T-1710: Write E2E test: building upgrade with sufficient resources
+- [ ] T-1711: Write E2E test: building upgrade blocked with insufficient resources
+- [ ] T-1712: Write E2E test: building demolish with confirmation dialog
+- [ ] T-1713: Write E2E test: resource bar displays correct values
+- [ ] T-1714: Write E2E test: resource production updates after tick
+- [ ] T-1715: Write E2E test: resource cap prevents overflow
+- [ ] T-1716: Write E2E test: resource conversion recipe execution
+- [ ] T-1717: Write E2E test: hero recruitment from Tavern
+- [ ] T-1718: Write E2E test: hero detail page displays all stats
+- [ ] T-1719: Write E2E test: hero skill tree navigation and skill unlock
+- [ ] T-1720: Write E2E test: hero equipment equip and unequip
+- [ ] T-1721: Write E2E test: hero assignment to building
+- [ ] T-1722: Write E2E test: hero dismissal with confirmation
+- [ ] T-1723: Write E2E test: expedition party formation with hero selection
+- [ ] T-1724: Write E2E test: expedition launch with valid party
+- [ ] T-1725: Write E2E test: expedition progress tracking updates
+- [ ] T-1726: Write E2E test: expedition completion reward display
+- [ ] T-1727: Write E2E test: market buy order placement
+- [ ] T-1728: Write E2E test: market sell order placement
+- [ ] T-1729: Write E2E test: market price history chart rendering
+- [ ] T-1730: Write E2E test: market search and filter functionality
+- [ ] T-1731: Write E2E test: research tree node selection and start
+- [ ] T-1732: Write E2E test: research completion notification
+- [ ] T-1733: Write E2E test: research tree zoom and pan interaction
+- [ ] T-1734: Write E2E test: inventory grid item display and sorting
+- [ ] T-1735: Write E2E test: crafting recipe selection and execution
+- [ ] T-1736: Write E2E test: item equip comparison tooltip
+- [ ] T-1737: Write E2E test: world map region click and info panel
+- [ ] T-1738: Write E2E test: world map zoom and pan interaction
+- [ ] T-1739: Write E2E test: calendar view with event markers
+- [ ] T-1740: Write E2E test: event popup display and choice selection
+- [ ] T-1741: Write E2E test: notification center open and mark-read
+- [ ] T-1742: Write E2E test: settings page volume slider interaction
+- [ ] T-1743: Write E2E test: profile page avatar upload
+- [ ] T-1744: Write E2E test: account settings password change
+- [ ] T-1745: Write E2E test: chat message send and receive
+- [ ] T-1746: Write E2E test: friend request send and accept
+- [ ] T-1747: Write E2E test: alliance creation and invite
+- [ ] T-1748: Write E2E test: leaderboard page loading and sort
+- [ ] T-1749: Write E2E test: combat auto-battle plays to completion
+- [ ] T-1750: Write E2E test: combat reward distribution after victory
+- [ ] T-1751: Write E2E test: lore codex entry display
+- [ ] T-1752: Write E2E test: quest log shows active quests
+- [ ] T-1753: Write E2E test: NPC dialog interaction flow
+- [ ] T-1754: Write E2E test: weather widget displays current conditions
+- [ ] T-1755: Write E2E test: season visual theme matches current season
+- [ ] T-1756: Write E2E test: responsive layout at mobile breakpoint (375px)
+- [ ] T-1757: Write E2E test: responsive layout at tablet breakpoint (768px)
+- [ ] T-1758: Write E2E test: responsive layout at desktop breakpoint (1920px)
+- [ ] T-1759: Write E2E test: keyboard navigation through main scenes
+- [ ] T-1760: Write E2E test: tab order correctness on forms
+- [ ] T-1761: Write E2E test: tooltip display on hover for buildings
+- [ ] T-1762: Write E2E test: modal open/close with backdrop click
+- [ ] T-1763: Write E2E test: toast notification appears and auto-dismisses
+- [ ] T-1764: Write E2E test: error page display on 404 route
+- [ ] T-1765: Write E2E test: loading spinner displays during data fetch
+- [ ] T-1766: Write E2E test: empty state display when no data exists
+- [ ] T-1767: Write E2E test: network error banner on connection loss
+- [ ] T-1768: Write E2E test: pagination controls on long lists
+- [ ] T-1769: Write E2E test: search/filter combination produces correct results
+- [ ] T-1770: Write E2E test: data persistence after page refresh
+- [ ] T-1771: Write E2E test: concurrent action handling (double-click prevention)
+- [ ] T-1772: Write E2E test: session expiration redirect to login
+- [ ] T-1773: Write E2E test: browser back/forward navigation state preservation
+- [ ] T-1774: Write E2E test: screenshot comparison of guild hall scene
+- [ ] T-1775: Write E2E test: screenshot comparison of market scene
+- [ ] T-1776: Write E2E test: screenshot comparison of world map scene
+- [ ] T-1777: Write E2E test: screenshot comparison of combat scene
+- [ ] T-1778: Write E2E test: screenshot comparison of research tree
+- [ ] T-1779: Write E2E test: screenshot comparison of login page
+- [ ] T-1780: Write E2E test: screenshot comparison of hero detail page
+- [ ] T-1781: Write E2E test: full user onboarding flow (register -> guild setup -> first build)
+- [ ] T-1782: Write E2E test: full expedition cycle (form party -> launch -> return -> loot)
+- [ ] T-1783: Write E2E test: full crafting cycle (gather materials -> craft -> equip)
+- [ ] T-1784: Write E2E test: full trade cycle (list item -> buy item -> verify inventory)
+- [ ] T-1785: Write E2E test: full research cycle (select node -> wait -> complete -> verify effect)
+- [ ] T-1786: Write E2E test: API error handling (server returns 500)
+- [ ] T-1787: Write E2E test: slow network simulation (throttled connection)
+- [ ] T-1788: Write E2E test: multiple tabs open simultaneously
+- [ ] T-1789: Write E2E test: cross-browser visual consistency check
+- [ ] T-1790: Set up Playwright CI integration with test artifact upload
+
+## Epic 25: Unit & Integration Testing
+> Service tests, route tests, balance formula tests, and event generation tests.
+
+- [ ] T-1791: Set up Jest or Vitest testing framework with TypeScript support
+- [ ] T-1792: Configure test coverage reporting with minimum threshold (80%)
+- [ ] T-1793: Create test database setup and teardown utilities
+- [ ] T-1794: Build mock factory for generating test data (users, guilds, heroes)
+- [ ] T-1795: Create API route test helper with authenticated request support
+- [ ] T-1796: Write unit test: resource production calculation correctness
+- [ ] T-1797: Write unit test: resource decay calculation correctness
+- [ ] T-1798: Write unit test: resource cap enforcement
+- [ ] T-1799: Write unit test: resource conversion recipe validation
+- [ ] T-1800: Write unit test: hero stat calculation with level and equipment
+- [ ] T-1801: Write unit test: hero XP curve formula correctness
+- [ ] T-1802: Write unit test: hero power score calculation
+- [ ] T-1803: Write unit test: hero morale modifier effects
+- [ ] T-1804: Write unit test: combat damage formula with all modifiers
+- [ ] T-1805: Write unit test: combat critical hit probability
+- [ ] T-1806: Write unit test: combat initiative ordering
+- [ ] T-1807: Write unit test: combat status effect application and duration
+- [ ] T-1808: Write unit test: market price calculation with supply/demand
+- [ ] T-1809: Write unit test: market fee calculation
+- [ ] T-1810: Write unit test: auction bidding validation rules
+- [ ] T-1811: Write unit test: expedition duration calculation
+- [ ] T-1812: Write unit test: expedition encounter probability weighting
+- [ ] T-1813: Write unit test: expedition loot roll distribution
+- [ ] T-1814: Write unit test: expedition party power score calculation
+- [ ] T-1815: Write unit test: research time calculation with modifiers
+- [ ] T-1816: Write unit test: research prerequisite validation
+- [ ] T-1817: Write unit test: research effect application
+- [ ] T-1818: Write unit test: building production rate with worker bonuses
+- [ ] T-1819: Write unit test: building upgrade cost scaling formula
+- [ ] T-1820: Write unit test: building adjacency bonus calculation
+- [ ] T-1821: Write unit test: guild XP calculation from all sources
+- [ ] T-1822: Write unit test: guild level-up threshold formula
+- [ ] T-1823: Write unit test: event condition evaluation engine
+- [ ] T-1824: Write unit test: event effect application correctness
+- [ ] T-1825: Write unit test: event cooldown enforcement
+- [ ] T-1826: Write unit test: weather data mapping to game effects
+- [ ] T-1827: Write unit test: financial data normalization to modifiers
+- [ ] T-1828: Write unit test: moon phase calculation accuracy
+- [ ] T-1829: Write unit test: season determination from date
+- [ ] T-1830: Write unit test: item stat randomization within bounds
+- [ ] T-1831: Write unit test: item set bonus activation logic
+- [ ] T-1832: Write unit test: crafting quality roll distribution
+- [ ] T-1833: Write unit test: JWT token generation and validation
+- [ ] T-1834: Write unit test: password hashing and verification
+- [ ] T-1835: Write unit test: input validation schemas reject invalid data
+- [ ] T-1836: Write unit test: rate limiter correctly counts requests
+- [ ] T-1837: Write integration test: user registration endpoint
+- [ ] T-1838: Write integration test: user login endpoint
+- [ ] T-1839: Write integration test: resource add/subtract endpoint
+- [ ] T-1840: Write integration test: hero recruitment endpoint
+- [ ] T-1841: Write integration test: expedition launch endpoint
+- [ ] T-1842: Write integration test: market buy/sell endpoint
+- [ ] T-1843: Write integration test: research start endpoint
+- [ ] T-1844: Write integration test: building construct endpoint
+- [ ] T-1845: Write integration test: event trigger endpoint
+- [ ] T-1846: Write integration test: weather data fetch and cache
+- [ ] T-1847: Write integration test: financial data fetch and cache
+- [ ] T-1848: Write integration test: chat message send endpoint
+- [ ] T-1849: Write integration test: friend request endpoint
+- [ ] T-1850: Write integration test: alliance create endpoint
+- [ ] T-1851: Write integration test: crafting execute endpoint
+- [ ] T-1852: Write integration test: item equip endpoint
+- [ ] T-1853: Write integration test: cron job resource production execution
+- [ ] T-1854: Write integration test: cron job expedition progress execution
+- [ ] T-1855: Write integration test: cron job market price update execution
+- [ ] T-1856: Write integration test: WebSocket connection establishment
+- [ ] T-1857: Write integration test: WebSocket message broadcast
+- [ ] T-1858: Write integration test: data pipeline fallback behavior
+- [ ] T-1859: Write integration test: concurrent request handling (race conditions)
+- [ ] T-1860: Write integration test: database transaction rollback on error
+- [ ] T-1861: Write load test: 100 concurrent users performing basic operations
+- [ ] T-1862: Write load test: market with 1000 concurrent listings
+- [ ] T-1863: Write load test: expedition system with 500 active expeditions
+- [ ] T-1864: Write balance test: resource economy simulation over 30 in-game days
+- [ ] T-1865: Write balance test: hero progression curve from level 1 to 50
+- [ ] T-1866: Write balance test: market price stability over simulated trading
+- [ ] T-1867: Write balance test: combat balance between all enemy types
+- [ ] T-1868: Write balance test: research tree completion time estimation
+- [ ] T-1869: Write snapshot test: API response shapes for all endpoints
+- [ ] T-1870: Write snapshot test: database migration generates expected schema
+
+## Epic 26: DevOps & Deployment
+> CI/CD pipeline, staging environment, production deployment, domain setup, SSL, and CDN configuration.
+
+- [ ] T-1871: Set up GitHub Actions workflow file for CI pipeline
+- [ ] T-1872: Configure CI to run linting on push and pull request
+- [ ] T-1873: Configure CI to run unit tests on push and pull request
+- [ ] T-1874: Configure CI to run integration tests on push and pull request
+- [ ] T-1875: Configure CI to run Playwright E2E tests on pull request
+- [ ] T-1876: Configure CI to check TypeScript compilation
+- [ ] T-1877: Configure CI to run security vulnerability scan
+- [ ] T-1878: Configure CI to generate and upload test coverage report
+- [ ] T-1879: Set up CI caching for node_modules and Playwright browsers
+- [ ] T-1880: Create CI badge display in README for build status
+- [ ] T-1881: Set up staging environment configuration (separate DB, API keys)
+- [ ] T-1882: Configure staging deployment trigger on merge to develop branch
+- [ ] T-1883: Build staging environment health check automation
+- [ ] T-1884: Set up production environment with Node.js runtime
+- [ ] T-1885: Configure production deployment trigger on merge to main branch
+- [ ] T-1886: Implement blue-green deployment strategy for zero downtime
+- [ ] T-1887: Create deployment rollback procedure with one-click revert
+- [ ] T-1888: Set up domain name registration and DNS configuration
+- [ ] T-1889: Configure SSL certificate with Let's Encrypt auto-renewal
+- [ ] T-1890: Set up CDN for static asset delivery (images, sprites, audio)
+- [ ] T-1891: Configure CDN cache headers for optimal caching strategy
+- [ ] T-1892: Implement asset fingerprinting for cache busting on deploy
+- [ ] T-1893: Set up production database with automated backup
+- [ ] T-1894: Configure production logging with log aggregation service
+- [ ] T-1895: Set up production monitoring with uptime checks (every 5 minutes)
+- [ ] T-1896: Configure alerting for server errors, high latency, and downtime
+- [ ] T-1897: Create production environment variable management system
+- [ ] T-1898: Build deployment pre-check script (tests pass, no migration pending)
+- [ ] T-1899: Implement database migration auto-run on deployment
+- [ ] T-1900: Create deployment notification to team chat (Slack/Discord webhook)
+- [ ] T-1901: Set up container configuration with Docker and docker-compose
+- [ ] T-1902: Create Docker image for application with multi-stage build
+- [ ] T-1903: Configure Docker health check in container
+- [ ] T-1904: Set up container orchestration for scaling (Docker Swarm or K8s)
+- [ ] T-1905: Create infrastructure-as-code templates for server provisioning
+- [ ] T-1906: Implement secrets management (environment secrets, not in repo)
+- [ ] T-1907: Set up preview deployments for pull requests
+- [ ] T-1908: Configure branch protection rules (require reviews, pass CI)
+- [ ] T-1909: Create release versioning system with semantic versioning
+- [ ] T-1910: Build changelog generation from commit messages
+- [ ] T-1911: Set up production error alerting with PagerDuty or similar
+- [ ] T-1912: Configure auto-scaling rules based on CPU and memory usage
+- [ ] T-1913: Create disaster recovery runbook with step-by-step procedures
+- [ ] T-1914: Set up database replication for production resilience
+- [ ] T-1915: Implement CI pipeline for database migration dry-run
+- [ ] T-1916: Configure rate limiting at load balancer level
+- [ ] T-1917: Create production performance baseline documentation
+- [ ] T-1918: Set up synthetic monitoring for critical user flows
+- [ ] T-1919: Implement canary deployment strategy for high-risk changes
+- [ ] T-1920: Build deployment dashboard showing current versions and history
+- [ ] T-1921: Configure GZIP compression at server/CDN level
+- [ ] T-1922: Create maintenance mode page for planned downtime
+- [ ] T-1923: Set up log retention policy (30 days hot, 90 days cold)
+- [ ] T-1924: Implement cost monitoring for hosting and API usage
+- [ ] T-1925: Create deployment SLA documentation and uptime targets
+- [ ] T-1926: Set up status page for public service health display
+- [ ] T-1927: Configure DDoS protection at CDN/load balancer level
+- [ ] T-1928: Create automated smoke test suite for post-deployment verification
+- [ ] T-1929: Set up staging-to-production promotion workflow
+- [ ] T-1930: Implement feature environment for testing feature branches
+
+## Epic 27: Mobile Optimization
+> Touch controls, responsive scaling, PWA support, offline mode, and performance profiling on mobile devices.
+
+- [ ] T-1931: Implement touch event handlers for all interactive elements
+- [ ] T-1932: Add tap feedback (visual ripple) for touch interactions
+- [ ] T-1933: Implement long-press gesture for context menu on mobile
+- [ ] T-1934: Create swipe gesture handler for navigation between scenes
+- [ ] T-1935: Implement pinch-to-zoom for map and research tree on touch
+- [ ] T-1936: Build responsive viewport meta tag configuration
+- [ ] T-1937: Implement canvas scaling for Phaser game on various screen sizes
+- [ ] T-1938: Create mobile-specific UI layouts for guild hall scene
+- [ ] T-1939: Create mobile-specific UI layouts for market scene
+- [ ] T-1940: Create mobile-specific UI layouts for expedition planning
+- [ ] T-1941: Create mobile-specific UI layouts for hero management
+- [ ] T-1942: Implement PWA manifest.json with app name, icons, and theme
+- [ ] T-1943: Create service worker for offline caching of static assets
+- [ ] T-1944: Implement offline detection and banner display
+- [ ] T-1945: Build offline action queue (queue actions when offline, sync on reconnect)
+- [ ] T-1946: Create app install prompt for PWA add-to-home-screen
+- [ ] T-1947: Implement push notification support via service worker
+- [ ] T-1948: Build push notification opt-in flow with permission request
+- [ ] T-1949: Create push notification for expedition completion
+- [ ] T-1950: Create push notification for event triggers
+- [ ] T-1951: Implement asset lazy loading for mobile bandwidth optimization
+- [ ] T-1952: Create low-resolution asset variants for mobile devices
+- [ ] T-1953: Implement texture atlas optimization for mobile GPU memory
+- [ ] T-1954: Build mobile performance profiling using Chrome DevTools protocol
+- [ ] T-1955: Optimize render loop for 60fps on mid-range mobile devices
+- [ ] T-1956: Implement particle effect reduction for mobile performance
+- [ ] T-1957: Create battery-saver mode reducing animation and effects
+- [ ] T-1958: Implement mobile-specific font size scaling for readability
+- [ ] T-1959: Build mobile bottom sheet component for detail panels
+- [ ] T-1960: Create mobile-optimized dialog/modal sizing
+- [ ] T-1961: Implement safe area inset handling for notched devices
+- [ ] T-1962: Build mobile landscape orientation support and layout
+- [ ] T-1963: Create mobile data usage estimation display
+- [ ] T-1964: Implement image compression for mobile network optimization
+- [ ] T-1965: Build mobile-specific loading indicators (smaller, less intrusive)
+- [ ] T-1966: Create mobile gesture tutorial overlay for first-time users
+- [ ] T-1967: Implement haptic feedback for key interactions on supported devices
+- [ ] T-1968: Build mobile notification badge on app icon
+- [ ] T-1969: Create mobile share functionality using Web Share API
+- [ ] T-1970: Implement mobile keyboard handling (prevent viewport shift)
+- [ ] T-1971: Build mobile orientation lock preference setting
+- [ ] T-1972: Create mobile quick-action shortcuts from home screen
+- [ ] T-1973: Implement mobile-specific error handling (network timeout, slow connection)
+- [ ] T-1974: Build mobile A/B layout testing framework
+- [ ] T-1975: Create mobile device detection utility for feature flagging
+- [ ] T-1976: Implement mobile scroll performance optimization (passive listeners)
+- [ ] T-1977: Build mobile accessibility zoom support without layout breaking
+- [ ] T-1978: Create mobile crash reporting integration
+- [ ] T-1979: Implement mobile app-like transition animations between scenes
+- [ ] T-1980: Build mobile performance budget and monitoring dashboard
+
+## Epic 28: Accessibility
+> Screen reader support, keyboard navigation, color contrast, ARIA labels, and reduced motion preferences.
+
+- [ ] T-1981: Audit all interactive elements for ARIA label coverage
+- [ ] T-1982: Add ARIA labels to all buttons, links, and form controls
+- [ ] T-1983: Add ARIA landmarks (main, nav, aside, footer) to page layout
+- [ ] T-1984: Implement ARIA live regions for dynamic content updates (resource changes)
+- [ ] T-1985: Add ARIA descriptions to complex UI components (research tree, combat)
+- [ ] T-1986: Implement screen reader announcements for game events and notifications
+- [ ] T-1987: Create text alternatives for all icon-only buttons
+- [ ] T-1988: Build keyboard navigation for guild hall building grid
+- [ ] T-1989: Build keyboard navigation for hero roster and detail pages
+- [ ] T-1990: Build keyboard navigation for market trading interface
+- [ ] T-1991: Build keyboard navigation for research tree nodes
+- [ ] T-1992: Build keyboard navigation for expedition planning
+- [ ] T-1993: Implement visible focus indicators on all interactive elements
+- [ ] T-1994: Create skip-to-main-content link for keyboard users
+- [ ] T-1995: Audit color contrast ratios for WCAG AA compliance (4.5:1 minimum)
+- [ ] T-1996: Fix all color contrast violations found in audit
+- [ ] T-1997: Create high contrast theme option for visually impaired users
+- [ ] T-1998: Implement reduced motion preference detection and animation disabling
+- [ ] T-1999: Add alt text to all images and illustrations
+- [ ] T-2000: Create accessibility settings page with font size, contrast, and motion options
+
+## Epic 29: Localization
+> i18n framework, string extraction, translation support, RTL layout, and date/number formatting.
+
+- [ ] T-2001: Set up i18n framework (i18next or similar) with namespace support
+- [ ] T-2002: Extract all hardcoded English strings to translation key files
+- [ ] T-2003: Create translation key naming convention and documentation
+- [ ] T-2004: Build language selector UI in settings page
+- [ ] T-2005: Implement language persistence in user preferences
+- [ ] T-2006: Create English (en) base translation file
+- [ ] T-2007: Set up Spanish (es) translation file with machine-translated starter content
+- [ ] T-2008: Set up French (fr) translation file with machine-translated starter content
+- [ ] T-2009: Set up German (de) translation file with machine-translated starter content
+- [ ] T-2010: Set up Japanese (ja) translation file with machine-translated starter content
+- [ ] T-2011: Set up Portuguese (pt-BR) translation file with machine-translated starter content
+- [ ] T-2012: Implement pluralization rules per language
+- [ ] T-2013: Implement date formatting per locale (MM/DD vs DD/MM)
+- [ ] T-2014: Implement number formatting per locale (1,000.00 vs 1.000,00)
+- [ ] T-2015: Implement currency display formatting per locale
+- [ ] T-2016: Create RTL layout support for Arabic/Hebrew languages
+- [ ] T-2017: Build RTL CSS overrides for mirrored layouts
+- [ ] T-2018: Implement dynamic font loading for CJK character sets
+- [ ] T-2019: Create translation contribution guide for community translators
+- [ ] T-2020: Build translation completion percentage display per language
+- [ ] T-2021: Implement fallback chain (requested locale -> English -> key name)
+- [ ] T-2022: Create string interpolation support for dynamic values in translations
+- [ ] T-2023: Build context notes system for translators (screenshot + usage context)
+- [ ] T-2024: Implement locale-aware sorting for lists and tables
+- [ ] T-2025: Create translation testing utility to find missing keys
+- [ ] T-2026: Build visual translation tool for in-context editing
+- [ ] T-2027: Implement locale-specific asset loading (localized images where needed)
+- [ ] T-2028: Create translation memory system for consistent terminology
+- [ ] T-2029: Build locale switcher preview for testing translations
+- [ ] T-2030: Implement text expansion handling (German text 30% longer than English)
+- [ ] T-2031: Create localized tutorial content per language
+- [ ] T-2032: Build translation CI check for missing keys on new strings
+- [ ] T-2033: Implement locale-aware search functionality
+- [ ] T-2034: Create localization documentation for adding new languages
+- [ ] T-2035: Build translation export/import utility for translator workflow
+- [ ] T-2036: Implement locale-specific game content (region names, NPC names)
+- [ ] T-2037: Create translation review workflow with approval status
+- [ ] T-2038: Build locale-aware notification text rendering
+- [ ] T-2039: Implement keyboard shortcut remapping for non-QWERTY layouts
+- [ ] T-2040: Create localization QA checklist and testing procedure
+
+## Epic 30: Analytics & Monetization
+> Event tracking, retention metrics, funnel analysis, optional cosmetic shop, and supporter tier system.
+
+- [ ] T-2041: Set up analytics event tracking framework (PostHog, Mixpanel, or custom)
+- [ ] T-2042: Implement page view tracking for all scenes
+- [ ] T-2043: Implement button click tracking for key actions
+- [ ] T-2044: Create user session duration tracking
+- [ ] T-2045: Implement feature usage tracking (which features are used most)
+- [ ] T-2046: Create funnel: registration -> guild setup -> first building -> first expedition
+- [ ] T-2047: Create funnel: expedition launch -> expedition completion -> loot collection
+- [ ] T-2048: Create funnel: market visit -> browse -> purchase
+- [ ] T-2049: Create funnel: hero recruit -> level up -> skill unlock
+- [ ] T-2050: Implement daily active user (DAU) tracking
+- [ ] T-2051: Implement weekly active user (WAU) tracking
+- [ ] T-2052: Implement monthly active user (MAU) tracking
+- [ ] T-2053: Create retention cohort analysis (Day 1, Day 7, Day 30 retention)
+- [ ] T-2054: Build analytics dashboard with key metrics overview
+- [ ] T-2055: Implement user segmentation by activity level (casual, regular, hardcore)
+- [ ] T-2056: Create churn prediction model based on activity patterns
+- [ ] T-2057: Implement A/B testing framework for feature experiments
+- [ ] T-2058: Create A/B test: onboarding flow variation
+- [ ] T-2059: Build A/B test results dashboard with statistical significance
+- [ ] T-2060: Implement event tracking for real-world data engagement (weather checks, market views)
+- [ ] T-2061: Create error rate tracking by endpoint and user segment
+- [ ] T-2062: Implement performance metric tracking (page load time, API response time)
+- [ ] T-2063: Build user feedback collection widget (in-app survey)
+- [ ] T-2064: Create NPS (Net Promoter Score) survey integration
+- [ ] T-2065: Implement analytics data export for external analysis
+- [ ] T-2066: Create cosmetic shop scene with item grid layout
+- [ ] T-2067: Build cosmetic item categories (guild hall decorations, hero skins, themes)
+- [ ] T-2068: Implement guild hall decoration cosmetic items (10 items)
+- [ ] T-2069: Create hero portrait frame cosmetic items (10 frames)
+- [ ] T-2070: Build UI theme cosmetic options (5 color themes)
+- [ ] T-2071: Create guild emblem special cosmetic components (10 items)
+- [ ] T-2072: Implement building skin cosmetic variations (5 building skins)
+- [ ] T-2073: Build cosmetic preview system showing item before purchase
+- [ ] T-2074: Implement premium currency system (Gems or similar)
+- [ ] T-2075: Create premium currency purchase flow with payment integration
+- [ ] T-2076: Build premium currency balance display in header
+- [ ] T-2077: Implement cosmetic item purchase with premium currency
+- [ ] T-2078: Create supporter tier system (Bronze, Silver, Gold, Platinum)
+- [ ] T-2079: Implement supporter tier benefits (exclusive cosmetics, chat badge, bonus storage)
+- [ ] T-2080: Build supporter tier management page
+- [ ] T-2081: Create supporter recurring payment integration
+- [ ] T-2082: Implement supporter tier badge display on player profile
+- [ ] T-2083: Build supporter exclusive chat channel
+- [ ] T-2084: Create supporter early access feature flag system
+- [ ] T-2085: Implement revenue tracking dashboard for monetization metrics
+- [ ] T-2086: Build ARPU (Average Revenue Per User) calculation
+- [ ] T-2087: Create LTV (Lifetime Value) estimation model
+- [ ] T-2088: Implement refund handling workflow
+- [ ] T-2089: Build purchase history page for players
+- [ ] T-2090: Create gift system for sending cosmetics to other players
