@@ -53,56 +53,56 @@
 - [x] T-0048: Implement responsive typography scale that adjusts to viewport width
 - [x] T-0049: Create icon system with SVG sprite sheet and icon component
 - [x] T-0050: Build color-coded rarity system (common, uncommon, rare, epic, legendary)
-- [ ] T-0051: Implement focus ring styles for keyboard navigation accessibility
-- [ ] T-0052: Add reduced-motion media query support to disable animations when preferred
-- [ ] T-0053: Create consistent form layout with validation message display
-- [ ] T-0054: Build form input component with label, placeholder, and error state
-- [ ] T-0055: Build textarea component with character count and max length
-- [ ] T-0056: Build checkbox and radio group components with accessible labels
-- [ ] T-0057: Implement form validation utility with required, min/max, and pattern rules
-- [ ] T-0058: Create notification center dropdown with read/unread states
-- [ ] T-0059: Build notification preference settings panel
-- [ ] T-0060: Implement in-app notification queue with auto-dismiss timers
-- [ ] T-0061: Build resource bar header component showing all 8 resources with icons
-- [ ] T-0062: Add animated resource change indicators (+/- floating numbers)
-- [ ] T-0063: Implement resource bar overflow handling for small screens
-- [ ] T-0064: Build clock/time display component showing in-game time and season
-- [ ] T-0065: Create weather indicator widget in the header bar
-- [ ] T-0066: Build mini-map widget showing current region context
-- [ ] T-0067: Implement tutorial overlay system with step-by-step highlights
-- [ ] T-0068: Create first-time user onboarding flow with 5 guided steps
-- [ ] T-0069: Build tooltip tour system for introducing new features
-- [ ] T-0070: Implement user preference for UI density (compact, normal, comfortable)
-- [ ] T-0071: Add CSS grid layout for guild hall building placement view
-- [ ] T-0072: Add CSS grid layout for hero roster list/grid toggle view
-- [ ] T-0073: Add CSS grid layout for market trading interface
-- [ ] T-0074: Add CSS grid layout for research tree visualization
-- [ ] T-0075: Add CSS grid layout for expedition planning screen
-- [ ] T-0076: Add CSS grid layout for inventory/equipment management
-- [ ] T-0077: Implement pinch-to-zoom support for map and research tree on touch devices
-- [ ] T-0078: Build image lazy-loading utility for hero portraits and building sprites
-- [ ] T-0079: Create placeholder image component for assets not yet loaded
-- [ ] T-0080: Implement virtual scrolling for long lists (hero roster, item inventory)
-- [ ] T-0081: Build data table component with sortable columns and row selection
-- [ ] T-0082: Build filter bar component with tag-based active filter display
-- [ ] T-0083: Implement undo/redo toast for reversible actions
-- [ ] T-0084: Create consistent spacing and margin utility classes
-- [ ] T-0085: Build responsive image component with srcset for different resolutions
-- [ ] T-0086: Implement CSS transition for theme switching (light to dark)
-- [ ] T-0087: Build split-pane layout component for side-by-side views
-- [ ] T-0088: Create z-index management system to prevent stacking context issues
-- [ ] T-0089: Implement print stylesheet for guild reports and expedition logs
-- [ ] T-0090: Build copy-to-clipboard utility with visual feedback
-- [ ] T-0091: Implement relative time display (e.g., "3 minutes ago") with auto-update
-- [ ] T-0092: Build countdown timer component for event and expedition timers
-- [ ] T-0093: Create visual diff component for comparing before/after stat changes
-- [ ] T-0094: Build star rating component for hero satisfaction and item quality
-- [ ] T-0095: Implement gesture recognizer for swipe navigation between tabs on mobile
-- [ ] T-0096: Create floating action button component for primary actions on mobile
-- [ ] T-0097: Build status indicator dot component (online, idle, busy, offline)
-- [ ] T-0098: Implement sticky header behavior for scrollable content sections
-- [ ] T-0099: Add CSS animations for weather-based UI theme tinting
-- [ ] T-0100: Comprehensive visual regression audit across all breakpoints
+- [x] T-0051: Implement focus ring styles for keyboard navigation accessibility
+- [x] T-0052: Add reduced-motion media query support to disable animations when preferred
+- [x] T-0053: Create consistent form layout with validation message display
+- [x] T-0054: Build form input component with label, placeholder, and error state
+- [x] T-0055: Build textarea component with character count and max length
+- [x] T-0056: Build checkbox and radio group components with accessible labels
+- [x] T-0057: Implement form validation utility with required, min/max, and pattern rules
+- [x] T-0058: Create notification center dropdown with read/unread states
+- [x] T-0059: Build notification preference settings panel
+- [x] T-0060: Implement in-app notification queue with auto-dismiss timers
+- [x] T-0061: Build resource bar header component showing all 8 resources with icons
+- [x] T-0062: Add animated resource change indicators (+/- floating numbers)
+- [x] T-0063: Implement resource bar overflow handling for small screens
+- [x] T-0064: Build clock/time display component showing in-game time and season
+- [x] T-0065: Create weather indicator widget in the header bar
+- [x] T-0066: Build mini-map widget showing current region context
+- [x] T-0067: Implement tutorial overlay system with step-by-step highlights
+- [x] T-0068: Create first-time user onboarding flow with 5 guided steps
+- [x] T-0069: Build tooltip tour system for introducing new features
+- [x] T-0070: Implement user preference for UI density (compact, normal, comfortable)
+- [x] T-0071: Add CSS grid layout for guild hall building placement view
+- [x] T-0072: Add CSS grid layout for hero roster list/grid toggle view
+- [x] T-0073: Add CSS grid layout for market trading interface
+- [x] T-0074: Add CSS grid layout for research tree visualization
+- [x] T-0075: Add CSS grid layout for expedition planning screen
+- [x] T-0076: Add CSS grid layout for inventory/equipment management
+- [x] T-0077: Implement pinch-to-zoom support for map and research tree on touch devices
+- [x] T-0078: Build image lazy-loading utility for hero portraits and building sprites
+- [x] T-0079: Create placeholder image component for assets not yet loaded
+- [x] T-0080: Implement virtual scrolling for long lists (hero roster, item inventory)
+- [x] T-0081: Build data table component with sortable columns and row selection
+- [x] T-0082: Build filter bar component with tag-based active filter display
+- [x] T-0083: Implement undo/redo toast for reversible actions
+- [x] T-0084: Create consistent spacing and margin utility classes
+- [x] T-0085: Build responsive image component with srcset for different resolutions
+- [x] T-0086: Implement CSS transition for theme switching (light to dark)
+- [x] T-0087: Build split-pane layout component for side-by-side views
+- [x] T-0088: Create z-index management system to prevent stacking context issues
+- [x] T-0089: Implement print stylesheet for guild reports and expedition logs
+- [x] T-0090: Build copy-to-clipboard utility with visual feedback
+- [x] T-0091: Implement relative time display (e.g., "3 minutes ago") with auto-update
+- [x] T-0092: Build countdown timer component for event and expedition timers
+- [x] T-0093: Create visual diff component for comparing before/after stat changes
+- [x] T-0094: Build star rating component for hero satisfaction and item quality
+- [x] T-0095: Implement gesture recognizer for swipe navigation between tabs on mobile
+- [x] T-0096: Create floating action button component for primary actions on mobile
+- [x] T-0097: Build status indicator dot component (online, idle, busy, offline)
+- [x] T-0098: Implement sticky header behavior for scrollable content sections
+- [x] T-0099: Add CSS animations for weather-based UI theme tinting
+- [x] T-0100: Comprehensive visual regression audit across all breakpoints
 
 ## Epic 2: Login & Account System
 > OAuth integration, password reset flow, account settings, profile management, and secure session handling.
