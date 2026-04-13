@@ -714,4 +714,341 @@ router.post('/expand-storage', async (req: Request, res: Response) => {
   }
 });
 
+// ===== ITEM AGING (T-0742) =====
+
+// GET /aging — items with visual aging/patina info
+router.get('/aging', async (req: Request, res: Response) => {
+  try {
+    const guild = await getGuild(req, res);
+    if (!guild) return;
+
+    const inventory = await ItemService.getInventory(guild.id);
+    const aged = inventory.map((item: any) => {
+      const createdDay = item.metadata?.createdDay || 0;
+      const currentDay = Math.floor(Date.now() / (24 * 60 * 60 * 1000));
+      const ageDays = currentDay - createdDay;
+      let patina = 'new';
+      if (ageDays > 365) patina = 'ancient';
+      else if (ageDays > 180) patina = 'weathered';
+      else if (ageDays > 90) patina = 'aged';
+      else if (ageDays > 30) patina = 'worn';
+
+      return { id: item.id, templateId: item.templateId, name: item.template?.name, ageDays, patina };
+    });
+
+    res.json(aged);
+  } catch (err) {
+    console.error('Aging error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ===== QUEST REWARD INTEGRATION (T-0744) =====
+
+// POST /quest-reward — award item from quest completion
+router.post('/quest-reward', async (req: Request, res: Response) => {
+  try {
+    const guild = await getGuild(req, res);
+    if (!guild) return;
+
+    const { templateId, quantity } = req.body;
+    if (!templateId) {
+      res.status(400).json({ error: 'validation', message: 'templateId is required' });
+      return;
+    }
+
+    const item = await ItemService.addItem(guild.id, templateId, quantity || 1);
+    res.json({ item, message: 'Quest reward received!' });
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(400).json({ error: 'reward_failed', message: err.message });
+    } else {
+      res.status(500).json({ error: 'server', message: 'Internal server error' });
+    }
+  }
+});
+
+// ===== CRAFTING EVENTS (T-0745) =====
+
+// GET /crafting-events — active crafting events
+router.get('/crafting-events', async (_req: Request, res: Response) => {
+  try {
+    // Calculate active crafting events based on date
+    const now = new Date();
+    const month = now.getMonth();
+    const events = [];
+
+    // Seasonal crafting festivals
+    if (month === 11 || month === 0) {
+      events.push({
+        id: 'winter_forge',
+        name: 'Winter Forge Festival',
+        description: 'Double quality chance on all crafted items!',
+        bonus: { qualityMultiplier: 2, critChanceBonus: 5 },
+        active: true,
+      });
+    }
+    if (month >= 5 && month <= 7) {
+      events.push({
+        id: 'summer_smelt',
+        name: 'Summer Smelting Season',
+        description: 'Reduced crafting costs by 20%!',
+        bonus: { costReduction: 0.2 },
+        active: true,
+      });
+    }
+    if (month === 9) {
+      events.push({
+        id: 'harvest_craft',
+        name: 'Harvest Crafting Fair',
+        description: 'Food and herb recipes cost 50% less!',
+        bonus: { costReduction: 0.5, categories: ['food', 'herbs'] },
+        active: true,
+      });
+    }
+
+    res.json(events);
+  } catch (err) {
+    console.error('Crafting events error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ===== SEASONAL MATERIALS (T-0757) =====
+
+// GET /seasonal-materials — materials available this season
+router.get('/seasonal-materials', async (_req: Request, res: Response) => {
+  try {
+    const now = new Date();
+    const month = now.getMonth();
+
+    let season: string;
+    if (month >= 2 && month <= 4) season = 'spring';
+    else if (month >= 5 && month <= 7) season = 'summer';
+    else if (month >= 8 && month <= 10) season = 'autumn';
+    else season = 'winter';
+
+    const seasonalMaterials: Record<string, Array<{ templateId: string; name: string; description: string }>> = {
+      spring: [
+        { templateId: 'seed_moonpetal', name: 'Moonpetal Seed', description: 'Blooms in spring moonlight' },
+        { templateId: 'material_living_wood', name: 'Living Wood', description: 'Most potent in spring' },
+      ],
+      summer: [
+        { templateId: 'material_dragon_scale', name: 'Dragon Scale', description: 'Dragons shed in summer heat' },
+        { templateId: 'gem_ruby', name: 'Ruby', description: 'Found in summer-warmed caves' },
+      ],
+      autumn: [
+        { templateId: 'material_moonthread', name: 'Moonthread', description: 'Harvest moon enhances spinning' },
+        { templateId: 'seed_cloudberry', name: 'Cloudberry Bush', description: 'Autumn berries are sweetest' },
+      ],
+      winter: [
+        { templateId: 'gem_sapphire', name: 'Sapphire', description: 'Crystal clear in winter frost' },
+        { templateId: 'material_phoenix_feather', name: 'Phoenix Feather', description: 'Phoenix nests in winter warmth' },
+      ],
+    };
+
+    res.json({
+      season,
+      materials: seasonalMaterials[season] || [],
+      bonusDropRate: 1.5,
+    });
+  } catch (err) {
+    console.error('Seasonal materials error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ===== RECIPE DISCOVERY (T-0756) =====
+
+// POST /discover-from-expedition — discover recipe from expedition find
+router.post('/discover-from-expedition', async (req: Request, res: Response) => {
+  try {
+    const guild = await getGuild(req, res);
+    if (!guild) return;
+
+    const { destinationId } = req.body;
+
+    // Randomly discover a recipe based on expedition destination
+    const allRecipes = CraftingService.getAllRecipes();
+    const state = CraftingService.getCraftingState(guild.metadata);
+    const undiscovered = allRecipes.filter(r => !state.discoveredRecipes.includes(r.id));
+
+    if (undiscovered.length === 0) {
+      res.json({ discovered: false, message: 'All recipes already known!' });
+      return;
+    }
+
+    // 30% chance to discover a recipe
+    if (Math.random() > 0.3) {
+      res.json({ discovered: false, message: 'No recipe found this time.' });
+      return;
+    }
+
+    const recipe = undiscovered[Math.floor(Math.random() * undiscovered.length)];
+    await CraftingService.discoverRecipe(guild.id, recipe.id);
+
+    res.json({
+      discovered: true,
+      recipe: { id: recipe.id, name: recipe.name },
+      message: `Discovered recipe: ${recipe.name}!`,
+    });
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(400).json({ error: 'discover_failed', message: err.message });
+    } else {
+      res.status(500).json({ error: 'server', message: 'Internal server error' });
+    }
+  }
+});
+
+// ===== STAT RANDOMIZATION (T-0747) =====
+
+// POST /randomize-stats — randomize item stats within rarity range
+router.post('/randomize-stats', async (req: Request, res: Response) => {
+  try {
+    const guild = await getGuild(req, res);
+    if (!guild) return;
+
+    const { itemId } = req.body;
+    if (!itemId) {
+      res.status(400).json({ error: 'validation', message: 'itemId is required' });
+      return;
+    }
+
+    const item = await prisma.item.findUnique({ where: { id: itemId } });
+    if (!item || item.guildId !== guild.id) {
+      res.status(400).json({ error: 'not_found', message: 'Item not found' });
+      return;
+    }
+
+    const template = ITEM_TEMPLATES.find(t => t.id === item.templateId);
+    if (!template) {
+      res.status(400).json({ error: 'not_found', message: 'Template not found' });
+      return;
+    }
+
+    // Cost: 10 essence per reroll
+    const resources = JSON.parse(guild.resources) as Record<string, number>;
+    if ((resources.essence || 0) < 10) {
+      res.status(400).json({ error: 'insufficient', message: 'Need 10 essence to reroll stats' });
+      return;
+    }
+    resources.essence -= 10;
+
+    // Randomize stats within +/- 20% of template base
+    const metadata = item.metadata ? JSON.parse(item.metadata) : {};
+    const statRolls: Record<string, number> = {};
+
+    if (template.effects.statBonuses) {
+      for (const [stat, base] of Object.entries(template.effects.statBonuses)) {
+        const variance = Math.ceil(base * 0.2);
+        const roll = base + Math.floor(Math.random() * (variance * 2 + 1)) - variance;
+        statRolls[stat] = Math.max(1, roll);
+      }
+    }
+
+    metadata.statRolls = statRolls;
+
+    await prisma.item.update({
+      where: { id: itemId },
+      data: { metadata: JSON.stringify(metadata) },
+    });
+
+    await prisma.guild.update({
+      where: { id: guild.id },
+      data: { resources: JSON.stringify(resources) },
+    });
+
+    res.json({ statRolls, essenceSpent: 10 });
+  } catch (err) {
+    console.error('Randomize stats error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ===== ITEM CARD EXPORT (T-0755) =====
+
+// GET /card/:templateId — get item detail card data for sharing
+router.get('/card/:templateId', async (req: Request, res: Response) => {
+  try {
+    const template = ITEM_TEMPLATES.find(t => t.id === req.params.templateId);
+    if (!template) {
+      res.status(404).json({ error: 'not_found', message: 'Template not found' });
+      return;
+    }
+
+    // Build card data for client-side rendering/export
+    const card = {
+      name: template.name,
+      rarity: template.rarity,
+      category: template.category,
+      description: template.description,
+      effects: template.effects,
+      durability: template.durability,
+      sockets: template.sockets,
+      sellValue: template.sellValue,
+      lore: template.lore,
+      setId: template.setId,
+      weaponType: template.weaponType,
+      isLegendary: template.isLegendaryQuest,
+      shareUrl: `guildtide://item/${template.id}`,
+    };
+
+    res.json(card);
+  } catch (err) {
+    console.error('Card export error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ===== AUCTION INTEGRATION (T-0750) =====
+
+// POST /list-auction — list item on auction house
+router.post('/list-auction', async (req: Request, res: Response) => {
+  try {
+    const guild = await getGuild(req, res);
+    if (!guild) return;
+
+    const { itemId, startingPrice, buyoutPrice, durationHours } = req.body;
+    if (!itemId || !startingPrice) {
+      res.status(400).json({ error: 'validation', message: 'itemId and startingPrice are required' });
+      return;
+    }
+
+    // Remove item from inventory
+    await ItemService.removeItem(guild.id, itemId, 1);
+
+    // Store auction listing in guild metadata
+    let meta: Record<string, unknown> = {};
+    try { if (guild.metadata) meta = JSON.parse(guild.metadata); } catch { /* empty */ }
+
+    const auctions: any[] = (meta.itemAuctions as any[]) || [];
+    auctions.push({
+      id: `auction_${Date.now()}`,
+      itemId,
+      startingPrice,
+      buyoutPrice: buyoutPrice || startingPrice * 2,
+      currentBid: startingPrice,
+      durationHours: durationHours || 24,
+      listedAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + (durationHours || 24) * 3600 * 1000).toISOString(),
+      status: 'active',
+    });
+
+    meta.itemAuctions = auctions;
+    await prisma.guild.update({
+      where: { id: guild.id },
+      data: { metadata: JSON.stringify(meta) },
+    });
+
+    res.json({ message: 'Item listed on auction house!' });
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(400).json({ error: 'auction_failed', message: err.message });
+    } else {
+      res.status(500).json({ error: 'server', message: 'Internal server error' });
+    }
+  }
+});
+
 export { router as itemsRouter };
