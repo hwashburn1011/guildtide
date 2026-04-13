@@ -1,0 +1,13 @@
+node_modules
+.git
+.github
+*.md
+docs
+tests
+playwright-report
+test-results
+.env
+.env.*
+*.db
+*.sqlite
+coverage
