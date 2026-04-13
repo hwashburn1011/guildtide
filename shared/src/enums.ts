@@ -163,3 +163,81 @@ export enum Climate {
   Mediterranean = 'mediterranean',
   Continental = 'continental',
 }
+
+// --- Social / Multiplayer Enums ---
+
+export enum PlayerPresenceStatus {
+  Online = 'online',
+  Idle = 'idle',
+  Offline = 'offline',
+}
+
+export enum FriendRequestStatus {
+  Pending = 'pending',
+  Accepted = 'accepted',
+  Declined = 'declined',
+}
+
+export enum AllianceRole {
+  Leader = 'leader',
+  Officer = 'officer',
+  Member = 'member',
+}
+
+export enum AlliancePerm {
+  Invite = 'invite',
+  Kick = 'kick',
+  Manage = 'manage',
+  Chat = 'chat',
+  Treasury = 'treasury',
+  War = 'war',
+}
+
+export enum ChatChannel {
+  Global = 'global',
+  Alliance = 'alliance',
+  Private = 'private',
+}
+
+export enum TradeRequestStatus {
+  Pending = 'pending',
+  Accepted = 'accepted',
+  Declined = 'declined',
+  Expired = 'expired',
+}
+
+export enum GuildWarStatus {
+  Pending = 'pending',
+  Active = 'active',
+  Resolved = 'resolved',
+  Cancelled = 'cancelled',
+}
+
+export enum GuildWarObjective {
+  MostExpeditions = 'most_expeditions',
+  HighestTradeVolume = 'highest_trade_volume',
+  MostResources = 'most_resources',
+  MostXP = 'most_xp',
+}
+
+export enum LeaderboardCategory {
+  GuildLevel = 'guild_level',
+  Wealth = 'wealth',
+  ExpeditionCount = 'expedition_count',
+  TradeVolume = 'trade_volume',
+  HeroPower = 'hero_power',
+  AllianceRank = 'alliance_rank',
+}
+
+export enum SocialNotificationType {
+  FriendOnline = 'friend_online',
+  FriendRequest = 'friend_request',
+  TradeRequest = 'trade_request',
+  AllianceInvite = 'alliance_invite',
+  WarDeclared = 'war_declared',
+  GiftReceived = 'gift_received',
+  ChatMention = 'chat_mention',
+  RankChange = 'rank_change',
+  WorldBoss = 'world_boss',
+  AllianceEvent = 'alliance_event',
+}
