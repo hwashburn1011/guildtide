@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  username     String   @unique
+  regionId     String   @default("")
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime @default(now())
+  lastTickAt   DateTime @default(now())
+  guild        Guild?
+}
+
+model Guild {
+  id          String       @id @default(uuid())
+  playerId    String       @unique
+  player      Player       @relation(fields: [playerId], references: [id])
+  name        String
+  level       Int          @default(1)
+  xp          Int          @default(0)
+  resources   String       @default("{}")
+  heroes      Hero[]
+  buildings   Building[]
+  inventory   Item[]
+  expeditions Expedition[]
+  researchIds String       @default("[]")
+  createdAt   DateTime     @default(now())
+}
+
+model Hero {
+  id         String   @id @default(uuid())
+  guildId    String
+  guild      Guild    @relation(fields: [guildId], references: [id])
+  name       String
+  role       String
+  level      Int      @default(1)
+  xp         Int      @default(0)
+  traits     String   @default("[]")
+  stats      String   @default("{}")
+  equipment  String   @default("{}")
+  assignment String?
+  status     String   @default("idle")
+  hiredAt    DateTime @default(now())
+}
+
+model Building {
+  id       String  @id @default(uuid())
+  guildId  String
+  guild    Guild   @relation(fields: [guildId], references: [id])
+  type     String
+  level    Int     @default(1)
+  slot     Int
+  metadata String?
+}
+
+model Item {
+  id         String  @id @default(uuid())
+  guildId    String
+  guild      Guild   @relation(fields: [guildId], references: [id])
+  templateId String
+  quantity   Int     @default(1)
+  metadata   String?
+}
+
+model Expedition {
+  id          String    @id @default(uuid())
+  guildId     String
+  guild       Guild     @relation(fields: [guildId], references: [id])
+  type        String
+  heroIds     String    @default("[]")
+  destination String
+  startedAt   DateTime  @default(now())
+  duration    Int
+  resolvedAt  DateTime?
+  result      String?
+  status      String    @default("active")
+}
+
+model RegionState {
+  id           String   @id @default(uuid())
+  regionId     String
+  date         String
+  weather      String   @default("{}")
+  modifiers    String   @default("{}")
+  activeEvents String   @default("[]")
+  marketState  String   @default("{}")
+  createdAt    DateTime @default(now())
+
+  @@unique([regionId, date])
+}
+
+model EventLog {
+  id        String   @id @default(uuid())
+  guildId   String
+  type      String
+  message   String
+  data      String?
+  createdAt DateTime @default(now())
+}
