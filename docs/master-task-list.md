@@ -719,86 +719,86 @@
 ## Epic 10: Items & Equipment
 > Full crafting system, item sets, enchanting, item trading, and visual equipment previews on heroes.
 
-- [ ] T-0681: Define item data schema (name, type, rarity, stats, slot, requirements, lore)
-- [ ] T-0682: Create item database with 100+ base items across all categories
-- [ ] T-0683: Implement weapon category items (swords, staves, bows, daggers, maces)
-- [ ] T-0684: Implement armor category items (helmets, chestplates, leggings, boots, shields)
-- [ ] T-0685: Implement accessory category items (rings, amulets, cloaks, belts)
-- [ ] T-0686: Implement consumable category items (potions, scrolls, food, bombs)
-- [ ] T-0687: Implement material category items (crafting ingredients, ores, herbs, gems)
-- [ ] T-0688: Build inventory UI with grid layout and category tabs
-- [ ] T-0689: Implement item tooltip with stat display, flavor text, and comparison
-- [ ] T-0690: Build item comparison overlay showing stat differences with equipped item
-- [ ] T-0691: Implement item equip/unequip system with slot validation
-- [ ] T-0692: Build hero equipment panel with paper-doll slot display
-- [ ] T-0693: Create equipment stat bonus calculation and display
-- [ ] T-0694: Implement item rarity tiers with color-coded borders (5 tiers)
-- [ ] T-0695: Create item rarity drop rate configuration per expedition difficulty
-- [ ] T-0696: Build crafting recipe data structure with ingredients and result
-- [ ] T-0697: Implement crafting service with recipe lookup and material validation
-- [ ] T-0698: Create 50 crafting recipes across all item categories
-- [ ] T-0699: Build crafting UI with recipe browser, ingredient display, and craft button
-- [ ] T-0700: Implement crafting progress timer based on recipe complexity
-- [ ] T-0701: Build crafting queue system with multiple items in sequence
-- [ ] T-0702: Create crafting quality system (normal, fine, masterwork based on Smith skill)
-- [ ] T-0703: Implement crafting critical success chance for bonus stats
-- [ ] T-0704: Build crafting history log showing recent crafted items
-- [ ] T-0705: Create crafting material source tracker (where to find each ingredient)
-- [ ] T-0706: Implement item set system with set bonuses for wearing matching pieces
-- [ ] T-0707: Create 10 item sets with 3-5 pieces each and tiered set bonuses
-- [ ] T-0708: Build set collection tracker showing owned/missing pieces
-- [ ] T-0709: Implement set bonus activation display on hero equipment panel
-- [ ] T-0710: Create enchanting system with enchantment scrolls and gem sockets
-- [ ] T-0711: Implement enchantment application to equipment with cost
-- [ ] T-0712: Build enchanting UI with scroll selection and target item selection
-- [ ] T-0713: Create 20 enchantment types (fire damage, cold resist, speed boost, etc.)
-- [ ] T-0714: Implement gem socketing system for adding gem bonuses to items
-- [ ] T-0715: Build gem socketing UI with drag-drop gem to socket
-- [ ] T-0716: Create gem types and effects (ruby: strength, sapphire: intellect, etc.)
-- [ ] T-0717: Implement item durability system with repair mechanic
-- [ ] T-0718: Build item repair UI at Workshop with cost display
-- [ ] T-0719: Create item salvage/disenchant system for recovering materials
-- [ ] T-0720: Build salvage UI with material recovery preview
-- [ ] T-0721: Implement item upgrade system (combine 3 items to higher rarity)
-- [ ] T-0722: Build item upgrade UI with item selection slots and result preview
-- [ ] T-0723: Create item lore system with unlockable backstory per unique item
-- [ ] T-0724: Build item lore collection page (compendium)
-- [ ] T-0725: Implement item visual preview on hero portrait when equipped
-- [ ] T-0726: Create weapon visual variations per type and rarity
-- [ ] T-0727: Create armor visual variations per type and rarity
-- [ ] T-0728: Build item sorting options (by type, rarity, level, value, name)
-- [ ] T-0729: Implement item filtering by type, rarity, and equippable role
-- [ ] T-0730: Create item search by name functionality
-- [ ] T-0731: Build item mass-sell UI for bulk selling vendor trash
-- [ ] T-0732: Implement item lock/favorite to prevent accidental sell or salvage
-- [ ] T-0733: Create item trading between players with trade window UI
-- [ ] T-0734: Build trade window with offer/request panels and accept/decline
-- [ ] T-0735: Implement item gift system for sending items to alliance members
-- [ ] T-0736: Create legendary item system with unique named items and special effects
-- [ ] T-0737: Build legendary item discovery notification with fanfare animation
-- [ ] T-0738: Implement item achievement system (collect all legendaries, craft 100 items)
-- [ ] T-0739: Create item tooltip comparison mode (hold Shift to compare with equipped)
-- [ ] T-0740: Build gear score calculation combining all equipped item stats
-- [ ] T-0741: Implement recommended gear suggestions based on hero role and level
-- [ ] T-0742: Create item aging system where ancient items gain patina visual
-- [ ] T-0743: Build item collection completion percentage per category
-- [ ] T-0744: Implement item quest reward integration for hero personal quests
-- [ ] T-0745: Create item crafting event (crafting festival: double quality chance)
-- [ ] T-0746: Build item storage chest system for overflow inventory
-- [ ] T-0747: Implement item stat randomization within rarity-defined ranges
-- [ ] T-0748: Create item transmog system for visual appearance override
-- [ ] T-0749: Build transmog UI with appearance library and preview
-- [ ] T-0750: Implement item auction integration (list equipment on auction house)
-- [ ] T-0751: Create item durability warning notification before breakage
-- [ ] T-0752: Build equipment loadout save/swap system for quick gear changes
-- [ ] T-0753: Implement item drop animation from expedition loot
-- [ ] T-0754: Create item price estimation based on market average
-- [ ] T-0755: Build item detail card export as shareable image
-- [ ] T-0756: Implement item recipe discovery from expedition rare finds
-- [ ] T-0757: Create item seasonal crafting materials available only in certain seasons
-- [ ] T-0758: Build item inventory capacity system with expandable storage
-- [ ] T-0759: Implement item auto-equip best gear button per hero
-- [ ] T-0760: Create item quick-craft button for previously crafted recipes
+- [x] T-0681: Define item data schema (name, type, rarity, stats, slot, requirements, lore)
+- [x] T-0682: Create item database with 100+ base items across all categories
+- [x] T-0683: Implement weapon category items (swords, staves, bows, daggers, maces)
+- [x] T-0684: Implement armor category items (helmets, chestplates, leggings, boots, shields)
+- [x] T-0685: Implement accessory category items (rings, amulets, cloaks, belts)
+- [x] T-0686: Implement consumable category items (potions, scrolls, food, bombs)
+- [x] T-0687: Implement material category items (crafting ingredients, ores, herbs, gems)
+- [x] T-0688: Build inventory UI with grid layout and category tabs
+- [x] T-0689: Implement item tooltip with stat display, flavor text, and comparison
+- [x] T-0690: Build item comparison overlay showing stat differences with equipped item
+- [x] T-0691: Implement item equip/unequip system with slot validation
+- [x] T-0692: Build hero equipment panel with paper-doll slot display
+- [x] T-0693: Create equipment stat bonus calculation and display
+- [x] T-0694: Implement item rarity tiers with color-coded borders (5 tiers)
+- [x] T-0695: Create item rarity drop rate configuration per expedition difficulty
+- [x] T-0696: Build crafting recipe data structure with ingredients and result
+- [x] T-0697: Implement crafting service with recipe lookup and material validation
+- [x] T-0698: Create 50 crafting recipes across all item categories
+- [x] T-0699: Build crafting UI with recipe browser, ingredient display, and craft button
+- [x] T-0700: Implement crafting progress timer based on recipe complexity
+- [x] T-0701: Build crafting queue system with multiple items in sequence
+- [x] T-0702: Create crafting quality system (normal, fine, masterwork based on Smith skill)
+- [x] T-0703: Implement crafting critical success chance for bonus stats
+- [x] T-0704: Build crafting history log showing recent crafted items
+- [x] T-0705: Create crafting material source tracker (where to find each ingredient)
+- [x] T-0706: Implement item set system with set bonuses for wearing matching pieces
+- [x] T-0707: Create 10 item sets with 3-5 pieces each and tiered set bonuses
+- [x] T-0708: Build set collection tracker showing owned/missing pieces
+- [x] T-0709: Implement set bonus activation display on hero equipment panel
+- [x] T-0710: Create enchanting system with enchantment scrolls and gem sockets
+- [x] T-0711: Implement enchantment application to equipment with cost
+- [x] T-0712: Build enchanting UI with scroll selection and target item selection
+- [x] T-0713: Create 20 enchantment types (fire damage, cold resist, speed boost, etc.)
+- [x] T-0714: Implement gem socketing system for adding gem bonuses to items
+- [x] T-0715: Build gem socketing UI with drag-drop gem to socket
+- [x] T-0716: Create gem types and effects (ruby: strength, sapphire: intellect, etc.)
+- [x] T-0717: Implement item durability system with repair mechanic
+- [x] T-0718: Build item repair UI at Workshop with cost display
+- [x] T-0719: Create item salvage/disenchant system for recovering materials
+- [x] T-0720: Build salvage UI with material recovery preview
+- [x] T-0721: Implement item upgrade system (combine 3 items to higher rarity)
+- [x] T-0722: Build item upgrade UI with item selection slots and result preview
+- [x] T-0723: Create item lore system with unlockable backstory per unique item
+- [x] T-0724: Build item lore collection page (compendium)
+- [x] T-0725: Implement item visual preview on hero portrait when equipped
+- [x] T-0726: Create weapon visual variations per type and rarity
+- [x] T-0727: Create armor visual variations per type and rarity
+- [x] T-0728: Build item sorting options (by type, rarity, level, value, name)
+- [x] T-0729: Implement item filtering by type, rarity, and equippable role
+- [x] T-0730: Create item search by name functionality
+- [x] T-0731: Build item mass-sell UI for bulk selling vendor trash
+- [x] T-0732: Implement item lock/favorite to prevent accidental sell or salvage
+- [x] T-0733: Create item trading between players with trade window UI
+- [x] T-0734: Build trade window with offer/request panels and accept/decline
+- [x] T-0735: Implement item gift system for sending items to alliance members
+- [x] T-0736: Create legendary item system with unique named items and special effects
+- [x] T-0737: Build legendary item discovery notification with fanfare animation
+- [x] T-0738: Implement item achievement system (collect all legendaries, craft 100 items)
+- [x] T-0739: Create item tooltip comparison mode (hold Shift to compare with equipped)
+- [x] T-0740: Build gear score calculation combining all equipped item stats
+- [x] T-0741: Implement recommended gear suggestions based on hero role and level
+- [x] T-0742: Create item aging system where ancient items gain patina visual
+- [x] T-0743: Build item collection completion percentage per category
+- [x] T-0744: Implement item quest reward integration for hero personal quests
+- [x] T-0745: Create item crafting event (crafting festival: double quality chance)
+- [x] T-0746: Build item storage chest system for overflow inventory
+- [x] T-0747: Implement item stat randomization within rarity-defined ranges
+- [x] T-0748: Create item transmog system for visual appearance override
+- [x] T-0749: Build transmog UI with appearance library and preview
+- [x] T-0750: Implement item auction integration (list equipment on auction house)
+- [x] T-0751: Create item durability warning notification before breakage
+- [x] T-0752: Build equipment loadout save/swap system for quick gear changes
+- [x] T-0753: Implement item drop animation from expedition loot
+- [x] T-0754: Create item price estimation based on market average
+- [x] T-0755: Build item detail card export as shareable image
+- [x] T-0756: Implement item recipe discovery from expedition rare finds
+- [x] T-0757: Create item seasonal crafting materials available only in certain seasons
+- [x] T-0758: Build item inventory capacity system with expandable storage
+- [x] T-0759: Implement item auto-equip best gear button per hero
+- [x] T-0760: Create item quick-craft button for previously crafted recipes
 
 ## Epic 11: Weather & Real-World Data
 > OpenWeatherMap integration, financial APIs, news API, sports events, global celebrations, data pipeline with caching and fallbacks.
