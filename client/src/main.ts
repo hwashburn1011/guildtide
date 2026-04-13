@@ -6,6 +6,7 @@ import { RegionSelectScene } from './scenes/RegionSelectScene';
 import { GuildHallScene } from './scenes/GuildHallScene';
 import { ExpeditionScene } from './scenes/ExpeditionScene';
 import { MarketScene } from './scenes/MarketScene';
+import { ResearchScene } from './scenes/ResearchScene';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -20,7 +21,7 @@ const config: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [BootScene, LoginScene, RegionSelectScene, GuildHallScene, ExpeditionScene, MarketScene],
+  scene: [BootScene, LoginScene, RegionSelectScene, GuildHallScene, ExpeditionScene, MarketScene, ResearchScene],
 };
 
 new Phaser.Game(config);
