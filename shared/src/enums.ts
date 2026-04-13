@@ -31,6 +31,14 @@ export enum HeroTrait {
   Salvager = 'salvager',
   Hardy = 'hardy',
   Nimble = 'nimble',
+  Brave = 'brave',
+  Greedy = 'greedy',
+  Cautious = 'cautious',
+  Loyal = 'loyal',
+  Scholarly = 'scholarly',
+  Charismatic = 'charismatic',
+  Stubborn = 'stubborn',
+  Inventive = 'inventive',
 }
 
 export enum HeroStatus {
@@ -38,6 +46,8 @@ export enum HeroStatus {
   Assigned = 'assigned',
   Expedition = 'expedition',
   Recovering = 'recovering',
+  Training = 'training',
+  Resting = 'resting',
 }
 
 export enum BuildingType {

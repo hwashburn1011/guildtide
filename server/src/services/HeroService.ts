@@ -1,11 +1,14 @@
 import { prisma } from '../db';
 import { HeroRole, HeroTrait, HeroStatus } from '../../../shared/src/enums';
+import { generatePortrait, getHeroRarityTier, getRecruitCost } from './HeroProgressionService';
 
 const FIRST_NAMES = [
   'Aldric', 'Brenna', 'Cedric', 'Dara', 'Elrik', 'Fiona', 'Gareth', 'Hilde',
   'Ingrid', 'Jasper', 'Kira', 'Leif', 'Mira', 'Nolan', 'Olga', 'Penn',
   'Quinn', 'Rowan', 'Sable', 'Theron', 'Una', 'Voss', 'Wren', 'Xara',
   'Yara', 'Zeke', 'Astrid', 'Bjorn', 'Calla', 'Dorian',
+  'Eira', 'Fenris', 'Gwendolyn', 'Halvar', 'Isolde', 'Jareth',
+  'Kael', 'Lena', 'Magnus', 'Nyx', 'Orion', 'Petra',
 ];
 
 const LAST_NAMES = [
@@ -13,7 +16,38 @@ const LAST_NAMES = [
   'Frostholm', 'Greenmantle', 'Hawkridge', 'Ironbark', 'Jadecliff',
   'Kettleburn', 'Lightfoot', 'Moorwind', 'Nightshade', 'Oakenheart',
   'Pebblebrook', 'Quicksilver', 'Ravenscroft', 'Stormweaver', 'Thornfield',
+  'Wintermere', 'Dawnforge', 'Silvervein', 'Starfall', 'Grimholt',
 ];
+
+const BACKSTORIES = [
+  'Once a wandering traveler who heard tales of your guild\'s renown.',
+  'A former apprentice seeking new purpose and adventure.',
+  'Fled a distant village after a mysterious event and seeks sanctuary.',
+  'A seasoned veteran looking for one last great chapter.',
+  'Found injured near the guild gates with no memory of the past.',
+  'Arrived with a letter of recommendation from a retired guild member.',
+  'Won a bet at the tavern and claimed guild membership as the prize.',
+  'A scholar who abandoned the library for the thrill of the unknown.',
+  'Grew up hearing legends of the guild and always dreamed of joining.',
+  'A quiet soul with hidden depths, seeking a place to belong.',
+];
+
+const VOICE_LINES: Record<string, string[]> = {
+  greeting: [
+    'Reporting for duty!', 'Ready to serve the guild!', 'What adventure awaits?',
+    'Point me to the action.', 'I won\'t let you down.',
+  ],
+  idle: [
+    'Just resting my feet...', 'Any tasks for me?', 'I could use some excitement.',
+    'The guild looks great today.', 'Wonder what\'s for dinner.',
+  ],
+  happy: [
+    'Life is good at the guild!', 'Best decision I ever made!', 'I feel unstoppable!',
+  ],
+  unhappy: [
+    'I\'ve seen better days...', 'Could use a break...', 'Is anyone listening?',
+  ],
+};
 
 const ROLE_BASE_STATS: Record<HeroRole, { str: number; agi: number; int: number; end: number; lck: number }> = {
   [HeroRole.Farmer]: { str: 6, agi: 4, int: 3, end: 7, lck: 5 },
@@ -40,6 +74,26 @@ export const ROLE_BUILDING_AFFINITY: Record<string, Record<string, number>> = {
   mystic: { laboratory: 1.4, herb_garden: 1.1 },
   caravan_master: { market: 1.3 },
   archivist: { laboratory: 1.3 },
+};
+
+// Trait effects on expeditions and buildings
+export const TRAIT_EFFECTS: Record<string, { expeditionBonus: number; buildingBonus: number; moraleModifier: number }> = {
+  [HeroTrait.Stormborn]: { expeditionBonus: 0.05, buildingBonus: 0, moraleModifier: 0 },
+  [HeroTrait.Sunblessed]: { expeditionBonus: 0, buildingBonus: 0.05, moraleModifier: 5 },
+  [HeroTrait.Frostward]: { expeditionBonus: 0.03, buildingBonus: 0.02, moraleModifier: 0 },
+  [HeroTrait.ShrewdTrader]: { expeditionBonus: 0, buildingBonus: 0.08, moraleModifier: 0 },
+  [HeroTrait.LuckyForager]: { expeditionBonus: 0.08, buildingBonus: 0, moraleModifier: 0 },
+  [HeroTrait.Salvager]: { expeditionBonus: 0.05, buildingBonus: 0.03, moraleModifier: 0 },
+  [HeroTrait.Hardy]: { expeditionBonus: 0.03, buildingBonus: 0.03, moraleModifier: 3 },
+  [HeroTrait.Nimble]: { expeditionBonus: 0.06, buildingBonus: 0, moraleModifier: 0 },
+  [HeroTrait.Brave]: { expeditionBonus: 0.07, buildingBonus: 0, moraleModifier: 3 },
+  [HeroTrait.Greedy]: { expeditionBonus: 0.03, buildingBonus: 0.05, moraleModifier: -3 },
+  [HeroTrait.Cautious]: { expeditionBonus: -0.03, buildingBonus: 0.05, moraleModifier: 2 },
+  [HeroTrait.Loyal]: { expeditionBonus: 0.02, buildingBonus: 0.02, moraleModifier: 5 },
+  [HeroTrait.Scholarly]: { expeditionBonus: 0, buildingBonus: 0.06, moraleModifier: 0 },
+  [HeroTrait.Charismatic]: { expeditionBonus: 0.03, buildingBonus: 0.03, moraleModifier: 5 },
+  [HeroTrait.Stubborn]: { expeditionBonus: 0.04, buildingBonus: -0.02, moraleModifier: -2 },
+  [HeroTrait.Inventive]: { expeditionBonus: 0.02, buildingBonus: 0.06, moraleModifier: 0 },
 };
 
 function randomElement<T>(arr: T[]): T {
@@ -80,41 +134,100 @@ function generateStats(role: HeroRole): { strength: number; agility: number; int
   };
 }
 
-const RECRUIT_COST = 50; // gold
+function generateBackstory(): string {
+  return randomElement(BACKSTORIES);
+}
+
+function generateVoiceLine(category: string): string {
+  const lines = VOICE_LINES[category] || VOICE_LINES.greeting;
+  return randomElement(lines);
+}
+
+// Hero quality (1-5) determines stat variance and trait count
+function calculateHeroQuality(stats: Record<string, number>, traits: HeroTrait[]): number {
+  const totalStats = Object.values(stats).reduce((a, b) => a + b, 0);
+  const traitBonus = traits.length * 5;
+  const score = totalStats + traitBonus;
+  if (score >= 50) return 5;
+  if (score >= 40) return 4;
+  if (score >= 32) return 3;
+  if (score >= 25) return 2;
+  return 1;
+}
+
+// Festival double-quality recruitment
+function isFestivalActive(): boolean {
+  // Placeholder: could check world state for active festivals
+  return false;
+}
 
 export class HeroService {
-  static getRecruitCost(): number {
-    return RECRUIT_COST;
+  static getRecruitCost(guildHeroCount: number = 0, heroQuality: number = 1): number {
+    return getRecruitCost(heroQuality, guildHeroCount);
   }
 
   static async recruit(guildId: string, preferredRole?: HeroRole) {
-    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    const guild = await prisma.guild.findUnique({
+      where: { id: guildId },
+      include: { heroes: true },
+    });
     if (!guild) throw new Error('Guild not found');
 
+    const role = preferredRole || randomElement(Object.values(HeroRole));
+    const stats = generateStats(role);
+    let traits = generateTraits();
+
+    // Festival: double quality — extra trait
+    if (isFestivalActive() && traits.length < 2) {
+      const allTraits = Object.values(HeroTrait);
+      const available = allTraits.filter(t => !traits.includes(t));
+      if (available.length > 0) traits.push(randomElement(available));
+    }
+
+    const quality = calculateHeroQuality(stats, traits);
+    const cost = getRecruitCost(quality, guild.heroes.length);
+
     const resources = JSON.parse(guild.resources) as Record<string, number>;
-    if ((resources.gold || 0) < RECRUIT_COST) {
-      throw new Error(`Not enough gold. Need ${RECRUIT_COST}, have ${Math.floor(resources.gold || 0)}`);
+    if ((resources.gold || 0) < cost) {
+      throw new Error(`Not enough gold. Need ${cost}, have ${Math.floor(resources.gold || 0)}`);
     }
 
     // Deduct cost
-    resources.gold -= RECRUIT_COST;
+    resources.gold -= cost;
     await prisma.guild.update({
       where: { id: guildId },
       data: { resources: JSON.stringify(resources) },
     });
 
-    const role = preferredRole || randomElement(Object.values(HeroRole));
-    const stats = generateStats(role);
-    const traits = generateTraits();
+    // Generate metadata (portrait, backstory, morale, voice lines, birthday)
+    const name = generateName();
+    const portrait = generatePortrait(name.charCodeAt(0) * 1000 + name.charCodeAt(1));
+    const metadata = {
+      morale: 70,
+      skillPoints: 0,
+      unlockedSkills: [] as string[],
+      backstory: generateBackstory(),
+      portrait,
+      voiceLines: {
+        greeting: generateVoiceLine('greeting'),
+        idle: generateVoiceLine('idle'),
+      },
+      birthday: new Date(Date.now() + randomInt(30, 365) * 86400000).toISOString().split('T')[0],
+      activityLog: [{ action: 'Recruited to guild', timestamp: new Date().toISOString() }],
+      relationships: [] as Array<{ heroId: string; type: string; strength: number }>,
+      wishList: [] as string[],
+      recruitmentHistory: { cost, quality },
+    };
 
     const hero = await prisma.hero.create({
       data: {
         guildId,
-        name: generateName(),
+        name,
         role,
         traits: JSON.stringify(traits),
         stats: JSON.stringify(stats),
         equipment: JSON.stringify({ weapon: null, armor: null, charm: null, tool: null }),
+        metadata: JSON.stringify(metadata),
       },
     });
 
@@ -124,6 +237,10 @@ export class HeroService {
         traits,
         stats,
         equipment: { weapon: null, armor: null, charm: null, tool: null },
+        morale: 70,
+        powerScore: Object.values(stats).reduce((a, b) => a + b, 0) + 3,
+        rarityTier: getHeroRarityTier(stats, traits.map(String)),
+        portrait,
       },
       resources,
     };
@@ -138,11 +255,22 @@ export class HeroService {
 
     const newStatus = assignment ? HeroStatus.Assigned : HeroStatus.Idle;
 
+    // Log assignment in activity log
+    const metadata = hero.metadata ? JSON.parse(hero.metadata) : {};
+    const activityLog = metadata.activityLog || [];
+    activityLog.push({
+      action: assignment ? `Assigned to ${assignment}` : 'Unassigned',
+      timestamp: new Date().toISOString(),
+    });
+    if (activityLog.length > 50) activityLog.splice(0, activityLog.length - 50);
+    metadata.activityLog = activityLog;
+
     const updated = await prisma.hero.update({
       where: { id: heroId },
       data: {
         assignment,
         status: newStatus,
+        metadata: JSON.stringify(metadata),
       },
     });
 

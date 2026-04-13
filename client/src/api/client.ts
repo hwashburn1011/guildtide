@@ -267,6 +267,90 @@ class ApiClient {
     return this.request('POST', `/heroes/${heroId}/assign`, { assignment });
   }
 
+  async getHeroDetail(heroId: string): Promise<any> {
+    return this.request('GET', `/heroes/${heroId}/detail`);
+  }
+
+  async dismissHero(heroId: string): Promise<{ success: boolean; farewellMessage: string }> {
+    return this.request('POST', `/heroes/${heroId}/dismiss`);
+  }
+
+  async awardHeroXP(heroId: string, amount: number, source: string): Promise<any> {
+    return this.request('POST', `/heroes/${heroId}/xp`, { amount, source });
+  }
+
+  async unlockHeroSkill(heroId: string, skillId: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', `/heroes/${heroId}/skills/unlock`, { skillId });
+  }
+
+  async respecHeroSkills(heroId: string): Promise<{ success: boolean; cost: number }> {
+    return this.request('POST', `/heroes/${heroId}/skills/respec`);
+  }
+
+  async getSkillTree(role: string): Promise<any> {
+    return this.request('GET', `/heroes/skill-trees/${role}`);
+  }
+
+  async retireHero(heroId: string): Promise<any> {
+    return this.request('POST', `/heroes/${heroId}/retire`);
+  }
+
+  async trainHero(heroId: string, stat: string): Promise<any> {
+    return this.request('POST', `/heroes/${heroId}/train`, { stat });
+  }
+
+  async adjustHeroMorale(heroId: string, delta: number): Promise<{ morale: number; label: string }> {
+    return this.request('POST', `/heroes/${heroId}/morale`, { delta });
+  }
+
+  async specializeHero(heroId: string, specializationId: string): Promise<any> {
+    return this.request('POST', `/heroes/${heroId}/specialize`, { specializationId });
+  }
+
+  async evolveHeroClass(heroId: string, evolutionId: string): Promise<any> {
+    return this.request('POST', `/heroes/${heroId}/evolve`, { evolutionId });
+  }
+
+  async setHeroNickname(heroId: string, nickname: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/heroes/${heroId}/nickname`, { nickname });
+  }
+
+  async toggleHeroFavorite(heroId: string): Promise<{ favorited: boolean }> {
+    return this.request('POST', `/heroes/${heroId}/favorite`);
+  }
+
+  async compareHeroes(heroAId: string, heroBId: string): Promise<{ heroA: any; heroB: any }> {
+    return this.request('GET', `/heroes/compare?heroA=${heroAId}&heroB=${heroBId}`);
+  }
+
+  async searchHeroes(query: string): Promise<Hero[]> {
+    return this.request('GET', `/heroes/search?q=${encodeURIComponent(query)}`);
+  }
+
+  async getHeroDashboard(): Promise<any> {
+    return this.request('GET', '/heroes/dashboard');
+  }
+
+  async getAutoAssignSuggestions(): Promise<Array<{ heroId: string; heroName: string; building: string; score: number }>> {
+    return this.request('GET', '/heroes/auto-assign');
+  }
+
+  async batchAssignIdle(): Promise<{ assigned: number }> {
+    return this.request('POST', '/heroes/batch/assign-idle');
+  }
+
+  async batchRestAll(): Promise<{ rested: number }> {
+    return this.request('POST', '/heroes/batch/rest-all');
+  }
+
+  async getSpecializations(role: string): Promise<any[]> {
+    return this.request('GET', `/heroes/specializations/${role}`);
+  }
+
+  async getClassEvolutions(role: string): Promise<any[]> {
+    return this.request('GET', `/heroes/evolutions/${role}`);
+  }
+
   // Events
   async getEvents(): Promise<any[]> {
     return this.request('GET', '/events');
