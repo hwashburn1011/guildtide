@@ -10,6 +10,9 @@ import { HeroRoster } from '../ui/HeroRoster';
 import { WeatherPanel } from '../ui/WeatherPanel';
 import { EventPanel } from '../ui/EventPanel';
 import { InventoryPanel } from '../ui/InventoryPanel';
+import { EventLogPanel } from '../ui/EventLogPanel';
+import { TutorialOverlay } from '../ui/TutorialOverlay';
+import { NotificationSystem } from '../systems/NotificationSystem';
 
 export class GuildHallScene extends Phaser.Scene {
   private guild: Guild | null = null;
@@ -19,6 +22,7 @@ export class GuildHallScene extends Phaser.Scene {
   private weatherPanel: WeatherPanel | null = null;
   private eventPanel: EventPanel | null = null;
   private inventoryPanel: InventoryPanel | null = null;
+  private eventLogPanel: EventLogPanel | null = null;
   private activeEvents: any[] = [];
   private syncTimer: Phaser.Time.TimerEvent | null = null;
 
@@ -116,6 +120,18 @@ export class GuildHallScene extends Phaser.Scene {
       color: COLORS.textSecondary,
     });
 
+    // Event Log button
+    const eventLogBtn = this.add.text(GAME_WIDTH - 330, 20, 'Event Log', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.small}px`,
+      color: COLORS.textAccent,
+      fontStyle: 'bold',
+    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
+
+    eventLogBtn.on('pointerup', () => {
+      this.eventLogPanel?.show();
+    });
+
     // Inventory button
     const inventoryBtn = this.add.text(GAME_WIDTH - 240, 20, 'Inventory', {
       fontFamily: FONTS.primary,
@@ -184,14 +200,23 @@ export class GuildHallScene extends Phaser.Scene {
       () => this.refreshGuild(),
     );
 
+    // Event log panel
+    this.eventLogPanel = new EventLogPanel(this);
+
     // Bottom nav
     this.buildBottomNav();
+
+    // Tutorial overlay for new players
+    if (TutorialOverlay.shouldShow(this.guild.level, this.guild.buildings?.length ?? 0)) {
+      new TutorialOverlay(this);
+    }
   }
 
   private async handleUpgrade(buildingType: string): Promise<void> {
     try {
       const result = await apiClient.upgradeBuilding(buildingType);
       this.resourceBar?.setResources(result.resources as Resources);
+      NotificationSystem.show(this, `${result.building.type} upgraded to level ${result.building.level}!`, 'success');
       await this.refreshGuild();
     } catch (err) {
       // Show error briefly
