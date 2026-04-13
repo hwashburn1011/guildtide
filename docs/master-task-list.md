@@ -497,86 +497,86 @@
 ## Epic 7: Expedition System
 > Expedition log, route visualization, encounter narratives, rare discoveries, and boss expedition events.
 
-- [ ] T-0471: Define expedition data schema (destination, party, duration, status, log, rewards)
-- [ ] T-0472: Create expedition service with launch, tick, resolve, and return methods
-- [ ] T-0473: Implement expedition party formation UI with hero slot selection
-- [ ] T-0474: Build party composition validator (role requirements, minimum heroes)
-- [ ] T-0475: Create party power score calculation from member stats and synergies
-- [ ] T-0476: Implement expedition destination selector with region list and difficulty
-- [ ] T-0477: Build destination info panel with environment, enemies, and reward preview
-- [ ] T-0478: Create expedition duration calculator based on distance and party speed
-- [ ] T-0479: Implement expedition launch confirmation with cost and time summary
-- [ ] T-0480: Build expedition launch animation showing party departing guild hall
-- [ ] T-0481: Create expedition progress tracker showing elapsed/remaining time
-- [ ] T-0482: Implement expedition progress bar on main UI header
-- [ ] T-0483: Build expedition log system recording events during expedition
-- [ ] T-0484: Create expedition encounter engine with weighted random event selection
-- [ ] T-0485: Implement combat encounter resolution using party stats vs enemy stats
-- [ ] T-0486: Create treasure encounter with loot table and roll mechanics
-- [ ] T-0487: Implement trap encounter with agility/perception check mechanics
-- [ ] T-0488: Create NPC encounter with dialog options and charisma checks
-- [ ] T-0489: Implement rest encounter for party healing during long expeditions
-- [ ] T-0490: Create weather encounter modifying expedition difficulty
-- [ ] T-0491: Build expedition encounter narrative text generation system
-- [ ] T-0492: Implement expedition encounter outcome effects (damage, loot, morale change)
-- [ ] T-0493: Create expedition rare discovery system (unique artifacts, lore fragments)
-- [ ] T-0494: Build rare discovery collection page showing all discovered artifacts
-- [ ] T-0495: Implement rare discovery trigger conditions (specific party, weather, date)
-- [ ] T-0496: Create expedition boss system with special boss expeditions
-- [ ] T-0497: Build boss expedition unlock requirements (guild level, research, prerequisite)
-- [ ] T-0498: Implement boss encounter mechanics with multi-phase combat
-- [ ] T-0499: Create boss loot table with exclusive rewards
-- [ ] T-0500: Build boss expedition debriefing screen with battle summary
-- [ ] T-0501: Implement expedition route visualization on world map
-- [ ] T-0502: Create route waypoint system with encounter points marked
-- [ ] T-0503: Build route progress animation showing party movement between waypoints
-- [ ] T-0504: Implement expedition supply system (carry food and materials for duration)
-- [ ] T-0505: Create supply consumption rate based on party size and duration
-- [ ] T-0506: Build supply shortage penalties (reduced stats, morale loss)
-- [ ] T-0507: Implement expedition return event with reward distribution
-- [ ] T-0508: Build expedition return celebration animation at guild hall
-- [ ] T-0509: Create expedition reward detail screen with item and XP breakdown
-- [ ] T-0510: Implement expedition failure states (party defeated, supplies exhausted)
-- [ ] T-0511: Build expedition failure consequences (hero injuries, lost supplies)
-- [ ] T-0512: Create expedition retreat option available before boss encounters
-- [ ] T-0513: Implement expedition diary UI showing complete log of all past expeditions
-- [ ] T-0514: Build expedition statistics page (total expeditions, success rate, loot value)
-- [ ] T-0515: Create expedition difficulty rating system (1-5 stars)
-- [ ] T-0516: Implement expedition difficulty modifiers from real-world data
-- [ ] T-0517: Build expedition recommendation engine based on party strength
-- [ ] T-0518: Create expedition speed boost from Scout heroes in party
-- [ ] T-0519: Implement expedition scouting pre-check revealing partial encounter list
-- [ ] T-0520: Build expedition hero selection quick-filter by available/rested status
-- [ ] T-0521: Create expedition party template save/load for repeated runs
-- [ ] T-0522: Implement expedition chain system (multi-destination journey)
-- [ ] T-0523: Build expedition chain progress tracker with checkpoints
-- [ ] T-0524: Create expedition environmental hazard system (poison swamp, lava field)
-- [ ] T-0525: Implement hazard mitigation through party skills and items
-- [ ] T-0526: Build expedition milestone rewards (10th expedition, 100th expedition)
-- [ ] T-0527: Create expedition seasonal content (winter expeditions have unique encounters)
-- [ ] T-0528: Implement expedition notification when complete (toast + badge)
-- [ ] T-0529: Build expedition auto-repeat toggle for farming specific routes
-- [ ] T-0530: Create expedition leaderboard for fastest completion times
-- [ ] T-0531: Implement expedition companion NPC hire for temporary party boost
-- [ ] T-0532: Build expedition lore discovery system unlocking world history entries
-- [ ] T-0533: Create expedition map fog-of-war system (reveal areas through exploration)
-- [ ] T-0534: Implement expedition party morale tracking separate from base morale
-- [ ] T-0535: Build expedition camping scene between long journey legs
-- [ ] T-0536: Create expedition random event influenced by real-world news sentiment
-- [ ] T-0537: Implement expedition resource node discovery for new gathering locations
-- [ ] T-0538: Build expedition post-mortem analysis showing optimal party suggestion
-- [ ] T-0539: Create expedition achievement badges (explorer, treasure hunter, boss slayer)
-- [ ] T-0540: Implement expedition quick-launch from destination list for repeat runs
-- [ ] T-0541: Build expedition encounter history for each destination
-- [ ] T-0542: Create expedition hero performance rating after completion
-- [ ] T-0543: Implement expedition weather forecast display before launch
-- [ ] T-0544: Build expedition danger zone warnings for party under-level destinations
-- [ ] T-0545: Create expedition narrative summary generator from log entries
-- [ ] T-0546: Implement expedition reward multiplier from Observatory predictions
-- [ ] T-0547: Build expedition tutorial for first-time expedition launch
-- [ ] T-0548: Create expedition event: merchant caravan encounter for mid-route trading
-- [ ] T-0549: Implement expedition timed challenge mode with bonus rewards
-- [ ] T-0550: Build expedition fleet system for launching multiple parties to same destination
+- [x] T-0471: Define expedition data schema (destination, party, duration, status, log, rewards)
+- [x] T-0472: Create expedition service with launch, tick, resolve, and return methods
+- [x] T-0473: Implement expedition party formation UI with hero slot selection
+- [x] T-0474: Build party composition validator (role requirements, minimum heroes)
+- [x] T-0475: Create party power score calculation from member stats and synergies
+- [x] T-0476: Implement expedition destination selector with region list and difficulty
+- [x] T-0477: Build destination info panel with environment, enemies, and reward preview
+- [x] T-0478: Create expedition duration calculator based on distance and party speed
+- [x] T-0479: Implement expedition launch confirmation with cost and time summary
+- [x] T-0480: Build expedition launch animation showing party departing guild hall
+- [x] T-0481: Create expedition progress tracker showing elapsed/remaining time
+- [x] T-0482: Implement expedition progress bar on main UI header
+- [x] T-0483: Build expedition log system recording events during expedition
+- [x] T-0484: Create expedition encounter engine with weighted random event selection
+- [x] T-0485: Implement combat encounter resolution using party stats vs enemy stats
+- [x] T-0486: Create treasure encounter with loot table and roll mechanics
+- [x] T-0487: Implement trap encounter with agility/perception check mechanics
+- [x] T-0488: Create NPC encounter with dialog options and charisma checks
+- [x] T-0489: Implement rest encounter for party healing during long expeditions
+- [x] T-0490: Create weather encounter modifying expedition difficulty
+- [x] T-0491: Build expedition encounter narrative text generation system
+- [x] T-0492: Implement expedition encounter outcome effects (damage, loot, morale change)
+- [x] T-0493: Create expedition rare discovery system (unique artifacts, lore fragments)
+- [x] T-0494: Build rare discovery collection page showing all discovered artifacts
+- [x] T-0495: Implement rare discovery trigger conditions (specific party, weather, date)
+- [x] T-0496: Create expedition boss system with special boss expeditions
+- [x] T-0497: Build boss expedition unlock requirements (guild level, research, prerequisite)
+- [x] T-0498: Implement boss encounter mechanics with multi-phase combat
+- [x] T-0499: Create boss loot table with exclusive rewards
+- [x] T-0500: Build boss expedition debriefing screen with battle summary
+- [x] T-0501: Implement expedition route visualization on world map
+- [x] T-0502: Create route waypoint system with encounter points marked
+- [x] T-0503: Build route progress animation showing party movement between waypoints
+- [x] T-0504: Implement expedition supply system (carry food and materials for duration)
+- [x] T-0505: Create supply consumption rate based on party size and duration
+- [x] T-0506: Build supply shortage penalties (reduced stats, morale loss)
+- [x] T-0507: Implement expedition return event with reward distribution
+- [x] T-0508: Build expedition return celebration animation at guild hall
+- [x] T-0509: Create expedition reward detail screen with item and XP breakdown
+- [x] T-0510: Implement expedition failure states (party defeated, supplies exhausted)
+- [x] T-0511: Build expedition failure consequences (hero injuries, lost supplies)
+- [x] T-0512: Create expedition retreat option available before boss encounters
+- [x] T-0513: Implement expedition diary UI showing complete log of all past expeditions
+- [x] T-0514: Build expedition statistics page (total expeditions, success rate, loot value)
+- [x] T-0515: Create expedition difficulty rating system (1-5 stars)
+- [x] T-0516: Implement expedition difficulty modifiers from real-world data
+- [x] T-0517: Build expedition recommendation engine based on party strength
+- [x] T-0518: Create expedition speed boost from Scout heroes in party
+- [x] T-0519: Implement expedition scouting pre-check revealing partial encounter list
+- [x] T-0520: Build expedition hero selection quick-filter by available/rested status
+- [x] T-0521: Create expedition party template save/load for repeated runs
+- [x] T-0522: Implement expedition chain system (multi-destination journey)
+- [x] T-0523: Build expedition chain progress tracker with checkpoints
+- [x] T-0524: Create expedition environmental hazard system (poison swamp, lava field)
+- [x] T-0525: Implement hazard mitigation through party skills and items
+- [x] T-0526: Build expedition milestone rewards (10th expedition, 100th expedition)
+- [x] T-0527: Create expedition seasonal content (winter expeditions have unique encounters)
+- [x] T-0528: Implement expedition notification when complete (toast + badge)
+- [x] T-0529: Build expedition auto-repeat toggle for farming specific routes
+- [x] T-0530: Create expedition leaderboard for fastest completion times
+- [x] T-0531: Implement expedition companion NPC hire for temporary party boost
+- [x] T-0532: Build expedition lore discovery system unlocking world history entries
+- [x] T-0533: Create expedition map fog-of-war system (reveal areas through exploration)
+- [x] T-0534: Implement expedition party morale tracking separate from base morale
+- [x] T-0535: Build expedition camping scene between long journey legs
+- [x] T-0536: Create expedition random event influenced by real-world news sentiment
+- [x] T-0537: Implement expedition resource node discovery for new gathering locations
+- [x] T-0538: Build expedition post-mortem analysis showing optimal party suggestion
+- [x] T-0539: Create expedition achievement badges (explorer, treasure hunter, boss slayer)
+- [x] T-0540: Implement expedition quick-launch from destination list for repeat runs
+- [x] T-0541: Build expedition encounter history for each destination
+- [x] T-0542: Create expedition hero performance rating after completion
+- [x] T-0543: Implement expedition weather forecast display before launch
+- [x] T-0544: Build expedition danger zone warnings for party under-level destinations
+- [x] T-0545: Create expedition narrative summary generator from log entries
+- [x] T-0546: Implement expedition reward multiplier from Observatory predictions
+- [x] T-0547: Build expedition tutorial for first-time expedition launch
+- [x] T-0548: Create expedition event: merchant caravan encounter for mid-route trading
+- [x] T-0549: Implement expedition timed challenge mode with bonus rewards
+- [x] T-0550: Build expedition fleet system for launching multiple parties to same destination
 
 ## Epic 8: Market & Economy
 > Price history charts, trade routes, NPC merchants, auction system, and economic cycles influenced by real-world data.
