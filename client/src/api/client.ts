@@ -8,6 +8,7 @@ import type {
   Guild,
   Resources,
   Building,
+  Hero,
 } from '@shared/types';
 import type { ResourceType } from '@shared/enums';
 
@@ -97,6 +98,19 @@ class ApiClient {
     resources: Resources;
   }> {
     return this.request('POST', `/buildings/${type}/upgrade`);
+  }
+
+  // Heroes
+  async getHeroes(): Promise<Hero[]> {
+    return this.request('GET', '/heroes');
+  }
+
+  async recruitHero(role?: string): Promise<{ hero: Hero; resources: Resources }> {
+    return this.request('POST', '/heroes/recruit', role ? { role } : {});
+  }
+
+  async assignHero(heroId: string, assignment: string | null): Promise<Hero> {
+    return this.request('POST', `/heroes/${heroId}/assign`, { assignment });
   }
 }
 
