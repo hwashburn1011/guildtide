@@ -10,6 +10,9 @@ import {
   ItemRarity,
   ItemCategory,
   Climate,
+  CraftingQuality,
+  EnchantmentType,
+  GemType,
 } from './enums';
 
 // --- Resource Map ---
@@ -567,4 +570,168 @@ export interface ItemTemplate {
   requiredBuilding: string | null;
   requiredBuildingLevel: number;
   maxStack: number;
+  /** Weapon sub-type for visual rendering */
+  weaponType?: 'sword' | 'staff' | 'bow' | 'dagger' | 'mace';
+  /** Number of gem sockets (0 = none) */
+  sockets?: number;
+  /** Base durability points */
+  durability?: number;
+  /** Lore text unlocked on first discovery */
+  lore?: string;
+  /** Level requirement to equip */
+  levelRequired?: number;
+  /** Item set this item belongs to */
+  setId?: string;
+  /** Whether this is a legendary quest item */
+  isLegendaryQuest?: boolean;
+  /** Visual tier for rendering (0-4 maps to rarity) */
+  visualTier?: number;
+  /** Sell value in gold */
+  sellValue?: number;
+  /** Salvage yield when disenchanted */
+  salvageYield?: Partial<Record<ResourceType, number>>;
+}
+
+// --- Crafting System ---
+export interface CraftingRecipe {
+  id: string;
+  name: string;
+  resultTemplateId: string;
+  ingredients: Partial<Record<ResourceType, number>>;
+  /** Item ingredients (templateId -> quantity) */
+  itemIngredients?: Record<string, number>;
+  craftTimeSeconds: number;
+  requiredBuildingLevel: number;
+  /** Minimum skill level to discover */
+  discoveryLevel?: number;
+  /** Category tag for recipe browser */
+  category: ItemCategory;
+}
+
+export interface CraftingQueueEntry {
+  recipeId: string;
+  startedAt: string;
+  completesAt: string;
+  quality: CraftingQuality;
+}
+
+export interface CraftingState {
+  discoveredRecipes: string[];
+  craftingQueue: CraftingQueueEntry[];
+  craftingHistory: Array<{
+    recipeId: string;
+    quality: CraftingQuality;
+    craftedAt: string;
+  }>;
+  totalCrafted: number;
+}
+
+// --- Item Sets ---
+export interface ItemSetBonus {
+  piecesRequired: number;
+  statBonuses?: Partial<Record<string, number>>;
+  expeditionBonus?: number;
+  buildingBonus?: number;
+  specialEffect?: string;
+}
+
+export interface ItemSetDefinition {
+  id: string;
+  name: string;
+  description: string;
+  pieceTemplateIds: string[];
+  bonuses: ItemSetBonus[];
+}
+
+// --- Enchanting ---
+export interface EnchantmentDefinition {
+  id: EnchantmentType;
+  name: string;
+  description: string;
+  effects: Partial<Record<string, number>>;
+  essenceCost: number;
+  goldCost: number;
+  applicableSlots: string[];
+  rarity: ItemRarity;
+}
+
+export interface AppliedEnchantment {
+  enchantmentId: EnchantmentType;
+  level: number;
+}
+
+// --- Gems & Sockets ---
+export interface GemDefinition {
+  type: GemType;
+  name: string;
+  description: string;
+  effects: Partial<Record<string, number>>;
+  rarity: ItemRarity;
+}
+
+export interface SocketedGem {
+  socketIndex: number;
+  gemType: GemType;
+}
+
+// --- Item Instance Metadata ---
+export interface ItemInstanceMetadata {
+  durability?: number;
+  maxDurability?: number;
+  enchantments?: AppliedEnchantment[];
+  socketedGems?: SocketedGem[];
+  quality?: CraftingQuality;
+  locked?: boolean;
+  transmogId?: string | null;
+  /** Random stat rolls within rarity range */
+  statRolls?: Record<string, number>;
+  /** Age in game days for patina */
+  createdDay?: number;
+  /** Loadout assignment */
+  loadoutId?: string | null;
+}
+
+// --- Trading ---
+export interface TradeOffer {
+  id: string;
+  fromGuildId: string;
+  toGuildId: string;
+  offeredItems: Array<{ templateId: string; quantity: number }>;
+  requestedItems: Array<{ templateId: string; quantity: number }>;
+  status: 'pending' | 'accepted' | 'declined' | 'expired';
+  createdAt: string;
+  expiresAt: string;
+}
+
+// --- Equipment Loadout ---
+export interface EquipmentLoadout {
+  id: string;
+  name: string;
+  slots: Record<string, string | null>;
+}
+
+// --- Gear Score ---
+export interface GearScore {
+  heroId: string;
+  totalScore: number;
+  slotScores: Record<string, number>;
+  setBonusScore: number;
+  enchantmentScore: number;
+  gemScore: number;
+}
+
+// --- Loot Table ---
+export interface LootTableEntry {
+  templateId: string;
+  weight: number;
+  minQuantity: number;
+  maxQuantity: number;
+  guaranteed?: boolean;
+}
+
+export interface LootTable {
+  id: string;
+  entries: LootTableEntry[];
+  guaranteedDrops?: string[];
+  rarityWeights: Record<ItemRarity, number>;
 }

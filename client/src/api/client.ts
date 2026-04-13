@@ -758,16 +758,82 @@ class ApiClient {
   }
 
   // Items & Equipment
-  async getInventory(): Promise<any[]> {
-    return this.request('GET', '/items');
+  async getInventory(options?: { sortBy?: string; category?: string; rarity?: string; search?: string }): Promise<any[]> {
+    const params = new URLSearchParams();
+    if (options?.sortBy) params.set('sortBy', options.sortBy);
+    if (options?.category) params.set('category', options.category);
+    if (options?.rarity) params.set('rarity', options.rarity);
+    if (options?.search) params.set('search', options.search);
+    const qs = params.toString();
+    return this.request('GET', `/items${qs ? `?${qs}` : ''}`);
   }
 
   async getItemTemplates(): Promise<any[]> {
     return this.request('GET', '/items/templates');
   }
 
+  async getItemSets(): Promise<any[]> {
+    return this.request('GET', '/items/sets');
+  }
+
+  async getEnchantments(): Promise<any[]> {
+    return this.request('GET', '/items/enchantments');
+  }
+
+  async getGemEffects(): Promise<Record<string, Record<string, number>>> {
+    return this.request('GET', '/items/gems');
+  }
+
+  async getItemCollection(): Promise<Record<string, { owned: number; total: number; percent: number }>> {
+    return this.request('GET', '/items/collection');
+  }
+
+  async getItemLore(): Promise<Array<{ templateId: string; name: string; lore: string }>> {
+    return this.request('GET', '/items/lore');
+  }
+
+  async getInventoryCapacity(): Promise<{ used: number; max: number }> {
+    return this.request('GET', '/items/capacity');
+  }
+
+  async getItemPriceEstimate(templateId: string): Promise<{ templateId: string; estimatedPrice: number }> {
+    return this.request('GET', `/items/price-estimate/${templateId}`);
+  }
+
   async craftItem(templateId: string): Promise<{ item: any; resources: Record<string, number> }> {
     return this.request('POST', '/items/craft', { templateId });
+  }
+
+  async getCraftingRecipes(): Promise<any[]> {
+    return this.request('GET', '/items/recipes');
+  }
+
+  async getMaterialSources(recipeId: string): Promise<Array<{ resource: string; sources: string[] }>> {
+    return this.request('GET', `/items/recipes/${recipeId}/sources`);
+  }
+
+  async getCraftingState(): Promise<any> {
+    return this.request('GET', '/items/crafting-state');
+  }
+
+  async queueCraft(recipeId: string): Promise<any> {
+    return this.request('POST', '/items/crafting/queue', { recipeId });
+  }
+
+  async collectCrafting(): Promise<any> {
+    return this.request('POST', '/items/crafting/collect');
+  }
+
+  async cancelCrafting(recipeId: string): Promise<any> {
+    return this.request('POST', '/items/crafting/cancel', { recipeId });
+  }
+
+  async getCraftingHistory(): Promise<any[]> {
+    return this.request('GET', '/items/crafting/history');
+  }
+
+  async discoverRecipe(recipeId: string): Promise<any> {
+    return this.request('POST', '/items/crafting/discover', { recipeId });
   }
 
   async equipItem(heroId: string, itemId: string, slot: string): Promise<Hero> {
@@ -776,6 +842,66 @@ class ApiClient {
 
   async unequipItem(heroId: string, slot: string): Promise<Hero> {
     return this.request('POST', '/items/unequip', { heroId, slot });
+  }
+
+  async autoEquipBest(heroId: string): Promise<{ equipment: Record<string, string | null> }> {
+    return this.request('POST', '/items/auto-equip', { heroId });
+  }
+
+  async getGearScore(heroId: string): Promise<any> {
+    return this.request('GET', `/items/gear-score/${heroId}`);
+  }
+
+  async getSetBonuses(heroId: string): Promise<any[]> {
+    return this.request('GET', `/items/set-bonuses/${heroId}`);
+  }
+
+  async repairItem(templateId: string): Promise<{ cost: number; durability: number }> {
+    return this.request('POST', '/items/repair', { templateId });
+  }
+
+  async salvageItem(itemId: string, quantity?: number): Promise<{ recovered: Record<string, number> }> {
+    return this.request('POST', '/items/salvage', { itemId, quantity: quantity || 1 });
+  }
+
+  async upgradeItem(itemId: string): Promise<{ newItem: any }> {
+    return this.request('POST', '/items/upgrade', { itemId });
+  }
+
+  async toggleItemLock(itemId: string): Promise<{ locked: boolean }> {
+    return this.request('POST', '/items/lock', { itemId });
+  }
+
+  async sellItems(items: Array<{ itemId: string; quantity: number }>): Promise<{ totalGold: number }> {
+    return this.request('POST', '/items/sell', { items });
+  }
+
+  async setTransmog(itemId: string, transmogTemplateId: string | null): Promise<any> {
+    return this.request('POST', '/items/transmog', { itemId, transmogTemplateId });
+  }
+
+  async enchantItem(itemId: string, enchantmentId: string): Promise<any> {
+    return this.request('POST', '/items/enchant', { itemId, enchantmentId });
+  }
+
+  async disenchantItem(itemId: string, enchantmentId: string): Promise<any> {
+    return this.request('POST', '/items/disenchant', { itemId, enchantmentId });
+  }
+
+  async socketGem(itemId: string, gemItemId: string, socketIndex: number): Promise<any> {
+    return this.request('POST', '/items/socket-gem', { itemId, gemItemId, socketIndex });
+  }
+
+  async unsocketGem(itemId: string, socketIndex: number): Promise<any> {
+    return this.request('POST', '/items/unsocket-gem', { itemId, socketIndex });
+  }
+
+  async saveEquipmentLoadout(heroId: string, name: string): Promise<any> {
+    return this.request('POST', '/items/loadout', { heroId, name });
+  }
+
+  async expandStorage(): Promise<{ newMax: number; cost: number }> {
+    return this.request('POST', '/items/expand-storage');
   }
 
   // Guild XP
