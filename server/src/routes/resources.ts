@@ -278,4 +278,250 @@ router.post('/snapshot', async (req: Request, res: Response) => {
   }
 });
 
+// GET /analytics — resource analytics endpoint for external tracking
+router.get('/analytics', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+      include: { buildings: true, heroes: true },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const resources = JSON.parse(guild.resources) as Record<ResourceType, number>;
+    const caps = ResourceService.calculateCaps(guild.buildings);
+    const state = await ResourceService.getFullState(req.playerId!);
+    const forecasts = await ResourceService.getForecasts(req.playerId!);
+    const scarcity = ResourceService.getScarcityIndicators(resources, caps);
+
+    // Aggregate stats
+    const totalResources = Object.values(resources).reduce((s, v) => s + v, 0);
+    const totalCap = Object.values(caps).reduce((s, v) => s + v, 0);
+    const utilization = totalCap > 0 ? totalResources / totalCap : 0;
+
+    // Count audit log entries in last 24h
+    const since24h = new Date(Date.now() - 24 * 3600 * 1000);
+    const transactionCount = await prisma.eventLog.count({
+      where: {
+        guildId: guild.id,
+        type: 'resource_audit',
+        createdAt: { gte: since24h },
+      },
+    });
+
+    // Count conversions in last 24h
+    const conversionCount = await prisma.eventLog.count({
+      where: {
+        guildId: guild.id,
+        type: 'resource_conversion',
+        createdAt: { gte: since24h },
+      },
+    });
+
+    res.json({
+      guildId: guild.id,
+      guildLevel: guild.level,
+      timestamp: new Date().toISOString(),
+      resources,
+      caps,
+      scarcity,
+      forecasts,
+      rates: state?.rates ?? {},
+      netRates: state?.netRates ?? {},
+      multipliers: state?.multipliers ?? {},
+      summary: {
+        totalResources: Math.floor(totalResources),
+        totalCapacity: totalCap,
+        utilization: Math.round(utilization * 100),
+        transactions24h: transactionCount,
+        conversions24h: conversionCount,
+        buildingCount: guild.buildings.length,
+        heroCount: guild.heroes.length,
+      },
+    });
+  } catch (err) {
+    console.error('Get analytics error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// POST /priority — set resource priority allocation during shortages
+router.post('/priority', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const { priorities } = req.body;
+    if (!Array.isArray(priorities)) {
+      res.status(400).json({ error: 'validation', message: 'Provide priorities array of resource types' });
+      return;
+    }
+
+    // Store priority order in guild event log as config
+    await prisma.eventLog.create({
+      data: {
+        guildId: guild.id,
+        type: 'resource_priority_config',
+        message: 'Resource priority order updated',
+        data: JSON.stringify({ priorities }),
+      },
+    });
+
+    res.json({ priorities });
+  } catch (err) {
+    console.error('Set priority error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// POST /reserve — set emergency reserve amounts
+router.post('/reserve', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const { reserves } = req.body;
+    if (typeof reserves !== 'object') {
+      res.status(400).json({ error: 'validation', message: 'Provide reserves object { resource: amount }' });
+      return;
+    }
+
+    // Validate reserve amounts
+    const resources = JSON.parse(guild.resources) as Record<ResourceType, number>;
+    for (const [res, amount] of Object.entries(reserves)) {
+      if (typeof amount !== 'number' || amount < 0) {
+        res.status(400).json({ error: 'validation', message: `Invalid reserve for ${res}` });
+        return;
+      }
+    }
+
+    // Store reserves config
+    await prisma.eventLog.create({
+      data: {
+        guildId: guild.id,
+        type: 'resource_reserve_config',
+        message: 'Emergency reserves updated',
+        data: JSON.stringify({ reserves }),
+      },
+    });
+
+    res.json({ reserves });
+  } catch (err) {
+    console.error('Set reserve error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// GET /achievements — resource achievement badges
+router.get('/achievements', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const resources = JSON.parse(guild.resources) as Record<ResourceType, number>;
+
+    // Count conversions and trades for achievements
+    const conversionCount = await prisma.eventLog.count({
+      where: { guildId: guild.id, type: 'resource_conversion' },
+    });
+    const tradeCount = await prisma.eventLog.count({
+      where: { guildId: guild.id, type: 'market_trade' },
+    });
+    const milestonesCompleted = await prisma.eventLog.count({
+      where: { guildId: guild.id, type: 'resource_milestone' },
+    });
+
+    const totalResources = Object.values(resources).reduce((s, v) => s + v, 0);
+
+    const badges = [
+      {
+        id: 'hoarder_bronze',
+        name: 'Hoarder (Bronze)',
+        description: 'Accumulate 5,000 total resources',
+        earned: totalResources >= 5000,
+        progress: Math.min(1, totalResources / 5000),
+      },
+      {
+        id: 'hoarder_silver',
+        name: 'Hoarder (Silver)',
+        description: 'Accumulate 25,000 total resources',
+        earned: totalResources >= 25000,
+        progress: Math.min(1, totalResources / 25000),
+      },
+      {
+        id: 'hoarder_gold',
+        name: 'Hoarder (Gold)',
+        description: 'Accumulate 100,000 total resources',
+        earned: totalResources >= 100000,
+        progress: Math.min(1, totalResources / 100000),
+      },
+      {
+        id: 'converter_novice',
+        name: 'Novice Converter',
+        description: 'Perform 10 resource conversions',
+        earned: conversionCount >= 10,
+        progress: Math.min(1, conversionCount / 10),
+      },
+      {
+        id: 'converter_expert',
+        name: 'Expert Converter',
+        description: 'Perform 100 resource conversions',
+        earned: conversionCount >= 100,
+        progress: Math.min(1, conversionCount / 100),
+      },
+      {
+        id: 'trader_bronze',
+        name: 'Trader (Bronze)',
+        description: 'Complete 25 market trades',
+        earned: tradeCount >= 25,
+        progress: Math.min(1, tradeCount / 25),
+      },
+      {
+        id: 'trader_silver',
+        name: 'Trader (Silver)',
+        description: 'Complete 100 market trades',
+        earned: tradeCount >= 100,
+        progress: Math.min(1, tradeCount / 100),
+      },
+      {
+        id: 'milestone_hunter',
+        name: 'Milestone Hunter',
+        description: 'Complete 5 resource milestones',
+        earned: milestonesCompleted >= 5,
+        progress: Math.min(1, milestonesCompleted / 5),
+      },
+      {
+        id: 'essence_collector',
+        name: 'Essence Collector',
+        description: 'Accumulate 200 essence',
+        earned: (resources[ResourceType.Essence] || 0) >= 200,
+        progress: Math.min(1, (resources[ResourceType.Essence] || 0) / 200),
+      },
+      {
+        id: 'diversified',
+        name: 'Diversified',
+        description: 'Have at least 100 of every resource type',
+        earned: Object.values(resources).every(v => v >= 100),
+        progress: Math.min(1, Object.values(resources).filter(v => v >= 100).length / 8),
+      },
+    ];
+
+    res.json(badges);
+  } catch (err) {
+    console.error('Get achievements error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
 export { router as resourcesRouter };
