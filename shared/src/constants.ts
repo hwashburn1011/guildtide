@@ -121,6 +121,147 @@ export const DAILY_LOGIN_REWARDS: Array<{
   { day: 7, resources: { [ResourceType.Gold]: 200, [ResourceType.Essence]: 20 }, xp: 50, label: 'Day 7: Jackpot!' },
 ];
 
+/** Default storage caps per resource type */
+export const DEFAULT_STORAGE_CAPS: Record<ResourceType, number> = {
+  [ResourceType.Gold]: 5000,
+  [ResourceType.Wood]: 3000,
+  [ResourceType.Stone]: 3000,
+  [ResourceType.Herbs]: 1500,
+  [ResourceType.Ore]: 2000,
+  [ResourceType.Water]: 2500,
+  [ResourceType.Food]: 2500,
+  [ResourceType.Essence]: 500,
+};
+
+/** Storage cap increase per building level (for the building that produces this resource) */
+export const STORAGE_CAP_PER_BUILDING_LEVEL = 0.15; // +15% per level
+
+/** Resource decay rates per hour (only perishable resources) */
+export const RESOURCE_DECAY_RATES: Partial<Record<ResourceType, number>> = {
+  [ResourceType.Food]: 0.02,   // 2% per hour
+  [ResourceType.Herbs]: 0.01,  // 1% per hour
+};
+
+/** Cold storage decay reduction from Workshop building */
+export const COLD_STORAGE_DECAY_REDUCTION_PER_LEVEL = 0.05; // 5% reduction per Workshop level
+
+/** Resource descriptions for UI display */
+export const RESOURCE_DESCRIPTIONS: Record<ResourceType, { icon: string; description: string }> = {
+  [ResourceType.Gold]:    { icon: 'coin',    description: 'Primary currency for trade and construction.' },
+  [ResourceType.Wood]:    { icon: 'log',     description: 'Lumber for building structures and crafting.' },
+  [ResourceType.Stone]:   { icon: 'brick',   description: 'Raw stone for fortifications and upgrades.' },
+  [ResourceType.Herbs]:   { icon: 'leaf',    description: 'Medicinal plants for potions and research. Perishable.' },
+  [ResourceType.Ore]:     { icon: 'pickaxe', description: 'Raw ore refined into metals for equipment.' },
+  [ResourceType.Water]:   { icon: 'droplet', description: 'Fresh water for irrigation and alchemy.' },
+  [ResourceType.Food]:    { icon: 'bread',   description: 'Provisions to feed your guild. Perishable.' },
+  [ResourceType.Essence]: { icon: 'sparkle', description: 'Mystical energy for advanced research and crafting.' },
+};
+
+/** Resource conversion recipes */
+export interface ConversionRecipe {
+  id: string;
+  name: string;
+  description: string;
+  inputs: Partial<Record<ResourceType, number>>;
+  outputs: Partial<Record<ResourceType, number>>;
+  /** Minimum building level required (Workshop) */
+  requiredBuildingLevel: number;
+}
+
+export const CONVERSION_RECIPES: ConversionRecipe[] = [
+  {
+    id: 'smelt_metal',
+    name: 'Smelt Metal',
+    description: 'Refine raw ore into useful metal ingots.',
+    inputs: { [ResourceType.Ore]: 5, [ResourceType.Wood]: 2 },
+    outputs: { [ResourceType.Gold]: 15 },
+    requiredBuildingLevel: 1,
+  },
+  {
+    id: 'brew_potions',
+    name: 'Brew Potions',
+    description: 'Distill herbs and water into valuable potions.',
+    inputs: { [ResourceType.Herbs]: 3, [ResourceType.Water]: 1 },
+    outputs: { [ResourceType.Essence]: 2 },
+    requiredBuildingLevel: 2,
+  },
+  {
+    id: 'stonework',
+    name: 'Masonry',
+    description: 'Shape raw stone into refined building materials.',
+    inputs: { [ResourceType.Stone]: 8, [ResourceType.Water]: 2 },
+    outputs: { [ResourceType.Gold]: 20 },
+    requiredBuildingLevel: 1,
+  },
+  {
+    id: 'lumber_processing',
+    name: 'Lumber Processing',
+    description: 'Process raw timber into fine construction planks.',
+    inputs: { [ResourceType.Wood]: 10 },
+    outputs: { [ResourceType.Gold]: 12, [ResourceType.Stone]: 2 },
+    requiredBuildingLevel: 1,
+  },
+  {
+    id: 'feast_preparation',
+    name: 'Feast Preparation',
+    description: 'Prepare a grand feast to boost guild morale.',
+    inputs: { [ResourceType.Food]: 10, [ResourceType.Water]: 5, [ResourceType.Herbs]: 2 },
+    outputs: { [ResourceType.Essence]: 5, [ResourceType.Gold]: 10 },
+    requiredBuildingLevel: 3,
+  },
+  {
+    id: 'alchemical_transmutation',
+    name: 'Alchemical Transmutation',
+    description: 'Use essence to transmute base materials into gold.',
+    inputs: { [ResourceType.Essence]: 3, [ResourceType.Ore]: 5 },
+    outputs: { [ResourceType.Gold]: 50 },
+    requiredBuildingLevel: 4,
+  },
+];
+
+/** Resource milestone thresholds and rewards */
+export interface ResourceMilestone {
+  id: string;
+  resource: ResourceType;
+  threshold: number;
+  label: string;
+  reward: Partial<Record<ResourceType, number>>;
+  xp: number;
+}
+
+export const RESOURCE_MILESTONES: ResourceMilestone[] = [
+  { id: 'gold_1000', resource: ResourceType.Gold, threshold: 1000, label: 'Gold Hoarder', reward: { [ResourceType.Essence]: 5 }, xp: 25 },
+  { id: 'gold_5000', resource: ResourceType.Gold, threshold: 5000, label: 'Gold Baron', reward: { [ResourceType.Essence]: 15 }, xp: 50 },
+  { id: 'wood_1000', resource: ResourceType.Wood, threshold: 1000, label: 'Lumber Lord', reward: { [ResourceType.Gold]: 100 }, xp: 25 },
+  { id: 'stone_1000', resource: ResourceType.Stone, threshold: 1000, label: 'Stone Mason', reward: { [ResourceType.Gold]: 100 }, xp: 25 },
+  { id: 'food_1000', resource: ResourceType.Food, threshold: 1000, label: 'Feast Master', reward: { [ResourceType.Gold]: 100 }, xp: 25 },
+  { id: 'essence_100', resource: ResourceType.Essence, threshold: 100, label: 'Essence Adept', reward: { [ResourceType.Gold]: 200 }, xp: 50 },
+  { id: 'essence_500', resource: ResourceType.Essence, threshold: 500, label: 'Essence Master', reward: { [ResourceType.Gold]: 500 }, xp: 100 },
+  { id: 'ore_500', resource: ResourceType.Ore, threshold: 500, label: 'Ore Miner', reward: { [ResourceType.Gold]: 75 }, xp: 20 },
+  { id: 'herbs_500', resource: ResourceType.Herbs, threshold: 500, label: 'Herbalist', reward: { [ResourceType.Gold]: 75 }, xp: 20 },
+  { id: 'water_1000', resource: ResourceType.Water, threshold: 1000, label: 'Water Bearer', reward: { [ResourceType.Gold]: 75 }, xp: 20 },
+];
+
+/** Seasonal resource bonus multipliers */
+export const SEASONAL_RESOURCE_BONUSES: Record<string, Partial<Record<ResourceType, number>>> = {
+  spring: { [ResourceType.Food]: 0.2, [ResourceType.Herbs]: 0.15, [ResourceType.Water]: 0.1 },
+  summer: { [ResourceType.Wood]: 0.15, [ResourceType.Stone]: 0.1, [ResourceType.Food]: 0.1 },
+  autumn: { [ResourceType.Food]: 0.25, [ResourceType.Ore]: 0.1, [ResourceType.Wood]: 0.1 },
+  winter: { [ResourceType.Ore]: 0.15, [ResourceType.Stone]: 0.15, [ResourceType.Essence]: 0.1 },
+};
+
+/** Max resource production per tick (anti-exploit) — units per second */
+export const MAX_PRODUCTION_PER_SECOND: Record<ResourceType, number> = {
+  [ResourceType.Gold]: 10,
+  [ResourceType.Wood]: 8,
+  [ResourceType.Stone]: 6,
+  [ResourceType.Herbs]: 5,
+  [ResourceType.Ore]: 4,
+  [ResourceType.Water]: 8,
+  [ResourceType.Food]: 8,
+  [ResourceType.Essence]: 2,
+};
+
 /** Hero XP curve multiplier */
 export const HERO_XP_MULTIPLIER = 1.25;
 

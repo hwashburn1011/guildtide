@@ -10,6 +10,7 @@ import {
 } from '../../../shared/src/constants';
 import { IdleProgressService } from '../services/IdleProgressService';
 import { GuildService } from '../services/GuildService';
+import { ResourceService } from '../services/ResourceService';
 import type { GuildEmblem } from '../../../shared/src/types';
 
 const router = Router();
@@ -116,10 +117,20 @@ router.post('/collect', async (req: Request, res: Response) => {
       where: { playerId: req.playerId },
     });
 
+    // Take a resource snapshot on collect for history tracking
+    if (guild) {
+      await ResourceService.takeSnapshot(guild.id);
+    }
+
+    const balance = guild
+      ? await ResourceService.getBalance(guild.id)
+      : { current: {}, caps: {} };
+
     res.json({
       gains: gains.resources,
       elapsedSeconds: gains.elapsedSeconds,
-      resources: guild ? JSON.parse(guild.resources) : {},
+      resources: balance.current,
+      caps: balance.caps,
       rates,
     });
   } catch (err) {

@@ -209,6 +209,62 @@ export interface Region {
   timezone: string;
 }
 
+// --- Resource System ---
+export interface ResourceState {
+  current: Record<ResourceType, number>;
+  caps: Record<ResourceType, number>;
+  rates: Record<ResourceType, number>;
+  netRates: Record<ResourceType, number>;
+  decayRates: Partial<Record<ResourceType, number>>;
+  multipliers: ResourceMultipliers;
+}
+
+export interface ResourceMultipliers {
+  weather: Partial<Record<ResourceType, number>>;
+  season: Partial<Record<ResourceType, number>>;
+  research: Partial<Record<ResourceType, number>>;
+  items: Partial<Record<ResourceType, number>>;
+}
+
+export interface ResourceBreakdown {
+  resource: ResourceType;
+  production: Array<{ source: string; amount: number }>;
+  consumption: Array<{ source: string; amount: number }>;
+  netRate: number;
+}
+
+export interface ResourceSnapshot {
+  timestamp: string;
+  resources: Record<ResourceType, number>;
+}
+
+export interface ResourceAlert {
+  resource: ResourceType;
+  threshold: number;
+  direction: 'below' | 'above';
+  enabled: boolean;
+}
+
+export interface ResourceAuditEntry {
+  id: string;
+  guildId: string;
+  resource: ResourceType;
+  amount: number;
+  balanceAfter: number;
+  action: string;
+  details: string;
+  timestamp: string;
+}
+
+export interface ResourceForecast {
+  resource: ResourceType;
+  currentAmount: number;
+  cap: number;
+  netRatePerHour: number;
+  hoursUntilFull: number | null;
+  hoursUntilEmpty: number | null;
+}
+
 // --- API Request/Response Types ---
 export interface RegisterRequest {
   email: string;
