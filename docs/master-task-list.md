@@ -803,106 +803,106 @@
 ## Epic 11: Weather & Real-World Data
 > OpenWeatherMap integration, financial APIs, news API, sports events, global celebrations, data pipeline with caching and fallbacks.
 
-- [ ] T-0761: Set up OpenWeatherMap API key configuration and environment variable
-- [ ] T-0762: Implement weather data fetch service with city/coordinates parameter
-- [ ] T-0763: Create weather data model (temperature, condition, humidity, wind, pressure)
-- [ ] T-0764: Implement weather data caching layer with 30-minute TTL
-- [ ] T-0765: Build weather cache invalidation and refresh mechanism
-- [ ] T-0766: Create weather fallback system returning last known data on API failure
-- [ ] T-0767: Implement weather condition mapping to in-game effects table
-- [ ] T-0768: Create rain weather effect: +20% farm production, -10% expedition speed
-- [ ] T-0769: Create sunny weather effect: +10% morale, +15% market activity
-- [ ] T-0770: Create storm weather effect: -30% expedition safety, +20% mine yield
-- [ ] T-0771: Create snow weather effect: -20% food production, +10% research speed
-- [ ] T-0772: Create fog weather effect: +15% rogue effectiveness, -10% scout range
-- [ ] T-0773: Create heatwave weather effect: -15% worker efficiency, +25% water resource value
-- [ ] T-0774: Create wind weather effect: +10% travel speed, -5% construction speed
-- [ ] T-0775: Build weather display widget with icon, temperature, and condition text
-- [ ] T-0776: Implement weather change notification when conditions shift
-- [ ] T-0777: Create weather forecast display showing next 24 hours of conditions
-- [ ] T-0778: Build weather history log showing past 7 days of conditions
-- [ ] T-0779: Implement weather-based visual changes to guild hall scene (rain particles, sun glow)
-- [ ] T-0780: Create weather-based ambient sound changes (rain sounds, wind sounds)
-- [ ] T-0781: Implement weather location setting in player profile (city selection)
-- [ ] T-0782: Build weather location auto-detect using browser geolocation API
-- [ ] T-0783: Create weather-based expedition modifier display on launch screen
-- [ ] T-0784: Implement weather-based market price modifier application
-- [ ] T-0785: Build weather API rate limiter (max 60 calls per minute)
-- [ ] T-0786: Create weather data validation and sanitization layer
-- [ ] T-0787: Implement weather webhook for real-time severe weather alerts
-- [ ] T-0788: Build weather comparison between player locations in alliance
-- [ ] T-0789: Create weather achievement system (play during 10 different conditions)
-- [ ] T-0790: Implement weather pattern analysis for prediction accuracy bonuses
-- [ ] T-0791: Set up Fear & Greed Index API integration
-- [ ] T-0792: Implement Fear & Greed data fetch with daily caching
-- [ ] T-0793: Create Fear & Greed mapping to market volatility modifier
-- [ ] T-0794: Build Fear & Greed indicator display in Observatory building
-- [ ] T-0795: Set up major stock index API integration (S&P 500 daily close)
-- [ ] T-0796: Implement stock index data fetch with daily caching
-- [ ] T-0797: Create stock index mapping to merchant guild prosperity modifier
-- [ ] T-0798: Build stock market sentiment display in Observatory
-- [ ] T-0799: Set up crypto market sentiment API integration
-- [ ] T-0800: Implement crypto sentiment data fetch with hourly caching
-- [ ] T-0801: Create crypto volatility mapping to in-game trade volatility
-- [ ] T-0802: Build crypto sentiment widget in market scene
-- [ ] T-0803: Set up news headline API integration (top headlines)
-- [ ] T-0804: Implement news data fetch with 2-hour caching
-- [ ] T-0805: Create news sentiment analysis (positive/negative/neutral classification)
-- [ ] T-0806: Map news sentiment to world event generation triggers
-- [ ] T-0807: Build news ticker display in guild hall scene
-- [ ] T-0808: Set up sports results API integration (major leagues)
-- [ ] T-0809: Implement sports data fetch with event-based caching
-- [ ] T-0810: Create sports event mapping to in-game tournament events
-- [ ] T-0811: Build sports event notification for in-game tournament triggers
-- [ ] T-0812: Set up moon phase calculation service (algorithmic, no API needed)
-- [ ] T-0813: Implement moon phase display with current phase icon
-- [ ] T-0814: Create moon phase effects (full moon: +20% magic, new moon: +20% stealth)
-- [ ] T-0815: Build lunar calendar display in Calendar scene
-- [ ] T-0816: Create data pipeline orchestrator managing all external API fetches
-- [ ] T-0817: Implement data pipeline scheduling with staggered fetch intervals
-- [ ] T-0818: Build data pipeline health dashboard showing API status per source
-- [ ] T-0819: Create data pipeline error logging and alerting system
-- [ ] T-0820: Implement data pipeline fallback chain (primary API -> backup API -> cached data -> defaults)
-- [ ] T-0821: Build data source configuration admin panel
-- [ ] T-0822: Create real-world data modifier summary panel showing all active effects
-- [ ] T-0823: Implement real-world data opt-out toggle for players who prefer fixed values
-- [ ] T-0824: Build real-world data tutorial explaining how reality affects the game
-- [ ] T-0825: Create global celebration detection (World Cup, Olympics, major holidays)
-- [ ] T-0826: Implement celebration event generation from detected global events
-- [ ] T-0827: Build celebration event visual overlay with themed decorations
-- [ ] T-0828: Create API usage tracking and budget monitoring dashboard
-- [ ] T-0829: Implement API key rotation system for multiple provider accounts
-- [ ] T-0830: Build data freshness indicator showing last update time per source
-- [ ] T-0831: Create historical real-world data archive for pattern analysis
-- [ ] T-0832: Implement cross-data correlation engine (weather + market = compound effect)
-- [ ] T-0833: Build compound effect display showing combined real-world modifiers
-- [ ] T-0834: Create data source reliability scoring for weighted fallback decisions
-- [ ] T-0835: Implement real-world data changelog showing what changed each day
-- [ ] T-0836: Build Observatory building research upgrades to unlock more data sources
-- [ ] T-0837: Create earthquake/natural disaster data mapping to in-game calamity events
-- [ ] T-0838: Implement solar/astronomical event tracking (eclipses, solstices)
-- [ ] T-0839: Build astronomical event in-game bonus system
-- [ ] T-0840: Create tide data integration for coastal region expedition modifiers
-- [ ] T-0841: Implement air quality data mapping to atmospheric effects
-- [ ] T-0842: Build real-world data feed aggregation API endpoint for frontend
-- [ ] T-0843: Create data pipeline retry logic with exponential backoff
-- [ ] T-0844: Implement data pipeline circuit breaker for repeatedly failing APIs
-- [ ] T-0845: Build real-world data impact report showing historical effects on gameplay
-- [ ] T-0846: Create sunrise/sunset data integration for day/night cycle synchronization
-- [ ] T-0847: Implement UV index data mapping to outdoor expedition modifiers
-- [ ] T-0848: Build pollen count data mapping to nature-based resource production
-- [ ] T-0849: Create real-world event correlation leaderboard (who predicted effects best)
-- [ ] T-0850: Implement data pipeline unit tests for all fetch, cache, and fallback paths
-- [ ] T-0851: Build data source mock mode for development and testing environments
-- [ ] T-0852: Create real-world data integration documentation for new data sources
-- [ ] T-0853: Implement global event significance scoring for prioritizing game impact
-- [ ] T-0854: Build data pipeline batch processing for low-priority data sources
-- [ ] T-0855: Create real-world data anonymization ensuring no personal location data leaks
-- [ ] T-0856: Implement weather-to-biome mapping for region-specific weather effects
-- [ ] T-0857: Build real-world data A/B test framework for balancing data impact
-- [ ] T-0858: Create data source health check endpoint for monitoring
-- [ ] T-0859: Implement data pipeline graceful degradation during partial outages
-- [ ] T-0860: Build real-world data impact toggle per modifier for balance testing
+- [x] T-0761: Set up OpenWeatherMap API key configuration and environment variable
+- [x] T-0762: Implement weather data fetch service with city/coordinates parameter
+- [x] T-0763: Create weather data model (temperature, condition, humidity, wind, pressure)
+- [x] T-0764: Implement weather data caching layer with 30-minute TTL
+- [x] T-0765: Build weather cache invalidation and refresh mechanism
+- [x] T-0766: Create weather fallback system returning last known data on API failure
+- [x] T-0767: Implement weather condition mapping to in-game effects table
+- [x] T-0768: Create rain weather effect: +20% farm production, -10% expedition speed
+- [x] T-0769: Create sunny weather effect: +10% morale, +15% market activity
+- [x] T-0770: Create storm weather effect: -30% expedition safety, +20% mine yield
+- [x] T-0771: Create snow weather effect: -20% food production, +10% research speed
+- [x] T-0772: Create fog weather effect: +15% rogue effectiveness, -10% scout range
+- [x] T-0773: Create heatwave weather effect: -15% worker efficiency, +25% water resource value
+- [x] T-0774: Create wind weather effect: +10% travel speed, -5% construction speed
+- [x] T-0775: Build weather display widget with icon, temperature, and condition text
+- [x] T-0776: Implement weather change notification when conditions shift
+- [x] T-0777: Create weather forecast display showing next 24 hours of conditions
+- [x] T-0778: Build weather history log showing past 7 days of conditions
+- [x] T-0779: Implement weather-based visual changes to guild hall scene (rain particles, sun glow)
+- [x] T-0780: Create weather-based ambient sound changes (rain sounds, wind sounds)
+- [x] T-0781: Implement weather location setting in player profile (city selection)
+- [x] T-0782: Build weather location auto-detect using browser geolocation API
+- [x] T-0783: Create weather-based expedition modifier display on launch screen
+- [x] T-0784: Implement weather-based market price modifier application
+- [x] T-0785: Build weather API rate limiter (max 60 calls per minute)
+- [x] T-0786: Create weather data validation and sanitization layer
+- [x] T-0787: Implement weather webhook for real-time severe weather alerts
+- [x] T-0788: Build weather comparison between player locations in alliance
+- [x] T-0789: Create weather achievement system (play during 10 different conditions)
+- [x] T-0790: Implement weather pattern analysis for prediction accuracy bonuses
+- [x] T-0791: Set up Fear & Greed Index API integration
+- [x] T-0792: Implement Fear & Greed data fetch with daily caching
+- [x] T-0793: Create Fear & Greed mapping to market volatility modifier
+- [x] T-0794: Build Fear & Greed indicator display in Observatory building
+- [x] T-0795: Set up major stock index API integration (S&P 500 daily close)
+- [x] T-0796: Implement stock index data fetch with daily caching
+- [x] T-0797: Create stock index mapping to merchant guild prosperity modifier
+- [x] T-0798: Build stock market sentiment display in Observatory
+- [x] T-0799: Set up crypto market sentiment API integration
+- [x] T-0800: Implement crypto sentiment data fetch with hourly caching
+- [x] T-0801: Create crypto volatility mapping to in-game trade volatility
+- [x] T-0802: Build crypto sentiment widget in market scene
+- [x] T-0803: Set up news headline API integration (top headlines)
+- [x] T-0804: Implement news data fetch with 2-hour caching
+- [x] T-0805: Create news sentiment analysis (positive/negative/neutral classification)
+- [x] T-0806: Map news sentiment to world event generation triggers
+- [x] T-0807: Build news ticker display in guild hall scene
+- [x] T-0808: Set up sports results API integration (major leagues)
+- [x] T-0809: Implement sports data fetch with event-based caching
+- [x] T-0810: Create sports event mapping to in-game tournament events
+- [x] T-0811: Build sports event notification for in-game tournament triggers
+- [x] T-0812: Set up moon phase calculation service (algorithmic, no API needed)
+- [x] T-0813: Implement moon phase display with current phase icon
+- [x] T-0814: Create moon phase effects (full moon: +20% magic, new moon: +20% stealth)
+- [x] T-0815: Build lunar calendar display in Calendar scene
+- [x] T-0816: Create data pipeline orchestrator managing all external API fetches
+- [x] T-0817: Implement data pipeline scheduling with staggered fetch intervals
+- [x] T-0818: Build data pipeline health dashboard showing API status per source
+- [x] T-0819: Create data pipeline error logging and alerting system
+- [x] T-0820: Implement data pipeline fallback chain (primary API -> backup API -> cached data -> defaults)
+- [x] T-0821: Build data source configuration admin panel
+- [x] T-0822: Create real-world data modifier summary panel showing all active effects
+- [x] T-0823: Implement real-world data opt-out toggle for players who prefer fixed values
+- [x] T-0824: Build real-world data tutorial explaining how reality affects the game
+- [x] T-0825: Create global celebration detection (World Cup, Olympics, major holidays)
+- [x] T-0826: Implement celebration event generation from detected global events
+- [x] T-0827: Build celebration event visual overlay with themed decorations
+- [x] T-0828: Create API usage tracking and budget monitoring dashboard
+- [x] T-0829: Implement API key rotation system for multiple provider accounts
+- [x] T-0830: Build data freshness indicator showing last update time per source
+- [x] T-0831: Create historical real-world data archive for pattern analysis
+- [x] T-0832: Implement cross-data correlation engine (weather + market = compound effect)
+- [x] T-0833: Build compound effect display showing combined real-world modifiers
+- [x] T-0834: Create data source reliability scoring for weighted fallback decisions
+- [x] T-0835: Implement real-world data changelog showing what changed each day
+- [x] T-0836: Build Observatory building research upgrades to unlock more data sources
+- [x] T-0837: Create earthquake/natural disaster data mapping to in-game calamity events
+- [x] T-0838: Implement solar/astronomical event tracking (eclipses, solstices)
+- [x] T-0839: Build astronomical event in-game bonus system
+- [x] T-0840: Create tide data integration for coastal region expedition modifiers
+- [x] T-0841: Implement air quality data mapping to atmospheric effects
+- [x] T-0842: Build real-world data feed aggregation API endpoint for frontend
+- [x] T-0843: Create data pipeline retry logic with exponential backoff
+- [x] T-0844: Implement data pipeline circuit breaker for repeatedly failing APIs
+- [x] T-0845: Build real-world data impact report showing historical effects on gameplay
+- [x] T-0846: Create sunrise/sunset data integration for day/night cycle synchronization
+- [x] T-0847: Implement UV index data mapping to outdoor expedition modifiers
+- [x] T-0848: Build pollen count data mapping to nature-based resource production
+- [x] T-0849: Create real-world event correlation leaderboard (who predicted effects best)
+- [x] T-0850: Implement data pipeline unit tests for all fetch, cache, and fallback paths
+- [x] T-0851: Build data source mock mode for development and testing environments
+- [x] T-0852: Create real-world data integration documentation for new data sources
+- [x] T-0853: Implement global event significance scoring for prioritizing game impact
+- [x] T-0854: Build data pipeline batch processing for low-priority data sources
+- [x] T-0855: Create real-world data anonymization ensuring no personal location data leaks
+- [x] T-0856: Implement weather-to-biome mapping for region-specific weather effects
+- [x] T-0857: Build real-world data A/B test framework for balancing data impact
+- [x] T-0858: Create data source health check endpoint for monitoring
+- [x] T-0859: Implement data pipeline graceful degradation during partial outages
+- [x] T-0860: Build real-world data impact toggle per modifier for balance testing
 
 ## Epic 12: Events System
 > 50+ event templates, event chains, branching narratives, seasonal events, and player-driven events.
