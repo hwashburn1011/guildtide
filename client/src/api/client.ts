@@ -2257,6 +2257,26 @@ class ApiClient {
   async shareChatImage(channel: string, channelId: string, imageUrl: string): Promise<any> {
     return this.request('POST', '/social/chat/image', { channel, channelId, imageUrl });
   }
+
+  // ============================================================
+  // Alliance Research API
+  // ============================================================
+
+  async getAllianceResearch(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/research/tree`);
+  }
+
+  async startAllianceResearch(allianceId: string, nodeId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/research/start`, { nodeId });
+  }
+
+  async completeAllianceResearch(allianceId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/research/complete`);
+  }
+
+  async getAllianceResearchEffects(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/research/effects`);
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);
