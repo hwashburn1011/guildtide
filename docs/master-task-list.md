@@ -1785,308 +1785,308 @@
 ## Epic 24: Playwright Testing
 > Install, configure, and write E2E tests for every scene, flow, and edge case with screenshot comparisons.
 
-- [ ] T-1691: Install Playwright and configure project with TypeScript support
-- [ ] T-1692: Set up Playwright test directory structure and configuration file
-- [ ] T-1693: Configure browser targets (Chromium, Firefox, WebKit)
-- [ ] T-1694: Set up test base URL and environment variable configuration
-- [ ] T-1695: Create test fixtures for authenticated user session
-- [ ] T-1696: Create test fixtures for seeded database state
-- [ ] T-1697: Build test helper utilities (login, navigate, wait-for-load)
-- [ ] T-1698: Set up screenshot comparison baseline capture workflow
-- [ ] T-1699: Configure visual regression threshold settings (0.1% pixel diff)
-- [ ] T-1700: Create Playwright reporter configuration (HTML, JSON, CI)
-- [ ] T-1701: Write E2E test: registration form submission with valid data
-- [ ] T-1702: Write E2E test: registration form validation error display
-- [ ] T-1703: Write E2E test: login with valid credentials redirects to guild hall
-- [ ] T-1704: Write E2E test: login with invalid credentials shows error message
-- [ ] T-1705: Write E2E test: password reset flow end-to-end
-- [ ] T-1706: Write E2E test: logout clears session and redirects to login
-- [ ] T-1707: Write E2E test: OAuth login button redirects to provider
-- [ ] T-1708: Write E2E test: guild hall scene loads with correct buildings
-- [ ] T-1709: Write E2E test: building placement on grid cell
-- [ ] T-1710: Write E2E test: building upgrade with sufficient resources
-- [ ] T-1711: Write E2E test: building upgrade blocked with insufficient resources
-- [ ] T-1712: Write E2E test: building demolish with confirmation dialog
-- [ ] T-1713: Write E2E test: resource bar displays correct values
-- [ ] T-1714: Write E2E test: resource production updates after tick
-- [ ] T-1715: Write E2E test: resource cap prevents overflow
-- [ ] T-1716: Write E2E test: resource conversion recipe execution
-- [ ] T-1717: Write E2E test: hero recruitment from Tavern
-- [ ] T-1718: Write E2E test: hero detail page displays all stats
-- [ ] T-1719: Write E2E test: hero skill tree navigation and skill unlock
-- [ ] T-1720: Write E2E test: hero equipment equip and unequip
-- [ ] T-1721: Write E2E test: hero assignment to building
-- [ ] T-1722: Write E2E test: hero dismissal with confirmation
-- [ ] T-1723: Write E2E test: expedition party formation with hero selection
-- [ ] T-1724: Write E2E test: expedition launch with valid party
-- [ ] T-1725: Write E2E test: expedition progress tracking updates
-- [ ] T-1726: Write E2E test: expedition completion reward display
-- [ ] T-1727: Write E2E test: market buy order placement
-- [ ] T-1728: Write E2E test: market sell order placement
-- [ ] T-1729: Write E2E test: market price history chart rendering
-- [ ] T-1730: Write E2E test: market search and filter functionality
-- [ ] T-1731: Write E2E test: research tree node selection and start
-- [ ] T-1732: Write E2E test: research completion notification
-- [ ] T-1733: Write E2E test: research tree zoom and pan interaction
-- [ ] T-1734: Write E2E test: inventory grid item display and sorting
-- [ ] T-1735: Write E2E test: crafting recipe selection and execution
-- [ ] T-1736: Write E2E test: item equip comparison tooltip
-- [ ] T-1737: Write E2E test: world map region click and info panel
-- [ ] T-1738: Write E2E test: world map zoom and pan interaction
-- [ ] T-1739: Write E2E test: calendar view with event markers
-- [ ] T-1740: Write E2E test: event popup display and choice selection
-- [ ] T-1741: Write E2E test: notification center open and mark-read
-- [ ] T-1742: Write E2E test: settings page volume slider interaction
-- [ ] T-1743: Write E2E test: profile page avatar upload
-- [ ] T-1744: Write E2E test: account settings password change
-- [ ] T-1745: Write E2E test: chat message send and receive
-- [ ] T-1746: Write E2E test: friend request send and accept
-- [ ] T-1747: Write E2E test: alliance creation and invite
-- [ ] T-1748: Write E2E test: leaderboard page loading and sort
-- [ ] T-1749: Write E2E test: combat auto-battle plays to completion
-- [ ] T-1750: Write E2E test: combat reward distribution after victory
-- [ ] T-1751: Write E2E test: lore codex entry display
-- [ ] T-1752: Write E2E test: quest log shows active quests
-- [ ] T-1753: Write E2E test: NPC dialog interaction flow
-- [ ] T-1754: Write E2E test: weather widget displays current conditions
-- [ ] T-1755: Write E2E test: season visual theme matches current season
-- [ ] T-1756: Write E2E test: responsive layout at mobile breakpoint (375px)
-- [ ] T-1757: Write E2E test: responsive layout at tablet breakpoint (768px)
-- [ ] T-1758: Write E2E test: responsive layout at desktop breakpoint (1920px)
-- [ ] T-1759: Write E2E test: keyboard navigation through main scenes
-- [ ] T-1760: Write E2E test: tab order correctness on forms
-- [ ] T-1761: Write E2E test: tooltip display on hover for buildings
-- [ ] T-1762: Write E2E test: modal open/close with backdrop click
-- [ ] T-1763: Write E2E test: toast notification appears and auto-dismisses
-- [ ] T-1764: Write E2E test: error page display on 404 route
-- [ ] T-1765: Write E2E test: loading spinner displays during data fetch
-- [ ] T-1766: Write E2E test: empty state display when no data exists
-- [ ] T-1767: Write E2E test: network error banner on connection loss
-- [ ] T-1768: Write E2E test: pagination controls on long lists
-- [ ] T-1769: Write E2E test: search/filter combination produces correct results
-- [ ] T-1770: Write E2E test: data persistence after page refresh
-- [ ] T-1771: Write E2E test: concurrent action handling (double-click prevention)
-- [ ] T-1772: Write E2E test: session expiration redirect to login
-- [ ] T-1773: Write E2E test: browser back/forward navigation state preservation
-- [ ] T-1774: Write E2E test: screenshot comparison of guild hall scene
-- [ ] T-1775: Write E2E test: screenshot comparison of market scene
-- [ ] T-1776: Write E2E test: screenshot comparison of world map scene
-- [ ] T-1777: Write E2E test: screenshot comparison of combat scene
-- [ ] T-1778: Write E2E test: screenshot comparison of research tree
-- [ ] T-1779: Write E2E test: screenshot comparison of login page
-- [ ] T-1780: Write E2E test: screenshot comparison of hero detail page
-- [ ] T-1781: Write E2E test: full user onboarding flow (register -> guild setup -> first build)
-- [ ] T-1782: Write E2E test: full expedition cycle (form party -> launch -> return -> loot)
-- [ ] T-1783: Write E2E test: full crafting cycle (gather materials -> craft -> equip)
-- [ ] T-1784: Write E2E test: full trade cycle (list item -> buy item -> verify inventory)
-- [ ] T-1785: Write E2E test: full research cycle (select node -> wait -> complete -> verify effect)
-- [ ] T-1786: Write E2E test: API error handling (server returns 500)
-- [ ] T-1787: Write E2E test: slow network simulation (throttled connection)
-- [ ] T-1788: Write E2E test: multiple tabs open simultaneously
-- [ ] T-1789: Write E2E test: cross-browser visual consistency check
-- [ ] T-1790: Set up Playwright CI integration with test artifact upload
+- [x] T-1691: Install Playwright and configure project with TypeScript support
+- [x] T-1692: Set up Playwright test directory structure and configuration file
+- [x] T-1693: Configure browser targets (Chromium, Firefox, WebKit)
+- [x] T-1694: Set up test base URL and environment variable configuration
+- [x] T-1695: Create test fixtures for authenticated user session
+- [x] T-1696: Create test fixtures for seeded database state
+- [x] T-1697: Build test helper utilities (login, navigate, wait-for-load)
+- [x] T-1698: Set up screenshot comparison baseline capture workflow
+- [x] T-1699: Configure visual regression threshold settings (0.1% pixel diff)
+- [x] T-1700: Create Playwright reporter configuration (HTML, JSON, CI)
+- [x] T-1701: Write E2E test: registration form submission with valid data
+- [x] T-1702: Write E2E test: registration form validation error display
+- [x] T-1703: Write E2E test: login with valid credentials redirects to guild hall
+- [x] T-1704: Write E2E test: login with invalid credentials shows error message
+- [x] T-1705: Write E2E test: password reset flow end-to-end
+- [x] T-1706: Write E2E test: logout clears session and redirects to login
+- [x] T-1707: Write E2E test: OAuth login button redirects to provider
+- [x] T-1708: Write E2E test: guild hall scene loads with correct buildings
+- [x] T-1709: Write E2E test: building placement on grid cell
+- [x] T-1710: Write E2E test: building upgrade with sufficient resources
+- [x] T-1711: Write E2E test: building upgrade blocked with insufficient resources
+- [x] T-1712: Write E2E test: building demolish with confirmation dialog
+- [x] T-1713: Write E2E test: resource bar displays correct values
+- [x] T-1714: Write E2E test: resource production updates after tick
+- [x] T-1715: Write E2E test: resource cap prevents overflow
+- [x] T-1716: Write E2E test: resource conversion recipe execution
+- [x] T-1717: Write E2E test: hero recruitment from Tavern
+- [x] T-1718: Write E2E test: hero detail page displays all stats
+- [x] T-1719: Write E2E test: hero skill tree navigation and skill unlock
+- [x] T-1720: Write E2E test: hero equipment equip and unequip
+- [x] T-1721: Write E2E test: hero assignment to building
+- [x] T-1722: Write E2E test: hero dismissal with confirmation
+- [x] T-1723: Write E2E test: expedition party formation with hero selection
+- [x] T-1724: Write E2E test: expedition launch with valid party
+- [x] T-1725: Write E2E test: expedition progress tracking updates
+- [x] T-1726: Write E2E test: expedition completion reward display
+- [x] T-1727: Write E2E test: market buy order placement
+- [x] T-1728: Write E2E test: market sell order placement
+- [x] T-1729: Write E2E test: market price history chart rendering
+- [x] T-1730: Write E2E test: market search and filter functionality
+- [x] T-1731: Write E2E test: research tree node selection and start
+- [x] T-1732: Write E2E test: research completion notification
+- [x] T-1733: Write E2E test: research tree zoom and pan interaction
+- [x] T-1734: Write E2E test: inventory grid item display and sorting
+- [x] T-1735: Write E2E test: crafting recipe selection and execution
+- [x] T-1736: Write E2E test: item equip comparison tooltip
+- [x] T-1737: Write E2E test: world map region click and info panel
+- [x] T-1738: Write E2E test: world map zoom and pan interaction
+- [x] T-1739: Write E2E test: calendar view with event markers
+- [x] T-1740: Write E2E test: event popup display and choice selection
+- [x] T-1741: Write E2E test: notification center open and mark-read
+- [x] T-1742: Write E2E test: settings page volume slider interaction
+- [x] T-1743: Write E2E test: profile page avatar upload
+- [x] T-1744: Write E2E test: account settings password change
+- [x] T-1745: Write E2E test: chat message send and receive
+- [x] T-1746: Write E2E test: friend request send and accept
+- [x] T-1747: Write E2E test: alliance creation and invite
+- [x] T-1748: Write E2E test: leaderboard page loading and sort
+- [x] T-1749: Write E2E test: combat auto-battle plays to completion
+- [x] T-1750: Write E2E test: combat reward distribution after victory
+- [x] T-1751: Write E2E test: lore codex entry display
+- [x] T-1752: Write E2E test: quest log shows active quests
+- [x] T-1753: Write E2E test: NPC dialog interaction flow
+- [x] T-1754: Write E2E test: weather widget displays current conditions
+- [x] T-1755: Write E2E test: season visual theme matches current season
+- [x] T-1756: Write E2E test: responsive layout at mobile breakpoint (375px)
+- [x] T-1757: Write E2E test: responsive layout at tablet breakpoint (768px)
+- [x] T-1758: Write E2E test: responsive layout at desktop breakpoint (1920px)
+- [x] T-1759: Write E2E test: keyboard navigation through main scenes
+- [x] T-1760: Write E2E test: tab order correctness on forms
+- [x] T-1761: Write E2E test: tooltip display on hover for buildings
+- [x] T-1762: Write E2E test: modal open/close with backdrop click
+- [x] T-1763: Write E2E test: toast notification appears and auto-dismisses
+- [x] T-1764: Write E2E test: error page display on 404 route
+- [x] T-1765: Write E2E test: loading spinner displays during data fetch
+- [x] T-1766: Write E2E test: empty state display when no data exists
+- [x] T-1767: Write E2E test: network error banner on connection loss
+- [x] T-1768: Write E2E test: pagination controls on long lists
+- [x] T-1769: Write E2E test: search/filter combination produces correct results
+- [x] T-1770: Write E2E test: data persistence after page refresh
+- [x] T-1771: Write E2E test: concurrent action handling (double-click prevention)
+- [x] T-1772: Write E2E test: session expiration redirect to login
+- [x] T-1773: Write E2E test: browser back/forward navigation state preservation
+- [x] T-1774: Write E2E test: screenshot comparison of guild hall scene
+- [x] T-1775: Write E2E test: screenshot comparison of market scene
+- [x] T-1776: Write E2E test: screenshot comparison of world map scene
+- [x] T-1777: Write E2E test: screenshot comparison of combat scene
+- [x] T-1778: Write E2E test: screenshot comparison of research tree
+- [x] T-1779: Write E2E test: screenshot comparison of login page
+- [x] T-1780: Write E2E test: screenshot comparison of hero detail page
+- [x] T-1781: Write E2E test: full user onboarding flow (register -> guild setup -> first build)
+- [x] T-1782: Write E2E test: full expedition cycle (form party -> launch -> return -> loot)
+- [x] T-1783: Write E2E test: full crafting cycle (gather materials -> craft -> equip)
+- [x] T-1784: Write E2E test: full trade cycle (list item -> buy item -> verify inventory)
+- [x] T-1785: Write E2E test: full research cycle (select node -> wait -> complete -> verify effect)
+- [x] T-1786: Write E2E test: API error handling (server returns 500)
+- [x] T-1787: Write E2E test: slow network simulation (throttled connection)
+- [x] T-1788: Write E2E test: multiple tabs open simultaneously
+- [x] T-1789: Write E2E test: cross-browser visual consistency check
+- [x] T-1790: Set up Playwright CI integration with test artifact upload
 
 ## Epic 25: Unit & Integration Testing
 > Service tests, route tests, balance formula tests, and event generation tests.
 
-- [ ] T-1791: Set up Jest or Vitest testing framework with TypeScript support
-- [ ] T-1792: Configure test coverage reporting with minimum threshold (80%)
-- [ ] T-1793: Create test database setup and teardown utilities
-- [ ] T-1794: Build mock factory for generating test data (users, guilds, heroes)
-- [ ] T-1795: Create API route test helper with authenticated request support
-- [ ] T-1796: Write unit test: resource production calculation correctness
-- [ ] T-1797: Write unit test: resource decay calculation correctness
-- [ ] T-1798: Write unit test: resource cap enforcement
-- [ ] T-1799: Write unit test: resource conversion recipe validation
-- [ ] T-1800: Write unit test: hero stat calculation with level and equipment
-- [ ] T-1801: Write unit test: hero XP curve formula correctness
-- [ ] T-1802: Write unit test: hero power score calculation
-- [ ] T-1803: Write unit test: hero morale modifier effects
-- [ ] T-1804: Write unit test: combat damage formula with all modifiers
-- [ ] T-1805: Write unit test: combat critical hit probability
-- [ ] T-1806: Write unit test: combat initiative ordering
-- [ ] T-1807: Write unit test: combat status effect application and duration
-- [ ] T-1808: Write unit test: market price calculation with supply/demand
-- [ ] T-1809: Write unit test: market fee calculation
-- [ ] T-1810: Write unit test: auction bidding validation rules
-- [ ] T-1811: Write unit test: expedition duration calculation
-- [ ] T-1812: Write unit test: expedition encounter probability weighting
-- [ ] T-1813: Write unit test: expedition loot roll distribution
-- [ ] T-1814: Write unit test: expedition party power score calculation
-- [ ] T-1815: Write unit test: research time calculation with modifiers
-- [ ] T-1816: Write unit test: research prerequisite validation
-- [ ] T-1817: Write unit test: research effect application
-- [ ] T-1818: Write unit test: building production rate with worker bonuses
-- [ ] T-1819: Write unit test: building upgrade cost scaling formula
-- [ ] T-1820: Write unit test: building adjacency bonus calculation
-- [ ] T-1821: Write unit test: guild XP calculation from all sources
-- [ ] T-1822: Write unit test: guild level-up threshold formula
-- [ ] T-1823: Write unit test: event condition evaluation engine
-- [ ] T-1824: Write unit test: event effect application correctness
-- [ ] T-1825: Write unit test: event cooldown enforcement
-- [ ] T-1826: Write unit test: weather data mapping to game effects
-- [ ] T-1827: Write unit test: financial data normalization to modifiers
-- [ ] T-1828: Write unit test: moon phase calculation accuracy
-- [ ] T-1829: Write unit test: season determination from date
-- [ ] T-1830: Write unit test: item stat randomization within bounds
-- [ ] T-1831: Write unit test: item set bonus activation logic
-- [ ] T-1832: Write unit test: crafting quality roll distribution
-- [ ] T-1833: Write unit test: JWT token generation and validation
-- [ ] T-1834: Write unit test: password hashing and verification
-- [ ] T-1835: Write unit test: input validation schemas reject invalid data
-- [ ] T-1836: Write unit test: rate limiter correctly counts requests
-- [ ] T-1837: Write integration test: user registration endpoint
-- [ ] T-1838: Write integration test: user login endpoint
-- [ ] T-1839: Write integration test: resource add/subtract endpoint
-- [ ] T-1840: Write integration test: hero recruitment endpoint
-- [ ] T-1841: Write integration test: expedition launch endpoint
-- [ ] T-1842: Write integration test: market buy/sell endpoint
-- [ ] T-1843: Write integration test: research start endpoint
-- [ ] T-1844: Write integration test: building construct endpoint
-- [ ] T-1845: Write integration test: event trigger endpoint
-- [ ] T-1846: Write integration test: weather data fetch and cache
-- [ ] T-1847: Write integration test: financial data fetch and cache
-- [ ] T-1848: Write integration test: chat message send endpoint
-- [ ] T-1849: Write integration test: friend request endpoint
-- [ ] T-1850: Write integration test: alliance create endpoint
-- [ ] T-1851: Write integration test: crafting execute endpoint
-- [ ] T-1852: Write integration test: item equip endpoint
-- [ ] T-1853: Write integration test: cron job resource production execution
-- [ ] T-1854: Write integration test: cron job expedition progress execution
-- [ ] T-1855: Write integration test: cron job market price update execution
-- [ ] T-1856: Write integration test: WebSocket connection establishment
-- [ ] T-1857: Write integration test: WebSocket message broadcast
-- [ ] T-1858: Write integration test: data pipeline fallback behavior
-- [ ] T-1859: Write integration test: concurrent request handling (race conditions)
-- [ ] T-1860: Write integration test: database transaction rollback on error
-- [ ] T-1861: Write load test: 100 concurrent users performing basic operations
-- [ ] T-1862: Write load test: market with 1000 concurrent listings
-- [ ] T-1863: Write load test: expedition system with 500 active expeditions
-- [ ] T-1864: Write balance test: resource economy simulation over 30 in-game days
-- [ ] T-1865: Write balance test: hero progression curve from level 1 to 50
-- [ ] T-1866: Write balance test: market price stability over simulated trading
-- [ ] T-1867: Write balance test: combat balance between all enemy types
-- [ ] T-1868: Write balance test: research tree completion time estimation
-- [ ] T-1869: Write snapshot test: API response shapes for all endpoints
-- [ ] T-1870: Write snapshot test: database migration generates expected schema
+- [x] T-1791: Set up Jest or Vitest testing framework with TypeScript support
+- [x] T-1792: Configure test coverage reporting with minimum threshold (80%)
+- [x] T-1793: Create test database setup and teardown utilities
+- [x] T-1794: Build mock factory for generating test data (users, guilds, heroes)
+- [x] T-1795: Create API route test helper with authenticated request support
+- [x] T-1796: Write unit test: resource production calculation correctness
+- [x] T-1797: Write unit test: resource decay calculation correctness
+- [x] T-1798: Write unit test: resource cap enforcement
+- [x] T-1799: Write unit test: resource conversion recipe validation
+- [x] T-1800: Write unit test: hero stat calculation with level and equipment
+- [x] T-1801: Write unit test: hero XP curve formula correctness
+- [x] T-1802: Write unit test: hero power score calculation
+- [x] T-1803: Write unit test: hero morale modifier effects
+- [x] T-1804: Write unit test: combat damage formula with all modifiers
+- [x] T-1805: Write unit test: combat critical hit probability
+- [x] T-1806: Write unit test: combat initiative ordering
+- [x] T-1807: Write unit test: combat status effect application and duration
+- [x] T-1808: Write unit test: market price calculation with supply/demand
+- [x] T-1809: Write unit test: market fee calculation
+- [x] T-1810: Write unit test: auction bidding validation rules
+- [x] T-1811: Write unit test: expedition duration calculation
+- [x] T-1812: Write unit test: expedition encounter probability weighting
+- [x] T-1813: Write unit test: expedition loot roll distribution
+- [x] T-1814: Write unit test: expedition party power score calculation
+- [x] T-1815: Write unit test: research time calculation with modifiers
+- [x] T-1816: Write unit test: research prerequisite validation
+- [x] T-1817: Write unit test: research effect application
+- [x] T-1818: Write unit test: building production rate with worker bonuses
+- [x] T-1819: Write unit test: building upgrade cost scaling formula
+- [x] T-1820: Write unit test: building adjacency bonus calculation
+- [x] T-1821: Write unit test: guild XP calculation from all sources
+- [x] T-1822: Write unit test: guild level-up threshold formula
+- [x] T-1823: Write unit test: event condition evaluation engine
+- [x] T-1824: Write unit test: event effect application correctness
+- [x] T-1825: Write unit test: event cooldown enforcement
+- [x] T-1826: Write unit test: weather data mapping to game effects
+- [x] T-1827: Write unit test: financial data normalization to modifiers
+- [x] T-1828: Write unit test: moon phase calculation accuracy
+- [x] T-1829: Write unit test: season determination from date
+- [x] T-1830: Write unit test: item stat randomization within bounds
+- [x] T-1831: Write unit test: item set bonus activation logic
+- [x] T-1832: Write unit test: crafting quality roll distribution
+- [x] T-1833: Write unit test: JWT token generation and validation
+- [x] T-1834: Write unit test: password hashing and verification
+- [x] T-1835: Write unit test: input validation schemas reject invalid data
+- [x] T-1836: Write unit test: rate limiter correctly counts requests
+- [x] T-1837: Write integration test: user registration endpoint
+- [x] T-1838: Write integration test: user login endpoint
+- [x] T-1839: Write integration test: resource add/subtract endpoint
+- [x] T-1840: Write integration test: hero recruitment endpoint
+- [x] T-1841: Write integration test: expedition launch endpoint
+- [x] T-1842: Write integration test: market buy/sell endpoint
+- [x] T-1843: Write integration test: research start endpoint
+- [x] T-1844: Write integration test: building construct endpoint
+- [x] T-1845: Write integration test: event trigger endpoint
+- [x] T-1846: Write integration test: weather data fetch and cache
+- [x] T-1847: Write integration test: financial data fetch and cache
+- [x] T-1848: Write integration test: chat message send endpoint
+- [x] T-1849: Write integration test: friend request endpoint
+- [x] T-1850: Write integration test: alliance create endpoint
+- [x] T-1851: Write integration test: crafting execute endpoint
+- [x] T-1852: Write integration test: item equip endpoint
+- [x] T-1853: Write integration test: cron job resource production execution
+- [x] T-1854: Write integration test: cron job expedition progress execution
+- [x] T-1855: Write integration test: cron job market price update execution
+- [x] T-1856: Write integration test: WebSocket connection establishment
+- [x] T-1857: Write integration test: WebSocket message broadcast
+- [x] T-1858: Write integration test: data pipeline fallback behavior
+- [x] T-1859: Write integration test: concurrent request handling (race conditions)
+- [x] T-1860: Write integration test: database transaction rollback on error
+- [x] T-1861: Write load test: 100 concurrent users performing basic operations
+- [x] T-1862: Write load test: market with 1000 concurrent listings
+- [x] T-1863: Write load test: expedition system with 500 active expeditions
+- [x] T-1864: Write balance test: resource economy simulation over 30 in-game days
+- [x] T-1865: Write balance test: hero progression curve from level 1 to 50
+- [x] T-1866: Write balance test: market price stability over simulated trading
+- [x] T-1867: Write balance test: combat balance between all enemy types
+- [x] T-1868: Write balance test: research tree completion time estimation
+- [x] T-1869: Write snapshot test: API response shapes for all endpoints
+- [x] T-1870: Write snapshot test: database migration generates expected schema
 
 ## Epic 26: DevOps & Deployment
 > CI/CD pipeline, staging environment, production deployment, domain setup, SSL, and CDN configuration.
 
-- [ ] T-1871: Set up GitHub Actions workflow file for CI pipeline
-- [ ] T-1872: Configure CI to run linting on push and pull request
-- [ ] T-1873: Configure CI to run unit tests on push and pull request
-- [ ] T-1874: Configure CI to run integration tests on push and pull request
-- [ ] T-1875: Configure CI to run Playwright E2E tests on pull request
-- [ ] T-1876: Configure CI to check TypeScript compilation
-- [ ] T-1877: Configure CI to run security vulnerability scan
-- [ ] T-1878: Configure CI to generate and upload test coverage report
-- [ ] T-1879: Set up CI caching for node_modules and Playwright browsers
-- [ ] T-1880: Create CI badge display in README for build status
-- [ ] T-1881: Set up staging environment configuration (separate DB, API keys)
-- [ ] T-1882: Configure staging deployment trigger on merge to develop branch
-- [ ] T-1883: Build staging environment health check automation
-- [ ] T-1884: Set up production environment with Node.js runtime
-- [ ] T-1885: Configure production deployment trigger on merge to main branch
-- [ ] T-1886: Implement blue-green deployment strategy for zero downtime
-- [ ] T-1887: Create deployment rollback procedure with one-click revert
-- [ ] T-1888: Set up domain name registration and DNS configuration
-- [ ] T-1889: Configure SSL certificate with Let's Encrypt auto-renewal
-- [ ] T-1890: Set up CDN for static asset delivery (images, sprites, audio)
-- [ ] T-1891: Configure CDN cache headers for optimal caching strategy
-- [ ] T-1892: Implement asset fingerprinting for cache busting on deploy
-- [ ] T-1893: Set up production database with automated backup
-- [ ] T-1894: Configure production logging with log aggregation service
-- [ ] T-1895: Set up production monitoring with uptime checks (every 5 minutes)
-- [ ] T-1896: Configure alerting for server errors, high latency, and downtime
-- [ ] T-1897: Create production environment variable management system
-- [ ] T-1898: Build deployment pre-check script (tests pass, no migration pending)
-- [ ] T-1899: Implement database migration auto-run on deployment
-- [ ] T-1900: Create deployment notification to team chat (Slack/Discord webhook)
-- [ ] T-1901: Set up container configuration with Docker and docker-compose
-- [ ] T-1902: Create Docker image for application with multi-stage build
-- [ ] T-1903: Configure Docker health check in container
-- [ ] T-1904: Set up container orchestration for scaling (Docker Swarm or K8s)
-- [ ] T-1905: Create infrastructure-as-code templates for server provisioning
-- [ ] T-1906: Implement secrets management (environment secrets, not in repo)
-- [ ] T-1907: Set up preview deployments for pull requests
-- [ ] T-1908: Configure branch protection rules (require reviews, pass CI)
-- [ ] T-1909: Create release versioning system with semantic versioning
-- [ ] T-1910: Build changelog generation from commit messages
-- [ ] T-1911: Set up production error alerting with PagerDuty or similar
-- [ ] T-1912: Configure auto-scaling rules based on CPU and memory usage
-- [ ] T-1913: Create disaster recovery runbook with step-by-step procedures
-- [ ] T-1914: Set up database replication for production resilience
-- [ ] T-1915: Implement CI pipeline for database migration dry-run
-- [ ] T-1916: Configure rate limiting at load balancer level
-- [ ] T-1917: Create production performance baseline documentation
-- [ ] T-1918: Set up synthetic monitoring for critical user flows
-- [ ] T-1919: Implement canary deployment strategy for high-risk changes
-- [ ] T-1920: Build deployment dashboard showing current versions and history
-- [ ] T-1921: Configure GZIP compression at server/CDN level
-- [ ] T-1922: Create maintenance mode page for planned downtime
-- [ ] T-1923: Set up log retention policy (30 days hot, 90 days cold)
-- [ ] T-1924: Implement cost monitoring for hosting and API usage
-- [ ] T-1925: Create deployment SLA documentation and uptime targets
-- [ ] T-1926: Set up status page for public service health display
-- [ ] T-1927: Configure DDoS protection at CDN/load balancer level
-- [ ] T-1928: Create automated smoke test suite for post-deployment verification
-- [ ] T-1929: Set up staging-to-production promotion workflow
-- [ ] T-1930: Implement feature environment for testing feature branches
+- [x] T-1871: Set up GitHub Actions workflow file for CI pipeline
+- [x] T-1872: Configure CI to run linting on push and pull request
+- [x] T-1873: Configure CI to run unit tests on push and pull request
+- [x] T-1874: Configure CI to run integration tests on push and pull request
+- [x] T-1875: Configure CI to run Playwright E2E tests on pull request
+- [x] T-1876: Configure CI to check TypeScript compilation
+- [x] T-1877: Configure CI to run security vulnerability scan
+- [x] T-1878: Configure CI to generate and upload test coverage report
+- [x] T-1879: Set up CI caching for node_modules and Playwright browsers
+- [x] T-1880: Create CI badge display in README for build status
+- [x] T-1881: Set up staging environment configuration (separate DB, API keys)
+- [x] T-1882: Configure staging deployment trigger on merge to develop branch
+- [x] T-1883: Build staging environment health check automation
+- [x] T-1884: Set up production environment with Node.js runtime
+- [x] T-1885: Configure production deployment trigger on merge to main branch
+- [x] T-1886: Implement blue-green deployment strategy for zero downtime
+- [x] T-1887: Create deployment rollback procedure with one-click revert
+- [x] T-1888: Set up domain name registration and DNS configuration
+- [x] T-1889: Configure SSL certificate with Let's Encrypt auto-renewal
+- [x] T-1890: Set up CDN for static asset delivery (images, sprites, audio)
+- [x] T-1891: Configure CDN cache headers for optimal caching strategy
+- [x] T-1892: Implement asset fingerprinting for cache busting on deploy
+- [x] T-1893: Set up production database with automated backup
+- [x] T-1894: Configure production logging with log aggregation service
+- [x] T-1895: Set up production monitoring with uptime checks (every 5 minutes)
+- [x] T-1896: Configure alerting for server errors, high latency, and downtime
+- [x] T-1897: Create production environment variable management system
+- [x] T-1898: Build deployment pre-check script (tests pass, no migration pending)
+- [x] T-1899: Implement database migration auto-run on deployment
+- [x] T-1900: Create deployment notification to team chat (Slack/Discord webhook)
+- [x] T-1901: Set up container configuration with Docker and docker-compose
+- [x] T-1902: Create Docker image for application with multi-stage build
+- [x] T-1903: Configure Docker health check in container
+- [x] T-1904: Set up container orchestration for scaling (Docker Swarm or K8s)
+- [x] T-1905: Create infrastructure-as-code templates for server provisioning
+- [x] T-1906: Implement secrets management (environment secrets, not in repo)
+- [x] T-1907: Set up preview deployments for pull requests
+- [x] T-1908: Configure branch protection rules (require reviews, pass CI)
+- [x] T-1909: Create release versioning system with semantic versioning
+- [x] T-1910: Build changelog generation from commit messages
+- [x] T-1911: Set up production error alerting with PagerDuty or similar
+- [x] T-1912: Configure auto-scaling rules based on CPU and memory usage
+- [x] T-1913: Create disaster recovery runbook with step-by-step procedures
+- [x] T-1914: Set up database replication for production resilience
+- [x] T-1915: Implement CI pipeline for database migration dry-run
+- [x] T-1916: Configure rate limiting at load balancer level
+- [x] T-1917: Create production performance baseline documentation
+- [x] T-1918: Set up synthetic monitoring for critical user flows
+- [x] T-1919: Implement canary deployment strategy for high-risk changes
+- [x] T-1920: Build deployment dashboard showing current versions and history
+- [x] T-1921: Configure GZIP compression at server/CDN level
+- [x] T-1922: Create maintenance mode page for planned downtime
+- [x] T-1923: Set up log retention policy (30 days hot, 90 days cold)
+- [x] T-1924: Implement cost monitoring for hosting and API usage
+- [x] T-1925: Create deployment SLA documentation and uptime targets
+- [x] T-1926: Set up status page for public service health display
+- [x] T-1927: Configure DDoS protection at CDN/load balancer level
+- [x] T-1928: Create automated smoke test suite for post-deployment verification
+- [x] T-1929: Set up staging-to-production promotion workflow
+- [x] T-1930: Implement feature environment for testing feature branches
 
 ## Epic 27: Mobile Optimization
 > Touch controls, responsive scaling, PWA support, offline mode, and performance profiling on mobile devices.
 
-- [ ] T-1931: Implement touch event handlers for all interactive elements
-- [ ] T-1932: Add tap feedback (visual ripple) for touch interactions
-- [ ] T-1933: Implement long-press gesture for context menu on mobile
-- [ ] T-1934: Create swipe gesture handler for navigation between scenes
-- [ ] T-1935: Implement pinch-to-zoom for map and research tree on touch
-- [ ] T-1936: Build responsive viewport meta tag configuration
-- [ ] T-1937: Implement canvas scaling for Phaser game on various screen sizes
-- [ ] T-1938: Create mobile-specific UI layouts for guild hall scene
-- [ ] T-1939: Create mobile-specific UI layouts for market scene
-- [ ] T-1940: Create mobile-specific UI layouts for expedition planning
-- [ ] T-1941: Create mobile-specific UI layouts for hero management
-- [ ] T-1942: Implement PWA manifest.json with app name, icons, and theme
-- [ ] T-1943: Create service worker for offline caching of static assets
-- [ ] T-1944: Implement offline detection and banner display
-- [ ] T-1945: Build offline action queue (queue actions when offline, sync on reconnect)
-- [ ] T-1946: Create app install prompt for PWA add-to-home-screen
-- [ ] T-1947: Implement push notification support via service worker
-- [ ] T-1948: Build push notification opt-in flow with permission request
-- [ ] T-1949: Create push notification for expedition completion
-- [ ] T-1950: Create push notification for event triggers
-- [ ] T-1951: Implement asset lazy loading for mobile bandwidth optimization
-- [ ] T-1952: Create low-resolution asset variants for mobile devices
-- [ ] T-1953: Implement texture atlas optimization for mobile GPU memory
-- [ ] T-1954: Build mobile performance profiling using Chrome DevTools protocol
-- [ ] T-1955: Optimize render loop for 60fps on mid-range mobile devices
-- [ ] T-1956: Implement particle effect reduction for mobile performance
-- [ ] T-1957: Create battery-saver mode reducing animation and effects
-- [ ] T-1958: Implement mobile-specific font size scaling for readability
-- [ ] T-1959: Build mobile bottom sheet component for detail panels
-- [ ] T-1960: Create mobile-optimized dialog/modal sizing
-- [ ] T-1961: Implement safe area inset handling for notched devices
-- [ ] T-1962: Build mobile landscape orientation support and layout
-- [ ] T-1963: Create mobile data usage estimation display
-- [ ] T-1964: Implement image compression for mobile network optimization
-- [ ] T-1965: Build mobile-specific loading indicators (smaller, less intrusive)
-- [ ] T-1966: Create mobile gesture tutorial overlay for first-time users
-- [ ] T-1967: Implement haptic feedback for key interactions on supported devices
-- [ ] T-1968: Build mobile notification badge on app icon
-- [ ] T-1969: Create mobile share functionality using Web Share API
-- [ ] T-1970: Implement mobile keyboard handling (prevent viewport shift)
-- [ ] T-1971: Build mobile orientation lock preference setting
-- [ ] T-1972: Create mobile quick-action shortcuts from home screen
-- [ ] T-1973: Implement mobile-specific error handling (network timeout, slow connection)
-- [ ] T-1974: Build mobile A/B layout testing framework
-- [ ] T-1975: Create mobile device detection utility for feature flagging
-- [ ] T-1976: Implement mobile scroll performance optimization (passive listeners)
-- [ ] T-1977: Build mobile accessibility zoom support without layout breaking
-- [ ] T-1978: Create mobile crash reporting integration
-- [ ] T-1979: Implement mobile app-like transition animations between scenes
-- [ ] T-1980: Build mobile performance budget and monitoring dashboard
+- [x] T-1931: Implement touch event handlers for all interactive elements
+- [x] T-1932: Add tap feedback (visual ripple) for touch interactions
+- [x] T-1933: Implement long-press gesture for context menu on mobile
+- [x] T-1934: Create swipe gesture handler for navigation between scenes
+- [x] T-1935: Implement pinch-to-zoom for map and research tree on touch
+- [x] T-1936: Build responsive viewport meta tag configuration
+- [x] T-1937: Implement canvas scaling for Phaser game on various screen sizes
+- [x] T-1938: Create mobile-specific UI layouts for guild hall scene
+- [x] T-1939: Create mobile-specific UI layouts for market scene
+- [x] T-1940: Create mobile-specific UI layouts for expedition planning
+- [x] T-1941: Create mobile-specific UI layouts for hero management
+- [x] T-1942: Implement PWA manifest.json with app name, icons, and theme
+- [x] T-1943: Create service worker for offline caching of static assets
+- [x] T-1944: Implement offline detection and banner display
+- [x] T-1945: Build offline action queue (queue actions when offline, sync on reconnect)
+- [x] T-1946: Create app install prompt for PWA add-to-home-screen
+- [x] T-1947: Implement push notification support via service worker
+- [x] T-1948: Build push notification opt-in flow with permission request
+- [x] T-1949: Create push notification for expedition completion
+- [x] T-1950: Create push notification for event triggers
+- [x] T-1951: Implement asset lazy loading for mobile bandwidth optimization
+- [x] T-1952: Create low-resolution asset variants for mobile devices
+- [x] T-1953: Implement texture atlas optimization for mobile GPU memory
+- [x] T-1954: Build mobile performance profiling using Chrome DevTools protocol
+- [x] T-1955: Optimize render loop for 60fps on mid-range mobile devices
+- [x] T-1956: Implement particle effect reduction for mobile performance
+- [x] T-1957: Create battery-saver mode reducing animation and effects
+- [x] T-1958: Implement mobile-specific font size scaling for readability
+- [x] T-1959: Build mobile bottom sheet component for detail panels
+- [x] T-1960: Create mobile-optimized dialog/modal sizing
+- [x] T-1961: Implement safe area inset handling for notched devices
+- [x] T-1962: Build mobile landscape orientation support and layout
+- [x] T-1963: Create mobile data usage estimation display
+- [x] T-1964: Implement image compression for mobile network optimization
+- [x] T-1965: Build mobile-specific loading indicators (smaller, less intrusive)
+- [x] T-1966: Create mobile gesture tutorial overlay for first-time users
+- [x] T-1967: Implement haptic feedback for key interactions on supported devices
+- [x] T-1968: Build mobile notification badge on app icon
+- [x] T-1969: Create mobile share functionality using Web Share API
+- [x] T-1970: Implement mobile keyboard handling (prevent viewport shift)
+- [x] T-1971: Build mobile orientation lock preference setting
+- [x] T-1972: Create mobile quick-action shortcuts from home screen
+- [x] T-1973: Implement mobile-specific error handling (network timeout, slow connection)
+- [x] T-1974: Build mobile A/B layout testing framework
+- [x] T-1975: Create mobile device detection utility for feature flagging
+- [x] T-1976: Implement mobile scroll performance optimization (passive listeners)
+- [x] T-1977: Build mobile accessibility zoom support without layout breaking
+- [x] T-1978: Create mobile crash reporting integration
+- [x] T-1979: Implement mobile app-like transition animations between scenes
+- [x] T-1980: Build mobile performance budget and monitoring dashboard
 
 ## Epic 28: Accessibility
 > Screen reader support, keyboard navigation, color contrast, ARIA labels, and reduced motion preferences.
