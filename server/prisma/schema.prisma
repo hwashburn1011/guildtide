@@ -28,19 +28,24 @@ model Player {
 }
 
 model Guild {
-  id          String       @id @default(uuid())
-  playerId    String       @unique
-  player      Player       @relation(fields: [playerId], references: [id])
-  name        String
-  level       Int          @default(1)
-  xp          Int          @default(0)
-  resources   String       @default("{}")
-  heroes      Hero[]
-  buildings   Building[]
-  inventory   Item[]
-  expeditions Expedition[]
-  researchIds String       @default("[]")
-  createdAt   DateTime     @default(now())
+  id              String       @id @default(uuid())
+  playerId        String       @unique
+  player          Player       @relation(fields: [playerId], references: [id])
+  name            String
+  level           Int          @default(1)
+  xp              Int          @default(0)
+  resources       String       @default("{}")
+  emblem          String?
+  motto           String       @default("")
+  buildingSlots   Int          @default(6)
+  lastDailyReward String?
+  loginStreak     Int          @default(0)
+  heroes          Hero[]
+  buildings       Building[]
+  inventory       Item[]
+  expeditions     Expedition[]
+  researchIds     String       @default("[]")
+  createdAt       DateTime     @default(now())
 }
 
 model Hero {

@@ -2,7 +2,8 @@ import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH, GAME_HEIGHT } from '../config';
 import { apiClient } from '../api/client';
 import type { Guild, Resources } from '@shared/types';
-import { ResourceType } from '@shared/enums';
+import { ResourceType, BuildingType } from '@shared/enums';
+import { BUILDING_DEFINITIONS, BUILDING_LEVEL_BONUS } from '@shared/constants';
 import { ResourceBar } from '../ui/ResourceBar';
 import { BuildingPanel } from '../ui/BuildingPanel';
 import { OfflineGainsModal } from '../ui/OfflineGainsModal';
@@ -13,6 +14,13 @@ import { InventoryPanel } from '../ui/InventoryPanel';
 import { EventLogPanel } from '../ui/EventLogPanel';
 import { TutorialOverlay } from '../ui/TutorialOverlay';
 import { NotificationSystem } from '../systems/NotificationSystem';
+import { GuildInfoPanel } from '../ui/GuildInfoPanel';
+import { GuildStatsPanel } from '../ui/GuildStatsPanel';
+import { GuildActivityPanel } from '../ui/GuildActivityPanel';
+import { BuildingDetailPanel } from '../ui/BuildingDetailPanel';
+import { BuildMenuPanel } from '../ui/BuildMenuPanel';
+import { BuildingSynergyPanel } from '../ui/BuildingSynergyPanel';
+import { UIResourceDelta } from '../ui/components/UIResourceDelta';
 
 export class GuildHallScene extends Phaser.Scene {
   private guild: Guild | null = null;
@@ -23,8 +31,16 @@ export class GuildHallScene extends Phaser.Scene {
   private eventPanel: EventPanel | null = null;
   private inventoryPanel: InventoryPanel | null = null;
   private eventLogPanel: EventLogPanel | null = null;
+  private guildInfoPanel: GuildInfoPanel | null = null;
+  private guildStatsPanel: GuildStatsPanel | null = null;
+  private guildActivityPanel: GuildActivityPanel | null = null;
+  private buildingDetailPanel: BuildingDetailPanel | null = null;
+  private buildMenuPanel: BuildMenuPanel | null = null;
+  private buildingSynergyPanel: BuildingSynergyPanel | null = null;
   private activeEvents: any[] = [];
   private syncTimer: Phaser.Time.TimerEvent | null = null;
+  private seasonalContainer: Phaser.GameObjects.Container | null = null;
+  private productionTickTimer: Phaser.Time.TimerEvent | null = null;
 
   constructor() {
     super({ key: 'GuildHallScene' });
@@ -77,10 +93,20 @@ export class GuildHallScene extends Phaser.Scene {
         // Weather/events may not be available yet
       }
 
+      // Fetch seasonal decoration
+      this.loadSeasonalDecoration();
+
       // Periodic server sync every 30 seconds
       this.syncTimer = this.time.addEvent({
         delay: 30000,
         callback: () => this.syncWithServer(),
+        loop: true,
+      });
+
+      // Production tick display every 5 seconds
+      this.productionTickTimer = this.time.addEvent({
+        delay: 5000,
+        callback: () => this.showProductionTicks(),
         loop: true,
       });
     } catch (err) {
@@ -99,101 +125,26 @@ export class GuildHallScene extends Phaser.Scene {
   private buildUI(): void {
     if (!this.guild) return;
 
-    // Header bar
-    const headerBg = this.add.graphics();
-    headerBg.fillStyle(COLORS.panelBg, 0.9);
-    headerBg.fillRect(0, 0, GAME_WIDTH, 55);
-    headerBg.lineStyle(2, COLORS.panelBorder);
-    headerBg.strokeRect(0, 0, GAME_WIDTH, 55);
-
-    // Guild name & level
-    this.add.text(20, 10, this.guild.name, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.heading}px`,
-      color: COLORS.textGold,
-      fontStyle: 'bold',
-    });
-
-    this.add.text(20, 36, `Level ${this.guild.level}`, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.tiny}px`,
-      color: COLORS.textSecondary,
-    });
-
-    // Event Log button
-    const eventLogBtn = this.add.text(GAME_WIDTH - 330, 20, 'Event Log', {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: COLORS.textAccent,
-      fontStyle: 'bold',
-    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
-
-    eventLogBtn.on('pointerup', () => {
-      this.eventLogPanel?.show();
-    });
-
-    // Inventory button
-    const inventoryBtn = this.add.text(GAME_WIDTH - 240, 20, 'Inventory', {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: COLORS.textAccent,
-      fontStyle: 'bold',
-    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
-
-    inventoryBtn.on('pointerup', () => {
-      this.inventoryPanel?.show();
-    });
-
-    // Heroes button
-    const heroesBtn = this.add.text(GAME_WIDTH - 160, 20, 'Heroes', {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: COLORS.textAccent,
-      fontStyle: 'bold',
-    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
-
-    heroesBtn.on('pointerup', () => {
-      this.heroRoster?.show();
-    });
-
-    // Settings button
-    const settingsBtn = this.add.text(GAME_WIDTH - 90, 20, 'Settings', {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: COLORS.textSecondary,
-    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
-
-    settingsBtn.on('pointerup', () => {
-      this.scene.start('AccountSettingsScene');
-    });
-
-    // Logout button
-    const logoutText = this.add.text(GAME_WIDTH - 20, 20, 'Logout', {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: COLORS.textSecondary,
-    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
-
-    logoutText.on('pointerup', () => {
-      localStorage.removeItem('guildtide_token');
-      localStorage.removeItem('guildtide_remember');
-      localStorage.removeItem('guildtide_is_guest');
-      this.scene.start('LoginScene');
-    });
+    // Header bar with navigation buttons
+    this.buildHeader();
 
     // Resource bar
     this.resourceBar = new ResourceBar(this, 55, this.guild.resources);
 
-    // Building panel
+    // Guild info panel (name, level, XP bar, emblem, daily reward)
+    this.guildInfoPanel = new GuildInfoPanel(this, 85, this.guild, () => this.refreshGuild());
+
+    // Building panel using grid layout
     this.buildingPanel = new BuildingPanel(
       this,
-      115,
+      155,
       this.guild.buildings,
       (building) => this.handleUpgrade(building.type),
+      (building) => this.buildingDetailPanel?.show(building.type),
     );
 
     // Weather panel (right side)
-    this.weatherPanel = new WeatherPanel(this, GAME_WIDTH - 240, 115);
+    this.weatherPanel = new WeatherPanel(this, GAME_WIDTH - 240, 155);
 
     // Event panel (shown on demand)
     this.eventPanel = new EventPanel(this, () => this.refreshGuild());
@@ -216,6 +167,16 @@ export class GuildHallScene extends Phaser.Scene {
     // Event log panel
     this.eventLogPanel = new EventLogPanel(this);
 
+    // Modal panels (lazy-created)
+    this.guildStatsPanel = new GuildStatsPanel(this);
+    this.guildActivityPanel = new GuildActivityPanel(this);
+    this.buildingDetailPanel = new BuildingDetailPanel(this, () => this.refreshGuild());
+    this.buildMenuPanel = new BuildMenuPanel(this, this.guild, () => this.refreshGuild());
+    this.buildingSynergyPanel = new BuildingSynergyPanel(this);
+
+    // Seasonal decoration container
+    this.seasonalContainer = this.add.container(0, 0);
+
     // Bottom nav
     this.buildBottomNav();
 
@@ -225,6 +186,83 @@ export class GuildHallScene extends Phaser.Scene {
     }
   }
 
+  private buildHeader(): void {
+    if (!this.guild) return;
+
+    const headerBg = this.add.graphics();
+    headerBg.fillStyle(COLORS.panelBg, 0.9);
+    headerBg.fillRect(0, 0, GAME_WIDTH, 55);
+    headerBg.lineStyle(2, COLORS.panelBorder);
+    headerBg.strokeRect(0, 0, GAME_WIDTH, 55);
+
+    // Guild name & level
+    this.add.text(20, 10, this.guild.name, {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.heading}px`,
+      color: COLORS.textGold,
+      fontStyle: 'bold',
+    });
+
+    this.add.text(20, 36, `Level ${this.guild.level}`, {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.tiny}px`,
+      color: COLORS.textSecondary,
+    });
+
+    // Header buttons (right side)
+    const buttonDefs = [
+      { label: 'Build', x: GAME_WIDTH - 480, action: () => this.buildMenuPanel?.show() },
+      { label: 'Synergies', x: GAME_WIDTH - 410, action: () => this.buildingSynergyPanel?.show() },
+      { label: 'Activity', x: GAME_WIDTH - 330, action: () => this.guildActivityPanel?.show() },
+      { label: 'Stats', x: GAME_WIDTH - 260, action: () => this.guildStatsPanel?.show() },
+      { label: 'Event Log', x: GAME_WIDTH - 200, action: () => this.eventLogPanel?.show() },
+      { label: 'Inventory', x: GAME_WIDTH - 120, action: () => this.inventoryPanel?.show() },
+    ];
+
+    buttonDefs.forEach(({ label, x, action }) => {
+      const btn = this.add.text(x, 8, label, {
+        fontFamily: FONTS.primary,
+        fontSize: `${FONTS.sizes.tiny}px`,
+        color: COLORS.textAccent,
+        fontStyle: 'bold',
+      }).setInteractive({ useHandCursor: true });
+
+      btn.on('pointerover', () => btn.setAlpha(0.7));
+      btn.on('pointerout', () => btn.setAlpha(1));
+      btn.on('pointerup', action);
+    });
+
+    // Heroes button
+    const heroesBtn = this.add.text(GAME_WIDTH - 55, 8, 'Heroes', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.tiny}px`,
+      color: COLORS.textAccent,
+      fontStyle: 'bold',
+    }).setInteractive({ useHandCursor: true });
+    heroesBtn.on('pointerup', () => this.heroRoster?.show());
+
+    // Settings (second row)
+    const settingsBtn = this.add.text(GAME_WIDTH - 120, 32, 'Settings', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.tiny}px`,
+      color: COLORS.textSecondary,
+    }).setInteractive({ useHandCursor: true });
+    settingsBtn.on('pointerup', () => this.scene.start('AccountSettingsScene'));
+
+    // Logout
+    const logoutText = this.add.text(GAME_WIDTH - 55, 32, 'Logout', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.tiny}px`,
+      color: COLORS.textSecondary,
+    }).setInteractive({ useHandCursor: true });
+    logoutText.on('pointerup', () => {
+      localStorage.removeItem('guildtide_token');
+      localStorage.removeItem('guildtide_remember');
+      localStorage.removeItem('guildtide_is_guest');
+      this.scene.start('LoginScene');
+    });
+  }
+
   private async handleUpgrade(buildingType: string): Promise<void> {
     try {
       const result = await apiClient.upgradeBuilding(buildingType);
@@ -232,7 +270,6 @@ export class GuildHallScene extends Phaser.Scene {
       NotificationSystem.show(this, `${result.building.type} upgraded to level ${result.building.level}!`, 'success');
       await this.refreshGuild();
     } catch (err) {
-      // Show error briefly
       const errorText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 80,
         err instanceof Error ? err.message : 'Upgrade failed', {
         fontFamily: FONTS.primary,
@@ -248,7 +285,7 @@ export class GuildHallScene extends Phaser.Scene {
 
   private showEventNotification(count: number): void {
     const eventBtn = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 70,
-      `${count} Event${count > 1 ? 's' : ''} Active — Click to view`, {
+      `${count} Event${count > 1 ? 's' : ''} Active -- Click to view`, {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.small}px`,
       color: COLORS.textPrimary,
@@ -263,7 +300,6 @@ export class GuildHallScene extends Phaser.Scene {
       }
     });
 
-    // Pulse animation
     this.tweens.add({
       targets: eventBtn,
       alpha: 0.7,
@@ -271,6 +307,80 @@ export class GuildHallScene extends Phaser.Scene {
       yoyo: true,
       repeat: -1,
     });
+  }
+
+  private showProductionTicks(): void {
+    if (!this.guild || !this.guild.buildings) return;
+
+    const buildings = this.guild.buildings.filter(b => b.level > 0);
+    if (buildings.length === 0) return;
+
+    // Pick a random building to show a tick for
+    const idx = Math.floor(Math.random() * buildings.length);
+    const building = buildings[idx];
+    const def = BUILDING_DEFINITIONS[building.type as BuildingType];
+    if (!def) return;
+
+    const entries = Object.entries(def.baseOutput);
+    if (entries.length === 0) return;
+
+    const [, base] = entries[0];
+    const rate = (base as number) * (1 + building.level * BUILDING_LEVEL_BONUS);
+    const tickAmount = Math.round(rate * 5 * 100) / 100; // 5 seconds of production
+
+    // Position relative to building panel
+    const col = building.slot % 3;
+    const row = Math.floor(building.slot / 3);
+    const startX = (GAME_WIDTH - (3 * 380 + 2 * 20)) / 2;
+    const x = startX + col * 400 + 190;
+    const y = 155 + row * 145 + 50;
+
+    UIResourceDelta.show(this, x, y, tickAmount);
+  }
+
+  private async loadSeasonalDecoration(): Promise<void> {
+    try {
+      const seasonal = await apiClient.getSeasonalDecoration();
+      this.renderSeasonalDecoration(seasonal.season, seasonal.description);
+    } catch {
+      // Silently fail
+    }
+  }
+
+  private renderSeasonalDecoration(season: string, description: string): void {
+    if (!this.seasonalContainer) return;
+
+    // Small seasonal indicator in corner
+    const colors: Record<string, number> = {
+      spring: 0x4ecca3,
+      summer: 0xffd700,
+      autumn: 0xe67e22,
+      winter: 0x3498db,
+    };
+
+    const icons: Record<string, string> = {
+      spring: '\u2741', // flower
+      summer: '\u2600', // sun
+      autumn: '\u2741', // leaf stand-in
+      winter: '\u2744', // snowflake
+    };
+
+    const color = colors[season] ?? 0xffffff;
+    const icon = icons[season] ?? '';
+
+    const bg = this.add.graphics();
+    bg.fillStyle(color, 0.15);
+    bg.fillRoundedRect(GAME_WIDTH - 240, GAME_HEIGHT - 60, 230, 18, 4);
+    this.seasonalContainer.add(bg);
+
+    this.seasonalContainer.add(
+      this.add.text(GAME_WIDTH - 235, GAME_HEIGHT - 59, `${icon} ${description}`, {
+        fontFamily: FONTS.primary,
+        fontSize: `${FONTS.sizes.tiny}px`,
+        color: COLORS.textSecondary,
+        wordWrap: { width: 220 },
+      }),
+    );
   }
 
   private async refreshGuild(): Promise<void> {
@@ -282,6 +392,8 @@ export class GuildHallScene extends Phaser.Scene {
       this.heroRoster?.setHeroes(guildData.heroes);
       this.heroRoster?.setBuildings(guildData.buildings);
       this.inventoryPanel?.setHeroes(guildData.heroes);
+      this.guildInfoPanel?.setGuild(guildData);
+      this.buildMenuPanel?.setGuild(guildData);
       const rates = await apiClient.getRates();
       this.resourceBar?.setRates(rates);
     } catch {
@@ -295,7 +407,7 @@ export class GuildHallScene extends Phaser.Scene {
       this.resourceBar?.setResources(result.resources as Resources);
       this.resourceBar?.setRates(result.rates);
     } catch {
-      // Silently fail sync — will retry next cycle
+      // Silently fail sync
     }
   }
 
@@ -318,7 +430,7 @@ export class GuildHallScene extends Phaser.Scene {
 
     tabs.forEach((tab, i) => {
       const x = tabWidth * i + tabWidth / 2;
-      const isActive = i === 0; // Guild Hall is active
+      const isActive = i === 0;
       const text = this.add.text(x, navY + 25, tab.label, {
         fontFamily: FONTS.primary,
         fontSize: `${FONTS.sizes.small}px`,

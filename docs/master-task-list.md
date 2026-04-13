@@ -161,26 +161,26 @@
 ## Epic 3: Guild Hall Scene
 > Building placement grid, visual building upgrades, guild XP and leveling, and unlock progression within the guild hall.
 
-- [ ] T-0151: Design guild hall main scene layout with building grid area
-- [ ] T-0152: Implement isometric grid system for building placement (8x8 grid)
-- [ ] T-0153: Build grid cell highlighting on hover to indicate valid placement zones
-- [ ] T-0154: Implement building placement drag-and-drop from build menu to grid
-- [ ] T-0155: Add placement validation (no overlap, correct terrain type, resource check)
-- [ ] T-0156: Implement building removal/demolish action with resource refund (50%)
-- [ ] T-0157: Build building relocation drag from placed position to new grid cell
-- [ ] T-0158: Create guild hall background with parallax scrolling layers
-- [ ] T-0159: Implement day/night cycle visual overlay on guild hall scene
-- [ ] T-0160: Add weather visual effects overlay (rain, snow, sun rays) on guild hall
-- [ ] T-0161: Build guild info panel showing guild name, level, XP bar, and emblem
-- [ ] T-0162: Implement guild naming system with profanity filter and uniqueness check
-- [ ] T-0163: Build guild emblem editor with shape, color, and symbol selectors
-- [ ] T-0164: Implement guild XP calculation from completed expeditions
-- [ ] T-0165: Implement guild XP calculation from building construction
-- [ ] T-0166: Implement guild XP calculation from research completion
-- [ ] T-0167: Implement guild XP calculation from market trades
-- [ ] T-0168: Create guild level-up reward table (levels 1-50)
-- [ ] T-0169: Implement guild level-up celebration animation and reward display
-- [ ] T-0170: Build guild milestone achievements list with unlock requirements
+- [x] T-0151: Design guild hall main scene layout with building grid area
+- [x] T-0152: Implement isometric grid system for building placement (8x8 grid)
+- [x] T-0153: Build grid cell highlighting on hover to indicate valid placement zones
+- [x] T-0154: Implement building placement drag-and-drop from build menu to grid
+- [x] T-0155: Add placement validation (no overlap, correct terrain type, resource check)
+- [x] T-0156: Implement building removal/demolish action with resource refund (50%)
+- [x] T-0157: Build building relocation drag from placed position to new grid cell
+- [x] T-0158: Create guild hall background with parallax scrolling layers
+- [x] T-0159: Implement day/night cycle visual overlay on guild hall scene
+- [x] T-0160: Add weather visual effects overlay (rain, snow, sun rays) on guild hall
+- [x] T-0161: Build guild info panel showing guild name, level, XP bar, and emblem
+- [x] T-0162: Implement guild naming system with profanity filter and uniqueness check
+- [x] T-0163: Build guild emblem editor with shape, color, and symbol selectors
+- [x] T-0164: Implement guild XP calculation from completed expeditions
+- [x] T-0165: Implement guild XP calculation from building construction
+- [x] T-0166: Implement guild XP calculation from research completion
+- [x] T-0167: Implement guild XP calculation from market trades
+- [x] T-0168: Create guild level-up reward table (levels 1-50)
+- [x] T-0169: Implement guild level-up celebration animation and reward display
+- [x] T-0170: Build guild milestone achievements list with unlock requirements
 - [ ] T-0171: Implement building unlock progression tied to guild level
 - [ ] T-0172: Implement feature unlock progression (expeditions at level 3, market at level 5)
 - [ ] T-0173: Build build menu panel listing available buildings with costs

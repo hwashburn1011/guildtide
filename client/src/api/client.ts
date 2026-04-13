@@ -358,6 +358,130 @@ class ApiClient {
     return this.request('POST', '/items/unequip', { heroId, slot });
   }
 
+  // Guild XP
+  async getGuildXP(): Promise<{
+    level: number;
+    xp: number;
+    xpToNext: number;
+    unlockedBuildings: string[];
+    unlockedFeatures: string[];
+    buildingSlots: number;
+    nextReward: any;
+  }> {
+    return this.request('GET', '/guild/xp');
+  }
+
+  async addGuildXP(amount: number): Promise<{
+    level: number;
+    xp: number;
+    xpToNext: number;
+    levelUps: any[];
+  }> {
+    return this.request('POST', '/guild/xp', { amount });
+  }
+
+  // Guild emblem
+  async setGuildEmblem(color: string, symbol: string): Promise<{ emblem: { color: string; symbol: string } }> {
+    return this.request('POST', '/guild/emblem', { color, symbol });
+  }
+
+  // Guild motto
+  async setGuildMotto(motto: string): Promise<{ motto: string }> {
+    return this.request('POST', '/guild/motto', { motto });
+  }
+
+  // Guild stats
+  async getGuildStats(): Promise<{
+    totalBuildingsConstructed: number;
+    totalExpeditionsCompleted: number;
+    totalResourcesEarned: number;
+    totalHeroesRecruited: number;
+    totalResearchCompleted: number;
+    totalMarketTrades: number;
+    guildAgeDays: number;
+    loginStreak: number;
+  }> {
+    return this.request('GET', '/guild/stats');
+  }
+
+  // Guild activity feed
+  async getGuildActivity(limit?: number): Promise<Array<{
+    id: string;
+    type: string;
+    message: string;
+    timestamp: string;
+    data?: Record<string, unknown>;
+  }>> {
+    const params = limit ? `?limit=${limit}` : '';
+    return this.request('GET', `/guild/activity${params}`);
+  }
+
+  // Daily login reward
+  async claimDailyReward(): Promise<{
+    day: number;
+    resources: Record<string, number>;
+    xp: number;
+    label: string;
+    streak: number;
+  }> {
+    return this.request('POST', '/guild/daily-reward');
+  }
+
+  // Building synergies
+  async getBuildingSynergies(): Promise<Array<{
+    buildingA: string;
+    buildingB: string;
+    bonusPercent: number;
+    description: string;
+  }>> {
+    return this.request('GET', '/guild/synergies');
+  }
+
+  // Seasonal decoration
+  async getSeasonalDecoration(): Promise<{
+    season: string;
+    decoration: string;
+    description: string;
+  }> {
+    return this.request('GET', '/guild/seasonal');
+  }
+
+  // Building detail
+  async getBuildingDetail(type: string): Promise<{
+    type: string;
+    name: string;
+    description: string;
+    level: number;
+    maxLevel: number;
+    currentOutput: Record<string, number>;
+    nextOutput: Record<string, number>;
+    upgradeCost: Record<string, number> | null;
+    assignedHero: { id: string; name: string; role: string; level: number } | null;
+  }> {
+    return this.request('GET', `/buildings/${type}/detail`);
+  }
+
+  // Demolish building
+  async demolishBuilding(type: string): Promise<{
+    refund: Record<string, number>;
+    resources: Record<string, number>;
+  }> {
+    return this.request('POST', `/buildings/${type}/demolish`);
+  }
+
+  // Construction queue
+  async queueBuilding(buildingType: string): Promise<{
+    building: any;
+    resources: Record<string, number>;
+  }> {
+    return this.request('POST', '/buildings/queue', { buildingType });
+  }
+
+  // Complete construction
+  async completeConstruction(type: string): Promise<{ building: any }> {
+    return this.request('POST', `/buildings/${type}/complete`);
+  }
+
   // World state
   async getWorldState(): Promise<{
     regionId: string;

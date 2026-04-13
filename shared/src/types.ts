@@ -26,6 +26,30 @@ export interface Player {
 }
 
 // --- Guild ---
+export interface GuildEmblem {
+  color: string;
+  symbol: string;
+}
+
+export interface GuildStats {
+  totalBuildingsConstructed: number;
+  totalExpeditionsCompleted: number;
+  totalResourcesEarned: number;
+  totalHeroesRecruited: number;
+  totalResearchCompleted: number;
+  totalMarketTrades: number;
+  guildAgeDays: number;
+  loginStreak: number;
+}
+
+export interface GuildActivityEntry {
+  id: string;
+  type: string;
+  message: string;
+  timestamp: string;
+  data?: Record<string, unknown>;
+}
+
 export interface Guild {
   id: string;
   playerId: string;
@@ -36,6 +60,11 @@ export interface Guild {
   heroes: Hero[];
   buildings: Building[];
   inventory: Item[];
+  emblem: GuildEmblem | null;
+  motto: string;
+  buildingSlots: number;
+  lastDailyReward: string | null;
+  loginStreak: number;
   createdAt: string;
 }
 
