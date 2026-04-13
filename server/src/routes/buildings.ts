@@ -8,6 +8,8 @@ import {
 } from '../../../shared/src/constants';
 import { BuildingType, ResourceType } from '../../../shared/src/enums';
 import { GuildService } from '../services/GuildService';
+import { BuildingService } from '../services/BuildingService';
+import { PRODUCTION_CHAINS, BUILDING_ACHIEVEMENTS } from '../data/buildingSpecializations';
 
 const router = Router();
 router.use(authMiddleware);
@@ -136,9 +138,17 @@ router.post('/:type/upgrade', async (req: Request, res: Response) => {
       await GuildService.logActivity(guild.id, 'building_upgrade', `Upgraded ${def.name} to level ${currentLevel + 1}`);
     }
 
+    // Check building milestones and achievements (T-0366, T-0367, T-0370)
+    const milestones = await BuildingService.checkBuildingMilestones(
+      guild.id, buildingType, currentLevel + 1,
+    );
+    const achievements = await BuildingService.checkBuildingAchievements(guild.id);
+
     res.json({
       building: { ...building, metadata: building.metadata ? JSON.parse(building.metadata) : null },
       resources,
+      milestones: milestones.map(m => m.reward),
+      achievements: achievements.map(a => ({ id: a.id, name: a.name, description: a.description })),
     });
   } catch (err) {
     console.error('Upgrade building error:', err);
@@ -405,6 +415,275 @@ router.post('/:type/complete', async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Complete construction error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Extended building detail with specializations, behaviors, chains
+router.get('/:type/extended', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const detail = await BuildingService.getExtendedDetail(guild.id, buildingType);
+    if (!detail) {
+      res.status(400).json({ error: 'validation', message: 'Invalid building type' });
+      return;
+    }
+
+    res.json(detail);
+  } catch (err) {
+    console.error('Extended detail error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Specialize a building
+router.post('/:type/specialize', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const { specializationId } = req.body;
+
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const result = await BuildingService.applySpecialization(guild.id, buildingType, specializationId);
+    if (!result.success) {
+      res.status(400).json({ error: 'validation', message: result.error });
+      return;
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Specialize error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Pay maintenance for a building
+router.post('/:type/maintenance', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const result = await BuildingService.payMaintenance(guild.id, buildingType);
+    if (!result.success) {
+      res.status(400).json({ error: 'validation', message: result.error });
+      return;
+    }
+
+    res.json({ success: true, costs: result.costs });
+  } catch (err) {
+    console.error('Maintenance error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Toggle auto-collect
+router.post('/:type/auto-collect', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const { enabled } = req.body;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const result = await BuildingService.toggleAutoCollect(guild.id, buildingType, !!enabled);
+    res.json(result);
+  } catch (err) {
+    console.error('Auto-collect error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get production chains
+router.get('/chains/all', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+      include: { buildings: true },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const allChains = PRODUCTION_CHAINS.map(chain => {
+      const active = chain.steps.every(step =>
+        guild.buildings.some(b => b.type === step.building && b.level > 0),
+      );
+      const efficiency = BuildingService.getChainEfficiency(chain, guild.buildings);
+      return { ...chain, active, efficiency };
+    });
+
+    res.json(allChains);
+  } catch (err) {
+    console.error('Chains error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get building comparison (current vs next level)
+router.get('/:type/compare', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+      include: { buildings: true },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const building = guild.buildings.find(b => b.type === buildingType);
+    const level = building?.level ?? 0;
+    const comparison = BuildingService.getBuildingComparison(buildingType, level);
+    res.json(comparison);
+  } catch (err) {
+    console.error('Compare error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get building info card with stat comparison
+router.get('/:type/info', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+      include: { buildings: true },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const building = guild.buildings.find(b => b.type === buildingType);
+    const level = building?.level ?? 0;
+    const infoCard = BuildingService.getInfoCard(buildingType, level);
+    res.json(infoCard);
+  } catch (err) {
+    console.error('Info card error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get building lore
+router.get('/:type/lore', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+      include: { buildings: true },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const building = guild.buildings.find(b => b.type === buildingType);
+    const level = building?.level ?? 0;
+    const lore = BuildingService.getLoreEntries(buildingType, level);
+    res.json(lore);
+  } catch (err) {
+    console.error('Lore error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Check building achievements
+router.get('/achievements/check', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const newAchievements = await BuildingService.checkBuildingAchievements(guild.id);
+    res.json({ achievements: newAchievements, all: BUILDING_ACHIEVEMENTS });
+  } catch (err) {
+    console.error('Achievements error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Check storage full notifications
+router.get('/:type/storage-check', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const full = await BuildingService.checkStorageFull(guild.id, buildingType);
+    res.json({ full });
+  } catch (err) {
+    console.error('Storage check error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Worker efficiency for a building
+router.get('/:type/worker-efficiency', async (req: Request, res: Response) => {
+  try {
+    const buildingType = req.params.type as BuildingType;
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+      include: { buildings: true, heroes: true },
+    });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+
+    const assignedHeroes = guild.heroes.filter(
+      h => h.assignment === buildingType && h.status === 'assigned',
+    );
+
+    const efficiencies = assignedHeroes.map(hero => {
+      const eff = BuildingService.calculateWorkerEfficiency(
+        { role: hero.role, level: hero.level },
+        buildingType,
+      );
+      return {
+        ...eff,
+        heroId: hero.id,
+        heroName: hero.name,
+      };
+    });
+
+    res.json(efficiencies);
+  } catch (err) {
+    console.error('Worker efficiency error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
   }
 });
