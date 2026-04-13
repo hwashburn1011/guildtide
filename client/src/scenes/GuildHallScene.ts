@@ -9,6 +9,7 @@ import { OfflineGainsModal } from '../ui/OfflineGainsModal';
 import { HeroRoster } from '../ui/HeroRoster';
 import { WeatherPanel } from '../ui/WeatherPanel';
 import { EventPanel } from '../ui/EventPanel';
+import { InventoryPanel } from '../ui/InventoryPanel';
 
 export class GuildHallScene extends Phaser.Scene {
   private guild: Guild | null = null;
@@ -17,6 +18,7 @@ export class GuildHallScene extends Phaser.Scene {
   private heroRoster: HeroRoster | null = null;
   private weatherPanel: WeatherPanel | null = null;
   private eventPanel: EventPanel | null = null;
+  private inventoryPanel: InventoryPanel | null = null;
   private activeEvents: any[] = [];
   private syncTimer: Phaser.Time.TimerEvent | null = null;
 
@@ -114,6 +116,18 @@ export class GuildHallScene extends Phaser.Scene {
       color: COLORS.textSecondary,
     });
 
+    // Inventory button
+    const inventoryBtn = this.add.text(GAME_WIDTH - 240, 20, 'Inventory', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.small}px`,
+      color: COLORS.textAccent,
+      fontStyle: 'bold',
+    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
+
+    inventoryBtn.on('pointerup', () => {
+      this.inventoryPanel?.show();
+    });
+
     // Heroes button
     const heroesBtn = this.add.text(GAME_WIDTH - 160, 20, 'Heroes', {
       fontFamily: FONTS.primary,
@@ -160,6 +174,13 @@ export class GuildHallScene extends Phaser.Scene {
       this,
       this.guild.heroes,
       this.guild.buildings,
+      () => this.refreshGuild(),
+    );
+
+    // Inventory panel (hidden until opened)
+    this.inventoryPanel = new InventoryPanel(
+      this,
+      this.guild.heroes,
       () => this.refreshGuild(),
     );
 
@@ -222,6 +243,7 @@ export class GuildHallScene extends Phaser.Scene {
       this.buildingPanel?.setBuildings(guildData.buildings);
       this.heroRoster?.setHeroes(guildData.heroes);
       this.heroRoster?.setBuildings(guildData.buildings);
+      this.inventoryPanel?.setHeroes(guildData.heroes);
       const rates = await apiClient.getRates();
       this.resourceBar?.setRates(rates);
     } catch {
