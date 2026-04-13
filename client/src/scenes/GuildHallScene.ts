@@ -294,35 +294,32 @@ export class GuildHallScene extends Phaser.Scene {
     navBg.lineStyle(2, COLORS.panelBorder);
     navBg.strokeRect(0, navY, GAME_WIDTH, 50);
 
-    const tabs = ['Guild Hall', 'Expeditions', 'Market', 'World Map', 'Research'];
+    const tabs = [
+      { label: 'Guild Hall', scene: 'GuildHallScene' },
+      { label: 'Expeditions', scene: 'ExpeditionScene' },
+      { label: 'Market', scene: 'MarketScene' },
+      { label: 'World Map', scene: 'WorldMapScene' },
+      { label: 'Research', scene: 'ResearchScene' },
+    ];
     const tabWidth = GAME_WIDTH / tabs.length;
 
     tabs.forEach((tab, i) => {
       const x = tabWidth * i + tabWidth / 2;
-      const text = this.add.text(x, navY + 25, tab, {
+      const isActive = i === 0; // Guild Hall is active
+      const text = this.add.text(x, navY + 25, tab.label, {
         fontFamily: FONTS.primary,
         fontSize: `${FONTS.sizes.small}px`,
-        color: i === 0 ? COLORS.textGold : COLORS.textSecondary,
+        color: isActive ? COLORS.textGold : COLORS.textSecondary,
       }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
       text.on('pointerover', () => text.setColor(COLORS.textGold));
       text.on('pointerout', () => {
-        if (i !== 0) text.setColor(COLORS.textSecondary);
+        if (!isActive) text.setColor(COLORS.textSecondary);
       });
 
-      if (i === 1) {
+      if (!isActive) {
         text.on('pointerup', () => {
-          this.scene.start('ExpeditionScene');
-        });
-      }
-      if (i === 2) {
-        text.on('pointerup', () => {
-          this.scene.start('MarketScene');
-        });
-      }
-      if (i === 4) {
-        text.on('pointerup', () => {
-          this.scene.start('ResearchScene');
+          this.scene.start(tab.scene);
         });
       }
     });
