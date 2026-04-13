@@ -206,41 +206,41 @@
 - [x] T-0193: Create guild hall seasonal decorations (snow in winter, flowers in spring)
 - [x] T-0194: Build building quick-action buttons (upgrade, repair, assign, demolish)
 - [x] T-0195: Implement building durability/repair system with maintenance costs
-- [ ] T-0196: Add building efficiency modifier based on adjacent building synergies
-- [ ] T-0197: Create building blueprint discovery system from research or expeditions
-- [ ] T-0198: Implement guild hall screenshot/share feature
-- [ ] T-0199: Build guild statistics dashboard (total buildings, heroes, resources, expeditions)
-- [ ] T-0200: Add guild hall tutorial walkthrough for first-time players
-- [ ] T-0201: Implement building queue system for constructing multiple buildings sequentially
-- [ ] T-0202: Build construction progress bar overlay on buildings under construction
-- [ ] T-0203: Create building special ability activation UI (e.g., tavern recruitment event)
-- [ ] T-0204: Implement guild hall visitor NPC system (random visitors with quests)
-- [ ] T-0205: Build guild hall notification indicators on buildings needing attention
-- [ ] T-0206: Implement guild motto editor displayed on guild hall banner
-- [ ] T-0207: Create guild hall prestige system for resetting with permanent bonuses
-- [ ] T-0208: Build building collection completion tracker
-- [ ] T-0209: Implement guild hall comparison view (view other players' guild halls)
-- [ ] T-0210: Add haptic feedback on mobile for building placement actions
-- [ ] T-0211: Create guild hall ambient particle effects (fireflies at night, leaves in autumn)
-- [ ] T-0212: Implement building production boost events from real-world data triggers
-- [ ] T-0213: Build guild hall resource collection animation (click-to-collect floating icons)
-- [ ] T-0214: Create building info cards for the build menu with stat summaries
-- [ ] T-0215: Implement guild hall idle income summary displayed on return
-- [ ] T-0216: Build guild hall changelog/history showing all player actions
-- [ ] T-0217: Create building repair animation and visual damage states
-- [ ] T-0218: Implement guild hall boundary walls that upgrade with guild level
-- [ ] T-0219: Build guild hall entrance gate with visitor counter display
-- [ ] T-0220: Create guild achievement wall decoration unlocked by milestones
-- [ ] T-0221: Implement guild hall environment biome selection (forest, mountain, coastal)
-- [ ] T-0222: Build building tooltip with real-time production rate display
-- [ ] T-0223: Create guild hall quick-build mode for rapid building placement
-- [ ] T-0224: Implement guild hall layout save/load system for multiple arrangements
-- [ ] T-0225: Build guild hall sharing system to export layout as shareable link
-- [ ] T-0226: Create guild hall ambient sound system based on placed buildings
-- [ ] T-0227: Implement guild hall day counter showing guild age in days
-- [ ] T-0228: Build building sorting/filtering in the build menu by type and cost
-- [ ] T-0229: Create guild hall event notification popup for triggered events
-- [ ] T-0230: Implement guild hall performance optimization for large building counts
+- [x] T-0196: Add building efficiency modifier based on adjacent building synergies
+- [x] T-0197: Create building blueprint discovery system from research or expeditions
+- [x] T-0198: Implement guild hall screenshot/share feature
+- [x] T-0199: Build guild statistics dashboard (total buildings, heroes, resources, expeditions)
+- [x] T-0200: Add guild hall tutorial walkthrough for first-time players
+- [x] T-0201: Implement building queue system for constructing multiple buildings sequentially
+- [x] T-0202: Build construction progress bar overlay on buildings under construction
+- [x] T-0203: Create building special ability activation UI (e.g., tavern recruitment event)
+- [x] T-0204: Implement guild hall visitor NPC system (random visitors with quests)
+- [x] T-0205: Build guild hall notification indicators on buildings needing attention
+- [x] T-0206: Implement guild motto editor displayed on guild hall banner
+- [x] T-0207: Create guild hall prestige system for resetting with permanent bonuses
+- [x] T-0208: Build building collection completion tracker
+- [x] T-0209: Implement guild hall comparison view (view other players' guild halls)
+- [x] T-0210: Add haptic feedback on mobile for building placement actions
+- [x] T-0211: Create guild hall ambient particle effects (fireflies at night, leaves in autumn)
+- [x] T-0212: Implement building production boost events from real-world data triggers
+- [x] T-0213: Build guild hall resource collection animation (click-to-collect floating icons)
+- [x] T-0214: Create building info cards for the build menu with stat summaries
+- [x] T-0215: Implement guild hall idle income summary displayed on return
+- [x] T-0216: Build guild hall changelog/history showing all player actions
+- [x] T-0217: Create building repair animation and visual damage states
+- [x] T-0218: Implement guild hall boundary walls that upgrade with guild level
+- [x] T-0219: Build guild hall entrance gate with visitor counter display
+- [x] T-0220: Create guild achievement wall decoration unlocked by milestones
+- [x] T-0221: Implement guild hall environment biome selection (forest, mountain, coastal)
+- [x] T-0222: Build building tooltip with real-time production rate display
+- [x] T-0223: Create guild hall quick-build mode for rapid building placement
+- [x] T-0224: Implement guild hall layout save/load system for multiple arrangements
+- [x] T-0225: Build guild hall sharing system to export layout as shareable link
+- [x] T-0226: Create guild hall ambient sound system based on placed buildings
+- [x] T-0227: Implement guild hall day counter showing guild age in days
+- [x] T-0228: Build building sorting/filtering in the build menu by type and cost
+- [x] T-0229: Create guild hall event notification popup for triggered events
+- [x] T-0230: Implement guild hall performance optimization for large building counts
 
 ## Epic 4: Resource System
 > Storage caps, resource decay mechanics, conversion recipes, and resource visualization including charts and indicators.
