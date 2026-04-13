@@ -581,76 +581,76 @@
 ## Epic 8: Market & Economy
 > Price history charts, trade routes, NPC merchants, auction system, and economic cycles influenced by real-world data.
 
-- [ ] T-0551: Define market data schema (item listings, price history, trade records)
-- [ ] T-0552: Create market service with buy, sell, list, and price calculation methods
-- [ ] T-0553: Implement dynamic pricing engine based on supply and demand
-- [ ] T-0554: Build price calculation formula with base price, supply modifier, and event modifier
-- [ ] T-0555: Create price history storage with hourly snapshots per item
-- [ ] T-0556: Implement price history chart component with line graph and time axis
-- [ ] T-0557: Build price trend indicators (rising, falling, stable) with color coding
-- [ ] T-0558: Create market UI main page with category tabs (resources, items, equipment)
-- [ ] T-0559: Build buy panel with item list, quantity selector, and total cost display
-- [ ] T-0560: Build sell panel with inventory items, quantity selector, and total value display
-- [ ] T-0561: Implement buy order placement with confirmation dialog
-- [ ] T-0562: Implement sell order placement with confirmation dialog
-- [ ] T-0563: Create market transaction history log per player
-- [ ] T-0564: Build transaction history page with date filter and export option
-- [ ] T-0565: Implement NPC merchant system with 5 merchant types (general, rare, exotic, bulk, traveling)
-- [ ] T-0566: Create NPC merchant inventory rotation (new stock every 6 hours)
-- [ ] T-0567: Build NPC merchant dialog UI with greeting and trade interface
-- [ ] T-0568: Implement NPC merchant reputation system (better prices with more trades)
-- [ ] T-0569: Create traveling merchant event (arrives randomly, sells rare items)
-- [ ] T-0570: Build traveling merchant notification when arriving
-- [ ] T-0571: Implement auction system with listing, bidding, and buyout
-- [ ] T-0572: Build auction house UI with search, filter, and sort
-- [ ] T-0573: Create auction listing form with starting price, buyout, and duration
-- [ ] T-0574: Implement auction bidding endpoint with outbid notification
-- [ ] T-0575: Build auction timer display with countdown to close
-- [ ] T-0576: Implement auction resolution (highest bidder wins, mail delivery)
-- [ ] T-0577: Create auction history showing won and lost auctions
-- [ ] T-0578: Implement trade route system between regions with transport time
-- [ ] T-0579: Build trade route visualization on world map
-- [ ] T-0580: Create trade route profit calculator showing buy/sell spread
-- [ ] T-0581: Implement trade route risk system (bandits, weather delays)
-- [ ] T-0582: Build trade route caravan tracking with progress indicator
-- [ ] T-0583: Create economic cycle system with boom, bust, and stability phases
-- [ ] T-0584: Implement economic cycle effects on all market prices
-- [ ] T-0585: Build economic indicator dashboard showing current cycle phase
-- [ ] T-0586: Create market event system (trade festival: -20% fees, shortage: +50% prices)
-- [ ] T-0587: Implement market event notification and duration display
-- [ ] T-0588: Build market watchlist for tracking specific item prices
-- [ ] T-0589: Create price alert system (notify when item reaches target price)
-- [ ] T-0590: Implement market fee system (listing fee + transaction fee)
-- [ ] T-0591: Build fee reduction through Marketplace building upgrades
-- [ ] T-0592: Create market analytics page (most traded items, biggest movers)
-- [ ] T-0593: Implement market item search with autocomplete
-- [ ] T-0594: Build market bulk trade UI for large quantity transactions
-- [ ] T-0595: Create market seasonal price modifiers (winter: heating fuel expensive)
-- [ ] T-0596: Implement real-world stock market influence on in-game metal prices
-- [ ] T-0597: Build market comparison tool (compare prices across merchants)
-- [ ] T-0598: Create market tutorial NPC explaining trade basics
-- [ ] T-0599: Implement market order book showing pending buy/sell orders
-- [ ] T-0600: Build market mini-widget for quick-trade from any scene
-- [ ] T-0601: Create market achievement system (volume trader, price predictor)
-- [ ] T-0602: Implement commodity futures system for advance purchasing
-- [ ] T-0603: Build market news ticker showing recent major trades and events
-- [ ] T-0604: Create market crash event triggered by extreme real-world market drops
-- [ ] T-0605: Implement market stabilization mechanics to prevent runaway inflation
-- [ ] T-0606: Build merchant guild reputation impacting trade advantages
-- [ ] T-0607: Create market stall rental system for player-run shops
-- [ ] T-0608: Implement trade embargo events affecting specific regions
-- [ ] T-0609: Build market profit/loss tracker for player trading performance
-- [ ] T-0610: Create market currency exchange for future multi-currency support
-- [ ] T-0611: Implement market tax system contributing to guild treasury
-- [ ] T-0612: Build market quick-sell button for common items at floor price
-- [ ] T-0613: Create market demand forecast based on historical patterns
-- [ ] T-0614: Implement market rare item spotlight with limited availability
-- [ ] T-0615: Build market trading post upgrade path (more slots, lower fees)
-- [ ] T-0616: Create market arbitrage detection warning for suspicious trades
-- [ ] T-0617: Implement market escrow system for high-value player trades
-- [ ] T-0618: Build market daily deals rotation with discounted items
-- [ ] T-0619: Create market inflation tracking metric displayed in economy dashboard
-- [ ] T-0620: Implement market circuit breaker halting trades during extreme volatility
+- [x] T-0551: Define market data schema (item listings, price history, trade records)
+- [x] T-0552: Create market service with buy, sell, list, and price calculation methods
+- [x] T-0553: Implement dynamic pricing engine based on supply and demand
+- [x] T-0554: Build price calculation formula with base price, supply modifier, and event modifier
+- [x] T-0555: Create price history storage with hourly snapshots per item
+- [x] T-0556: Implement price history chart component with line graph and time axis
+- [x] T-0557: Build price trend indicators (rising, falling, stable) with color coding
+- [x] T-0558: Create market UI main page with category tabs (resources, items, equipment)
+- [x] T-0559: Build buy panel with item list, quantity selector, and total cost display
+- [x] T-0560: Build sell panel with inventory items, quantity selector, and total value display
+- [x] T-0561: Implement buy order placement with confirmation dialog
+- [x] T-0562: Implement sell order placement with confirmation dialog
+- [x] T-0563: Create market transaction history log per player
+- [x] T-0564: Build transaction history page with date filter and export option
+- [x] T-0565: Implement NPC merchant system with 5 merchant types (general, rare, exotic, bulk, traveling)
+- [x] T-0566: Create NPC merchant inventory rotation (new stock every 6 hours)
+- [x] T-0567: Build NPC merchant dialog UI with greeting and trade interface
+- [x] T-0568: Implement NPC merchant reputation system (better prices with more trades)
+- [x] T-0569: Create traveling merchant event (arrives randomly, sells rare items)
+- [x] T-0570: Build traveling merchant notification when arriving
+- [x] T-0571: Implement auction system with listing, bidding, and buyout
+- [x] T-0572: Build auction house UI with search, filter, and sort
+- [x] T-0573: Create auction listing form with starting price, buyout, and duration
+- [x] T-0574: Implement auction bidding endpoint with outbid notification
+- [x] T-0575: Build auction timer display with countdown to close
+- [x] T-0576: Implement auction resolution (highest bidder wins, mail delivery)
+- [x] T-0577: Create auction history showing won and lost auctions
+- [x] T-0578: Implement trade route system between regions with transport time
+- [x] T-0579: Build trade route visualization on world map
+- [x] T-0580: Create trade route profit calculator showing buy/sell spread
+- [x] T-0581: Implement trade route risk system (bandits, weather delays)
+- [x] T-0582: Build trade route caravan tracking with progress indicator
+- [x] T-0583: Create economic cycle system with boom, bust, and stability phases
+- [x] T-0584: Implement economic cycle effects on all market prices
+- [x] T-0585: Build economic indicator dashboard showing current cycle phase
+- [x] T-0586: Create market event system (trade festival: -20% fees, shortage: +50% prices)
+- [x] T-0587: Implement market event notification and duration display
+- [x] T-0588: Build market watchlist for tracking specific item prices
+- [x] T-0589: Create price alert system (notify when item reaches target price)
+- [x] T-0590: Implement market fee system (listing fee + transaction fee)
+- [x] T-0591: Build fee reduction through Marketplace building upgrades
+- [x] T-0592: Create market analytics page (most traded items, biggest movers)
+- [x] T-0593: Implement market item search with autocomplete
+- [x] T-0594: Build market bulk trade UI for large quantity transactions
+- [x] T-0595: Create market seasonal price modifiers (winter: heating fuel expensive)
+- [x] T-0596: Implement real-world stock market influence on in-game metal prices
+- [x] T-0597: Build market comparison tool (compare prices across merchants)
+- [x] T-0598: Create market tutorial NPC explaining trade basics
+- [x] T-0599: Implement market order book showing pending buy/sell orders
+- [x] T-0600: Build market mini-widget for quick-trade from any scene
+- [x] T-0601: Create market achievement system (volume trader, price predictor)
+- [x] T-0602: Implement commodity futures system for advance purchasing
+- [x] T-0603: Build market news ticker showing recent major trades and events
+- [x] T-0604: Create market crash event triggered by extreme real-world market drops
+- [x] T-0605: Implement market stabilization mechanics to prevent runaway inflation
+- [x] T-0606: Build merchant guild reputation impacting trade advantages
+- [x] T-0607: Create market stall rental system for player-run shops
+- [x] T-0608: Implement trade embargo events affecting specific regions
+- [x] T-0609: Build market profit/loss tracker for player trading performance
+- [x] T-0610: Create market currency exchange for future multi-currency support
+- [x] T-0611: Implement market tax system contributing to guild treasury
+- [x] T-0612: Build market quick-sell button for common items at floor price
+- [x] T-0613: Create market demand forecast based on historical patterns
+- [x] T-0614: Implement market rare item spotlight with limited availability
+- [x] T-0615: Build market trading post upgrade path (more slots, lower fees)
+- [x] T-0616: Create market arbitrage detection warning for suspicious trades
+- [x] T-0617: Implement market escrow system for high-value player trades
+- [x] T-0618: Build market daily deals rotation with discounted items
+- [x] T-0619: Create market inflation tracking metric displayed in economy dashboard
+- [x] T-0620: Implement market circuit breaker halting trades during extreme volatility
 
 ## Epic 9: Research System
 > Visual tech tree rendering, research animations, branch specialization, and research event triggers.
