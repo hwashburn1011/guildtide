@@ -393,106 +393,106 @@
 ## Epic 6: Hero System
 > Hero progression, skill trees, hero quests, retirement, hero stories, and portrait generation system.
 
-- [ ] T-0371: Define hero data schema (name, role, level, stats, skills, equipment, morale, XP)
-- [ ] T-0372: Create hero generation service with randomized names, stats, and backstories
-- [ ] T-0373: Implement name generation pool with fantasy first and last name banks
-- [ ] T-0374: Build hero stat system with 6 core stats (Strength, Agility, Intellect, Endurance, Charisma, Luck)
-- [ ] T-0375: Implement hero role system with 10 roles (Warrior, Mage, Ranger, Healer, Rogue, Scholar, Merchant, Smith, Scout, Bard)
-- [ ] T-0376: Create role-specific stat growth rates per level
-- [ ] T-0377: Implement hero XP gain from expeditions, training, and building work
-- [ ] T-0378: Build hero level-up system with stat point allocation
-- [ ] T-0379: Create hero level-up notification with stat comparison display
-- [ ] T-0380: Implement hero recruitment from Tavern with cost and interview preview
-- [ ] T-0381: Build hero recruitment panel with stat bars, role badge, and personality
-- [ ] T-0382: Create hero dismissal system with farewell dialog
-- [ ] T-0383: Implement hero roster page with grid/list view toggle
-- [ ] T-0384: Build hero sort options (by level, role, stat, name, morale)
-- [ ] T-0385: Build hero filter options (by role, availability, level range)
-- [ ] T-0386: Create hero detail page with full stat display, equipment, and history
-- [ ] T-0387: Build hero stat radar chart visualization
-- [ ] T-0388: Implement hero skill tree data structure (branching paths per role)
-- [ ] T-0389: Create Warrior skill tree with 15 skills across 3 branches
-- [ ] T-0390: Create Mage skill tree with 15 skills across 3 branches
-- [ ] T-0391: Create Ranger skill tree with 15 skills across 3 branches
-- [ ] T-0392: Create Healer skill tree with 15 skills across 3 branches
-- [ ] T-0393: Create Rogue skill tree with 15 skills across 3 branches
-- [ ] T-0394: Create Scholar skill tree with 15 skills across 3 branches
-- [ ] T-0395: Create Merchant skill tree with 15 skills across 3 branches
-- [ ] T-0396: Create Smith skill tree with 15 skills across 3 branches
-- [ ] T-0397: Create Scout skill tree with 15 skills across 3 branches
-- [ ] T-0398: Create Bard skill tree with 15 skills across 3 branches
-- [ ] T-0399: Build skill tree UI with node connections and unlock indicators
-- [ ] T-0400: Implement skill point allocation on level-up (1 point per level)
-- [ ] T-0401: Create skill effect application system (passive buffs, active abilities)
-- [ ] T-0402: Build skill tooltip showing effect description, requirements, and cost
-- [ ] T-0403: Implement skill prerequisite validation (unlock parent first)
-- [ ] T-0404: Create skill respec system with increasing gold cost per respec
-- [ ] T-0405: Build hero portrait system with layered facial feature composition
-- [ ] T-0406: Create portrait feature sets (hairstyle, face shape, eyes, mouth, accessories)
-- [ ] T-0407: Implement portrait color palette per feature (skin tone, hair color, eye color)
-- [ ] T-0408: Build portrait preview component with randomize button
-- [ ] T-0409: Implement portrait customization editor for player-created portraits
-- [ ] T-0410: Create role-specific portrait frame decorations
-- [ ] T-0411: Implement hero morale system affected by events, rest, and victories
-- [ ] T-0412: Build morale indicator on hero card (happy, neutral, unhappy, angry)
-- [ ] T-0413: Create morale effects on hero performance (high morale: +10% stats)
-- [ ] T-0414: Implement morale recovery through rest and Temple blessings
-- [ ] T-0415: Build hero quest system — personal quests for each hero based on backstory
-- [ ] T-0416: Create quest generation templates with 5 quest types (fetch, rescue, discover, defeat, negotiate)
-- [ ] T-0417: Implement hero quest dialog UI with objective display and progress
-- [ ] T-0418: Build hero quest reward system (XP, items, skill points, lore)
-- [ ] T-0419: Create hero quest chain system (multi-part storylines)
-- [ ] T-0420: Implement hero retirement system at max level with legacy bonus
-- [ ] T-0421: Build retirement ceremony UI with hero achievement summary
-- [ ] T-0422: Create retired hero hall of fame display
-- [ ] T-0423: Implement retirement legacy bonuses (permanent guild stat boosts)
-- [ ] T-0424: Build hero story/journal system tracking notable achievements
-- [ ] T-0425: Create hero relationship system (friendship/rivalry between heroes)
-- [ ] T-0426: Build relationship indicator on hero interaction screens
-- [ ] T-0427: Implement relationship effects on expedition performance
-- [ ] T-0428: Create hero trait system (brave, greedy, cautious, loyal, etc.)
-- [ ] T-0429: Build trait display badges on hero cards
-- [ ] T-0430: Implement trait effects on expedition events and building work
-- [ ] T-0431: Create hero injury system from failed expeditions
-- [ ] T-0432: Build injury recovery timer and Hospital building healing
-- [ ] T-0433: Implement hero specialization at level 10 (choose sub-role)
-- [ ] T-0434: Create specialization effect modifiers per role
-- [ ] T-0435: Build hero experience breakdown panel (XP per source)
-- [ ] T-0436: Implement hero auto-assignment suggestion for optimal building placement
-- [ ] T-0437: Create hero comparison tool for side-by-side stat evaluation
-- [ ] T-0438: Build hero quick-equip UI for swapping gear sets
-- [ ] T-0439: Implement hero favorite/pin system for quick access
-- [ ] T-0440: Create hero activity log showing recent actions and XP gains
-- [ ] T-0441: Build hero recruitment event (double quality heroes during festivals)
-- [ ] T-0442: Implement hero mood dialog bubbles on guild hall scene
-- [ ] T-0443: Create hero birthday event with morale boost and gift
-- [ ] T-0444: Build hero nickname system (player-assigned display names)
-- [ ] T-0445: Implement hero power score calculation combining stats, skills, and gear
-- [ ] T-0446: Create hero idle animation set per role (warrior practices sword, mage reads)
-- [ ] T-0447: Build hero status effects display (buffed, injured, tired, inspired)
-- [ ] T-0448: Implement hero recruitment cost scaling based on hero quality
-- [ ] T-0449: Create hero mentor system (high-level hero trains low-level hero)
-- [ ] T-0450: Build hero attribute reroll token system from premium currency
-- [ ] T-0451: Implement hero affinity system — heroes perform better in certain biomes
-- [ ] T-0452: Create hero rival NPC system (hero-specific antagonists in expeditions)
-- [ ] T-0453: Build hero memorial when a hero is permanently lost
-- [ ] T-0454: Implement hero class evolution system at level 20 (advanced role)
-- [ ] T-0455: Create hero stat soft cap with diminishing returns at high values
-- [ ] T-0456: Build hero wish list system (heroes request items or quest completions)
-- [ ] T-0457: Implement hero voice line text system for interactions
-- [ ] T-0458: Create hero compatibility matrix for expedition squad synergies
-- [ ] T-0459: Build hero recruitment history log showing all past recruits
-- [ ] T-0460: Create hero overview dashboard showing roster stats and averages
-- [ ] T-0461: Implement hero name generation influenced by real-world cultural calendar
-- [ ] T-0462: Build hero training montage animation for Barracks activities
-- [ ] T-0463: Create hero rest mechanic requiring downtime after expeditions
-- [ ] T-0464: Implement hero aging system with stat peak and eventual decline
-- [ ] T-0465: Build hero genealogy tree for retired heroes' successors
-- [ ] T-0466: Create hero mastery system for repeated expedition success in role
-- [ ] T-0467: Implement hero loyalty system with desertion risk at very low morale
-- [ ] T-0468: Build hero search by name or trait functionality
-- [ ] T-0469: Create hero batch actions (assign all idle, rest all, equip recommended)
-- [ ] T-0470: Implement hero portrait background color based on rarity tier
+- [x] T-0371: Define hero data schema (name, role, level, stats, skills, equipment, morale, XP)
+- [x] T-0372: Create hero generation service with randomized names, stats, and backstories
+- [x] T-0373: Implement name generation pool with fantasy first and last name banks
+- [x] T-0374: Build hero stat system with 6 core stats (Strength, Agility, Intellect, Endurance, Charisma, Luck)
+- [x] T-0375: Implement hero role system with 10 roles (Warrior, Mage, Ranger, Healer, Rogue, Scholar, Merchant, Smith, Scout, Bard)
+- [x] T-0376: Create role-specific stat growth rates per level
+- [x] T-0377: Implement hero XP gain from expeditions, training, and building work
+- [x] T-0378: Build hero level-up system with stat point allocation
+- [x] T-0379: Create hero level-up notification with stat comparison display
+- [x] T-0380: Implement hero recruitment from Tavern with cost and interview preview
+- [x] T-0381: Build hero recruitment panel with stat bars, role badge, and personality
+- [x] T-0382: Create hero dismissal system with farewell dialog
+- [x] T-0383: Implement hero roster page with grid/list view toggle
+- [x] T-0384: Build hero sort options (by level, role, stat, name, morale)
+- [x] T-0385: Build hero filter options (by role, availability, level range)
+- [x] T-0386: Create hero detail page with full stat display, equipment, and history
+- [x] T-0387: Build hero stat radar chart visualization
+- [x] T-0388: Implement hero skill tree data structure (branching paths per role)
+- [x] T-0389: Create Warrior skill tree with 15 skills across 3 branches
+- [x] T-0390: Create Mage skill tree with 15 skills across 3 branches
+- [x] T-0391: Create Ranger skill tree with 15 skills across 3 branches
+- [x] T-0392: Create Healer skill tree with 15 skills across 3 branches
+- [x] T-0393: Create Rogue skill tree with 15 skills across 3 branches
+- [x] T-0394: Create Scholar skill tree with 15 skills across 3 branches
+- [x] T-0395: Create Merchant skill tree with 15 skills across 3 branches
+- [x] T-0396: Create Smith skill tree with 15 skills across 3 branches
+- [x] T-0397: Create Scout skill tree with 15 skills across 3 branches
+- [x] T-0398: Create Bard skill tree with 15 skills across 3 branches
+- [x] T-0399: Build skill tree UI with node connections and unlock indicators
+- [x] T-0400: Implement skill point allocation on level-up (1 point per level)
+- [x] T-0401: Create skill effect application system (passive buffs, active abilities)
+- [x] T-0402: Build skill tooltip showing effect description, requirements, and cost
+- [x] T-0403: Implement skill prerequisite validation (unlock parent first)
+- [x] T-0404: Create skill respec system with increasing gold cost per respec
+- [x] T-0405: Build hero portrait system with layered facial feature composition
+- [x] T-0406: Create portrait feature sets (hairstyle, face shape, eyes, mouth, accessories)
+- [x] T-0407: Implement portrait color palette per feature (skin tone, hair color, eye color)
+- [x] T-0408: Build portrait preview component with randomize button
+- [x] T-0409: Implement portrait customization editor for player-created portraits
+- [x] T-0410: Create role-specific portrait frame decorations
+- [x] T-0411: Implement hero morale system affected by events, rest, and victories
+- [x] T-0412: Build morale indicator on hero card (happy, neutral, unhappy, angry)
+- [x] T-0413: Create morale effects on hero performance (high morale: +10% stats)
+- [x] T-0414: Implement morale recovery through rest and Temple blessings
+- [x] T-0415: Build hero quest system — personal quests for each hero based on backstory
+- [x] T-0416: Create quest generation templates with 5 quest types (fetch, rescue, discover, defeat, negotiate)
+- [x] T-0417: Implement hero quest dialog UI with objective display and progress
+- [x] T-0418: Build hero quest reward system (XP, items, skill points, lore)
+- [x] T-0419: Create hero quest chain system (multi-part storylines)
+- [x] T-0420: Implement hero retirement system at max level with legacy bonus
+- [x] T-0421: Build retirement ceremony UI with hero achievement summary
+- [x] T-0422: Create retired hero hall of fame display
+- [x] T-0423: Implement retirement legacy bonuses (permanent guild stat boosts)
+- [x] T-0424: Build hero story/journal system tracking notable achievements
+- [x] T-0425: Create hero relationship system (friendship/rivalry between heroes)
+- [x] T-0426: Build relationship indicator on hero interaction screens
+- [x] T-0427: Implement relationship effects on expedition performance
+- [x] T-0428: Create hero trait system (brave, greedy, cautious, loyal, etc.)
+- [x] T-0429: Build trait display badges on hero cards
+- [x] T-0430: Implement trait effects on expedition events and building work
+- [x] T-0431: Create hero injury system from failed expeditions
+- [x] T-0432: Build injury recovery timer and Hospital building healing
+- [x] T-0433: Implement hero specialization at level 10 (choose sub-role)
+- [x] T-0434: Create specialization effect modifiers per role
+- [x] T-0435: Build hero experience breakdown panel (XP per source)
+- [x] T-0436: Implement hero auto-assignment suggestion for optimal building placement
+- [x] T-0437: Create hero comparison tool for side-by-side stat evaluation
+- [x] T-0438: Build hero quick-equip UI for swapping gear sets
+- [x] T-0439: Implement hero favorite/pin system for quick access
+- [x] T-0440: Create hero activity log showing recent actions and XP gains
+- [x] T-0441: Build hero recruitment event (double quality heroes during festivals)
+- [x] T-0442: Implement hero mood dialog bubbles on guild hall scene
+- [x] T-0443: Create hero birthday event with morale boost and gift
+- [x] T-0444: Build hero nickname system (player-assigned display names)
+- [x] T-0445: Implement hero power score calculation combining stats, skills, and gear
+- [x] T-0446: Create hero idle animation set per role (warrior practices sword, mage reads)
+- [x] T-0447: Build hero status effects display (buffed, injured, tired, inspired)
+- [x] T-0448: Implement hero recruitment cost scaling based on hero quality
+- [x] T-0449: Create hero mentor system (high-level hero trains low-level hero)
+- [x] T-0450: Build hero attribute reroll token system from premium currency
+- [x] T-0451: Implement hero affinity system — heroes perform better in certain biomes
+- [x] T-0452: Create hero rival NPC system (hero-specific antagonists in expeditions)
+- [x] T-0453: Build hero memorial when a hero is permanently lost
+- [x] T-0454: Implement hero class evolution system at level 20 (advanced role)
+- [x] T-0455: Create hero stat soft cap with diminishing returns at high values
+- [x] T-0456: Build hero wish list system (heroes request items or quest completions)
+- [x] T-0457: Implement hero voice line text system for interactions
+- [x] T-0458: Create hero compatibility matrix for expedition squad synergies
+- [x] T-0459: Build hero recruitment history log showing all past recruits
+- [x] T-0460: Create hero overview dashboard showing roster stats and averages
+- [x] T-0461: Implement hero name generation influenced by real-world cultural calendar
+- [x] T-0462: Build hero training montage animation for Barracks activities
+- [x] T-0463: Create hero rest mechanic requiring downtime after expeditions
+- [x] T-0464: Implement hero aging system with stat peak and eventual decline
+- [x] T-0465: Build hero genealogy tree for retired heroes' successors
+- [x] T-0466: Create hero mastery system for repeated expedition success in role
+- [x] T-0467: Implement hero loyalty system with desertion risk at very low morale
+- [x] T-0468: Build hero search by name or trait functionality
+- [x] T-0469: Create hero batch actions (assign all idle, rest all, equip recommended)
+- [x] T-0470: Implement hero portrait background color based on rarity tier
 
 ## Epic 7: Expedition System
 > Expedition log, route visualization, encounter narratives, rare discoveries, and boss expedition events.

@@ -84,6 +84,61 @@ export interface HeroEquipment {
   tool: string | null;
 }
 
+export interface HeroPortrait {
+  hairStyle: number;
+  faceShape: number;
+  eyes: number;
+  mouth: number;
+  accessory: number;
+  skinTone: string;
+  hairColor: string;
+  eyeColor: string;
+}
+
+export interface HeroSkillNode {
+  id: string;
+  name: string;
+  description: string;
+  branch: number;
+  tier: number;
+  levelRequired: number;
+  prerequisiteIds: string[];
+  effects: Record<string, unknown>;
+}
+
+export interface HeroSkillTree {
+  role: HeroRole;
+  branches: [string, string, string];
+  skills: HeroSkillNode[];
+}
+
+export interface HeroRelationship {
+  heroId: string;
+  type: 'friendship' | 'rivalry' | 'neutral';
+  strength: number;
+}
+
+export interface HeroInjury {
+  injuredAt: string;
+  recoveryHours: number;
+  healedAt: string | null;
+}
+
+export interface HeroTraining {
+  stat: string;
+  startedAt: string;
+  duration: number;
+  xpGain: number;
+  statGain: number;
+}
+
+export interface HeroQuestProgress {
+  questId: string;
+  status: 'active' | 'completed' | 'failed';
+  progress: Record<string, number>;
+  startedAt: string;
+}
+
 export interface Hero {
   id: string;
   guildId: string;
@@ -96,6 +151,62 @@ export interface Hero {
   equipment: HeroEquipment;
   assignment: string | null;
   status: HeroStatus;
+  // Extended fields (populated from metadata)
+  morale?: number;
+  moraleLabel?: string;
+  xpToNext?: number;
+  powerScore?: number;
+  rarityTier?: number;
+  rarityColor?: string;
+  portrait?: HeroPortrait;
+  unlockedSkills?: string[];
+  skillPoints?: number;
+  nickname?: string | null;
+  favorited?: boolean;
+  specialization?: string | null;
+  evolution?: string | null;
+  injury?: HeroInjury | null;
+  training?: HeroTraining | null;
+  relationships?: HeroRelationship[];
+  stories?: Array<{ level: number; text: string }>;
+}
+
+export interface HeroDetail extends Hero {
+  moraleModifier: number;
+  biomeAffinities: string[];
+  agingModifier: number;
+  daysSinceHired: number;
+  skillTree: HeroSkillTree | null;
+  xpLog: Array<{ source: string; amount: number; timestamp: string }>;
+  availableQuests: Array<{
+    id: string;
+    type: string;
+    title: string;
+    description: string;
+    minLevel: number;
+    rewards: Record<string, unknown>;
+  }>;
+  wishList: string[];
+  activityLog: Array<{ action: string; timestamp: string }>;
+}
+
+export interface RetiredHero {
+  id: string;
+  name: string;
+  role: string;
+  level: number;
+  retiredAt: string;
+  bonuses: Array<{ statType: string; amount: number; description: string }>;
+}
+
+export interface RosterDashboard {
+  totalHeroes: number;
+  avgLevel: number;
+  avgPowerScore: number;
+  avgMorale: number;
+  roleCounts: Record<string, number>;
+  statusCounts: Record<string, number>;
+  highestLevel: number;
 }
 
 // --- Building ---
