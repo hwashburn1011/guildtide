@@ -2277,6 +2277,73 @@ class ApiClient {
   async getAllianceResearchEffects(allianceId: string): Promise<any> {
     return this.request('GET', `/alliances/${allianceId}/research/effects`);
   }
+
+  // ── Combat System (T-1241–T-1320) ──
+
+  async resolveCombat(heroIds: string[], region: string, enemyCount: number, options?: { terrain?: string; weather?: string; difficulty?: number }): Promise<any> {
+    return this.request('POST', '/combat/resolve', { heroIds, region, enemyCount, ...options });
+  }
+
+  async resolveBossCombat(heroIds: string[], bossId: string, options?: { terrain?: string; weather?: string }): Promise<any> {
+    return this.request('POST', '/combat/boss', { heroIds, bossId, ...options });
+  }
+
+  async resolveChallengeCombat(heroIds: string[], challengeId: string): Promise<any> {
+    return this.request('POST', '/combat/challenge', { heroIds, challengeId });
+  }
+
+  async attemptFlee(partySpeed: number, enemySpeed: number): Promise<{ fled: boolean }> {
+    return this.request('POST', '/combat/flee', { partySpeed, enemySpeed });
+  }
+
+  async getCombatPrediction(heroIds: string[], region?: string, enemyCount?: number): Promise<any> {
+    const params = `heroIds=${heroIds.join(',')}&region=${region ?? 'scrapyard_outskirts'}&enemyCount=${enemyCount ?? 3}`;
+    return this.request('GET', `/combat/predict?${params}`);
+  }
+
+  async getSquadSynergies(roles: string[]): Promise<any> {
+    return this.request('GET', `/combat/synergies?roles=${roles.join(',')}`);
+  }
+
+  async getElementChart(): Promise<any> {
+    return this.request('GET', '/combat/elements');
+  }
+
+  async getEnemyList(): Promise<any> {
+    return this.request('GET', '/combat/enemies');
+  }
+
+  async getBestiary(): Promise<any> {
+    return this.request('GET', '/combat/bestiary');
+  }
+
+  async getCombatStats(): Promise<any> {
+    return this.request('GET', '/combat/stats');
+  }
+
+  async setAutoBattle(enabled: boolean): Promise<any> {
+    return this.request('POST', '/combat/auto-battle', { enabled });
+  }
+
+  async setArenaDefenseTeam(heroes: any[]): Promise<any> {
+    return this.request('POST', '/combat/arena/defense', { heroes });
+  }
+
+  async getArenaOpponents(): Promise<any> {
+    return this.request('GET', '/combat/arena/opponents');
+  }
+
+  async fightArenaOpponent(defenderGuildId: string, heroIds: string[]): Promise<any> {
+    return this.request('POST', '/combat/arena/fight', { defenderGuildId, heroIds });
+  }
+
+  async getArenaHistory(): Promise<any> {
+    return this.request('GET', '/combat/arena/history');
+  }
+
+  async getArenaLeaderboard(): Promise<any> {
+    return this.request('GET', '/combat/arena/leaderboard');
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

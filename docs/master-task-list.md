@@ -1307,86 +1307,86 @@
 ## Epic 17: Combat & Encounters
 > Auto-battler combat system, squad composition, enemy types, boss fights, combat log, and combat rewards.
 
-- [ ] T-1241: Define combat data schema (attacker, defender, rounds, log, outcome)
-- [ ] T-1242: Create combat engine with turn-based auto-resolution
-- [ ] T-1243: Implement initiative system determining turn order by speed stat
-- [ ] T-1244: Build combat round processing (attack, defend, skill use, item use)
-- [ ] T-1245: Create damage calculation formula (attack - defense * modifier)
-- [ ] T-1246: Implement critical hit system with Luck stat influence
-- [ ] T-1247: Create dodge/evasion system with Agility stat influence
-- [ ] T-1248: Implement healing ability for Healer role heroes
-- [ ] T-1249: Create buff/debuff system for combat status effects
-- [ ] T-1250: Implement 10 combat status effects (poison, burn, freeze, stun, shield, regen, haste, slow, blind, berserk)
-- [ ] T-1251: Build combat UI with hero portraits and HP bars on left, enemies on right
-- [ ] T-1252: Implement combat animation system (attack swing, spell cast, hit flash)
-- [ ] T-1253: Create combat damage number floating text display
-- [ ] T-1254: Build combat action log panel showing turn-by-turn narrative
-- [ ] T-1255: Implement combat speed controls (1x, 2x, skip to result)
-- [ ] T-1256: Create squad composition system with front row and back row
-- [ ] T-1257: Implement row-based targeting (front row takes melee, back row takes ranged)
-- [ ] T-1258: Build squad formation UI with drag-drop hero positioning
-- [ ] T-1259: Create squad synergy bonuses (2 Warriors: +10% defense, etc.)
-- [ ] T-1260: Implement synergy display on squad formation screen
-- [ ] T-1261: Create 20 enemy types across different regions
-- [ ] T-1262: Implement Goblin enemy type with swarm attack pattern
-- [ ] T-1263: Implement Skeleton enemy type with resurrection ability
-- [ ] T-1264: Implement Wolf enemy type with pack bonus mechanic
-- [ ] T-1265: Implement Bandit enemy type with steal ability
-- [ ] T-1266: Implement Elemental enemy type with elemental resistance
-- [ ] T-1267: Implement Dragon enemy type with breath attack AoE
-- [ ] T-1268: Implement Troll enemy type with regeneration passive
-- [ ] T-1269: Implement Ghost enemy type with physical damage resistance
-- [ ] T-1270: Implement Golem enemy type with high defense low speed
-- [ ] T-1271: Implement Slime enemy type with split-on-death mechanic
-- [ ] T-1272: Implement Spider enemy type with web (slow) debuff
-- [ ] T-1273: Implement Orc enemy type with berserk on low HP
-- [ ] T-1274: Implement Witch enemy type with curse debuff
-- [ ] T-1275: Implement Giant enemy type with crushing blow mechanic
-- [ ] T-1276: Implement Imp enemy type with magic steal ability
-- [ ] T-1277: Implement Mimic enemy type disguised as treasure chest
-- [ ] T-1278: Implement Wraith enemy type with life drain attack
-- [ ] T-1279: Implement Hydra enemy type with multi-head attacks
-- [ ] T-1280: Implement Assassin enemy type with guaranteed critical first strike
-- [ ] T-1281: Implement Necromancer enemy type summoning minions
-- [ ] T-1282: Create boss encounter system with multi-phase mechanics
-- [ ] T-1283: Implement Dragon Lord boss with 3 phases (fire, ice, thunder)
-- [ ] T-1284: Implement Lich King boss with minion summoning phases
-- [ ] T-1285: Implement Kraken boss with tentacle mechanics
-- [ ] T-1286: Implement Ancient Golem boss with armor break phases
-- [ ] T-1287: Implement Shadow Lord boss with darkness mechanic
-- [ ] T-1288: Build boss HP bar with phase indicators
-- [ ] T-1289: Create boss special attack warning system (telegraph before big hits)
-- [ ] T-1290: Implement combat loot drop system with roll per enemy
-- [ ] T-1291: Create loot rarity roll using weighted random system
-- [ ] T-1292: Build combat reward screen with XP, gold, and item display
-- [ ] T-1293: Implement combat XP distribution to participating heroes
-- [ ] T-1294: Create combat MVP display (highest damage, most heals, etc.)
-- [ ] T-1295: Build combat replay system to rewatch past battles
-- [ ] T-1296: Implement combat difficulty scaling based on party average level
-- [ ] T-1297: Create combat terrain effects (forest: +evasion, mountain: +defense)
-- [ ] T-1298: Implement weather effects on combat (rain: -fire damage, snow: -speed)
-- [ ] T-1299: Build combat tutorial introducing mechanics step by step
-- [ ] T-1300: Create combat challenge mode with preset difficult encounters
-- [ ] T-1301: Implement combat flee mechanic with success chance based on speed
-- [ ] T-1302: Build combat statistics tracker (total kills, damage dealt, battles won)
-- [ ] T-1303: Create enemy bestiary unlocked by defeating each enemy type
-- [ ] T-1304: Build bestiary UI with enemy stats, lore, and drop tables
-- [ ] T-1305: Implement combat morale effect (high morale: +5% all stats in combat)
-- [ ] T-1306: Create combat equipment durability drain per battle
-- [ ] T-1307: Build auto-battle toggle for repeated encounters
-- [ ] T-1308: Implement combat power prediction before engagement
-- [ ] T-1309: Create combat modifier from real-world data (storm: +lightning damage)
-- [ ] T-1310: Build combat death/defeat animation for heroes and enemies
-- [ ] T-1311: Implement hero revival mechanic from Healer skill
-- [ ] T-1312: Create combat combo system for sequential hero attacks
-- [ ] T-1313: Build combat ultimate ability system charged over multiple rounds
-- [ ] T-1314: Implement combat element system (fire, water, earth, air, light, dark)
-- [ ] T-1315: Create elemental weakness/resistance chart
-- [ ] T-1316: Build element indicator on combat UI
-- [ ] T-1317: Implement combat AI behavior patterns per enemy type
-- [ ] T-1318: Create combat achievement system (first boss kill, no-damage clear)
-- [ ] T-1319: Build combat sound effects for attacks, skills, and impacts
-- [ ] T-1320: Implement combat background scenes per region biome
+- [x] T-1241: Define combat data schema (attacker, defender, rounds, log, outcome)
+- [x] T-1242: Create combat engine with turn-based auto-resolution
+- [x] T-1243: Implement initiative system determining turn order by speed stat
+- [x] T-1244: Build combat round processing (attack, defend, skill use, item use)
+- [x] T-1245: Create damage calculation formula (attack - defense * modifier)
+- [x] T-1246: Implement critical hit system with Luck stat influence
+- [x] T-1247: Create dodge/evasion system with Agility stat influence
+- [x] T-1248: Implement healing ability for Healer role heroes
+- [x] T-1249: Create buff/debuff system for combat status effects
+- [x] T-1250: Implement 10 combat status effects (poison, burn, freeze, stun, shield, regen, haste, slow, blind, berserk)
+- [x] T-1251: Build combat UI with hero portraits and HP bars on left, enemies on right
+- [x] T-1252: Implement combat animation system (attack swing, spell cast, hit flash)
+- [x] T-1253: Create combat damage number floating text display
+- [x] T-1254: Build combat action log panel showing turn-by-turn narrative
+- [x] T-1255: Implement combat speed controls (1x, 2x, skip to result)
+- [x] T-1256: Create squad composition system with front row and back row
+- [x] T-1257: Implement row-based targeting (front row takes melee, back row takes ranged)
+- [x] T-1258: Build squad formation UI with drag-drop hero positioning
+- [x] T-1259: Create squad synergy bonuses (2 Warriors: +10% defense, etc.)
+- [x] T-1260: Implement synergy display on squad formation screen
+- [x] T-1261: Create 20 enemy types across different regions
+- [x] T-1262: Implement Goblin enemy type with swarm attack pattern
+- [x] T-1263: Implement Skeleton enemy type with resurrection ability
+- [x] T-1264: Implement Wolf enemy type with pack bonus mechanic
+- [x] T-1265: Implement Bandit enemy type with steal ability
+- [x] T-1266: Implement Elemental enemy type with elemental resistance
+- [x] T-1267: Implement Dragon enemy type with breath attack AoE
+- [x] T-1268: Implement Troll enemy type with regeneration passive
+- [x] T-1269: Implement Ghost enemy type with physical damage resistance
+- [x] T-1270: Implement Golem enemy type with high defense low speed
+- [x] T-1271: Implement Slime enemy type with split-on-death mechanic
+- [x] T-1272: Implement Spider enemy type with web (slow) debuff
+- [x] T-1273: Implement Orc enemy type with berserk on low HP
+- [x] T-1274: Implement Witch enemy type with curse debuff
+- [x] T-1275: Implement Giant enemy type with crushing blow mechanic
+- [x] T-1276: Implement Imp enemy type with magic steal ability
+- [x] T-1277: Implement Mimic enemy type disguised as treasure chest
+- [x] T-1278: Implement Wraith enemy type with life drain attack
+- [x] T-1279: Implement Hydra enemy type with multi-head attacks
+- [x] T-1280: Implement Assassin enemy type with guaranteed critical first strike
+- [x] T-1281: Implement Necromancer enemy type summoning minions
+- [x] T-1282: Create boss encounter system with multi-phase mechanics
+- [x] T-1283: Implement Dragon Lord boss with 3 phases (fire, ice, thunder)
+- [x] T-1284: Implement Lich King boss with minion summoning phases
+- [x] T-1285: Implement Kraken boss with tentacle mechanics
+- [x] T-1286: Implement Ancient Golem boss with armor break phases
+- [x] T-1287: Implement Shadow Lord boss with darkness mechanic
+- [x] T-1288: Build boss HP bar with phase indicators
+- [x] T-1289: Create boss special attack warning system (telegraph before big hits)
+- [x] T-1290: Implement combat loot drop system with roll per enemy
+- [x] T-1291: Create loot rarity roll using weighted random system
+- [x] T-1292: Build combat reward screen with XP, gold, and item display
+- [x] T-1293: Implement combat XP distribution to participating heroes
+- [x] T-1294: Create combat MVP display (highest damage, most heals, etc.)
+- [x] T-1295: Build combat replay system to rewatch past battles
+- [x] T-1296: Implement combat difficulty scaling based on party average level
+- [x] T-1297: Create combat terrain effects (forest: +evasion, mountain: +defense)
+- [x] T-1298: Implement weather effects on combat (rain: -fire damage, snow: -speed)
+- [x] T-1299: Build combat tutorial introducing mechanics step by step
+- [x] T-1300: Create combat challenge mode with preset difficult encounters
+- [x] T-1301: Implement combat flee mechanic with success chance based on speed
+- [x] T-1302: Build combat statistics tracker (total kills, damage dealt, battles won)
+- [x] T-1303: Create enemy bestiary unlocked by defeating each enemy type
+- [x] T-1304: Build bestiary UI with enemy stats, lore, and drop tables
+- [x] T-1305: Implement combat morale effect (high morale: +5% all stats in combat)
+- [x] T-1306: Create combat equipment durability drain per battle
+- [x] T-1307: Build auto-battle toggle for repeated encounters
+- [x] T-1308: Implement combat power prediction before engagement
+- [x] T-1309: Create combat modifier from real-world data (storm: +lightning damage)
+- [x] T-1310: Build combat death/defeat animation for heroes and enemies
+- [x] T-1311: Implement hero revival mechanic from Healer skill
+- [x] T-1312: Create combat combo system for sequential hero attacks
+- [x] T-1313: Build combat ultimate ability system charged over multiple rounds
+- [x] T-1314: Implement combat element system (fire, water, earth, air, light, dark)
+- [x] T-1315: Create elemental weakness/resistance chart
+- [x] T-1316: Build element indicator on combat UI
+- [x] T-1317: Implement combat AI behavior patterns per enemy type
+- [x] T-1318: Create combat achievement system (first boss kill, no-damage clear)
+- [x] T-1319: Build combat sound effects for attacks, skills, and impacts
+- [x] T-1320: Implement combat background scenes per region biome
 
 ## Epic 18: Narrative & Discovery
 > Hidden pattern system, lore entries, world history, NPC dialogue, quest lines, and journal tracking.
