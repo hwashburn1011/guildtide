@@ -10,6 +10,7 @@ export class BuildingPanel {
   private container: Phaser.GameObjects.Container;
   private buildings: Building[];
   private onUpgrade: (building: Building) => void;
+  private onDetail?: (building: Building) => void;
   private buildingCards: Map<string, {
     levelText: Phaser.GameObjects.Text;
     outputText: Phaser.GameObjects.Text;
@@ -22,10 +23,12 @@ export class BuildingPanel {
     y: number,
     buildings: Building[],
     onUpgrade: (building: Building) => void,
+    onDetail?: (building: Building) => void,
   ) {
     this.scene = scene;
     this.buildings = buildings;
     this.onUpgrade = onUpgrade;
+    this.onDetail = onDetail;
     this.container = scene.add.container(0, y);
     this.render();
   }
@@ -146,6 +149,31 @@ export class BuildingPanel {
     upgradeBtn.on('pointerover', () => upgradeBtn.setAlpha(0.7));
     upgradeBtn.on('pointerout', () => upgradeBtn.setAlpha(1));
     upgradeBtn.on('pointerup', () => this.onUpgrade(building));
+
+    // Details button
+    if (this.onDetail && building.level > 0) {
+      const detailBtn = this.scene.add.text(x + w - 12, y + h - 35, 'Details', {
+        fontFamily: FONTS.primary,
+        fontSize: `${FONTS.sizes.tiny}px`,
+        color: COLORS.textSecondary,
+      }).setOrigin(1, 1).setInteractive({ useHandCursor: true });
+      this.container.add(detailBtn);
+
+      detailBtn.on('pointerover', () => detailBtn.setColor(COLORS.textAccent));
+      detailBtn.on('pointerout', () => detailBtn.setColor(COLORS.textSecondary));
+      detailBtn.on('pointerup', () => this.onDetail?.(building));
+    }
+
+    // Worker indicator (if building has metadata about construction)
+    if (building.metadata && (building.metadata as any).constructing) {
+      const constructLabel = this.scene.add.text(x + w / 2, y + h - 10, 'Under Construction...', {
+        fontFamily: FONTS.primary,
+        fontSize: `${FONTS.sizes.tiny}px`,
+        color: '#f5a623',
+        fontStyle: 'italic',
+      }).setOrigin(0.5, 1);
+      this.container.add(constructLabel);
+    }
 
     this.buildingCards.set(building.id, { levelText, outputText, costText, upgradeBtn });
   }

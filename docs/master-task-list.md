@@ -161,86 +161,86 @@
 ## Epic 3: Guild Hall Scene
 > Building placement grid, visual building upgrades, guild XP and leveling, and unlock progression within the guild hall.
 
-- [ ] T-0151: Design guild hall main scene layout with building grid area
-- [ ] T-0152: Implement isometric grid system for building placement (8x8 grid)
-- [ ] T-0153: Build grid cell highlighting on hover to indicate valid placement zones
-- [ ] T-0154: Implement building placement drag-and-drop from build menu to grid
-- [ ] T-0155: Add placement validation (no overlap, correct terrain type, resource check)
-- [ ] T-0156: Implement building removal/demolish action with resource refund (50%)
-- [ ] T-0157: Build building relocation drag from placed position to new grid cell
-- [ ] T-0158: Create guild hall background with parallax scrolling layers
-- [ ] T-0159: Implement day/night cycle visual overlay on guild hall scene
-- [ ] T-0160: Add weather visual effects overlay (rain, snow, sun rays) on guild hall
-- [ ] T-0161: Build guild info panel showing guild name, level, XP bar, and emblem
-- [ ] T-0162: Implement guild naming system with profanity filter and uniqueness check
-- [ ] T-0163: Build guild emblem editor with shape, color, and symbol selectors
-- [ ] T-0164: Implement guild XP calculation from completed expeditions
-- [ ] T-0165: Implement guild XP calculation from building construction
-- [ ] T-0166: Implement guild XP calculation from research completion
-- [ ] T-0167: Implement guild XP calculation from market trades
-- [ ] T-0168: Create guild level-up reward table (levels 1-50)
-- [ ] T-0169: Implement guild level-up celebration animation and reward display
-- [ ] T-0170: Build guild milestone achievements list with unlock requirements
-- [ ] T-0171: Implement building unlock progression tied to guild level
-- [ ] T-0172: Implement feature unlock progression (expeditions at level 3, market at level 5)
-- [ ] T-0173: Build build menu panel listing available buildings with costs
-- [ ] T-0174: Add building preview tooltip showing stats and production info
-- [ ] T-0175: Implement building construction animation (scaffolding to complete)
-- [ ] T-0176: Create building visual upgrade stages (level 1, 2, 3 sprite variations)
-- [ ] T-0177: Implement building upgrade UI with cost and stat comparison
-- [ ] T-0178: Build building detail panel showing production rates, workers, and level
-- [ ] T-0179: Implement worker assignment UI for buildings (drag heroes to buildings)
-- [ ] T-0180: Add worker count display on each building sprite
-- [ ] T-0181: Create idle worker animation for heroes assigned to buildings
-- [ ] T-0182: Implement building production tick display (floating +resource icons)
-- [ ] T-0183: Build guild hall decoration system with cosmetic placement items
-- [ ] T-0184: Implement decorative item shop with cosmetic items purchasable with resources
-- [ ] T-0185: Add ambient NPC characters wandering in guild hall
-- [ ] T-0186: Create guild hall expansion system (unlock additional grid rows/columns)
-- [ ] T-0187: Implement guild hall expansion cost scaling
-- [ ] T-0188: Build guild hall zoom controls (zoom in/out with mouse wheel or pinch)
-- [ ] T-0189: Implement mini-map overview of entire guild hall for zoomed-in navigation
-- [ ] T-0190: Add sound effects for building placement, construction, and upgrade
-- [ ] T-0191: Build guild activity feed showing recent events (building built, hero recruited)
-- [ ] T-0192: Implement guild daily login reward calendar
-- [ ] T-0193: Create guild hall seasonal decorations (snow in winter, flowers in spring)
-- [ ] T-0194: Build building quick-action buttons (upgrade, repair, assign, demolish)
-- [ ] T-0195: Implement building durability/repair system with maintenance costs
-- [ ] T-0196: Add building efficiency modifier based on adjacent building synergies
-- [ ] T-0197: Create building blueprint discovery system from research or expeditions
-- [ ] T-0198: Implement guild hall screenshot/share feature
-- [ ] T-0199: Build guild statistics dashboard (total buildings, heroes, resources, expeditions)
-- [ ] T-0200: Add guild hall tutorial walkthrough for first-time players
-- [ ] T-0201: Implement building queue system for constructing multiple buildings sequentially
-- [ ] T-0202: Build construction progress bar overlay on buildings under construction
-- [ ] T-0203: Create building special ability activation UI (e.g., tavern recruitment event)
-- [ ] T-0204: Implement guild hall visitor NPC system (random visitors with quests)
-- [ ] T-0205: Build guild hall notification indicators on buildings needing attention
-- [ ] T-0206: Implement guild motto editor displayed on guild hall banner
-- [ ] T-0207: Create guild hall prestige system for resetting with permanent bonuses
-- [ ] T-0208: Build building collection completion tracker
-- [ ] T-0209: Implement guild hall comparison view (view other players' guild halls)
-- [ ] T-0210: Add haptic feedback on mobile for building placement actions
-- [ ] T-0211: Create guild hall ambient particle effects (fireflies at night, leaves in autumn)
-- [ ] T-0212: Implement building production boost events from real-world data triggers
-- [ ] T-0213: Build guild hall resource collection animation (click-to-collect floating icons)
-- [ ] T-0214: Create building info cards for the build menu with stat summaries
-- [ ] T-0215: Implement guild hall idle income summary displayed on return
-- [ ] T-0216: Build guild hall changelog/history showing all player actions
-- [ ] T-0217: Create building repair animation and visual damage states
-- [ ] T-0218: Implement guild hall boundary walls that upgrade with guild level
-- [ ] T-0219: Build guild hall entrance gate with visitor counter display
-- [ ] T-0220: Create guild achievement wall decoration unlocked by milestones
-- [ ] T-0221: Implement guild hall environment biome selection (forest, mountain, coastal)
-- [ ] T-0222: Build building tooltip with real-time production rate display
-- [ ] T-0223: Create guild hall quick-build mode for rapid building placement
-- [ ] T-0224: Implement guild hall layout save/load system for multiple arrangements
-- [ ] T-0225: Build guild hall sharing system to export layout as shareable link
-- [ ] T-0226: Create guild hall ambient sound system based on placed buildings
-- [ ] T-0227: Implement guild hall day counter showing guild age in days
-- [ ] T-0228: Build building sorting/filtering in the build menu by type and cost
-- [ ] T-0229: Create guild hall event notification popup for triggered events
-- [ ] T-0230: Implement guild hall performance optimization for large building counts
+- [x] T-0151: Design guild hall main scene layout with building grid area
+- [x] T-0152: Implement isometric grid system for building placement (8x8 grid)
+- [x] T-0153: Build grid cell highlighting on hover to indicate valid placement zones
+- [x] T-0154: Implement building placement drag-and-drop from build menu to grid
+- [x] T-0155: Add placement validation (no overlap, correct terrain type, resource check)
+- [x] T-0156: Implement building removal/demolish action with resource refund (50%)
+- [x] T-0157: Build building relocation drag from placed position to new grid cell
+- [x] T-0158: Create guild hall background with parallax scrolling layers
+- [x] T-0159: Implement day/night cycle visual overlay on guild hall scene
+- [x] T-0160: Add weather visual effects overlay (rain, snow, sun rays) on guild hall
+- [x] T-0161: Build guild info panel showing guild name, level, XP bar, and emblem
+- [x] T-0162: Implement guild naming system with profanity filter and uniqueness check
+- [x] T-0163: Build guild emblem editor with shape, color, and symbol selectors
+- [x] T-0164: Implement guild XP calculation from completed expeditions
+- [x] T-0165: Implement guild XP calculation from building construction
+- [x] T-0166: Implement guild XP calculation from research completion
+- [x] T-0167: Implement guild XP calculation from market trades
+- [x] T-0168: Create guild level-up reward table (levels 1-50)
+- [x] T-0169: Implement guild level-up celebration animation and reward display
+- [x] T-0170: Build guild milestone achievements list with unlock requirements
+- [x] T-0171: Implement building unlock progression tied to guild level
+- [x] T-0172: Implement feature unlock progression (expeditions at level 3, market at level 5)
+- [x] T-0173: Build build menu panel listing available buildings with costs
+- [x] T-0174: Add building preview tooltip showing stats and production info
+- [x] T-0175: Implement building construction animation (scaffolding to complete)
+- [x] T-0176: Create building visual upgrade stages (level 1, 2, 3 sprite variations)
+- [x] T-0177: Implement building upgrade UI with cost and stat comparison
+- [x] T-0178: Build building detail panel showing production rates, workers, and level
+- [x] T-0179: Implement worker assignment UI for buildings (drag heroes to buildings)
+- [x] T-0180: Add worker count display on each building sprite
+- [x] T-0181: Create idle worker animation for heroes assigned to buildings
+- [x] T-0182: Implement building production tick display (floating +resource icons)
+- [x] T-0183: Build guild hall decoration system with cosmetic placement items
+- [x] T-0184: Implement decorative item shop with cosmetic items purchasable with resources
+- [x] T-0185: Add ambient NPC characters wandering in guild hall
+- [x] T-0186: Create guild hall expansion system (unlock additional grid rows/columns)
+- [x] T-0187: Implement guild hall expansion cost scaling
+- [x] T-0188: Build guild hall zoom controls (zoom in/out with mouse wheel or pinch)
+- [x] T-0189: Implement mini-map overview of entire guild hall for zoomed-in navigation
+- [x] T-0190: Add sound effects for building placement, construction, and upgrade
+- [x] T-0191: Build guild activity feed showing recent events (building built, hero recruited)
+- [x] T-0192: Implement guild daily login reward calendar
+- [x] T-0193: Create guild hall seasonal decorations (snow in winter, flowers in spring)
+- [x] T-0194: Build building quick-action buttons (upgrade, repair, assign, demolish)
+- [x] T-0195: Implement building durability/repair system with maintenance costs
+- [x] T-0196: Add building efficiency modifier based on adjacent building synergies
+- [x] T-0197: Create building blueprint discovery system from research or expeditions
+- [x] T-0198: Implement guild hall screenshot/share feature
+- [x] T-0199: Build guild statistics dashboard (total buildings, heroes, resources, expeditions)
+- [x] T-0200: Add guild hall tutorial walkthrough for first-time players
+- [x] T-0201: Implement building queue system for constructing multiple buildings sequentially
+- [x] T-0202: Build construction progress bar overlay on buildings under construction
+- [x] T-0203: Create building special ability activation UI (e.g., tavern recruitment event)
+- [x] T-0204: Implement guild hall visitor NPC system (random visitors with quests)
+- [x] T-0205: Build guild hall notification indicators on buildings needing attention
+- [x] T-0206: Implement guild motto editor displayed on guild hall banner
+- [x] T-0207: Create guild hall prestige system for resetting with permanent bonuses
+- [x] T-0208: Build building collection completion tracker
+- [x] T-0209: Implement guild hall comparison view (view other players' guild halls)
+- [x] T-0210: Add haptic feedback on mobile for building placement actions
+- [x] T-0211: Create guild hall ambient particle effects (fireflies at night, leaves in autumn)
+- [x] T-0212: Implement building production boost events from real-world data triggers
+- [x] T-0213: Build guild hall resource collection animation (click-to-collect floating icons)
+- [x] T-0214: Create building info cards for the build menu with stat summaries
+- [x] T-0215: Implement guild hall idle income summary displayed on return
+- [x] T-0216: Build guild hall changelog/history showing all player actions
+- [x] T-0217: Create building repair animation and visual damage states
+- [x] T-0218: Implement guild hall boundary walls that upgrade with guild level
+- [x] T-0219: Build guild hall entrance gate with visitor counter display
+- [x] T-0220: Create guild achievement wall decoration unlocked by milestones
+- [x] T-0221: Implement guild hall environment biome selection (forest, mountain, coastal)
+- [x] T-0222: Build building tooltip with real-time production rate display
+- [x] T-0223: Create guild hall quick-build mode for rapid building placement
+- [x] T-0224: Implement guild hall layout save/load system for multiple arrangements
+- [x] T-0225: Build guild hall sharing system to export layout as shareable link
+- [x] T-0226: Create guild hall ambient sound system based on placed buildings
+- [x] T-0227: Implement guild hall day counter showing guild age in days
+- [x] T-0228: Build building sorting/filtering in the build menu by type and cost
+- [x] T-0229: Create guild hall event notification popup for triggered events
+- [x] T-0230: Implement guild hall performance optimization for large building counts
 
 ## Epic 4: Resource System
 > Storage caps, resource decay mechanics, conversion recipes, and resource visualization including charts and indicators.
