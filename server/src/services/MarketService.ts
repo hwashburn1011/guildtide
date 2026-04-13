@@ -1,6 +1,7 @@
 import { prisma } from '../db.js';
 import { ResourceType, WeatherCondition } from '../../../shared/src/enums.js';
 import { WeatherService } from './WeatherService.js';
+import { RESEARCH_MAP } from '../data/researchData.js';
 
 /** Base prices per unit (gold is not tradeable) */
 const BASE_PRICES: Record<string, number> = {
@@ -230,8 +231,21 @@ export class MarketService {
 
     const daily = await this.generateDailyPrices(player.regionId);
     const unitPrice = daily.prices[resource];
-    // Sell at 80 % of buy price
-    const totalPrice = Math.max(1, Math.floor(unitPrice * 0.8 * quantity));
+
+    // Load guild's completed research for market bonuses
+    let marketSellBonus = 0;
+    let marketPriceAdvantage = 0;
+    const completedResearch: string[] = JSON.parse(guild.researchIds || '[]');
+    for (const resId of completedResearch) {
+      const node = RESEARCH_MAP.get(resId);
+      if (!node) continue;
+      marketSellBonus += node.effects['market_sell_bonus'] ?? 0;           // Trade Insurance: +15%
+      marketPriceAdvantage += node.effects['market_price_advantage'] ?? 0; // Master Trader: +25%
+    }
+
+    // Sell at 80% of buy price, boosted by research
+    const sellMultiplier = 0.8 * (1 + marketSellBonus + marketPriceAdvantage);
+    const totalPrice = Math.max(1, Math.floor(unitPrice * sellMultiplier * quantity));
 
     const resources = JSON.parse(guild.resources) as Record<ResourceType, number>;
 
