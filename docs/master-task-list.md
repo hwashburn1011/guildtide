@@ -107,56 +107,56 @@
 ## Epic 2: Login & Account System
 > OAuth integration, password reset flow, account settings, profile management, and secure session handling.
 
-- [ ] T-0101: Design login page layout with email/password form and OAuth buttons
-- [ ] T-0102: Implement email/password registration endpoint with validation
-- [ ] T-0103: Implement email/password login endpoint with JWT token generation
-- [ ] T-0104: Create JWT token refresh endpoint for seamless session renewal
-- [ ] T-0105: Implement secure token storage in httpOnly cookies
-- [ ] T-0106: Build login form frontend with email and password fields
-- [ ] T-0107: Build registration form frontend with email, username, and password
-- [ ] T-0108: Add client-side validation for registration (password strength, email format)
-- [ ] T-0109: Implement Google OAuth2 login flow backend (redirect, callback, token exchange)
-- [ ] T-0110: Implement Google OAuth2 login button and redirect on frontend
-- [ ] T-0111: Implement Discord OAuth2 login flow backend
-- [ ] T-0112: Implement Discord OAuth2 login button and redirect on frontend
-- [ ] T-0113: Implement GitHub OAuth2 login flow backend
-- [ ] T-0114: Implement GitHub OAuth2 login button and redirect on frontend
-- [ ] T-0115: Build OAuth account linking to allow connecting multiple providers
-- [ ] T-0116: Create forgot password page with email input
-- [ ] T-0117: Implement password reset token generation and email sending backend
-- [ ] T-0118: Build password reset confirmation page with new password form
-- [ ] T-0119: Implement password reset token validation and password update endpoint
-- [ ] T-0120: Add rate limiting to password reset requests (max 3 per hour)
-- [ ] T-0121: Build account settings page layout with navigation tabs
-- [ ] T-0122: Implement change password form and backend endpoint
-- [ ] T-0123: Implement change email form with verification email
-- [ ] T-0124: Implement email verification flow (send code, verify code)
-- [ ] T-0125: Build profile page with username, avatar, and bio fields
-- [ ] T-0126: Implement avatar upload with image cropping and size validation
-- [ ] T-0127: Build avatar selection from preset avatar gallery
-- [ ] T-0128: Implement username change with uniqueness validation
-- [ ] T-0129: Build active sessions list showing login devices and locations
-- [ ] T-0130: Implement revoke session endpoint for logging out other devices
-- [ ] T-0131: Add "log out all devices" button with confirmation
-- [ ] T-0132: Implement session expiration after 30 days of inactivity
-- [ ] T-0133: Build account deletion flow with confirmation and grace period
-- [ ] T-0134: Implement data export endpoint (GDPR compliance) for user data download
-- [ ] T-0135: Add two-factor authentication setup with TOTP (authenticator app)
-- [ ] T-0136: Build 2FA verification step during login
-- [ ] T-0137: Implement 2FA recovery codes generation and display
-- [ ] T-0138: Build login history page showing recent login attempts
-- [ ] T-0139: Implement suspicious login detection (new device/location notification)
-- [ ] T-0140: Add remember-me checkbox extending session duration
-- [ ] T-0141: Build guest/demo account mode for trying the game without registration
-- [ ] T-0142: Implement guest-to-full account upgrade flow preserving game progress
-- [ ] T-0143: Add CAPTCHA integration on registration to prevent bot accounts
-- [ ] T-0144: Implement account lockout after 5 failed login attempts (15-minute cooldown)
-- [ ] T-0145: Build notification preferences page (email notifications on/off per category)
-- [ ] T-0146: Implement email notification for login from new device
-- [ ] T-0147: Add last-login timestamp display on profile page
-- [ ] T-0148: Build connected accounts section showing linked OAuth providers
-- [ ] T-0149: Implement OAuth provider unlinking with password requirement
-- [ ] T-0150: Create account creation success onboarding redirect to guild setup
+- [x] T-0101: Design login page layout with email/password form and OAuth buttons
+- [x] T-0102: Implement email/password registration endpoint with validation
+- [x] T-0103: Implement email/password login endpoint with JWT token generation
+- [x] T-0104: Create JWT token refresh endpoint for seamless session renewal
+- [x] T-0105: Implement secure token storage in httpOnly cookies
+- [x] T-0106: Build login form frontend with email and password fields
+- [x] T-0107: Build registration form frontend with email, username, and password
+- [x] T-0108: Add client-side validation for registration (password strength, email format)
+- [x] T-0109: Implement Google OAuth2 login flow backend (redirect, callback, token exchange)
+- [x] T-0110: Implement Google OAuth2 login button and redirect on frontend
+- [x] T-0111: Implement Discord OAuth2 login flow backend
+- [x] T-0112: Implement Discord OAuth2 login button and redirect on frontend
+- [x] T-0113: Implement GitHub OAuth2 login flow backend
+- [x] T-0114: Implement GitHub OAuth2 login button and redirect on frontend
+- [x] T-0115: Build OAuth account linking to allow connecting multiple providers
+- [x] T-0116: Create forgot password page with email input
+- [x] T-0117: Implement password reset token generation and email sending backend
+- [x] T-0118: Build password reset confirmation page with new password form
+- [x] T-0119: Implement password reset token validation and password update endpoint
+- [x] T-0120: Add rate limiting to password reset requests (max 3 per hour)
+- [x] T-0121: Build account settings page layout with navigation tabs
+- [x] T-0122: Implement change password form and backend endpoint
+- [x] T-0123: Implement change email form with verification email
+- [x] T-0124: Implement email verification flow (send code, verify code)
+- [x] T-0125: Build profile page with username, avatar, and bio fields
+- [x] T-0126: Implement avatar upload with image cropping and size validation
+- [x] T-0127: Build avatar selection from preset avatar gallery
+- [x] T-0128: Implement username change with uniqueness validation
+- [x] T-0129: Build active sessions list showing login devices and locations
+- [x] T-0130: Implement revoke session endpoint for logging out other devices
+- [x] T-0131: Add "log out all devices" button with confirmation
+- [x] T-0132: Implement session expiration after 30 days of inactivity
+- [x] T-0133: Build account deletion flow with confirmation and grace period
+- [x] T-0134: Implement data export endpoint (GDPR compliance) for user data download
+- [x] T-0135: Add two-factor authentication setup with TOTP (authenticator app)
+- [x] T-0136: Build 2FA verification step during login
+- [x] T-0137: Implement 2FA recovery codes generation and display
+- [x] T-0138: Build login history page showing recent login attempts
+- [x] T-0139: Implement suspicious login detection (new device/location notification)
+- [x] T-0140: Add remember-me checkbox extending session duration
+- [x] T-0141: Build guest/demo account mode for trying the game without registration
+- [x] T-0142: Implement guest-to-full account upgrade flow preserving game progress
+- [x] T-0143: Add CAPTCHA integration on registration to prevent bot accounts
+- [x] T-0144: Implement account lockout after 5 failed login attempts (15-minute cooldown)
+- [x] T-0145: Build notification preferences page (email notifications on/off per category)
+- [x] T-0146: Implement email notification for login from new device
+- [x] T-0147: Add last-login timestamp display on profile page
+- [x] T-0148: Build connected accounts section showing linked OAuth providers
+- [x] T-0149: Implement OAuth provider unlinking with password requirement
+- [x] T-0150: Create account creation success onboarding redirect to guild setup
 
 ## Epic 3: Guild Hall Scene
 > Building placement grid, visual building upgrades, guild XP and leveling, and unlock progression within the guild hall.
