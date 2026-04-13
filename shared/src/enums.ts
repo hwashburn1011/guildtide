@@ -90,7 +90,48 @@ export enum ItemRarity {
   Common = 'common',
   Uncommon = 'uncommon',
   Rare = 'rare',
+  Epic = 'epic',
   Legendary = 'legendary',
+}
+
+export enum CraftingQuality {
+  Normal = 'normal',
+  Fine = 'fine',
+  Masterwork = 'masterwork',
+}
+
+export enum EnchantmentType {
+  FireDamage = 'fire_damage',
+  ColdResist = 'cold_resist',
+  SpeedBoost = 'speed_boost',
+  LifeSteal = 'life_steal',
+  CritChance = 'crit_chance',
+  ManaRegen = 'mana_regen',
+  Thorns = 'thorns',
+  Fortify = 'fortify',
+  Haste = 'haste',
+  Berserk = 'berserk',
+  Vampiric = 'vampiric',
+  Arcane = 'arcane',
+  NatureBlessing = 'nature_blessing',
+  ShadowStrike = 'shadow_strike',
+  HolyShield = 'holy_shield',
+  StormCall = 'storm_call',
+  EarthShatter = 'earth_shatter',
+  WindWalk = 'wind_walk',
+  PoisonCoat = 'poison_coat',
+  LuckCharm = 'luck_charm',
+}
+
+export enum GemType {
+  Ruby = 'ruby',
+  Sapphire = 'sapphire',
+  Emerald = 'emerald',
+  Topaz = 'topaz',
+  Diamond = 'diamond',
+  Amethyst = 'amethyst',
+  Onyx = 'onyx',
+  Opal = 'opal',
 }
 
 export enum ItemCategory {
@@ -102,6 +143,16 @@ export enum ItemCategory {
   Seed = 'seed',
   TradePermit = 'trade_permit',
   TransportUpgrade = 'transport_upgrade',
+  Consumable = 'consumable',
+  Material = 'material',
+  Gem = 'gem',
+  Helmet = 'helmet',
+  Boots = 'boots',
+  Shield = 'shield',
+  Ring = 'ring',
+  Amulet = 'amulet',
+  Belt = 'belt',
+  Cloak = 'cloak',
 }
 
 export enum Climate {
