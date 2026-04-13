@@ -494,7 +494,14 @@ class ApiClient {
       basePrice: number;
       currentPrice: number;
       trend: 'rising' | 'falling' | 'stable';
+      changePercent: number;
+      supplyDemandRatio: number;
     }>;
+    economicPhase: string;
+    inflationIndex: number;
+    activeEvents: Array<{ id: string; title: string; description: string; effects: Record<string, number> }>;
+    newsTicker: string[];
+    dailyDeals: Array<{ resource: string; discount: number; quantity: number; expiresAt: number }>;
   }> {
     return this.request('GET', '/market');
   }
@@ -504,7 +511,9 @@ class ApiClient {
     resource: string;
     quantity: number;
     totalPrice: number;
+    fees: number;
     resources: Record<string, number>;
+    reputation: number;
   }> {
     return this.request('POST', '/market/buy', { resource, quantity });
   }
@@ -514,9 +523,152 @@ class ApiClient {
     resource: string;
     quantity: number;
     totalPrice: number;
+    fees: number;
     resources: Record<string, number>;
+    reputation: number;
   }> {
     return this.request('POST', '/market/sell', { resource, quantity });
+  }
+
+  async marketQuickSell(resource: string, quantity: number): Promise<{
+    success: boolean;
+    resource: string;
+    quantity: number;
+    totalPrice: number;
+    fees: number;
+    resources: Record<string, number>;
+    reputation: number;
+  }> {
+    return this.request('POST', '/market/quick-sell', { resource, quantity });
+  }
+
+  async getMarketHistory(limit: number = 50): Promise<any[]> {
+    return this.request('GET', `/market/history?limit=${limit}`);
+  }
+
+  async getMarketPriceHistory(resource?: string, limit: number = 24): Promise<any[]> {
+    const params = new URLSearchParams();
+    if (resource) params.set('resource', resource);
+    params.set('limit', String(limit));
+    return this.request('GET', `/market/price-history?${params}`);
+  }
+
+  async getMarketAnalytics(): Promise<any> {
+    return this.request('GET', '/market/analytics');
+  }
+
+  async getMarketMerchants(): Promise<any[]> {
+    return this.request('GET', '/market/merchants');
+  }
+
+  async buyFromMerchant(merchantId: string, resource: string, quantity: number): Promise<any> {
+    return this.request('POST', `/market/merchants/${merchantId}/buy`, { resource, quantity });
+  }
+
+  async createAuction(resource: string, quantity: number, startingPrice: number, buyoutPrice?: number, durationHours?: number): Promise<any> {
+    return this.request('POST', '/market/auctions', { resource, quantity, startingPrice, buyoutPrice, durationHours });
+  }
+
+  async getAuctions(resource?: string): Promise<any[]> {
+    const params = resource ? `?resource=${resource}` : '';
+    return this.request('GET', `/market/auctions${params}`);
+  }
+
+  async placeBid(auctionId: string, amount: number): Promise<any> {
+    return this.request('POST', `/market/auctions/${auctionId}/bid`, { amount });
+  }
+
+  async getAuctionHistory(): Promise<any[]> {
+    return this.request('GET', '/market/auctions/history');
+  }
+
+  async createTradeRoute(fromRegion: string, toRegion: string, resource: string, quantity: number, travelHours?: number): Promise<any> {
+    return this.request('POST', '/market/trade-routes', { fromRegion, toRegion, resource, quantity, travelHours });
+  }
+
+  async getTradeRoutes(): Promise<any[]> {
+    return this.request('GET', '/market/trade-routes');
+  }
+
+  async getTradeRouteProfit(resource: string, quantity: number, buyPrice: number, sellPrice: number): Promise<any> {
+    return this.request('GET', `/market/trade-routes/profit?resource=${resource}&quantity=${quantity}&buyPrice=${buyPrice}&sellPrice=${sellPrice}`);
+  }
+
+  async getMarketWatchlist(): Promise<any[]> {
+    return this.request('GET', '/market/watchlist');
+  }
+
+  async setMarketWatchlist(items: Array<{ resource: string; targetPrice: number; direction: 'above' | 'below' }>): Promise<any> {
+    return this.request('POST', '/market/watchlist', { items });
+  }
+
+  async getMarketAlerts(): Promise<any[]> {
+    return this.request('GET', '/market/alerts');
+  }
+
+  async getOrderBook(resource?: string): Promise<any[]> {
+    const params = resource ? `?resource=${resource}` : '';
+    return this.request('GET', `/market/order-book${params}`);
+  }
+
+  async createFuture(resource: string, quantity: number, purchasePrice: number, maturityHours?: number): Promise<any> {
+    return this.request('POST', '/market/futures', { resource, quantity, purchasePrice, maturityHours });
+  }
+
+  async getActiveFutures(): Promise<any[]> {
+    return this.request('GET', '/market/futures');
+  }
+
+  async getMarketAchievements(): Promise<any[]> {
+    return this.request('GET', '/market/achievements');
+  }
+
+  async getMarketReputation(): Promise<{ reputation: number; discountPercent: number }> {
+    return this.request('GET', '/market/reputation');
+  }
+
+  async getMarketPnL(): Promise<{ netProfitLoss: number }> {
+    return this.request('GET', '/market/pnl');
+  }
+
+  async getExchangeRates(): Promise<Record<string, number>> {
+    return this.request('GET', '/market/exchange-rates');
+  }
+
+  async getDemandForecast(resource: string): Promise<{ nextDay: number; trend: string }> {
+    return this.request('GET', `/market/demand-forecast?resource=${resource}`);
+  }
+
+  async getMarketSpotlight(): Promise<any> {
+    return this.request('GET', '/market/spotlight');
+  }
+
+  async getMarketTutorial(): Promise<Array<{ title: string; text: string }>> {
+    return this.request('GET', '/market/tutorial');
+  }
+
+  async getMarketNews(): Promise<string[]> {
+    return this.request('GET', '/market/news');
+  }
+
+  async getMarketDailyDeals(): Promise<any[]> {
+    return this.request('GET', '/market/daily-deals');
+  }
+
+  async searchMarketItems(query: string): Promise<any[]> {
+    return this.request('GET', `/market/search?q=${encodeURIComponent(query)}`);
+  }
+
+  async compareMerchantPrices(): Promise<any[]> {
+    return this.request('GET', '/market/compare');
+  }
+
+  async getMarketInflation(): Promise<{ inflationIndex: number }> {
+    return this.request('GET', '/market/inflation');
+  }
+
+  async getMarketMiniWidget(): Promise<any[]> {
+    return this.request('GET', '/market/mini-widget');
   }
 
   // Research
