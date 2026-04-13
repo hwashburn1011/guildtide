@@ -42,8 +42,8 @@ router.post('/register', async (req: Request, res: Response) => {
     });
 
     const token = jwt.sign({ playerId: player.id }, config.jwtSecret, {
-      expiresIn: config.jwtExpiresIn,
-    });
+      expiresIn: config.jwtExpiresIn as string,
+    } as jwt.SignOptions);
 
     res.status(201).json({
       token,
@@ -107,8 +107,8 @@ router.post('/login', async (req: Request, res: Response) => {
     });
 
     const token = jwt.sign({ playerId: player.id }, config.jwtSecret, {
-      expiresIn: config.jwtExpiresIn,
-    });
+      expiresIn: config.jwtExpiresIn as string,
+    } as jwt.SignOptions);
 
     // Re-fetch guild with updated resources
     const updatedGuild = await prisma.guild.findUnique({

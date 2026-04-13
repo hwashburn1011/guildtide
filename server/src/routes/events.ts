@@ -50,7 +50,7 @@ router.post('/:eventId/respond', async (req: Request, res: Response) => {
     const result = await EventService.resolveEvent(
       guild.id,
       player.regionId,
-      req.params.eventId,
+      req.params.eventId as string,
       choiceIndex,
     );
 
