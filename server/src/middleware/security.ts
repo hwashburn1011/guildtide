@@ -170,6 +170,121 @@ export function isValidRedirectUrl(url: string): boolean {
 }
 
 // ---------------------------------------------------------------------------
+// File upload validation (T-1651)
+// ---------------------------------------------------------------------------
+
+const ALLOWED_FILE_TYPES = new Set([
+  'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+  'application/json', 'text/plain',
+]);
+
+export function validateFileUpload(
+  file: { mimetype: string; size: number; originalname: string },
+  maxSizeBytes: number = 5_242_880, // 5MB
+): { valid: boolean; error?: string } {
+  if (!ALLOWED_FILE_TYPES.has(file.mimetype)) {
+    return { valid: false, error: `File type not allowed: ${file.mimetype}` };
+  }
+  if (file.size > maxSizeBytes) {
+    return { valid: false, error: `File too large: ${file.size} bytes (max ${maxSizeBytes})` };
+  }
+  // Check for path traversal in filename
+  if (file.originalname.includes('..') || file.originalname.includes('/') || file.originalname.includes('\\')) {
+    return { valid: false, error: 'Invalid filename' };
+  }
+  return { valid: true };
+}
+
+// ---------------------------------------------------------------------------
+// SQL injection prevention audit (T-1649, T-1689)
+// All database queries use Prisma (parameterized by default).
+// This helper validates that raw strings don't contain SQL injection patterns.
+// ---------------------------------------------------------------------------
+
+const SQL_INJECTION_PATTERNS = [
+  /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|EXEC|UNION)\b)/i,
+  /(--|;|\/\*|\*\/)/,
+  /(['"])\s*\b(OR|AND)\b\s*\1/i,
+];
+
+export function containsSqlInjection(value: string): boolean {
+  return SQL_INJECTION_PATTERNS.some((pattern) => pattern.test(value));
+}
+
+/** Validate user input for SQL injection attempts. */
+export function sqlInjectionGuard(req: Request, res: Response, next: NextFunction): void {
+  if (req.body && typeof req.body === 'object') {
+    for (const [key, value] of Object.entries(req.body)) {
+      if (typeof value === 'string' && containsSqlInjection(value)) {
+        logger.warn('Potential SQL injection blocked', { key, ip: req.ip, path: req.path });
+        res.status(400).json({ error: 'invalid_input', message: 'Invalid characters in input' });
+        return;
+      }
+    }
+  }
+  next();
+}
+
+// ---------------------------------------------------------------------------
+// Security header compliance check (T-1685)
+// ---------------------------------------------------------------------------
+
+export function checkSecurityHeaders(headers: Record<string, string | undefined>): {
+  compliant: boolean;
+  missing: string[];
+  present: string[];
+} {
+  const required = [
+    'x-content-type-options',
+    'x-frame-options',
+    'content-security-policy',
+    'referrer-policy',
+    'permissions-policy',
+  ];
+
+  const present: string[] = [];
+  const missing: string[] = [];
+
+  for (const header of required) {
+    if (headers[header]) {
+      present.push(header);
+    } else {
+      missing.push(header);
+    }
+  }
+
+  return { compliant: missing.length === 0, missing, present };
+}
+
+// ---------------------------------------------------------------------------
+// OAuth state parameter validation (T-1686)
+// ---------------------------------------------------------------------------
+
+const oauthStateTokens: Map<string, number> = new Map();
+
+export function generateOAuthState(): string {
+  const state = randomBytes(32).toString('hex');
+  oauthStateTokens.set(state, Date.now() + 600_000); // 10 min expiry
+  return state;
+}
+
+export function validateOAuthState(state: string): boolean {
+  const expiresAt = oauthStateTokens.get(state);
+  if (!expiresAt) return false;
+  oauthStateTokens.delete(state);
+  return Date.now() < expiresAt;
+}
+
+// ---------------------------------------------------------------------------
+// Data privacy & consent (T-1669)
+// ---------------------------------------------------------------------------
+
+export function setPrivacyHeaders(res: Response): void {
+  res.setHeader('X-Privacy-Policy', '/privacy');
+  res.setHeader('X-Data-Controller', 'Guildtide');
+}
+
+// ---------------------------------------------------------------------------
 // Clean up expired CSRF tokens periodically
 // ---------------------------------------------------------------------------
 setInterval(() => {

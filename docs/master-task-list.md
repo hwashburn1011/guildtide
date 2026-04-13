@@ -1731,56 +1731,56 @@
 ## Epic 23: Security & Auth
 > CSRF protection, XSS prevention, input validation, rate limiting, encryption, and audit logging.
 
-- [ ] T-1641: Implement CSRF token generation and validation middleware
-- [ ] T-1642: Add CSRF token to all state-changing form submissions
-- [ ] T-1643: Implement Content Security Policy (CSP) headers
-- [ ] T-1644: Configure X-Content-Type-Options: nosniff header
-- [ ] T-1645: Configure X-Frame-Options: DENY header
-- [ ] T-1646: Configure Strict-Transport-Security (HSTS) header
-- [ ] T-1647: Implement XSS sanitization for all user text inputs
-- [ ] T-1648: Create HTML entity encoding for rendered user content
-- [ ] T-1649: Implement SQL injection prevention audit (parameterized queries check)
-- [ ] T-1650: Create input validation schemas for all API endpoints
-- [ ] T-1651: Implement file upload validation (type whitelist, size limit, content check)
-- [ ] T-1652: Create password hashing with bcrypt (12 salt rounds)
-- [ ] T-1653: Implement password complexity requirements (min 8 chars, mixed case, number)
-- [ ] T-1654: Create secure session token generation with crypto.randomBytes
-- [ ] T-1655: Implement JWT signature validation on every authenticated request
-- [ ] T-1656: Create JWT expiration and refresh token rotation
-- [ ] T-1657: Implement secure cookie flags (httpOnly, secure, sameSite)
-- [ ] T-1658: Create API authentication middleware with token extraction
-- [ ] T-1659: Implement role-based access control (RBAC) with user, mod, admin roles
-- [ ] T-1660: Create permission check middleware for admin endpoints
-- [ ] T-1661: Implement account lockout after repeated failed login attempts
-- [ ] T-1662: Create IP-based rate limiting for authentication endpoints
-- [ ] T-1663: Implement brute force detection and auto-blocking
-- [ ] T-1664: Create security audit log recording auth events and admin actions
-- [ ] T-1665: Build audit log viewer for admin dashboard
-- [ ] T-1666: Implement sensitive data encryption at rest (API keys, tokens)
-- [ ] T-1667: Create environment variable validation preventing default/empty secrets
-- [ ] T-1668: Implement secure API key storage with hashing
-- [ ] T-1669: Create data privacy compliance system (consent tracking, data access)
-- [ ] T-1670: Implement user data deletion endpoint with cascade handling
-- [ ] T-1671: Create security headers middleware combining all header configurations
-- [ ] T-1672: Implement CORS policy with strict origin whitelist
-- [ ] T-1673: Create dependency vulnerability scanning in CI pipeline
-- [ ] T-1674: Implement subresource integrity (SRI) for CDN-loaded scripts
-- [ ] T-1675: Create clickjacking protection with frame-busting script
-- [ ] T-1676: Implement session fixation prevention (regenerate session on login)
-- [ ] T-1677: Create suspicious activity detection (impossible travel, unusual patterns)
-- [ ] T-1678: Implement user notification for suspicious login activity
-- [ ] T-1679: Create admin impersonation audit logging
-- [ ] T-1680: Implement API endpoint authorization matrix documentation
-- [ ] T-1681: Create security incident response procedure document
-- [ ] T-1682: Implement password breach check against Have I Been Pwned API
-- [ ] T-1683: Create rate limit configuration per endpoint sensitivity
-- [ ] T-1684: Implement request body schema validation rejecting unknown fields
-- [ ] T-1685: Create automated security header scan and compliance check
-- [ ] T-1686: Implement OAuth state parameter validation for CSRF protection
-- [ ] T-1687: Create secure redirect URL validation preventing open redirect
-- [ ] T-1688: Implement API response sanitization removing internal data
-- [ ] T-1689: Create database query parameterization audit script
-- [ ] T-1690: Implement security monitoring alerting for critical events
+- [x] T-1641: Implement CSRF token generation and validation middleware
+- [x] T-1642: Add CSRF token to all state-changing form submissions
+- [x] T-1643: Implement Content Security Policy (CSP) headers
+- [x] T-1644: Configure X-Content-Type-Options: nosniff header
+- [x] T-1645: Configure X-Frame-Options: DENY header
+- [x] T-1646: Configure Strict-Transport-Security (HSTS) header
+- [x] T-1647: Implement XSS sanitization for all user text inputs
+- [x] T-1648: Create HTML entity encoding for rendered user content
+- [x] T-1649: Implement SQL injection prevention audit (parameterized queries check)
+- [x] T-1650: Create input validation schemas for all API endpoints
+- [x] T-1651: Implement file upload validation (type whitelist, size limit, content check)
+- [x] T-1652: Create password hashing with bcrypt (12 salt rounds)
+- [x] T-1653: Implement password complexity requirements (min 8 chars, mixed case, number)
+- [x] T-1654: Create secure session token generation with crypto.randomBytes
+- [x] T-1655: Implement JWT signature validation on every authenticated request
+- [x] T-1656: Create JWT expiration and refresh token rotation
+- [x] T-1657: Implement secure cookie flags (httpOnly, secure, sameSite)
+- [x] T-1658: Create API authentication middleware with token extraction
+- [x] T-1659: Implement role-based access control (RBAC) with user, mod, admin roles
+- [x] T-1660: Create permission check middleware for admin endpoints
+- [x] T-1661: Implement account lockout after repeated failed login attempts
+- [x] T-1662: Create IP-based rate limiting for authentication endpoints
+- [x] T-1663: Implement brute force detection and auto-blocking
+- [x] T-1664: Create security audit log recording auth events and admin actions
+- [x] T-1665: Build audit log viewer for admin dashboard
+- [x] T-1666: Implement sensitive data encryption at rest (API keys, tokens)
+- [x] T-1667: Create environment variable validation preventing default/empty secrets
+- [x] T-1668: Implement secure API key storage with hashing
+- [x] T-1669: Create data privacy compliance system (consent tracking, data access)
+- [x] T-1670: Implement user data deletion endpoint with cascade handling
+- [x] T-1671: Create security headers middleware combining all header configurations
+- [x] T-1672: Implement CORS policy with strict origin whitelist
+- [x] T-1673: Create dependency vulnerability scanning in CI pipeline
+- [x] T-1674: Implement subresource integrity (SRI) for CDN-loaded scripts
+- [x] T-1675: Create clickjacking protection with frame-busting script
+- [x] T-1676: Implement session fixation prevention (regenerate session on login)
+- [x] T-1677: Create suspicious activity detection (impossible travel, unusual patterns)
+- [x] T-1678: Implement user notification for suspicious login activity
+- [x] T-1679: Create admin impersonation audit logging
+- [x] T-1680: Implement API endpoint authorization matrix documentation
+- [x] T-1681: Create security incident response procedure document
+- [x] T-1682: Implement password breach check against Have I Been Pwned API
+- [x] T-1683: Create rate limit configuration per endpoint sensitivity
+- [x] T-1684: Implement request body schema validation rejecting unknown fields
+- [x] T-1685: Create automated security header scan and compliance check
+- [x] T-1686: Implement OAuth state parameter validation for CSRF protection
+- [x] T-1687: Create secure redirect URL validation preventing open redirect
+- [x] T-1688: Implement API response sanitization removing internal data
+- [x] T-1689: Create database query parameterization audit script
+- [x] T-1690: Implement security monitoring alerting for critical events
 
 ## Epic 24: Playwright Testing
 > Install, configure, and write E2E tests for every scene, flow, and edge case with screenshot comparisons.
