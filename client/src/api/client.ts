@@ -1150,8 +1150,290 @@ class ApiClient {
       };
       duration: number;
     } | null;
+    moonPhase: {
+      phase: string;
+      label: string;
+      icon: string;
+      effects: { magicPotency: number; stealthBonus: number };
+    };
+    astronomicalEvents: Array<{ name: string; effects: Record<string, number> }>;
+    severeAlerts: Array<{ alert: string; timestamp: string }>;
+    biomeEffects: Record<string, number>;
   }> {
     return this.request('GET', '/world/state');
+  }
+
+  // Weather forecast (T-0777)
+  async getWeatherForecast(): Promise<{
+    forecast: Array<{
+      date: string;
+      highTemp: number;
+      lowTemp: number;
+      dominantCondition: string;
+      avgHumidity: number;
+      avgWindSpeed: number;
+      totalRainMm: number;
+    }>;
+    pattern: {
+      consecutiveDays: number;
+      condition: string;
+      trend: string;
+      predictionBonus: number;
+    } | null;
+  }> {
+    return this.request('GET', '/world/forecast');
+  }
+
+  // Weather history (T-0778)
+  async getWeatherHistory(days: number = 7): Promise<{
+    history: Array<{
+      date: string;
+      condition: string;
+      temperature: number;
+      humidity: number;
+      windSpeed: number;
+      rainMm: number;
+    }>;
+  }> {
+    return this.request('GET', `/world/weather-history?days=${days}`);
+  }
+
+  // Weather comparison (T-0788)
+  async compareWeather(regionIds: string[]): Promise<{
+    comparison: Array<{
+      regionId: string;
+      condition: string;
+      temperature: number;
+      modifiers: Record<string, number>;
+    }>;
+  }> {
+    return this.request('GET', `/world/weather-compare?regions=${regionIds.join(',')}`);
+  }
+
+  // Weather achievements (T-0789)
+  async getWeatherAchievements(): Promise<{
+    conditionsSeen: number;
+    totalConditions: number;
+    achieved: boolean;
+    daysPlayed: number;
+  }> {
+    return this.request('GET', '/world/weather-achievements');
+  }
+
+  // Severe weather alerts (T-0787)
+  async getWeatherAlerts(): Promise<{
+    alerts: Array<{ alert: string; timestamp: string }>;
+  }> {
+    return this.request('GET', '/world/weather-alerts');
+  }
+
+  // Lunar calendar (T-0815)
+  async getLunarCalendar(): Promise<{
+    calendar: Array<{
+      date: string;
+      phase: string;
+      label: string;
+      icon: string;
+    }>;
+    currentPhase: {
+      label: string;
+      icon: string;
+      magicPotency: number;
+      stealthBonus: number;
+      essenceDrops: number;
+      huntBonus: number;
+      morale: number;
+    };
+  }> {
+    return this.request('GET', '/world/lunar-calendar');
+  }
+
+  // Data pipeline snapshot (T-0842)
+  async getDataPipeline(): Promise<{
+    fearGreed: { value: number; classification: string } | null;
+    stockIndex: { index: string; value: number; changePct: number } | null;
+    cryptoSentiment: { sentiment: number } | null;
+    newsHeadlines: Array<{ title: string; sentiment: string; source: string }>;
+    sportsEvents: Array<{ league: string; event: string }>;
+    moonPhase: { phase: string; label: string; icon: string };
+    astronomicalEvents: Array<{ name: string; fantasyName: string }>;
+    celebrations: Array<{ fantasyName: string; description: string; significance: number }>;
+    modifierSummary: Record<string, number>;
+    sources: Array<{
+      source: string;
+      enabled: boolean;
+      reliability: number;
+      callCount: number;
+      lastError: string | null;
+    }>;
+  }> {
+    return this.request('GET', '/world/data-pipeline');
+  }
+
+  // Data pipeline health (T-0818)
+  async getDataPipelineHealth(): Promise<{
+    sources: Array<{
+      source: string;
+      enabled: boolean;
+      lastFetch: number | null;
+      lastSuccess: number | null;
+      lastError: string | null;
+      reliability: number;
+      callCount: number;
+      errorCount: number;
+    }>;
+    circuitBreakers: Array<{ source: string; state: string; failures: number }>;
+  }> {
+    return this.request('GET', '/world/data-pipeline/health');
+  }
+
+  // Data freshness (T-0830)
+  async getDataFreshness(): Promise<{
+    sources: Array<{
+      source: string;
+      lastUpdate: string | null;
+      ageSeconds: number;
+      isStale: boolean;
+    }>;
+  }> {
+    return this.request('GET', '/world/data-pipeline/freshness');
+  }
+
+  // Data opt-out (T-0823)
+  async getDataOptOut(): Promise<{ optedOut: boolean }> {
+    return this.request('GET', '/world/data-pipeline/opt-out');
+  }
+
+  async setDataOptOut(optOut: boolean): Promise<{ optedOut: boolean }> {
+    return this.request('POST', '/world/data-pipeline/opt-out', { optOut });
+  }
+
+  // Per-modifier toggle (T-0860)
+  async setModifierEnabled(modifier: string, enabled: boolean): Promise<{ success: boolean }> {
+    return this.request('POST', `/world/data-pipeline/modifiers/${modifier}`, { enabled });
+  }
+
+  // Modifier summary with compound effects (T-0822, T-0832)
+  async getModifierSummary(): Promise<{
+    modifiers: Record<string, number>;
+    compoundEffects: Array<{
+      name: string;
+      description: string;
+      modifiers: Record<string, number>;
+    }>;
+  }> {
+    return this.request('GET', '/world/modifier-summary');
+  }
+
+  // Data pipeline changelog (T-0835)
+  async getDataChangelog(): Promise<{ changes: string[] }> {
+    return this.request('GET', '/world/data-pipeline/changelog');
+  }
+
+  // Impact report (T-0845)
+  async getImpactReport(): Promise<{
+    report: Array<{
+      date: string;
+      modifiers: Record<string, number>;
+      moonPhase: string;
+      celebrations: number;
+    }>;
+  }> {
+    return this.request('GET', '/world/data-pipeline/impact-report');
+  }
+
+  // Observatory upgrades (T-0836)
+  async getObservatoryUpgrades(): Promise<{
+    upgrades: Array<{
+      level: number;
+      dataSources: string[];
+      description: string;
+    }>;
+  }> {
+    return this.request('GET', '/world/observatory-upgrades');
+  }
+
+  // Expedition weather modifiers (T-0783)
+  async getExpeditionModifiers(): Promise<{
+    weather: Record<string, unknown>;
+    expeditionModifiers: {
+      travelSpeed: number;
+      huntBonus: number;
+      floodRisk: number;
+    };
+    severeAlerts: Array<{ alert: string; timestamp: string }>;
+  }> {
+    return this.request('GET', '/world/expedition-modifiers');
+  }
+
+  // Data tutorial (T-0824)
+  async getDataTutorial(): Promise<{
+    steps: Array<{ title: string; text: string }>;
+  }> {
+    return this.request('GET', '/world/data-tutorial');
+  }
+
+  // API usage (T-0828)
+  async getApiUsage(): Promise<{
+    sources: Array<{ source: string; calls: number; errors: number; reliability: number }>;
+    totalCalls: number;
+    totalErrors: number;
+  }> {
+    return this.request('GET', '/world/data-pipeline/usage');
+  }
+
+  // Data source config (T-0821)
+  async getDataSourceConfig(): Promise<Record<string, { enabled: boolean; priority: string; fetchIntervalMs: number }>> {
+    return this.request('GET', '/world/data-pipeline/config');
+  }
+
+  async setDataSourceEnabled(source: string, enabled: boolean): Promise<{ success: boolean }> {
+    return this.request('POST', `/world/data-pipeline/config/${source}`, { enabled });
+  }
+
+  // Cache refresh (T-0765)
+  async refreshWeatherCache(): Promise<{ success: boolean }> {
+    return this.request('POST', '/world/weather/refresh');
+  }
+
+  // Privacy info (T-0855)
+  async getDataPrivacyInfo(): Promise<{
+    policy: string;
+    dataRetention: string;
+    optOutAvailable: boolean;
+  }> {
+    return this.request('GET', '/world/data-pipeline/privacy');
+  }
+
+  // Integration docs (T-0852)
+  async getDataSourceDocs(): Promise<{
+    dataSources: Array<{ name: string; type: string; refreshRate: string; description: string }>;
+    mappingRules: string;
+  }> {
+    return this.request('GET', '/world/data-pipeline/docs');
+  }
+
+  // Health check (T-0858)
+  async getDataPipelineHealthCheck(): Promise<{
+    status: string;
+    sources: Array<{ source: string; reliability: number; lastError: string | null }>;
+  }> {
+    return this.request('GET', '/world/data-pipeline/healthcheck');
+  }
+
+  // Historical archive (T-0831)
+  async getDataArchive(days: number = 30): Promise<{
+    archive: Array<{ date: string; snapshot: unknown }>;
+  }> {
+    return this.request('GET', `/world/data-pipeline/archive?days=${days}`);
+  }
+
+  // Leaderboard (T-0849)
+  async getPredictionLeaderboard(): Promise<{
+    leaderboard: unknown[];
+    message: string;
+  }> {
+    return this.request('GET', '/world/data-pipeline/leaderboard');
   }
 }
 
