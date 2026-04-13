@@ -4,6 +4,7 @@ import { AllianceService } from '../services/AllianceService';
 import { GuildWarService } from '../services/GuildWarService';
 import { JointExpeditionService } from '../services/JointExpeditionService';
 import { GuildWarObjective } from '../../../shared/src/enums';
+import { AllianceResearchService } from '../services/AllianceResearchService';
 
 const router = Router();
 router.use(authMiddleware);
@@ -637,6 +638,61 @@ router.get('/:allianceId/banner', (req: Request, res: Response) => {
     res.json(banner);
   } catch (err) {
     console.error('Get banner error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ========================================
+// Alliance Research
+// ========================================
+
+// Get research tree
+router.get('/:allianceId/research/tree', (req: Request, res: Response) => {
+  try {
+    const tree = AllianceResearchService.getResearchTree();
+    const completed = AllianceResearchService.getCompletedResearch(req.params.allianceId);
+    const available = AllianceResearchService.getAvailableResearch(req.params.allianceId);
+    const active = AllianceResearchService.getActiveResearch(req.params.allianceId);
+    res.json({ tree, completed, available, active });
+  } catch (err) {
+    console.error('Get research error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Start research
+router.post('/:allianceId/research/start', (req: Request, res: Response) => {
+  try {
+    const { nodeId } = req.body;
+    const research = AllianceResearchService.startResearch(req.params.allianceId, nodeId);
+    res.json(research);
+  } catch (err: any) {
+    res.status(400).json({ error: 'validation', message: err.message });
+  }
+});
+
+// Complete research
+router.post('/:allianceId/research/complete', (req: Request, res: Response) => {
+  try {
+    const node = AllianceResearchService.completeResearch(req.params.allianceId);
+    if (!node) {
+      res.status(400).json({ error: 'validation', message: 'No research to complete' });
+      return;
+    }
+    res.json(node);
+  } catch (err) {
+    console.error('Complete research error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get research effects
+router.get('/:allianceId/research/effects', (req: Request, res: Response) => {
+  try {
+    const effects = AllianceResearchService.getResearchEffects(req.params.allianceId);
+    res.json(effects);
+  } catch (err) {
+    console.error('Get research effects error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
   }
 });
