@@ -1,3 +1,36 @@
+/**
+ * CalendarService — Season, holiday, festival, lunar cycle, and time-of-day logic.
+ *
+ * T-0941: Calendar system synchronized with real-world date
+ * T-0942: Season determination logic based on hemisphere and date
+ * T-0953: Season indicator with days remaining
+ * T-0954: Hemisphere selection support
+ * T-0963: Lunar cycle calculation (29.5-day cycle)
+ * T-0965: Full moon gameplay effects
+ * T-0966: New moon gameplay effects
+ * T-0967: Waxing/waning gameplay effects
+ * T-0974: Cultural holiday detection for player's region
+ * T-0975: Regional holiday events based on player location
+ * T-0980: Anniversary event for guild creation date
+ * T-0981: Equinox events with day/night balance theme
+ * T-0982: Time-of-day synchronization with real clock
+ * T-0984: Weekend bonus events
+ * T-0985: Custom player anniversary celebration
+ * T-0986: Month-specific event pool rotation
+ */
+
+import {
+  MOON_PHASE_EFFECTS,
+  SEASONAL_CROPS,
+  SEASONAL_MARKET_MODIFIERS,
+  HERO_SEASON_PREFERENCES,
+  SEASONAL_EXPEDITION_MODIFIERS,
+  DAILY_CHALLENGES,
+  MONTH_EVENT_POOLS,
+  type MoonPhase,
+  type MoonPhaseEffect,
+} from '../data/seasonalContent';
+
 // Region metadata for season/country mapping
 const REGION_META: Record<string, { hemisphere: 'north' | 'south'; country: string }> = {
   'miami': { hemisphere: 'north', country: 'US' },
@@ -308,5 +341,282 @@ export class CalendarService {
    */
   static getCountry(regionId: string): string {
     return REGION_META[regionId]?.country ?? 'US';
+  }
+
+  /**
+   * Get the hemisphere for a region.
+   */
+  static getHemisphere(regionId: string): 'north' | 'south' {
+    return REGION_META[regionId]?.hemisphere ?? 'north';
+  }
+
+  // --- T-0953: Season indicator with days remaining ---
+  static getSeasonInfo(regionId: string, date: Date = new Date()): {
+    season: Season;
+    daysRemaining: number;
+    progress: number;
+    nextSeason: Season;
+  } {
+    const season = CalendarService.getCurrentSeason(regionId, date);
+    const hemisphere = CalendarService.getHemisphere(regionId);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    // Season boundaries (northern hemisphere base)
+    const seasonEnds: Record<Season, { month: number; day: number }> = {
+      spring: { month: 5, day: 31 },
+      summer: { month: 8, day: 31 },
+      autumn: { month: 11, day: 30 },
+      winter: { month: 2, day: 28 },
+    };
+
+    // For southern hemisphere, seasons are flipped, but end dates stay the same
+    const actualSeason = hemisphere === 'south'
+      ? ({ spring: 'autumn', summer: 'winter', autumn: 'spring', winter: 'summer' } as const)[season]
+      : season;
+
+    const end = seasonEnds[actualSeason];
+    const endDate = new Date(date.getFullYear(), end.month - 1, end.day);
+    if (endDate < date) {
+      endDate.setFullYear(endDate.getFullYear() + 1);
+    }
+
+    const daysRemaining = Math.max(0, Math.ceil((endDate.getTime() - date.getTime()) / 86400000));
+    const totalDays = 91; // approximate season length
+    const progress = Math.min(1, Math.max(0, 1 - daysRemaining / totalDays));
+
+    const seasonOrder: Season[] = ['spring', 'summer', 'autumn', 'winter'];
+    const idx = seasonOrder.indexOf(season);
+    const nextSeason = seasonOrder[(idx + 1) % 4];
+
+    return { season, daysRemaining, progress, nextSeason };
+  }
+
+  // --- T-0963: Lunar cycle calculation ---
+  static getMoonPhase(date: Date = new Date()): MoonPhase {
+    // Known new moon: January 6, 2000 at 18:14 UTC
+    const knownNewMoon = new Date('2000-01-06T18:14:00Z').getTime();
+    const lunarCycle = 29.53058770576; // days
+    const daysSinceKnown = (date.getTime() - knownNewMoon) / 86400000;
+    const cyclePosition = ((daysSinceKnown % lunarCycle) + lunarCycle) % lunarCycle;
+    const phase = cyclePosition / lunarCycle; // 0..1
+
+    if (phase < 0.0625) return 'new_moon';
+    if (phase < 0.1875) return 'waxing_crescent';
+    if (phase < 0.3125) return 'first_quarter';
+    if (phase < 0.4375) return 'waxing_gibbous';
+    if (phase < 0.5625) return 'full_moon';
+    if (phase < 0.6875) return 'waning_gibbous';
+    if (phase < 0.8125) return 'last_quarter';
+    if (phase < 0.9375) return 'waning_crescent';
+    return 'new_moon';
+  }
+
+  static getMoonPhaseEffect(date: Date = new Date()): MoonPhaseEffect {
+    const phase = CalendarService.getMoonPhase(date);
+    return MOON_PHASE_EFFECTS.find(e => e.phase === phase) ?? MOON_PHASE_EFFECTS[0];
+  }
+
+  // --- T-0968: Upcoming full and new moons ---
+  static getUpcomingLunarEvents(date: Date = new Date(), count: number = 4): Array<{
+    phase: 'full_moon' | 'new_moon';
+    date: Date;
+    label: string;
+  }> {
+    const knownNewMoon = new Date('2000-01-06T18:14:00Z').getTime();
+    const lunarCycle = 29.53058770576;
+    const results: Array<{ phase: 'full_moon' | 'new_moon'; date: Date; label: string }> = [];
+    const startMs = date.getTime();
+
+    // Find the start of the current cycle
+    const daysSince = (startMs - knownNewMoon) / 86400000;
+    const currentCycle = Math.floor(daysSince / lunarCycle);
+
+    for (let i = 0; results.length < count && i < count * 2 + 4; i++) {
+      const cycleStart = knownNewMoon + (currentCycle + i) * lunarCycle * 86400000;
+      const newMoonDate = new Date(cycleStart);
+      const fullMoonDate = new Date(cycleStart + (lunarCycle / 2) * 86400000);
+
+      if (newMoonDate.getTime() > startMs && results.length < count) {
+        results.push({ phase: 'new_moon', date: newMoonDate, label: 'New Moon' });
+      }
+      if (fullMoonDate.getTime() > startMs && results.length < count) {
+        results.push({ phase: 'full_moon', date: fullMoonDate, label: 'Full Moon' });
+      }
+    }
+
+    return results.sort((a, b) => a.date.getTime() - b.date.getTime()).slice(0, count);
+  }
+
+  // --- T-0982: Time-of-day synchronization ---
+  static getTimeOfDay(date: Date = new Date()): 'dawn' | 'day' | 'dusk' | 'night' {
+    const hour = date.getHours();
+    if (hour >= 5 && hour < 7) return 'dawn';
+    if (hour >= 7 && hour < 18) return 'day';
+    if (hour >= 18 && hour < 20) return 'dusk';
+    return 'night';
+  }
+
+  // --- T-0984: Weekend bonus detection ---
+  static isWeekend(date: Date = new Date()): boolean {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  }
+
+  static getWeekendBonuses(): { xpBonus: number; goldBonus: number; lootBonus: number } {
+    return { xpBonus: 0.15, goldBonus: 0.10, lootBonus: 0.10 };
+  }
+
+  // --- T-0980: Guild anniversary check ---
+  static isGuildAnniversary(guildCreatedAt: string, date: Date = new Date()): boolean {
+    const created = new Date(guildCreatedAt);
+    return (
+      created.getMonth() === date.getMonth() &&
+      created.getDate() === date.getDate() &&
+      created.getFullYear() < date.getFullYear()
+    );
+  }
+
+  static getGuildAgeYears(guildCreatedAt: string, date: Date = new Date()): number {
+    const created = new Date(guildCreatedAt);
+    return date.getFullYear() - created.getFullYear();
+  }
+
+  // --- T-0985: Player anniversary ---
+  static isPlayerAnniversary(playerCreatedAt: string, date: Date = new Date()): boolean {
+    const created = new Date(playerCreatedAt);
+    return (
+      created.getMonth() === date.getMonth() &&
+      created.getDate() === date.getDate() &&
+      created.getFullYear() < date.getFullYear()
+    );
+  }
+
+  // --- T-0981: Equinox detection ---
+  static isEquinox(date: Date = new Date()): 'spring' | 'autumn' | null {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    // Spring equinox: around March 20
+    if (month === 3 && day >= 19 && day <= 21) return 'spring';
+    // Autumn equinox: around September 22
+    if (month === 9 && day >= 21 && day <= 23) return 'autumn';
+    return null;
+  }
+
+  // --- T-0974, T-0975: Cultural/Regional holiday detection ---
+  static getRegionalHolidays(regionId: string, date: Date = new Date()): Holiday[] {
+    const country = CalendarService.getCountry(regionId);
+    return CalendarService.getHolidays(date, country);
+  }
+
+  // --- T-0986: Month-specific event pool ---
+  static getMonthEventPool(date: Date = new Date()): string[] {
+    const month = date.getMonth() + 1;
+    return MONTH_EVENT_POOLS[month] ?? [];
+  }
+
+  // --- T-0970: Get today's daily challenges ---
+  static getDailyChallenges(date: Date = new Date(), count: number = 3): typeof DAILY_CHALLENGES {
+    // Deterministic selection based on day of year
+    const dayOfYear = Math.floor(
+      (date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 86400000,
+    );
+    const shuffled = [...DAILY_CHALLENGES];
+    // Simple seeded shuffle
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = (dayOfYear * 31 + i * 7) % (i + 1);
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, count);
+  }
+
+  // --- T-0976: Upcoming events this week ---
+  static getUpcomingEventsThisWeek(regionId: string, date: Date = new Date()): Array<{
+    date: Date;
+    holiday: Holiday;
+    festival: Festival | null;
+  }> {
+    const results: Array<{ date: Date; holiday: Holiday; festival: Festival | null }> = [];
+    const country = CalendarService.getCountry(regionId);
+
+    for (let i = 0; i < 7; i++) {
+      const checkDate = new Date(date);
+      checkDate.setDate(checkDate.getDate() + i);
+      const holidays = CalendarService.getHolidays(checkDate, country);
+      for (const holiday of holidays) {
+        // Avoid duplicates
+        if (!results.find(r => r.holiday.name === holiday.name)) {
+          results.push({
+            date: checkDate,
+            holiday,
+            festival: CalendarService.getFestivalFromHoliday(holiday),
+          });
+        }
+      }
+    }
+
+    return results;
+  }
+
+  // --- T-0941: Full calendar data for current month ---
+  static getCalendarMonth(regionId: string, date: Date = new Date()): Array<{
+    day: number;
+    date: Date;
+    isToday: boolean;
+    season: Season;
+    holidays: Holiday[];
+    moonPhase: MoonPhase;
+    isWeekend: boolean;
+  }> {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = date.getDate();
+    const country = CalendarService.getCountry(regionId);
+    const result: Array<{
+      day: number;
+      date: Date;
+      isToday: boolean;
+      season: Season;
+      holidays: Holiday[];
+      moonPhase: MoonPhase;
+      isWeekend: boolean;
+    }> = [];
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dayDate = new Date(year, month, d);
+      result.push({
+        day: d,
+        date: dayDate,
+        isToday: d === today,
+        season: CalendarService.getCurrentSeason(regionId, dayDate),
+        holidays: CalendarService.getHolidays(dayDate, country),
+        moonPhase: CalendarService.getMoonPhase(dayDate),
+        isWeekend: CalendarService.isWeekend(dayDate),
+      });
+    }
+
+    return result;
+  }
+
+  // --- Seasonal crop/market/expedition helpers ---
+  static getSeasonalCrops(season: Season) {
+    return SEASONAL_CROPS[season];
+  }
+
+  static getSeasonalMarketModifiers(season: Season) {
+    return SEASONAL_MARKET_MODIFIERS[season];
+  }
+
+  static getHeroMoraleModifier(heroRole: string, season: Season): number {
+    const pref = HERO_SEASON_PREFERENCES.find(p => p.role === heroRole);
+    if (!pref) return 0;
+    if (pref.preferredSeason === season) return pref.moraleBuff;
+    if (pref.dislikedSeason === season) return pref.moraleDebuff;
+    return 0;
+  }
+
+  static getExpeditionModifiers(season: Season) {
+    return SEASONAL_EXPEDITION_MODIFIERS[season];
   }
 }

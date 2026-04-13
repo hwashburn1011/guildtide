@@ -991,56 +991,56 @@
 ## Epic 13: Calendar & Seasons
 > 4 seasons with visual changes, holiday festivals with unique content, and lunar cycle mechanics.
 
-- [ ] T-0941: Implement calendar system synchronized with real-world date
-- [ ] T-0942: Create season determination logic based on hemisphere and date
-- [ ] T-0943: Build calendar UI component showing current month with event markers
-- [ ] T-0944: Implement season visual theme for Spring (green palette, flower particles)
-- [ ] T-0945: Implement season visual theme for Summer (warm palette, sun effects)
-- [ ] T-0946: Implement season visual theme for Autumn (orange palette, falling leaves)
-- [ ] T-0947: Implement season visual theme for Winter (blue palette, snow particles)
-- [ ] T-0948: Create season transition animation between seasonal themes
-- [ ] T-0949: Implement season effect on Farm production rates per crop type
-- [ ] T-0950: Create season effect on expedition difficulty and encounter tables
-- [ ] T-0951: Implement season effect on market prices for seasonal goods
-- [ ] T-0952: Create season effect on hero morale (some heroes prefer certain seasons)
-- [ ] T-0953: Build season indicator display showing current season and days remaining
-- [ ] T-0954: Implement hemisphere selection in player settings (affects season)
-- [ ] T-0955: Create New Year celebration event with fireworks animation
-- [ ] T-0956: Create Valentine's Day event with hero relationship bonuses
-- [ ] T-0957: Create Easter/Spring Festival event with egg hunt mini-game
-- [ ] T-0958: Create Summer Solstice event with daylight bonuses
-- [ ] T-0959: Create Halloween event with spooky expedition content
-- [ ] T-0960: Create Thanksgiving/Harvest event with food bonus
-- [ ] T-0961: Create Winter Solstice event with gift exchange mechanic
-- [ ] T-0962: Create New Year's Eve event with year-in-review summary
-- [ ] T-0963: Implement lunar cycle calculation (29.5-day cycle)
-- [ ] T-0964: Build moon phase display widget with current phase icon
-- [ ] T-0965: Create full moon gameplay effects (magic +25%, werewolf encounters)
-- [ ] T-0966: Create new moon gameplay effects (stealth +25%, dark encounters)
-- [ ] T-0967: Create waxing/waning gameplay effects (gradual modifier scaling)
-- [ ] T-0968: Build lunar calendar view showing upcoming full and new moons
-- [ ] T-0969: Implement daily login calendar with streak rewards
-- [ ] T-0970: Build daily challenge system with rotating objectives
-- [ ] T-0971: Create weekly recap summary email with guild progress
-- [ ] T-0972: Implement month-end report with statistics and achievements
-- [ ] T-0973: Build seasonal leaderboard reset with rewards for top performers
-- [ ] T-0974: Create cultural holiday detection for player's region
-- [ ] T-0975: Implement regional holiday events based on player location
-- [ ] T-0976: Build event calendar preview showing upcoming events this week
-- [ ] T-0977: Create season-specific ambient sounds (birds in spring, crickets in summer)
-- [ ] T-0978: Implement season-specific building visual changes (snow on roofs in winter)
-- [ ] T-0979: Build calendar notification system for upcoming events and holidays
-- [ ] T-0980: Create anniversary event for guild creation date
-- [ ] T-0981: Implement equinox events with day/night balance theme
-- [ ] T-0982: Build time-of-day synchronization with real clock
-- [ ] T-0983: Create dawn/dusk transition effects in guild hall
-- [ ] T-0984: Implement weekend bonus events (Saturday/Sunday extra rewards)
-- [ ] T-0985: Build custom player anniversary celebration event
-- [ ] T-0986: Create month-specific event pool rotation
-- [ ] T-0987: Implement season pass progression system with seasonal rewards
-- [ ] T-0988: Build season pass reward track UI with milestone indicators
-- [ ] T-0989: Create end-of-season summary with achievement highlights
-- [ ] T-0990: Implement calendar sharing feature for guild event coordination
+- [x] T-0941: Implement calendar system synchronized with real-world date
+- [x] T-0942: Create season determination logic based on hemisphere and date
+- [x] T-0943: Build calendar UI component showing current month with event markers
+- [x] T-0944: Implement season visual theme for Spring (green palette, flower particles)
+- [x] T-0945: Implement season visual theme for Summer (warm palette, sun effects)
+- [x] T-0946: Implement season visual theme for Autumn (orange palette, falling leaves)
+- [x] T-0947: Implement season visual theme for Winter (blue palette, snow particles)
+- [x] T-0948: Create season transition animation between seasonal themes
+- [x] T-0949: Implement season effect on Farm production rates per crop type
+- [x] T-0950: Create season effect on expedition difficulty and encounter tables
+- [x] T-0951: Implement season effect on market prices for seasonal goods
+- [x] T-0952: Create season effect on hero morale (some heroes prefer certain seasons)
+- [x] T-0953: Build season indicator display showing current season and days remaining
+- [x] T-0954: Implement hemisphere selection in player settings (affects season)
+- [x] T-0955: Create New Year celebration event with fireworks animation
+- [x] T-0956: Create Valentine's Day event with hero relationship bonuses
+- [x] T-0957: Create Easter/Spring Festival event with egg hunt mini-game
+- [x] T-0958: Create Summer Solstice event with daylight bonuses
+- [x] T-0959: Create Halloween event with spooky expedition content
+- [x] T-0960: Create Thanksgiving/Harvest event with food bonus
+- [x] T-0961: Create Winter Solstice event with gift exchange mechanic
+- [x] T-0962: Create New Year's Eve event with year-in-review summary
+- [x] T-0963: Implement lunar cycle calculation (29.5-day cycle)
+- [x] T-0964: Build moon phase display widget with current phase icon
+- [x] T-0965: Create full moon gameplay effects (magic +25%, werewolf encounters)
+- [x] T-0966: Create new moon gameplay effects (stealth +25%, dark encounters)
+- [x] T-0967: Create waxing/waning gameplay effects (gradual modifier scaling)
+- [x] T-0968: Build lunar calendar view showing upcoming full and new moons
+- [x] T-0969: Implement daily login calendar with streak rewards
+- [x] T-0970: Build daily challenge system with rotating objectives
+- [x] T-0971: Create weekly recap summary email with guild progress
+- [x] T-0972: Implement month-end report with statistics and achievements
+- [x] T-0973: Build seasonal leaderboard reset with rewards for top performers
+- [x] T-0974: Create cultural holiday detection for player's region
+- [x] T-0975: Implement regional holiday events based on player location
+- [x] T-0976: Build event calendar preview showing upcoming events this week
+- [x] T-0977: Create season-specific ambient sounds (birds in spring, crickets in summer)
+- [x] T-0978: Implement season-specific building visual changes (snow on roofs in winter)
+- [x] T-0979: Build calendar notification system for upcoming events and holidays
+- [x] T-0980: Create anniversary event for guild creation date
+- [x] T-0981: Implement equinox events with day/night balance theme
+- [x] T-0982: Build time-of-day synchronization with real clock
+- [x] T-0983: Create dawn/dusk transition effects in guild hall
+- [x] T-0984: Implement weekend bonus events (Saturday/Sunday extra rewards)
+- [x] T-0985: Build custom player anniversary celebration event
+- [x] T-0986: Create month-specific event pool rotation
+- [x] T-0987: Implement season pass progression system with seasonal rewards
+- [x] T-0988: Build season pass reward track UI with milestone indicators
+- [x] T-0989: Create end-of-season summary with achievement highlights
+- [x] T-0990: Implement calendar sharing feature for guild event coordination
 
 ## Epic 14: Financial Data Integration
 > Stock market influence on merchant guilds, commodity prices, economic indicators, crypto sentiment, and trade volatility mechanics.
