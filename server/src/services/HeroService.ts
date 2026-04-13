@@ -1,5 +1,5 @@
-import { prisma } from '../db.js';
-import { HeroRole, HeroTrait, HeroStatus } from '../../../shared/src/enums.js';
+import { prisma } from '../db';
+import { HeroRole, HeroTrait, HeroStatus } from '../../../shared/src/enums';
 
 const FIRST_NAMES = [
   'Aldric', 'Brenna', 'Cedric', 'Dara', 'Elrik', 'Fiona', 'Gareth', 'Hilde',

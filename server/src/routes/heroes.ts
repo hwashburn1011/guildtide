@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { prisma } from '../db.js';
-import { authMiddleware } from '../middleware/auth.js';
-import { HeroService } from '../services/HeroService.js';
-import { HeroRole } from '../../../shared/src/enums.js';
+import { prisma } from '../db';
+import { authMiddleware } from '../middleware/auth';
+import { HeroService } from '../services/HeroService';
+import { HeroRole } from '../../../shared/src/enums';
 
 const router = Router();
 router.use(authMiddleware);

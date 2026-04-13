@@ -1,4 +1,4 @@
-import { ExpeditionType } from '../../../shared/src/enums.js';
+import { ExpeditionType } from '../../../shared/src/enums';
 
 export interface LootRange {
   resource: string;

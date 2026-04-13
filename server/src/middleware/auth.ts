@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { config } from '../config.js';
+import { config } from '../config';
 
 export interface AuthPayload {
   playerId: string;

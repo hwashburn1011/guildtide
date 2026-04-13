@@ -1,17 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import { config } from './config.js';
-import { authRouter } from './routes/auth.js';
-import { guildRouter } from './routes/guild.js';
-import { playerRouter } from './routes/player.js';
-import { buildingsRouter } from './routes/buildings.js';
-import { heroesRouter } from './routes/heroes.js';
-import { worldRouter } from './routes/world.js';
-import { eventsRouter } from './routes/events.js';
-import { expeditionsRouter } from './routes/expeditions.js';
-import { marketRouter } from './routes/market.js';
-import { researchRouter } from './routes/research.js';
-import { itemsRouter } from './routes/items.js';
+import { config } from './config';
+import { authRouter } from './routes/auth';
+import { guildRouter } from './routes/guild';
+import { playerRouter } from './routes/player';
+import { buildingsRouter } from './routes/buildings';
+import { heroesRouter } from './routes/heroes';
+import { worldRouter } from './routes/world';
+import { eventsRouter } from './routes/events';
+import { expeditionsRouter } from './routes/expeditions';
+import { marketRouter } from './routes/market';
+import { researchRouter } from './routes/research';
+import { itemsRouter } from './routes/items';
 
 const app = express();
 

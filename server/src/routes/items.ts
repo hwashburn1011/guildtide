@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { prisma } from '../db.js';
-import { authMiddleware } from '../middleware/auth.js';
-import { ItemService } from '../services/ItemService.js';
-import { ITEM_TEMPLATES } from '../data/itemTemplates.js';
+import { prisma } from '../db';
+import { authMiddleware } from '../middleware/auth';
+import { ItemService } from '../services/ItemService';
+import { ITEM_TEMPLATES } from '../data/itemTemplates';
 
 const router = Router();
 router.use(authMiddleware);

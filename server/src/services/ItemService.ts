@@ -1,7 +1,7 @@
-import { prisma } from '../db.js';
-import { ItemCategory } from '../../../shared/src/enums.js';
-import { getItemTemplate, ITEM_TEMPLATES } from '../data/itemTemplates.js';
-import type { ItemTemplate } from '../data/itemTemplates.js';
+import { prisma } from '../db';
+import { ItemCategory } from '../../../shared/src/enums';
+import { getItemTemplate, ITEM_TEMPLATES } from '../data/itemTemplates';
+import type { ItemTemplate } from '../data/itemTemplates';
 
 /** Maps ItemCategory to valid equipment slot names */
 const CATEGORY_TO_SLOT: Partial<Record<ItemCategory, string>> = {

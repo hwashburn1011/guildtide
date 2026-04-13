@@ -1,6 +1,6 @@
-import { prisma } from '../db.js';
-import { RESEARCH_NODES, RESEARCH_MAP, type ResearchNode } from '../data/researchData.js';
-import { ResourceType } from '../../../shared/src/enums.js';
+import { prisma } from '../db';
+import { RESEARCH_NODES, RESEARCH_MAP, type ResearchNode } from '../data/researchData';
+import { ResourceType } from '../../../shared/src/enums';
 
 export interface ActiveResearch {
   researchId: string;

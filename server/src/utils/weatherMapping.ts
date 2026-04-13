@@ -1,4 +1,4 @@
-import { WeatherCondition } from '../../../shared/src/enums.js';
+import { WeatherCondition } from '../../../shared/src/enums';
 
 export interface RawWeatherData {
   condition: string;

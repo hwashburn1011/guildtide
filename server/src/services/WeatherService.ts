@@ -1,7 +1,7 @@
-import { prisma } from '../db.js';
-import { classifyWeather, weatherToModifiers, type RawWeatherData } from '../utils/weatherMapping.js';
-import { WeatherCondition } from '../../../shared/src/enums.js';
-import { CalendarService } from './CalendarService.js';
+import { prisma } from '../db';
+import { classifyWeather, weatherToModifiers, type RawWeatherData } from '../utils/weatherMapping';
+import { WeatherCondition } from '../../../shared/src/enums';
+import { CalendarService } from './CalendarService';
 
 // Region coordinates for weather fetching
 const REGION_COORDS: Record<string, { lat: number; lon: number }> = {

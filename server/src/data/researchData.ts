@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../shared/src/enums.js';
+import { ResourceType } from '../../../shared/src/enums';
 
 export interface ResearchNode {
   id: string;

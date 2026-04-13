@@ -1,6 +1,6 @@
-import { prisma } from '../db.js';
-import { EVENT_TEMPLATES, type EventTemplate } from '../data/eventTemplates.js';
-import { WeatherService } from './WeatherService.js';
+import { prisma } from '../db';
+import { EVENT_TEMPLATES, type EventTemplate } from '../data/eventTemplates';
+import { WeatherService } from './WeatherService';
 import { v4 as uuid } from 'uuid';
 
 export class EventService {

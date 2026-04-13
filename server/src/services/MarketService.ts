@@ -1,7 +1,7 @@
-import { prisma } from '../db.js';
-import { ResourceType, WeatherCondition } from '../../../shared/src/enums.js';
-import { WeatherService } from './WeatherService.js';
-import { RESEARCH_MAP } from '../data/researchData.js';
+import { prisma } from '../db';
+import { ResourceType, WeatherCondition } from '../../../shared/src/enums';
+import { WeatherService } from './WeatherService';
+import { RESEARCH_MAP } from '../data/researchData';
 
 /** Base prices per unit (gold is not tradeable) */
 const BASE_PRICES: Record<string, number> = {

@@ -1,4 +1,4 @@
-import { ItemCategory, ItemRarity, ResourceType } from '../../../shared/src/enums.js';
+import { ItemCategory, ItemRarity, ResourceType } from '../../../shared/src/enums';
 
 export interface ItemEffect {
   /** Stat bonuses applied when equipped (additive) */

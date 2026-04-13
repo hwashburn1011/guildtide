@@ -1,10 +1,10 @@
-import { prisma } from '../db.js';
-import { HeroStatus, ExpeditionStatus } from '../../../shared/src/enums.js';
-import { EXPEDITION_DESTINATIONS } from '../data/expeditionData.js';
-import { RESEARCH_MAP } from '../data/researchData.js';
-import { getItemTemplate } from '../data/itemTemplates.js';
-import { WeatherService } from './WeatherService.js';
-import type { GameModifiers } from '../utils/weatherMapping.js';
+import { prisma } from '../db';
+import { HeroStatus, ExpeditionStatus } from '../../../shared/src/enums';
+import { EXPEDITION_DESTINATIONS } from '../data/expeditionData';
+import { RESEARCH_MAP } from '../data/researchData';
+import { getItemTemplate } from '../data/itemTemplates';
+import { WeatherService } from './WeatherService';
+import type { GameModifiers } from '../utils/weatherMapping';
 
 interface ExpeditionResult {
   success: boolean;

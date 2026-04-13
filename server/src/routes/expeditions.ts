@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { prisma } from '../db.js';
-import { authMiddleware } from '../middleware/auth.js';
-import { ExpeditionService } from '../services/ExpeditionService.js';
-import { EXPEDITION_DESTINATIONS } from '../data/expeditionData.js';
+import { prisma } from '../db';
+import { authMiddleware } from '../middleware/auth';
+import { ExpeditionService } from '../services/ExpeditionService';
+import { EXPEDITION_DESTINATIONS } from '../data/expeditionData';
 
 const router = Router();
 router.use(authMiddleware);

@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { prisma } from '../db.js';
-import { config } from '../config.js';
-import { STARTING_RESOURCES } from '../../../shared/src/constants.js';
-import { IdleProgressService } from '../services/IdleProgressService.js';
+import { prisma } from '../db';
+import { config } from '../config';
+import { STARTING_RESOURCES } from '../../../shared/src/constants';
+import { IdleProgressService } from '../services/IdleProgressService';
 
 const router = Router();
 

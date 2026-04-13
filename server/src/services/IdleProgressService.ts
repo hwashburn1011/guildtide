@@ -1,14 +1,14 @@
-import { prisma } from '../db.js';
+import { prisma } from '../db';
 import {
   BUILDING_DEFINITIONS,
   BUILDING_LEVEL_BONUS,
   MAX_OFFLINE_SECONDS,
-} from '../../../shared/src/constants.js';
-import { BuildingType, ResourceType } from '../../../shared/src/enums.js';
-import { WeatherService } from './WeatherService.js';
-import type { GameModifiers } from '../utils/weatherMapping.js';
-import { RESEARCH_MAP } from '../data/researchData.js';
-import { getItemTemplate } from '../data/itemTemplates.js';
+} from '../../../shared/src/constants';
+import { BuildingType, ResourceType } from '../../../shared/src/enums';
+import { WeatherService } from './WeatherService';
+import type { GameModifiers } from '../utils/weatherMapping';
+import { RESEARCH_MAP } from '../data/researchData';
+import { getItemTemplate } from '../data/itemTemplates';
 
 export interface IdleGains {
   resources: Partial<Record<ResourceType, number>>;
