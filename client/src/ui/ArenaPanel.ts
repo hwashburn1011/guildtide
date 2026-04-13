@@ -97,7 +97,7 @@ export class ArenaPanel {
 
   private async renderLeaderboard(startY: number): Promise<void> {
     try {
-      const res = await apiClient.get('/combat/arena/leaderboard');
+      const res = await apiClient.getArenaLeaderboard();
       const entries = res.leaderboard ?? [];
       let y = startY;
 
@@ -130,7 +130,7 @@ export class ArenaPanel {
 
   private async renderOpponents(startY: number): Promise<void> {
     try {
-      const res = await apiClient.get('/combat/arena/opponents');
+      const res = await apiClient.getArenaOpponents();
       const opponents = res.opponents ?? [];
       let y = startY;
 
@@ -170,7 +170,7 @@ export class ArenaPanel {
 
   private async renderHistory(startY: number): Promise<void> {
     try {
-      const res = await apiClient.get('/combat/arena/history');
+      const res = await apiClient.getArenaHistory();
       const history = res.history ?? [];
       let y = startY;
 
@@ -214,7 +214,7 @@ export class ArenaPanel {
   private async initiateArenaFight(defenderGuildId: string): Promise<void> {
     try {
       // In production, user would select heroes; simplified here
-      await apiClient.post('/combat/arena/fight', { defenderGuildId, heroIds: [] });
+      await apiClient.fightArenaOpponent(defenderGuildId, []);
       this.loadTab('history');
     } catch {
       // Error handling

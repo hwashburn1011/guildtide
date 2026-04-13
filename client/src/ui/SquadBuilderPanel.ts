@@ -404,8 +404,8 @@ export class SquadBuilderPanel {
       return;
     }
     try {
-      const roles = this.squad.map(h => h.role.toLowerCase()).join(',');
-      const res = await apiClient.get(`/combat/synergies?roles=${roles}`);
+      const roles = this.squad.map(h => h.role.toLowerCase());
+      const res = await apiClient.getSquadSynergies(roles);
       this.activeSynergies = res.synergies ?? [];
     } catch {
       this.activeSynergies = [];
@@ -418,8 +418,8 @@ export class SquadBuilderPanel {
       return;
     }
     try {
-      const heroIds = this.squad.map(h => h.id).join(',');
-      const res = await apiClient.get(`/combat/predict?heroIds=${heroIds}`);
+      const heroIds = this.squad.map(h => h.id);
+      const res = await apiClient.getCombatPrediction(heroIds);
       this.powerPrediction = res;
     } catch {
       this.powerPrediction = null;
