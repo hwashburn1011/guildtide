@@ -113,6 +113,23 @@ class ApiClient {
     return this.request('POST', `/heroes/${heroId}/assign`, { assignment });
   }
 
+  // Events
+  async getEvents(): Promise<any[]> {
+    return this.request('GET', '/events');
+  }
+
+  async respondToEvent(eventId: string, choiceIndex: number): Promise<{
+    success: boolean;
+    narrative: string;
+    rewards?: Record<string, number>;
+  }> {
+    return this.request('POST', `/events/${eventId}/respond`, { choiceIndex });
+  }
+
+  async getEventLog(): Promise<any[]> {
+    return this.request('GET', '/events/log');
+  }
+
   // World state
   async getWorldState(): Promise<{
     regionId: string;

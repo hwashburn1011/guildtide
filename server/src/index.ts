@@ -7,6 +7,7 @@ import { playerRouter } from './routes/player.js';
 import { buildingsRouter } from './routes/buildings.js';
 import { heroesRouter } from './routes/heroes.js';
 import { worldRouter } from './routes/world.js';
+import { eventsRouter } from './routes/events.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/api/player', playerRouter);
 app.use('/api/buildings', buildingsRouter);
 app.use('/api/heroes', heroesRouter);
 app.use('/api/world', worldRouter);
+app.use('/api/events', eventsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {

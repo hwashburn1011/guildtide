@@ -8,6 +8,7 @@ import { BuildingPanel } from '../ui/BuildingPanel';
 import { OfflineGainsModal } from '../ui/OfflineGainsModal';
 import { HeroRoster } from '../ui/HeroRoster';
 import { WeatherPanel } from '../ui/WeatherPanel';
+import { EventPanel } from '../ui/EventPanel';
 
 export class GuildHallScene extends Phaser.Scene {
   private guild: Guild | null = null;
@@ -15,6 +16,8 @@ export class GuildHallScene extends Phaser.Scene {
   private buildingPanel: BuildingPanel | null = null;
   private heroRoster: HeroRoster | null = null;
   private weatherPanel: WeatherPanel | null = null;
+  private eventPanel: EventPanel | null = null;
+  private activeEvents: any[] = [];
   private syncTimer: Phaser.Time.TimerEvent | null = null;
 
   constructor() {
@@ -54,12 +57,18 @@ export class GuildHallScene extends Phaser.Scene {
       const rates = await apiClient.getRates();
       this.resourceBar?.setRates(rates);
 
-      // Fetch and display weather
+      // Fetch and display weather + events
       try {
         const worldState = await apiClient.getWorldState();
         this.weatherPanel?.setWeatherData(worldState.weather, worldState.modifiers);
+
+        const events = await apiClient.getEvents();
+        this.activeEvents = events;
+        if (events.length > 0) {
+          this.showEventNotification(events.length);
+        }
       } catch {
-        // Weather may not be available yet
+        // Weather/events may not be available yet
       }
 
       // Periodic server sync every 30 seconds
@@ -143,6 +152,9 @@ export class GuildHallScene extends Phaser.Scene {
     // Weather panel (right side)
     this.weatherPanel = new WeatherPanel(this, GAME_WIDTH - 240, 115);
 
+    // Event panel (shown on demand)
+    this.eventPanel = new EventPanel(this, () => this.refreshGuild());
+
     // Hero roster (hidden until opened)
     this.heroRoster = new HeroRoster(
       this,
@@ -173,6 +185,33 @@ export class GuildHallScene extends Phaser.Scene {
 
       this.time.delayedCall(3000, () => errorText.destroy());
     }
+  }
+
+  private showEventNotification(count: number): void {
+    const eventBtn = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 70,
+      `${count} Event${count > 1 ? 's' : ''} Active — Click to view`, {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.small}px`,
+      color: COLORS.textPrimary,
+      backgroundColor: '#e94560',
+      padding: { x: 20, y: 8 },
+      fontStyle: 'bold',
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+
+    eventBtn.on('pointerup', () => {
+      if (this.activeEvents.length > 0) {
+        this.eventPanel?.show(this.activeEvents[0]);
+      }
+    });
+
+    // Pulse animation
+    this.tweens.add({
+      targets: eventBtn,
+      alpha: 0.7,
+      duration: 800,
+      yoyo: true,
+      repeat: -1,
+    });
   }
 
   private async refreshGuild(): Promise<void> {
