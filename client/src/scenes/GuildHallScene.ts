@@ -268,6 +268,11 @@ export class GuildHallScene extends Phaser.Scene {
           this.scene.start('ExpeditionScene');
         });
       }
+      if (i === 2) {
+        text.on('pointerup', () => {
+          this.scene.start('MarketScene');
+        });
+      }
     });
   }
 }
