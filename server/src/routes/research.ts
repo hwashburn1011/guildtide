@@ -233,4 +233,76 @@ router.post('/prestige', async (req: Request, res: Response) => {
   }
 });
 
+// POST /specialize — branch specialization (T-0642, T-0643)
+router.post('/specialize', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const { branch, subPath } = req.body;
+    const result = await ResearchAdvancedService.specialize(guildId, branch, subPath);
+    res.json(result);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Specialization failed';
+    res.status(400).json({ error: 'specialize_failed', message });
+  }
+});
+
+// GET /specializations — get guild specializations
+router.get('/specializations', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const specs = await ResearchAdvancedService.getSpecializations(guildId);
+    res.json({ specializations: specs });
+  } catch (err) {
+    console.error('Get specializations error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// GET /export — export tree data for sharing (T-0660)
+router.get('/export', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const data = await ResearchAdvancedService.exportTreeData(guildId);
+    res.json(data);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Export failed';
+    res.status(400).json({ error: 'export_failed', message });
+  }
+});
+
+// POST /compare-paths — A/B path comparison (T-0663)
+router.post('/compare-paths', async (req: Request, res: Response) => {
+  const { pathA, pathB } = req.body;
+  const result = ResearchAdvancedService.compareResearchPaths(pathA || [], pathB || []);
+  res.json(result);
+});
+
+// POST /notification-prefs — set notification preferences (T-0661)
+router.post('/notification-prefs', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const prefs = await ResearchAdvancedService.setNotificationPrefs(guildId, req.body);
+    res.json({ prefs });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to set preferences';
+    res.status(400).json({ error: 'prefs_failed', message });
+  }
+});
+
 export { router as researchRouter };

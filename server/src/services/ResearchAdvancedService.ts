@@ -592,4 +592,161 @@ export class ResearchAdvancedService {
 
     return { kept, prestigeLevel: currentPrestige + 1 };
   }
+
+  /**
+   * Branch specialization (T-0642, T-0643) — at tier 3, choose a sub-path
+   */
+  static async specialize(guildId: string, branch: string, subPath: string): Promise<{ specialization: string }> {
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) throw new Error('No guild found');
+
+    const completed: string[] = JSON.parse(guild.researchIds || '[]');
+    const resources: Record<string, any> = JSON.parse(guild.resources || '{}');
+
+    // Check tier 3 prerequisite: at least 3 nodes completed in this branch
+    const branchNodes = getNodesForBranch(branch as ResearchBranch);
+    const completedInBranch = branchNodes.filter((n) => completed.includes(n.id));
+    if (completedInBranch.length < 3) {
+      throw new Error('Need at least 3 completed nodes in this branch to specialize');
+    }
+
+    // Store specialization
+    const specs = resources.__specializations || {};
+    if (specs[branch]) throw new Error('Already specialized in this branch');
+    specs[branch] = subPath;
+    resources.__specializations = specs;
+
+    await prisma.guild.update({
+      where: { id: guildId },
+      data: { resources: JSON.stringify(resources) },
+    });
+
+    return { specialization: subPath };
+  }
+
+  /**
+   * Get specializations for a guild
+   */
+  static async getSpecializations(guildId: string): Promise<Record<string, string>> {
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) return {};
+    const resources = JSON.parse(guild.resources || '{}');
+    return resources.__specializations || {};
+  }
+
+  /**
+   * Compare research trees between guilds (T-0658)
+   */
+  static async compareResearch(guildIdA: string, guildIdB: string): Promise<{
+    guildA: { completed: string[]; percent: number };
+    guildB: { completed: string[]; percent: number };
+    shared: string[];
+    uniqueA: string[];
+    uniqueB: string[];
+  }> {
+    const [guildA, guildB] = await Promise.all([
+      prisma.guild.findUnique({ where: { id: guildIdA } }),
+      prisma.guild.findUnique({ where: { id: guildIdB } }),
+    ]);
+
+    const completedA: string[] = JSON.parse(guildA?.researchIds || '[]');
+    const completedB: string[] = JSON.parse(guildB?.researchIds || '[]');
+
+    const setA = new Set(completedA);
+    const setB = new Set(completedB);
+
+    const shared = completedA.filter((id) => setB.has(id));
+    const uniqueA = completedA.filter((id) => !setB.has(id));
+    const uniqueB = completedB.filter((id) => !setA.has(id));
+
+    return {
+      guildA: { completed: completedA, percent: getOverallCompletion(completedA) * 100 },
+      guildB: { completed: completedB, percent: getOverallCompletion(completedB) * 100 },
+      shared,
+      uniqueA,
+      uniqueB,
+    };
+  }
+
+  /**
+   * Export research tree as shareable data (T-0660)
+   */
+  static async exportTreeData(guildId: string): Promise<{
+    guildName: string;
+    completed: string[];
+    percent: number;
+    branchStats: Record<string, number>;
+    timestamp: number;
+  }> {
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) throw new Error('No guild found');
+
+    const completed: string[] = JSON.parse(guild.researchIds || '[]');
+    const branchStats: Record<string, number> = {};
+    const branches = Object.values(ResearchBranch);
+    for (const branch of branches) {
+      branchStats[branch] = getBranchCompletion(branch, completed) * 100;
+    }
+
+    return {
+      guildName: guild.name,
+      completed,
+      percent: getOverallCompletion(completed) * 100,
+      branchStats,
+      timestamp: Date.now(),
+    };
+  }
+
+  /**
+   * Research notification preferences (T-0661)
+   */
+  static async setNotificationPrefs(
+    guildId: string,
+    prefs: { onComplete: boolean; onQueueAdvance: boolean; onEvent: boolean },
+  ): Promise<typeof prefs> {
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) throw new Error('No guild found');
+
+    const resources: Record<string, any> = JSON.parse(guild.resources || '{}');
+    resources.__researchNotifPrefs = prefs;
+
+    await prisma.guild.update({
+      where: { id: guildId },
+      data: { resources: JSON.stringify(resources) },
+    });
+
+    return prefs;
+  }
+
+  /**
+   * A/B path comparison tool (T-0663)
+   */
+  static compareResearchPaths(
+    pathA: string[],
+    pathB: string[],
+  ): {
+    pathA: { nodes: ResearchNode[]; totalCost: Record<string, number>; totalTime: number; effects: Record<string, number> };
+    pathB: { nodes: ResearchNode[]; totalCost: Record<string, number>; totalTime: number; effects: Record<string, number> };
+  } {
+    const calcPath = (ids: string[]) => {
+      const nodes = ids.map((id) => RESEARCH_MAP.get(id)).filter(Boolean) as ResearchNode[];
+      const totalCost: Record<string, number> = {};
+      let totalTime = 0;
+      const effects: Record<string, number> = {};
+
+      for (const node of nodes) {
+        for (const [k, v] of Object.entries(node.cost.resources)) {
+          totalCost[k] = (totalCost[k] || 0) + (v as number);
+        }
+        totalTime += node.cost.timeSeconds;
+        for (const [k, v] of Object.entries(node.effects)) {
+          effects[k] = (effects[k] || 0) + v;
+        }
+      }
+
+      return { nodes, totalCost, totalTime, effects };
+    };
+
+    return { pathA: calcPath(pathA), pathB: calcPath(pathB) };
+  }
 }

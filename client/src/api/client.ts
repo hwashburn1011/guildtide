@@ -725,6 +725,26 @@ class ApiClient {
     return this.request('POST', '/research/prestige');
   }
 
+  async specializeResearch(branch: string, subPath: string): Promise<{ specialization: string }> {
+    return this.request('POST', '/research/specialize', { branch, subPath });
+  }
+
+  async getResearchSpecializations(): Promise<{ specializations: Record<string, string> }> {
+    return this.request('GET', '/research/specializations');
+  }
+
+  async exportResearchTree(): Promise<any> {
+    return this.request('GET', '/research/export');
+  }
+
+  async compareResearchPaths(pathA: string[], pathB: string[]): Promise<any> {
+    return this.request('POST', '/research/compare-paths', { pathA, pathB });
+  }
+
+  async setResearchNotificationPrefs(prefs: { onComplete: boolean; onQueueAdvance: boolean; onEvent: boolean }): Promise<any> {
+    return this.request('POST', '/research/notification-prefs', prefs);
+  }
+
   // Items & Equipment
   async getInventory(): Promise<any[]> {
     return this.request('GET', '/items');

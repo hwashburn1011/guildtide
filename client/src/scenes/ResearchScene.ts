@@ -232,6 +232,24 @@ export class ResearchScene extends Phaser.Scene {
     searchBtn.on('pointerup', () => this.promptSearch());
     toolX -= 70;
 
+    // Export button (T-0660)
+    const exportBtn = this.add.text(toolX, toolY, 'Export', {
+      fontFamily: FONTS.primary, fontSize: `${FONTS.sizes.small}px`,
+      color: '#a0a0b0', fontStyle: 'bold',
+    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
+    exportBtn.on('pointerup', () => this.handleExportTree());
+    toolX -= 70;
+
+    // Filter clear button
+    if (this.branchFilter) {
+      const clearBtn = this.add.text(toolX, toolY, `[${this.branchFilter}] X`, {
+        fontFamily: FONTS.primary, fontSize: `${FONTS.sizes.small}px`,
+        color: '#e94560',
+      }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
+      clearBtn.on('pointerup', () => { this.branchFilter = null; this.rebuildTree(); });
+      toolX -= 80;
+    }
+
     // Zoom controls (T-0648)
     const zoomInBtn = this.add.text(toolX, toolY, '+', {
       fontFamily: FONTS.primary, fontSize: `${FONTS.sizes.body}px`,
@@ -908,6 +926,37 @@ export class ResearchScene extends Phaser.Scene {
       this.refreshState();
     } catch (err) {
       this.showMessage(err instanceof Error ? err.message : 'Cancel failed', '#ff4444');
+    }
+  }
+
+  /** Export tree as shareable text/image data (T-0660) */
+  private async handleExportTree(): Promise<void> {
+    try {
+      const data = await apiClient.exportResearchTree();
+      // Generate text summary for clipboard
+      const lines: string[] = [
+        `=== ${data.guildName} Research Tree ===`,
+        `Overall: ${Math.round(data.percent)}% complete`,
+        `Exported: ${new Date(data.timestamp).toLocaleString()}`,
+        '',
+      ];
+      for (const [branch, pct] of Object.entries(data.branchStats as Record<string, number>)) {
+        lines.push(`  ${branch}: ${Math.round(pct)}%`);
+      }
+      lines.push('');
+      lines.push(`Completed nodes: ${data.completed.length}`);
+
+      const text = lines.join('\n');
+
+      // Copy to clipboard
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        this.showMessage('Research tree copied to clipboard!', '#4ecca3');
+      } else {
+        window.prompt('Copy this research tree data:', text);
+      }
+    } catch (err) {
+      this.showMessage(err instanceof Error ? err.message : 'Export failed', '#ff4444');
     }
   }
 
