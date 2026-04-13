@@ -1539,56 +1539,56 @@
 ## Epic 20: Audio & Sound Design
 > Ambient music, weather sounds, UI SFX, event stingers, combat sounds, and notification sounds.
 
-- [ ] T-1461: Set up Web Audio API integration with Phaser sound manager
-- [ ] T-1462: Implement audio volume controls (master, music, SFX, ambient)
-- [ ] T-1463: Build audio settings UI with volume sliders and mute toggles
-- [ ] T-1464: Create audio crossfade system for smooth music transitions
-- [ ] T-1465: Implement ambient music system with scene-based track selection
-- [ ] T-1466: Compose/source guild hall ambient music track (calm, medieval)
-- [ ] T-1467: Compose/source market scene ambient music track (bustling, lively)
-- [ ] T-1468: Compose/source expedition scene ambient music track (adventurous)
-- [ ] T-1469: Compose/source combat music track (intense, rhythmic)
-- [ ] T-1470: Compose/source research/library ambient music track (contemplative)
-- [ ] T-1471: Compose/source world map ambient music track (epic, sweeping)
-- [ ] T-1472: Compose/source login/menu music track (inviting)
-- [ ] T-1473: Create seasonal music variations (spring: light, winter: somber)
-- [ ] T-1474: Implement day/night music variation (brighter day, softer night)
-- [ ] T-1475: Create rain ambient sound loop with intensity variation
-- [ ] T-1476: Create wind ambient sound loop with intensity variation
-- [ ] T-1477: Create thunder sound effect for storm weather
-- [ ] T-1478: Create snow/blizzard ambient sound loop
-- [ ] T-1479: Create bird chirp ambient sound for clear day weather
-- [ ] T-1480: Create crackling fire ambient sound for guild hall hearth
-- [ ] T-1481: Create UI button click sound effect
-- [ ] T-1482: Create UI button hover sound effect
-- [ ] T-1483: Create UI modal open sound effect
-- [ ] T-1484: Create UI modal close sound effect
-- [ ] T-1485: Create UI tab switch sound effect
-- [ ] T-1486: Create UI error/invalid action sound effect
-- [ ] T-1487: Create UI success/completion sound effect
-- [ ] T-1488: Create UI notification popup sound effect
-- [ ] T-1489: Create resource gain sound effect (coin clink for gold, etc.)
-- [ ] T-1490: Create resource insufficient/error sound effect
-- [ ] T-1491: Create building placement sound effect
-- [ ] T-1492: Create building construction sound effect (hammering, sawing)
-- [ ] T-1493: Create building upgrade completion sound effect (fanfare)
-- [ ] T-1494: Create building demolish sound effect
-- [ ] T-1495: Create hero recruitment sound effect (welcome fanfare)
-- [ ] T-1496: Create hero level-up sound effect (triumphant jingle)
-- [ ] T-1497: Create hero dismiss sound effect (farewell tone)
-- [ ] T-1498: Create expedition launch sound effect (horn blast)
-- [ ] T-1499: Create expedition return sound effect (arrival jingle)
-- [ ] T-1500: Create combat sword attack sound effect
-- [ ] T-1501: Create combat magic spell cast sound effect
-- [ ] T-1502: Create combat bow shot sound effect
-- [ ] T-1503: Create combat hit/impact sound effect
-- [ ] T-1504: Create combat heal spell sound effect
-- [ ] T-1505: Create combat victory fanfare
-- [ ] T-1506: Create combat defeat sound
-- [ ] T-1507: Create combat critical hit sound effect
-- [ ] T-1508: Create event notification stinger (attention-grabbing musical phrase)
-- [ ] T-1509: Create achievement unlocked sound effect
-- [ ] T-1510: Implement audio sprite system for efficient SFX loading
+- [x] T-1461: Set up Web Audio API integration with Phaser sound manager
+- [x] T-1462: Implement audio volume controls (master, music, SFX, ambient)
+- [x] T-1463: Build audio settings UI with volume sliders and mute toggles
+- [x] T-1464: Create audio crossfade system for smooth music transitions
+- [x] T-1465: Implement ambient music system with scene-based track selection
+- [x] T-1466: Compose/source guild hall ambient music track (calm, medieval)
+- [x] T-1467: Compose/source market scene ambient music track (bustling, lively)
+- [x] T-1468: Compose/source expedition scene ambient music track (adventurous)
+- [x] T-1469: Compose/source combat music track (intense, rhythmic)
+- [x] T-1470: Compose/source research/library ambient music track (contemplative)
+- [x] T-1471: Compose/source world map ambient music track (epic, sweeping)
+- [x] T-1472: Compose/source login/menu music track (inviting)
+- [x] T-1473: Create seasonal music variations (spring: light, winter: somber)
+- [x] T-1474: Implement day/night music variation (brighter day, softer night)
+- [x] T-1475: Create rain ambient sound loop with intensity variation
+- [x] T-1476: Create wind ambient sound loop with intensity variation
+- [x] T-1477: Create thunder sound effect for storm weather
+- [x] T-1478: Create snow/blizzard ambient sound loop
+- [x] T-1479: Create bird chirp ambient sound for clear day weather
+- [x] T-1480: Create crackling fire ambient sound for guild hall hearth
+- [x] T-1481: Create UI button click sound effect
+- [x] T-1482: Create UI button hover sound effect
+- [x] T-1483: Create UI modal open sound effect
+- [x] T-1484: Create UI modal close sound effect
+- [x] T-1485: Create UI tab switch sound effect
+- [x] T-1486: Create UI error/invalid action sound effect
+- [x] T-1487: Create UI success/completion sound effect
+- [x] T-1488: Create UI notification popup sound effect
+- [x] T-1489: Create resource gain sound effect (coin clink for gold, etc.)
+- [x] T-1490: Create resource insufficient/error sound effect
+- [x] T-1491: Create building placement sound effect
+- [x] T-1492: Create building construction sound effect (hammering, sawing)
+- [x] T-1493: Create building upgrade completion sound effect (fanfare)
+- [x] T-1494: Create building demolish sound effect
+- [x] T-1495: Create hero recruitment sound effect (welcome fanfare)
+- [x] T-1496: Create hero level-up sound effect (triumphant jingle)
+- [x] T-1497: Create hero dismiss sound effect (farewell tone)
+- [x] T-1498: Create expedition launch sound effect (horn blast)
+- [x] T-1499: Create expedition return sound effect (arrival jingle)
+- [x] T-1500: Create combat sword attack sound effect
+- [x] T-1501: Create combat magic spell cast sound effect
+- [x] T-1502: Create combat bow shot sound effect
+- [x] T-1503: Create combat hit/impact sound effect
+- [x] T-1504: Create combat heal spell sound effect
+- [x] T-1505: Create combat victory fanfare
+- [x] T-1506: Create combat defeat sound
+- [x] T-1507: Create combat critical hit sound effect
+- [x] T-1508: Create event notification stinger (attention-grabbing musical phrase)
+- [x] T-1509: Create achievement unlocked sound effect
+- [x] T-1510: Implement audio sprite system for efficient SFX loading
 
 ## Epic 21: Backend Infrastructure
 > Cron jobs, background workers, rate limiting, logging, error tracking, and API versioning.
