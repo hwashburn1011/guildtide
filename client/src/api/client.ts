@@ -6,7 +6,10 @@ import type {
   SetRegionRequest,
   CreateGuildRequest,
   Guild,
+  Resources,
+  Building,
 } from '@shared/types';
+import type { ResourceType } from '@shared/enums';
 
 class ApiClient {
   private baseUrl: string;
@@ -68,6 +71,32 @@ class ApiClient {
 
   async getGuild(): Promise<Guild> {
     return this.request<Guild>('GET', '/guild');
+  }
+
+  // Idle collection
+  async collect(): Promise<{
+    gains: Partial<Record<ResourceType, number>>;
+    elapsedSeconds: number;
+    resources: Resources;
+    rates: Record<ResourceType, number>;
+  }> {
+    return this.request('POST', '/guild/collect');
+  }
+
+  async getRates(): Promise<Record<ResourceType, number>> {
+    return this.request('GET', '/guild/rates');
+  }
+
+  // Buildings
+  async getBuildings(): Promise<Building[]> {
+    return this.request('GET', '/buildings');
+  }
+
+  async upgradeBuilding(type: string): Promise<{
+    building: Building;
+    resources: Resources;
+  }> {
+    return this.request('POST', `/buildings/${type}/upgrade`);
   }
 }
 

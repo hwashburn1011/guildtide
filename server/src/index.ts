@@ -4,6 +4,7 @@ import { config } from './config.js';
 import { authRouter } from './routes/auth.js';
 import { guildRouter } from './routes/guild.js';
 import { playerRouter } from './routes/player.js';
+import { buildingsRouter } from './routes/buildings.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/guild', guildRouter);
 app.use('/api/player', playerRouter);
+app.use('/api/buildings', buildingsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {

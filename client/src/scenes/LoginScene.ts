@@ -100,8 +100,14 @@ export class LoginScene extends Phaser.Scene {
     }
 
     try {
-      const response = await apiClient.login({ email, password });
+      const response = await apiClient.login({ email, password }) as any;
       localStorage.setItem('guildtide_token', response.token);
+
+      // Store offline gains for GuildHallScene to display
+      if (response.offlineGains) {
+        sessionStorage.setItem('guildtide_offline_gains', JSON.stringify(response.offlineGains));
+        sessionStorage.setItem('guildtide_elapsed_seconds', String(response.elapsedSeconds || 0));
+      }
 
       if (response.guild) {
         this.scene.start('GuildHallScene');

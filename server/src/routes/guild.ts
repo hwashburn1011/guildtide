@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { prisma } from '../db.js';
 import { authMiddleware } from '../middleware/auth.js';
 import { STARTING_RESOURCES } from '../../../shared/src/constants.js';
+import { IdleProgressService } from '../services/IdleProgressService.js';
 
 const router = Router();
 router.use(authMiddleware);
@@ -85,6 +86,39 @@ router.post('/', async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Create guild error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Collect idle resources (periodic client sync)
+router.post('/collect', async (req: Request, res: Response) => {
+  try {
+    const gains = await IdleProgressService.calculateAndApply(req.playerId!);
+    const rates = await IdleProgressService.getRates(req.playerId!);
+
+    const guild = await prisma.guild.findUnique({
+      where: { playerId: req.playerId },
+    });
+
+    res.json({
+      gains: gains.resources,
+      elapsedSeconds: gains.elapsedSeconds,
+      resources: guild ? JSON.parse(guild.resources) : {},
+      rates,
+    });
+  } catch (err) {
+    console.error('Collect error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get current production rates
+router.get('/rates', async (req: Request, res: Response) => {
+  try {
+    const rates = await IdleProgressService.getRates(req.playerId!);
+    res.json(rates);
+  } catch (err) {
+    console.error('Get rates error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
   }
 });
