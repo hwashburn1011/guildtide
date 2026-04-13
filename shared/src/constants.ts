@@ -350,3 +350,161 @@ export const BUILDING_DEFINITIONS: Record<BuildingType, {
     maxLevel: 15,
   },
 };
+
+// ============================================================
+// Social / Multiplayer Constants (Epic 16)
+// ============================================================
+
+import { AllianceRole, AlliancePerm, LeaderboardCategory, GuildWarObjective } from './enums';
+
+/** Maximum friends per player */
+export const MAX_FRIENDS = 50;
+
+/** Maximum alliance members */
+export const MAX_ALLIANCE_MEMBERS = 25;
+
+/** Maximum alliance level */
+export const ALLIANCE_MAX_LEVEL = 20;
+
+/** Alliance base XP to level 2 */
+export const ALLIANCE_BASE_XP = 200;
+
+/** Alliance XP multiplier per level */
+export const ALLIANCE_XP_MULTIPLIER = 1.5;
+
+/** Alliance role permissions */
+export const ALLIANCE_ROLE_PERMISSIONS: Record<AllianceRole, AlliancePerm[]> = {
+  [AllianceRole.Leader]: [
+    AlliancePerm.Invite, AlliancePerm.Kick, AlliancePerm.Manage,
+    AlliancePerm.Chat, AlliancePerm.Treasury, AlliancePerm.War,
+  ],
+  [AllianceRole.Officer]: [
+    AlliancePerm.Invite, AlliancePerm.Kick, AlliancePerm.Chat, AlliancePerm.Treasury,
+  ],
+  [AllianceRole.Member]: [AlliancePerm.Chat],
+};
+
+/** Alliance level perks */
+export const ALLIANCE_LEVEL_PERKS: Array<{
+  level: number;
+  name: string;
+  description: string;
+  effects: Record<string, number>;
+}> = [
+  { level: 2, name: 'Shared Knowledge', description: 'All members get +5% XP', effects: { xpBonus: 0.05 } },
+  { level: 5, name: 'Trade Routes', description: '+10% trade value for members', effects: { tradeBonus: 0.10 } },
+  { level: 8, name: 'Allied Scouts', description: '+10% expedition success', effects: { expeditionBonus: 0.10 } },
+  { level: 10, name: 'Shared Treasury', description: 'Unlock alliance treasury', effects: { treasuryUnlock: 1 } },
+  { level: 12, name: 'War Machine', description: '+15% guild war score', effects: { warBonus: 0.15 } },
+  { level: 15, name: 'Grand Alliance', description: '+20% resource production', effects: { resourceBonus: 0.20 } },
+  { level: 18, name: 'Pinnacle', description: '+25% all bonuses', effects: { allBonus: 0.25 } },
+  { level: 20, name: 'Legendary Alliance', description: 'Exclusive cosmetics + 30% all', effects: { allBonus: 0.30 } },
+];
+
+/** Chat rate limits (messages per minute) */
+export const CHAT_RATE_LIMIT_GLOBAL = 10;
+export const CHAT_RATE_LIMIT_ALLIANCE = 30;
+export const CHAT_RATE_LIMIT_PRIVATE = 20;
+
+/** Chat message max length */
+export const CHAT_MESSAGE_MAX_LENGTH = 500;
+
+/** Trade expiry duration in hours */
+export const TRADE_EXPIRY_HOURS = 24;
+
+/** Maximum active trade requests per player */
+export const MAX_ACTIVE_TRADES = 10;
+
+/** Gift daily limit */
+export const GIFT_DAILY_LIMIT = 5;
+
+/** Gift max resource amount per gift */
+export const GIFT_MAX_RESOURCES: Partial<Record<ResourceType, number>> = {
+  [ResourceType.Gold]: 500,
+  [ResourceType.Wood]: 300,
+  [ResourceType.Stone]: 300,
+  [ResourceType.Herbs]: 150,
+  [ResourceType.Ore]: 200,
+  [ResourceType.Water]: 250,
+  [ResourceType.Food]: 250,
+  [ResourceType.Essence]: 50,
+};
+
+/** Guild war duration in hours */
+export const GUILD_WAR_DURATION_HOURS = 48;
+
+/** Guild war minimum wager (gold) */
+export const GUILD_WAR_MIN_WAGER = 100;
+
+/** Leaderboard weekly reward tiers */
+export const LEADERBOARD_WEEKLY_REWARDS: Array<{
+  minRank: number;
+  maxRank: number;
+  resources: Partial<Record<ResourceType, number>>;
+}> = [
+  { minRank: 1, maxRank: 1, resources: { [ResourceType.Gold]: 1000, [ResourceType.Essence]: 50 } },
+  { minRank: 2, maxRank: 3, resources: { [ResourceType.Gold]: 500, [ResourceType.Essence]: 25 } },
+  { minRank: 4, maxRank: 10, resources: { [ResourceType.Gold]: 250, [ResourceType.Essence]: 10 } },
+  { minRank: 11, maxRank: 25, resources: { [ResourceType.Gold]: 100 } },
+  { minRank: 26, maxRank: 50, resources: { [ResourceType.Gold]: 50 } },
+];
+
+/** Regional synergy bonuses when alliance controls complementary climates */
+export const REGIONAL_SYNERGY_BONUSES: Array<{
+  climateA: string;
+  climateB: string;
+  bonus: string;
+  amount: number;
+}> = [
+  { climateA: 'tropical', climateB: 'arid', bonus: 'herb_production', amount: 0.15 },
+  { climateA: 'temperate', climateB: 'cold', bonus: 'ore_production', amount: 0.15 },
+  { climateA: 'mediterranean', climateB: 'continental', bonus: 'trade_bonus', amount: 0.10 },
+  { climateA: 'tropical', climateB: 'cold', bonus: 'essence_production', amount: 0.20 },
+  { climateA: 'arid', climateB: 'temperate', bonus: 'food_production', amount: 0.12 },
+];
+
+/** Profanity filter word list (basic) */
+export const PROFANITY_WORDS = [
+  'badword1', 'badword2', 'badword3',
+];
+
+/** Social achievements */
+export const SOCIAL_ACHIEVEMENTS: Array<{
+  id: string;
+  name: string;
+  description: string;
+  requirement: number;
+  type: string;
+}> = [
+  { id: 'social_friends_5', name: 'Social Butterfly', description: 'Make 5 friends', requirement: 5, type: 'friends' },
+  { id: 'social_friends_10', name: 'Popular', description: 'Make 10 friends', requirement: 10, type: 'friends' },
+  { id: 'social_friends_25', name: 'Celebrity', description: 'Make 25 friends', requirement: 25, type: 'friends' },
+  { id: 'social_trades_5', name: 'Trader', description: 'Complete 5 player trades', requirement: 5, type: 'trades' },
+  { id: 'social_trades_25', name: 'Merchant Prince', description: 'Complete 25 player trades', requirement: 25, type: 'trades' },
+  { id: 'social_joint_5', name: 'Cooperative', description: 'Complete 5 joint expeditions', requirement: 5, type: 'joint_expeditions' },
+  { id: 'social_gifts_10', name: 'Generous', description: 'Send 10 gifts', requirement: 10, type: 'gifts' },
+  { id: 'social_mentor_1', name: 'Mentor', description: 'Mentor 1 new player', requirement: 1, type: 'mentorship' },
+  { id: 'social_war_win_3', name: 'Warlord', description: 'Win 3 guild wars', requirement: 3, type: 'wars_won' },
+  { id: 'social_alliance_leader', name: 'Alliance Founder', description: 'Create an alliance', requirement: 1, type: 'alliance_created' },
+];
+
+/** Mentorship XP reward per mentee level gained */
+export const MENTORSHIP_XP_PER_LEVEL = 25;
+
+/** Inactive member kick threshold (days) */
+export const INACTIVE_MEMBER_DEFAULT_DAYS = 14;
+
+/** Season duration in days */
+export const MULTIPLAYER_SEASON_DURATION_DAYS = 30;
+
+/** WebSocket heartbeat interval (ms) */
+export const WS_HEARTBEAT_INTERVAL = 30000;
+
+/** WebSocket reconnect delays (ms) */
+export const WS_RECONNECT_DELAYS = [1000, 2000, 5000, 10000, 30000];
+
+/** World boss base HP */
+export const WORLD_BOSS_BASE_HP = 100000;
+
+/** Matchmaking power tolerance (±%) */
+export const MATCHMAKING_POWER_TOLERANCE = 0.25;

@@ -1805,6 +1805,478 @@ class ApiClient {
   async exportMapData(): Promise<Record<string, unknown>> {
     return this.request('GET', '/regions/export');
   }
+
+  // ============================================================
+  // Social / Multiplayer API (Epic 16)
+  // ============================================================
+
+  // --- Player Search & Profile ---
+  async searchPlayers(query: string): Promise<Array<{ id: string; username: string }>> {
+    return this.request('GET', `/social/players/search?q=${encodeURIComponent(query)}`);
+  }
+
+  async getPlayerProfile(playerId: string): Promise<any> {
+    return this.request('GET', `/social/players/${playerId}/profile`);
+  }
+
+  async getPlayerCard(playerId: string): Promise<any> {
+    return this.request('GET', `/social/players/${playerId}/card`);
+  }
+
+  async compareProfiles(playerAId: string, playerBId: string): Promise<any> {
+    return this.request('GET', `/social/players/compare/${playerAId}/${playerBId}`);
+  }
+
+  async setStatusMessage(message: string): Promise<{ success: boolean }> {
+    return this.request('PUT', '/social/players/status', { message });
+  }
+
+  async setPresence(status: string): Promise<{ success: boolean }> {
+    return this.request('PUT', '/social/presence', { status });
+  }
+
+  // --- Friends ---
+  async getFriendList(): Promise<any[]> {
+    return this.request('GET', '/social/friends');
+  }
+
+  async sendFriendRequest(toPlayerId: string): Promise<any> {
+    return this.request('POST', '/social/friends/request', { toPlayerId });
+  }
+
+  async getPendingFriendRequests(): Promise<any[]> {
+    return this.request('GET', '/social/friends/requests');
+  }
+
+  async acceptFriendRequest(requestId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/social/friends/request/${requestId}/accept`);
+  }
+
+  async declineFriendRequest(requestId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/social/friends/request/${requestId}/decline`);
+  }
+
+  async removeFriend(friendId: string): Promise<{ success: boolean }> {
+    return this.request('DELETE', `/social/friends/${friendId}`);
+  }
+
+  async getFriendActivityFeed(): Promise<any[]> {
+    return this.request('GET', '/social/friends/feed');
+  }
+
+  // --- Chat ---
+  async sendChatMessage(channel: string, channelId: string, content: string): Promise<any> {
+    return this.request('POST', '/social/chat/message', { channel, channelId, content });
+  }
+
+  async getChatMessages(channel: string, channelId: string, limit?: number): Promise<any[]> {
+    const params = limit ? `?limit=${limit}` : '';
+    return this.request('GET', `/social/chat/${channel}/${channelId}${params}`);
+  }
+
+  async addChatReaction(messageId: string, channel: string, channelId: string, emoji: string): Promise<{ success: boolean }> {
+    return this.request('POST', '/social/chat/reaction', { messageId, channel, channelId, emoji });
+  }
+
+  async getChatConversations(): Promise<any[]> {
+    return this.request('GET', '/social/chat/conversations');
+  }
+
+  // --- Block & Report ---
+  async blockPlayer(targetId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/social/block/${targetId}`);
+  }
+
+  async unblockPlayer(targetId: string): Promise<{ success: boolean }> {
+    return this.request('DELETE', `/social/block/${targetId}`);
+  }
+
+  async getBlockedPlayers(): Promise<any[]> {
+    return this.request('GET', '/social/blocked');
+  }
+
+  async reportPlayer(targetId: string, reason: string, details: string): Promise<any> {
+    return this.request('POST', '/social/report', { targetId, reason, details });
+  }
+
+  // --- Trading ---
+  async createTradeRequest(toPlayerId: string, offeredResources: any, requestedResources: any): Promise<any> {
+    return this.request('POST', '/social/trade', { toPlayerId, offeredResources, requestedResources });
+  }
+
+  async acceptTrade(tradeId: string): Promise<any> {
+    return this.request('POST', `/social/trade/${tradeId}/accept`);
+  }
+
+  async declineTrade(tradeId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/social/trade/${tradeId}/decline`);
+  }
+
+  async getTradeRequests(): Promise<any[]> {
+    return this.request('GET', '/social/trades');
+  }
+
+  async getTradeHistoryList(): Promise<any[]> {
+    return this.request('GET', '/social/trades/history');
+  }
+
+  // --- Gifts ---
+  async sendGift(toPlayerId: string, resources: any, message: string): Promise<any> {
+    return this.request('POST', '/social/gift', { toPlayerId, resources, message });
+  }
+
+  async getGiftHistory(): Promise<any[]> {
+    return this.request('GET', '/social/gifts');
+  }
+
+  async claimGift(giftId: string): Promise<any> {
+    return this.request('POST', `/social/gift/${giftId}/claim`);
+  }
+
+  // --- Social Feed & Notifications ---
+  async getSocialFeed(limit?: number): Promise<any[]> {
+    const params = limit ? `?limit=${limit}` : '';
+    return this.request('GET', `/social/feed${params}`);
+  }
+
+  async getSocialNotifications(): Promise<any[]> {
+    return this.request('GET', '/social/notifications');
+  }
+
+  async markNotificationRead(notifId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/social/notifications/${notifId}/read`);
+  }
+
+  async markAllNotificationsRead(): Promise<{ success: boolean }> {
+    return this.request('POST', '/social/notifications/read-all');
+  }
+
+  async getNotificationPrefs(): Promise<any> {
+    return this.request('GET', '/social/notifications/prefs');
+  }
+
+  async setNotificationPrefs(prefs: any): Promise<{ success: boolean }> {
+    return this.request('PUT', '/social/notifications/prefs', prefs);
+  }
+
+  // --- Follow ---
+  async followPlayer(targetId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/social/follow/${targetId}`);
+  }
+
+  async unfollowPlayer(targetId: string): Promise<{ success: boolean }> {
+    return this.request('DELETE', `/social/follow/${targetId}`);
+  }
+
+  async getFollowers(): Promise<any[]> {
+    return this.request('GET', '/social/followers');
+  }
+
+  async getFollowing(): Promise<any[]> {
+    return this.request('GET', '/social/following');
+  }
+
+  // --- Mentorship ---
+  async createMentorship(menteeId: string): Promise<any> {
+    return this.request('POST', '/social/mentorship', { menteeId });
+  }
+
+  async getMentorships(): Promise<any[]> {
+    return this.request('GET', '/social/mentorships');
+  }
+
+  // --- Social Achievements ---
+  async getSocialAchievements(): Promise<{ unlocked: string[] }> {
+    return this.request('GET', '/social/achievements');
+  }
+
+  // --- World Boss ---
+  async getWorldBosses(): Promise<any[]> {
+    return this.request('GET', '/social/world-boss');
+  }
+
+  async attackWorldBoss(bossId: string, damage: number, allianceId?: string): Promise<any> {
+    return this.request('POST', `/social/world-boss/${bossId}/attack`, { damage, allianceId });
+  }
+
+  async getWorldBossRewards(bossId: string): Promise<any[]> {
+    return this.request('GET', `/social/world-boss/${bossId}/rewards`);
+  }
+
+  // --- Season ---
+  async getActiveSeason(): Promise<any> {
+    return this.request('GET', '/social/season');
+  }
+
+  // --- Anti-Cheat ---
+  async validateAction(action: string, data: any): Promise<any> {
+    return this.request('POST', '/social/validate', { action, data });
+  }
+
+  // --- Spectator ---
+  async canSpectate(targetId: string): Promise<{ canSpectate: boolean }> {
+    return this.request('GET', `/social/spectate/${targetId}`);
+  }
+
+  // ============================================================
+  // Alliance API
+  // ============================================================
+
+  async createAlliance(name: string, description: string): Promise<any> {
+    return this.request('POST', '/alliances', { name, description });
+  }
+
+  async getMyAlliance(): Promise<any> {
+    return this.request('GET', '/alliances/mine');
+  }
+
+  async getAlliance(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}`);
+  }
+
+  async updateAlliance(allianceId: string, description: string, rules?: string): Promise<any> {
+    return this.request('PUT', `/alliances/${allianceId}`, { description, rules });
+  }
+
+  async updateAllianceEmblem(allianceId: string, emblem: any): Promise<any> {
+    return this.request('PUT', `/alliances/${allianceId}/emblem`, { emblem });
+  }
+
+  async leaveAlliance(allianceId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/alliances/${allianceId}/leave`);
+  }
+
+  async listAlliances(): Promise<any[]> {
+    return this.request('GET', '/alliances');
+  }
+
+  async inviteToAlliance(allianceId: string, toPlayerId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/invite`, { toPlayerId });
+  }
+
+  async getPendingAllianceInvites(): Promise<any[]> {
+    return this.request('GET', '/alliances/invites/pending');
+  }
+
+  async acceptAllianceInvite(inviteId: string): Promise<any> {
+    return this.request('POST', `/alliances/invites/${inviteId}/accept`);
+  }
+
+  async declineAllianceInvite(inviteId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/alliances/invites/${inviteId}/decline`);
+  }
+
+  async kickAllianceMember(allianceId: string, targetId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/alliances/${allianceId}/kick/${targetId}`);
+  }
+
+  async promoteOfficer(allianceId: string, targetId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/promote/${targetId}`);
+  }
+
+  async demoteOfficer(allianceId: string, targetId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/demote/${targetId}`);
+  }
+
+  async depositTreasury(allianceId: string, resources: any): Promise<{ success: boolean }> {
+    return this.request('POST', `/alliances/${allianceId}/treasury/deposit`, { resources });
+  }
+
+  async withdrawTreasury(allianceId: string, resources: any): Promise<{ success: boolean }> {
+    return this.request('POST', `/alliances/${allianceId}/treasury/withdraw`, { resources });
+  }
+
+  async getAllianceSynergy(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/synergy`);
+  }
+
+  async getAllianceChallenge(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/challenge`);
+  }
+
+  async createAllianceEvent(allianceId: string, title: string, description: string, objective: string, target: number): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/events`, { title, description, objective, target });
+  }
+
+  async getAllianceEvents(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/events`);
+  }
+
+  async createAnnouncement(allianceId: string, title: string, content: string, pinned?: boolean): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/announcements`, { title, content, pinned });
+  }
+
+  async getAnnouncements(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/announcements`);
+  }
+
+  async browseRecruitment(search?: string): Promise<any[]> {
+    const params = search ? `?search=${encodeURIComponent(search)}` : '';
+    return this.request('GET', `/alliances/recruitment/browse${params}`);
+  }
+
+  async getAllianceStats(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/stats`);
+  }
+
+  async getAlliancePerks(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/perks`);
+  }
+
+  async getAllianceReport(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/report`);
+  }
+
+  async getAllianceCalendar(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/calendar`);
+  }
+
+  async addCalendarEntry(allianceId: string, title: string, description: string, scheduledAt: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/calendar`, { title, description, scheduledAt });
+  }
+
+  async getTerritoryMap(): Promise<any[]> {
+    return this.request('GET', '/alliances/territory/map');
+  }
+
+  async getAllianceRankings(): Promise<any[]> {
+    return this.request('GET', '/alliances/rankings/all');
+  }
+
+  async getAllianceDiplomacy(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/diplomacy`);
+  }
+
+  async getAllianceBanner(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/banner`);
+  }
+
+  // --- Guild Wars ---
+  async declareGuildWar(challengerGuildId: string, defenderGuildId: string, objective: string, wager: any): Promise<any> {
+    return this.request('POST', '/alliances/wars/declare', { challengerGuildId, defenderGuildId, objective, wager });
+  }
+
+  async getActiveGuildWars(guildId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/wars/active/${guildId}`);
+  }
+
+  async getGuildWar(warId: string): Promise<any> {
+    return this.request('GET', `/alliances/wars/${warId}`);
+  }
+
+  async getGuildWarHistory(guildId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/wars/history/${guildId}`);
+  }
+
+  async getGuildWarStats(guildId: string): Promise<any> {
+    return this.request('GET', `/alliances/wars/stats/${guildId}`);
+  }
+
+  async findWarMatch(guildId: string): Promise<any> {
+    return this.request('GET', `/alliances/wars/matchmaking/${guildId}`);
+  }
+
+  // ============================================================
+  // Leaderboard API
+  // ============================================================
+
+  async getLeaderboard(category: string, period?: string): Promise<any> {
+    const params = period ? `?period=${period}` : '';
+    return this.request('GET', `/leaderboards/${category}${params}`);
+  }
+
+  async getAllLeaderboards(): Promise<any[]> {
+    return this.request('GET', '/leaderboards');
+  }
+
+  async getMyRank(category: string): Promise<any> {
+    return this.request('GET', `/leaderboards/${category}/my-rank`);
+  }
+
+  async searchLeaderboard(category: string, query: string): Promise<any[]> {
+    return this.request('GET', `/leaderboards/${category}/search?q=${encodeURIComponent(query)}`);
+  }
+
+  async getRankChanges(): Promise<any[]> {
+    return this.request('GET', '/leaderboards/my/rank-changes');
+  }
+
+  // ============================================================
+  // Joint Expeditions API
+  // ============================================================
+
+  async createJointExpedition(guildId: string, allianceId: string, destination: string, heroIds: string[]): Promise<any> {
+    return this.request('POST', '/alliances/joint-expedition', { guildId, allianceId, destination, heroIds });
+  }
+
+  async joinJointExpedition(expId: string, guildId: string, heroIds: string[]): Promise<any> {
+    return this.request('POST', `/alliances/joint-expedition/${expId}/join`, { guildId, heroIds });
+  }
+
+  async getActiveJointExpeditions(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/joint-expedition/active/${allianceId}`);
+  }
+
+  async getJointExpedition(expId: string): Promise<any> {
+    return this.request('GET', `/alliances/joint-expedition/${expId}`);
+  }
+
+  async resolveJointExpedition(expId: string): Promise<any> {
+    return this.request('POST', `/alliances/joint-expedition/${expId}/resolve`);
+  }
+
+  async getInactiveMembers(allianceId: string, days?: number): Promise<any[]> {
+    const params = days ? `?days=${days}` : '';
+    return this.request('GET', `/alliances/${allianceId}/inactive${params}`);
+  }
+
+  async autoKickInactive(allianceId: string, days?: number): Promise<{ kicked: string[] }> {
+    return this.request('POST', `/alliances/${allianceId}/auto-kick`, { days });
+  }
+
+  async getAllianceDonations(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/donations`);
+  }
+
+  async createDiplomacyPact(allianceId: string, type: string, otherAllianceId: string, durationDays?: number): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/diplomacy`, { type, otherAllianceId, durationDays });
+  }
+
+  async contestTerritory(regionId: string, allianceId: string, points?: number): Promise<any> {
+    return this.request('POST', `/alliances/territory/${regionId}/contest`, { allianceId, points });
+  }
+
+  async mergeAlliances(allianceAId: string, allianceBId: string): Promise<any> {
+    return this.request('POST', '/alliances/merge', { allianceAId, allianceBId });
+  }
+
+  async postRecruitment(allianceId: string, description: string, minGuildLevel?: number, tags?: string[]): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/recruitment`, { description, minGuildLevel, tags });
+  }
+
+  async shareChatImage(channel: string, channelId: string, imageUrl: string): Promise<any> {
+    return this.request('POST', '/social/chat/image', { channel, channelId, imageUrl });
+  }
+
+  // ============================================================
+  // Alliance Research API
+  // ============================================================
+
+  async getAllianceResearch(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/research/tree`);
+  }
+
+  async startAllianceResearch(allianceId: string, nodeId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/research/start`, { nodeId });
+  }
+
+  async completeAllianceResearch(allianceId: string): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/research/complete`);
+  }
+
+  async getAllianceResearchEffects(allianceId: string): Promise<any> {
+    return this.request('GET', `/alliances/${allianceId}/research/effects`);
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

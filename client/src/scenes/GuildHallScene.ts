@@ -425,6 +425,7 @@ export class GuildHallScene extends Phaser.Scene {
       { label: 'Market', scene: 'MarketScene' },
       { label: 'World Map', scene: 'WorldMapScene' },
       { label: 'Research', scene: 'ResearchScene' },
+      { label: 'Social', scene: 'SocialScene' },
     ];
     const tabWidth = GAME_WIDTH / tabs.length;
 

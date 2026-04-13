@@ -13,6 +13,16 @@ import {
   CraftingQuality,
   EnchantmentType,
   GemType,
+  PlayerPresenceStatus,
+  FriendRequestStatus,
+  AllianceRole,
+  AlliancePerm,
+  ChatChannel,
+  TradeRequestStatus,
+  GuildWarStatus,
+  GuildWarObjective,
+  LeaderboardCategory,
+  SocialNotificationType,
 } from './enums';
 
 // --- Resource Map ---
@@ -734,4 +744,527 @@ export interface LootTable {
   entries: LootTableEntry[];
   guaranteedDrops?: string[];
   rarityWeights: Record<ItemRarity, number>;
+}
+
+// ============================================================
+// Social / Multiplayer Types (Epic 16)
+// ============================================================
+
+// --- Player Presence ---
+export interface PlayerPresence {
+  playerId: string;
+  username: string;
+  status: PlayerPresenceStatus;
+  lastSeen: string;
+  statusMessage: string;
+}
+
+// --- Player Profile (public view) ---
+export interface PlayerProfile {
+  id: string;
+  username: string;
+  guildName: string;
+  guildLevel: number;
+  guildEmblem: GuildEmblem | null;
+  regionId: string;
+  totalExpeditions: number;
+  totalTradeVolume: number;
+  heroPower: number;
+  achievements: string[];
+  joinedAt: string;
+  statusMessage: string;
+  presence: PlayerPresenceStatus;
+  mentorLevel: number;
+}
+
+// --- Friend System ---
+export interface FriendRequest {
+  id: string;
+  fromPlayerId: string;
+  fromUsername: string;
+  toPlayerId: string;
+  toUsername: string;
+  status: FriendRequestStatus;
+  createdAt: string;
+}
+
+export interface Friend {
+  playerId: string;
+  username: string;
+  guildName: string;
+  guildLevel: number;
+  presence: PlayerPresenceStatus;
+  lastSeen: string;
+  addedAt: string;
+}
+
+// --- Alliance System ---
+export interface AllianceEmblem {
+  layers: Array<{ shape: string; color: string }>;
+}
+
+export interface Alliance {
+  id: string;
+  name: string;
+  description: string;
+  rules: string;
+  emblem: AllianceEmblem | null;
+  leaderId: string;
+  level: number;
+  xp: number;
+  members: AllianceMember[];
+  treasury: Partial<Resources>;
+  createdAt: string;
+  maxMembers: number;
+  isRecruiting: boolean;
+  tags: string[];
+}
+
+export interface AllianceMember {
+  playerId: string;
+  username: string;
+  guildName: string;
+  guildLevel: number;
+  role: AllianceRole;
+  joinedAt: string;
+  activityScore: number;
+  contributionXP: number;
+  lastActive: string;
+}
+
+export interface AllianceInvite {
+  id: string;
+  allianceId: string;
+  allianceName: string;
+  fromPlayerId: string;
+  fromUsername: string;
+  toPlayerId: string;
+  status: 'pending' | 'accepted' | 'declined';
+  createdAt: string;
+}
+
+export interface AllianceRolePermissions {
+  [AllianceRole.Leader]: AlliancePerm[];
+  [AllianceRole.Officer]: AlliancePerm[];
+  [AllianceRole.Member]: AlliancePerm[];
+}
+
+export interface AllianceDailyChallenge {
+  id: string;
+  allianceId: string;
+  objective: string;
+  target: number;
+  current: number;
+  reward: Partial<Resources>;
+  expiresAt: string;
+}
+
+export interface AllianceEvent {
+  id: string;
+  allianceId: string;
+  title: string;
+  description: string;
+  objective: string;
+  target: number;
+  current: number;
+  participants: string[];
+  reward: Partial<Resources>;
+  startsAt: string;
+  endsAt: string;
+}
+
+export interface AllianceAnnouncement {
+  id: string;
+  allianceId: string;
+  authorId: string;
+  authorUsername: string;
+  title: string;
+  content: string;
+  pinned: boolean;
+  createdAt: string;
+}
+
+export interface AllianceRecruitmentPost {
+  id: string;
+  allianceId: string;
+  allianceName: string;
+  description: string;
+  minGuildLevel: number;
+  tags: string[];
+  memberCount: number;
+  maxMembers: number;
+  allianceLevel: number;
+  createdAt: string;
+}
+
+export interface AllianceCalendarEntry {
+  id: string;
+  allianceId: string;
+  title: string;
+  description: string;
+  scheduledAt: string;
+  createdBy: string;
+}
+
+export interface AllianceWeeklyReport {
+  allianceId: string;
+  weekStart: string;
+  weekEnd: string;
+  totalXpEarned: number;
+  topContributors: Array<{ playerId: string; username: string; xp: number }>;
+  expeditionsCompleted: number;
+  warResults: Array<{ opponentName: string; won: boolean }>;
+  newMembers: number;
+  membersLeft: number;
+}
+
+export interface AlliancePerk {
+  id: string;
+  name: string;
+  description: string;
+  levelRequired: number;
+  effects: Record<string, number>;
+}
+
+export interface AllianceStatsDashboard {
+  memberCount: number;
+  totalPower: number;
+  avgGuildLevel: number;
+  activeMembers24h: number;
+  totalExpeditions: number;
+  treasuryValue: number;
+  allianceLevel: number;
+  allianceXP: number;
+  xpToNextLevel: number;
+}
+
+// --- Chat System ---
+export interface ChatMessage {
+  id: string;
+  channel: ChatChannel;
+  channelId: string;
+  senderId: string;
+  senderUsername: string;
+  content: string;
+  reactions: Record<string, string[]>;
+  imageUrl: string | null;
+  createdAt: string;
+}
+
+export interface ChatConversation {
+  playerId: string;
+  username: string;
+  lastMessage: string;
+  lastMessageAt: string;
+  unreadCount: number;
+}
+
+// --- Player Trade System ---
+export interface PlayerTradeRequest {
+  id: string;
+  fromPlayerId: string;
+  fromUsername: string;
+  toPlayerId: string;
+  toUsername: string;
+  offeredResources: Partial<Resources>;
+  offeredItems: Array<{ templateId: string; quantity: number }>;
+  requestedResources: Partial<Resources>;
+  requestedItems: Array<{ templateId: string; quantity: number }>;
+  status: TradeRequestStatus;
+  createdAt: string;
+  expiresAt: string;
+}
+
+export interface TradeHistoryEntry {
+  id: string;
+  fromPlayerId: string;
+  fromUsername: string;
+  toPlayerId: string;
+  toUsername: string;
+  offeredResources: Partial<Resources>;
+  requestedResources: Partial<Resources>;
+  completedAt: string;
+}
+
+// --- Joint Expeditions ---
+export interface JointExpedition {
+  id: string;
+  initiatorGuildId: string;
+  initiatorGuildName: string;
+  allianceId: string;
+  participants: JointExpeditionParticipant[];
+  destination: string;
+  startedAt: string;
+  duration: number;
+  status: ExpeditionStatus;
+  result: JointExpeditionResult | null;
+}
+
+export interface JointExpeditionParticipant {
+  guildId: string;
+  guildName: string;
+  heroIds: string[];
+  contribution: number;
+}
+
+export interface JointExpeditionResult {
+  success: boolean;
+  totalLoot: Partial<Resources>;
+  xpGained: number;
+  splits: Array<{ guildId: string; loot: Partial<Resources>; xp: number }>;
+}
+
+// --- Leaderboards ---
+export interface LeaderboardEntry {
+  rank: number;
+  playerId: string;
+  username: string;
+  guildName: string;
+  score: number;
+  previousRank: number | null;
+}
+
+export interface Leaderboard {
+  category: LeaderboardCategory;
+  period: 'weekly' | 'alltime';
+  entries: LeaderboardEntry[];
+  updatedAt: string;
+  playerRank: LeaderboardEntry | null;
+}
+
+export interface LeaderboardReward {
+  minRank: number;
+  maxRank: number;
+  resources: Partial<Resources>;
+}
+
+// --- Guild Wars ---
+export interface GuildWar {
+  id: string;
+  challengerGuildId: string;
+  challengerGuildName: string;
+  defenderGuildId: string;
+  defenderGuildName: string;
+  objective: GuildWarObjective;
+  wager: Partial<Resources>;
+  challengerScore: number;
+  defenderScore: number;
+  status: GuildWarStatus;
+  startsAt: string;
+  endsAt: string;
+  winnerId: string | null;
+}
+
+export interface GuildWarHistory {
+  id: string;
+  opponentName: string;
+  objective: GuildWarObjective;
+  myScore: number;
+  opponentScore: number;
+  won: boolean;
+  wager: Partial<Resources>;
+  resolvedAt: string;
+}
+
+export interface TerritoryWarRegion {
+  regionId: string;
+  regionName: string;
+  controllingAllianceId: string | null;
+  controllingAllianceName: string | null;
+  contestedBy: string[];
+  contestPoints: Record<string, number>;
+}
+
+// --- Regional Synergy ---
+export interface RegionalSynergy {
+  allianceId: string;
+  regions: string[];
+  bonuses: Record<string, number>;
+  synergyPairs: Array<{ regionA: string; regionB: string; bonus: string; amount: number }>;
+}
+
+// --- Gift System ---
+export interface GiftEntry {
+  id: string;
+  fromPlayerId: string;
+  fromUsername: string;
+  toPlayerId: string;
+  toUsername: string;
+  resources: Partial<Resources>;
+  message: string;
+  createdAt: string;
+  claimed: boolean;
+}
+
+// --- Social Feed ---
+export interface SocialFeedEntry {
+  id: string;
+  playerId: string;
+  username: string;
+  type: string;
+  message: string;
+  data: Record<string, unknown>;
+  createdAt: string;
+}
+
+// --- Social Notification ---
+export interface SocialNotification {
+  id: string;
+  playerId: string;
+  type: SocialNotificationType;
+  title: string;
+  message: string;
+  data: Record<string, unknown>;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface SocialNotificationPrefs {
+  [SocialNotificationType.FriendOnline]: boolean;
+  [SocialNotificationType.FriendRequest]: boolean;
+  [SocialNotificationType.TradeRequest]: boolean;
+  [SocialNotificationType.AllianceInvite]: boolean;
+  [SocialNotificationType.WarDeclared]: boolean;
+  [SocialNotificationType.GiftReceived]: boolean;
+  [SocialNotificationType.ChatMention]: boolean;
+  [SocialNotificationType.RankChange]: boolean;
+  [SocialNotificationType.WorldBoss]: boolean;
+  [SocialNotificationType.AllianceEvent]: boolean;
+}
+
+// --- World Boss ---
+export interface WorldBossEvent {
+  id: string;
+  bossName: string;
+  totalHP: number;
+  currentHP: number;
+  contributors: WorldBossContributor[];
+  startsAt: string;
+  endsAt: string;
+  defeated: boolean;
+  rewards: Partial<Resources>;
+}
+
+export interface WorldBossContributor {
+  playerId: string;
+  username: string;
+  allianceId: string | null;
+  damage: number;
+  hits: number;
+}
+
+// --- Mentorship ---
+export interface MentorshipLink {
+  id: string;
+  mentorId: string;
+  mentorUsername: string;
+  menteeId: string;
+  menteeUsername: string;
+  startedAt: string;
+  mentorXpEarned: number;
+  menteeLevel: number;
+}
+
+// --- Player Comparison ---
+export interface PlayerComparison {
+  playerA: PlayerProfile;
+  playerB: PlayerProfile;
+  differences: Record<string, { a: number; b: number }>;
+}
+
+// --- Seasons ---
+export interface MultiplayerSeason {
+  id: string;
+  name: string;
+  startsAt: string;
+  endsAt: string;
+  rewardTrack: SeasonRewardTier[];
+  currentTier: number;
+}
+
+export interface SeasonRewardTier {
+  tier: number;
+  pointsRequired: number;
+  rewards: Partial<Resources>;
+  label: string;
+}
+
+// --- Player Card ---
+export interface PlayerCard {
+  playerId: string;
+  username: string;
+  guildName: string;
+  guildLevel: number;
+  emblem: GuildEmblem | null;
+  topHeroName: string;
+  topHeroLevel: number;
+  expeditionCount: number;
+  achievements: string[];
+  shareUrl: string;
+}
+
+// --- Follow System ---
+export interface FollowEntry {
+  playerId: string;
+  username: string;
+  guildName: string;
+  followedAt: string;
+}
+
+// --- Blocked Player ---
+export interface BlockedPlayer {
+  playerId: string;
+  username: string;
+  blockedAt: string;
+}
+
+// --- Player Report ---
+export interface PlayerReport {
+  id: string;
+  reporterId: string;
+  targetId: string;
+  reason: string;
+  details: string;
+  createdAt: string;
+}
+
+// --- Cross-Alliance Trade Fair ---
+export interface TradeFairEvent {
+  id: string;
+  name: string;
+  startsAt: string;
+  endsAt: string;
+  participants: Array<{ allianceId: string; allianceName: string; offerings: Partial<Resources> }>;
+  bonusMultiplier: number;
+}
+
+// --- Alliance Diplomacy ---
+export interface DiplomacyPact {
+  id: string;
+  type: 'non_aggression' | 'trade_agreement';
+  allianceAId: string;
+  allianceAName: string;
+  allianceBId: string;
+  allianceBName: string;
+  startsAt: string;
+  endsAt: string;
+  active: boolean;
+}
+
+// --- Matchmaking ---
+export interface MatchmakingResult {
+  matchedGuildId: string;
+  matchedGuildName: string;
+  matchedGuildLevel: number;
+  matchedPowerScore: number;
+  compatibilityScore: number;
+}
+
+// --- Anti-Cheat ---
+export interface AntiCheatValidation {
+  action: string;
+  playerId: string;
+  valid: boolean;
+  reason: string;
+  timestamp: string;
 }

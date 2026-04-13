@@ -16,6 +16,9 @@ import { accountRouter } from './routes/account';
 import { resourcesRouter } from './routes/resources';
 import { financeRouter } from './routes/finance';
 import { regionsRouter } from './routes/regions';
+import { socialRouter } from './routes/social';
+import { alliancesRouter } from './routes/alliances';
+import { leaderboardsRouter } from './routes/leaderboards';
 
 const app = express();
 
@@ -49,6 +52,9 @@ app.use('/api/account', accountRouter);
 app.use('/api/resources', resourcesRouter);
 app.use('/api/finance', financeRouter);
 app.use('/api/regions', regionsRouter);
+app.use('/api/social', socialRouter);
+app.use('/api/alliances', alliancesRouter);
+app.use('/api/leaderboards', leaderboardsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {

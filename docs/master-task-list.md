@@ -1203,106 +1203,106 @@
 ## Epic 16: Social & Multiplayer
 > Async guild cooperation, trade between players, alliances, leaderboards, chat, guild wars, and regional synergy.
 
-- [ ] T-1141: Design multiplayer architecture with WebSocket connection management
-- [ ] T-1142: Implement WebSocket server with connection pooling and heartbeat
-- [ ] T-1143: Build WebSocket client with reconnection logic and offline queue
-- [ ] T-1144: Create player presence system (online, idle, offline statuses)
-- [ ] T-1145: Implement player search by username with results list
-- [ ] T-1146: Build player profile public view with guild info and stats
-- [ ] T-1147: Create friend request system with send, accept, decline endpoints
-- [ ] T-1148: Build friend list UI with online status and quick actions
-- [ ] T-1149: Implement friend activity feed showing recent friend actions
-- [ ] T-1150: Create alliance system with create, invite, join, leave endpoints
-- [ ] T-1151: Build alliance creation form with name, emblem, and description
-- [ ] T-1152: Implement alliance invitation system with pending invites list
-- [ ] T-1153: Build alliance member list with role display (leader, officer, member)
-- [ ] T-1154: Create alliance role permission system (who can invite, kick, manage)
-- [ ] T-1155: Implement alliance chat channel with message history
-- [ ] T-1156: Build alliance chat UI with message input and scrollable history
-- [ ] T-1157: Create global chat channel with rate limiting and moderation
-- [ ] T-1158: Implement chat message filtering (profanity filter, spam detection)
-- [ ] T-1159: Build chat notification system with unread message count
-- [ ] T-1160: Create private messaging system between players
-- [ ] T-1161: Build private message UI with conversation threads
-- [ ] T-1162: Implement player blocking system to hide messages from blocked users
-- [ ] T-1163: Create player reporting system for chat abuse
-- [ ] T-1164: Build moderation tools for alliance leaders (mute, kick members)
-- [ ] T-1165: Implement player-to-player trade system with trade window
-- [ ] T-1166: Build trade request UI with offer and request slots
-- [ ] T-1167: Create trade confirmation flow with both parties accepting
-- [ ] T-1168: Implement trade history log between players
-- [ ] T-1169: Create guild cooperation system: joint expeditions with alliance members
-- [ ] T-1170: Build joint expedition UI showing allied party contribution
-- [ ] T-1171: Implement joint expedition reward splitting system
-- [ ] T-1172: Create alliance leaderboard ranked by combined guild level
-- [ ] T-1173: Build individual leaderboard categories (expedition count, trade volume, hero power)
-- [ ] T-1174: Implement leaderboard UI with rank display, filters, and search
-- [ ] T-1175: Create weekly leaderboard reset with rewards for top rankings
-- [ ] T-1176: Build leaderboard notification for rank changes
-- [ ] T-1177: Implement guild wars system: async competitive events between guilds
-- [ ] T-1178: Create guild war declaration with wager and duration settings
-- [ ] T-1179: Build guild war progress tracker with score display
-- [ ] T-1180: Implement guild war objective system (most expeditions, highest trade volume)
-- [ ] T-1181: Create guild war reward distribution for winning guild
-- [ ] T-1182: Build guild war history log with results and statistics
-- [ ] T-1183: Implement regional synergy system (alliances controlling regions get bonuses)
-- [ ] T-1184: Create regional synergy bonus calculation from allied outpost network
-- [ ] T-1185: Build regional synergy map overlay showing alliance territory
-- [ ] T-1186: Implement alliance treasury for shared resource pooling
-- [ ] T-1187: Build alliance treasury management UI with deposit and withdraw
-- [ ] T-1188: Create alliance research system (shared research tree for alliance)
-- [ ] T-1189: Implement alliance event system (alliance-wide challenges)
-- [ ] T-1190: Build alliance event participation tracker
-- [ ] T-1191: Create social notification system (friend online, trade request, war declared)
-- [ ] T-1192: Implement player gifting system for resource donations to friends
-- [ ] T-1193: Build gift history log showing sent and received gifts
-- [ ] T-1194: Create alliance recruitment board for posting open alliance listings
-- [ ] T-1195: Build alliance recruitment browser with search and filter
-- [ ] T-1196: Implement alliance merge system for combining two alliances
-- [ ] T-1197: Create social achievement system (make 10 friends, complete 5 joint expeditions)
-- [ ] T-1198: Build player comparison tool for comparing stats with friends
-- [ ] T-1199: Implement alliance daily challenge with shared objective
-- [ ] T-1200: Create alliance chat emoji reaction system
-- [ ] T-1201: Build alliance announcement board for leader posts
-- [ ] T-1202: Implement player mentorship system (veteran guides new player)
-- [ ] T-1203: Create mentorship reward system for mentor engagement
-- [ ] T-1204: Build social hub scene with chat, friends, and alliance access
-- [ ] T-1205: Implement multiplayer event: world boss requiring alliance cooperation
-- [ ] T-1206: Create world boss damage contribution tracker
-- [ ] T-1207: Build world boss reward distribution based on contribution
-- [ ] T-1208: Implement alliance banner display in guild hall
-- [ ] T-1209: Create alliance territory war (compete for region control with other alliances)
-- [ ] T-1210: Build territory war map with contested regions highlighted
-- [ ] T-1211: Implement alliance diplomacy system (non-aggression pacts, trade agreements)
-- [ ] T-1212: Create alliance ranking system with tiered prestige levels
-- [ ] T-1213: Build alliance statistics dashboard (member count, total power, activity)
-- [ ] T-1214: Implement social feed with recent friend and alliance activity
-- [ ] T-1215: Create multiplayer sync for shared world events across all players
-- [ ] T-1216: Build spectator mode for watching ally expeditions
-- [ ] T-1217: Implement alliance weekly report with contribution highlights
-- [ ] T-1218: Create social referral system with rewards for inviting new players
-- [ ] T-1219: Build player card shareable link with stats and guild info
-- [ ] T-1220: Implement anti-cheat validation for multiplayer actions
-- [ ] T-1221: Create matchmaking system for guild wars based on power level
-- [ ] T-1222: Build alliance calendar for scheduling cooperative events
-- [ ] T-1223: Implement player achievement showcase on profile
-- [ ] T-1224: Create social tutorial introducing multiplayer features
-- [ ] T-1225: Build alliance officer promotion/demotion system
-- [ ] T-1226: Implement alliance description and rules editor
-- [ ] T-1227: Create alliance member activity score tracking
-- [ ] T-1228: Build inactive member auto-kick settings for alliance leaders
-- [ ] T-1229: Implement alliance emblem customization with layers and colors
-- [ ] T-1230: Create multiplayer season system with ranked competitive periods
-- [ ] T-1231: Build seasonal reward track for multiplayer engagement
-- [ ] T-1232: Implement alliance resource donation leaderboard
-- [ ] T-1233: Create cross-alliance trade fair event
-- [ ] T-1234: Build social notification preferences (per category mute/unmute)
-- [ ] T-1235: Implement player status message (custom text shown to friends)
-- [ ] T-1236: Create alliance level system with XP from member contributions
-- [ ] T-1237: Build alliance perk unlocks at alliance level milestones
-- [ ] T-1238: Implement chat image/screenshot sharing in alliance chat
-- [ ] T-1239: Create player follow system for tracking non-friend players
-- [ ] T-1240: Build multiplayer performance optimization for large alliances
+- [x] T-1141: Design multiplayer architecture with WebSocket connection management
+- [x] T-1142: Implement WebSocket server with connection pooling and heartbeat
+- [x] T-1143: Build WebSocket client with reconnection logic and offline queue
+- [x] T-1144: Create player presence system (online, idle, offline statuses)
+- [x] T-1145: Implement player search by username with results list
+- [x] T-1146: Build player profile public view with guild info and stats
+- [x] T-1147: Create friend request system with send, accept, decline endpoints
+- [x] T-1148: Build friend list UI with online status and quick actions
+- [x] T-1149: Implement friend activity feed showing recent friend actions
+- [x] T-1150: Create alliance system with create, invite, join, leave endpoints
+- [x] T-1151: Build alliance creation form with name, emblem, and description
+- [x] T-1152: Implement alliance invitation system with pending invites list
+- [x] T-1153: Build alliance member list with role display (leader, officer, member)
+- [x] T-1154: Create alliance role permission system (who can invite, kick, manage)
+- [x] T-1155: Implement alliance chat channel with message history
+- [x] T-1156: Build alliance chat UI with message input and scrollable history
+- [x] T-1157: Create global chat channel with rate limiting and moderation
+- [x] T-1158: Implement chat message filtering (profanity filter, spam detection)
+- [x] T-1159: Build chat notification system with unread message count
+- [x] T-1160: Create private messaging system between players
+- [x] T-1161: Build private message UI with conversation threads
+- [x] T-1162: Implement player blocking system to hide messages from blocked users
+- [x] T-1163: Create player reporting system for chat abuse
+- [x] T-1164: Build moderation tools for alliance leaders (mute, kick members)
+- [x] T-1165: Implement player-to-player trade system with trade window
+- [x] T-1166: Build trade request UI with offer and request slots
+- [x] T-1167: Create trade confirmation flow with both parties accepting
+- [x] T-1168: Implement trade history log between players
+- [x] T-1169: Create guild cooperation system: joint expeditions with alliance members
+- [x] T-1170: Build joint expedition UI showing allied party contribution
+- [x] T-1171: Implement joint expedition reward splitting system
+- [x] T-1172: Create alliance leaderboard ranked by combined guild level
+- [x] T-1173: Build individual leaderboard categories (expedition count, trade volume, hero power)
+- [x] T-1174: Implement leaderboard UI with rank display, filters, and search
+- [x] T-1175: Create weekly leaderboard reset with rewards for top rankings
+- [x] T-1176: Build leaderboard notification for rank changes
+- [x] T-1177: Implement guild wars system: async competitive events between guilds
+- [x] T-1178: Create guild war declaration with wager and duration settings
+- [x] T-1179: Build guild war progress tracker with score display
+- [x] T-1180: Implement guild war objective system (most expeditions, highest trade volume)
+- [x] T-1181: Create guild war reward distribution for winning guild
+- [x] T-1182: Build guild war history log with results and statistics
+- [x] T-1183: Implement regional synergy system (alliances controlling regions get bonuses)
+- [x] T-1184: Create regional synergy bonus calculation from allied outpost network
+- [x] T-1185: Build regional synergy map overlay showing alliance territory
+- [x] T-1186: Implement alliance treasury for shared resource pooling
+- [x] T-1187: Build alliance treasury management UI with deposit and withdraw
+- [x] T-1188: Create alliance research system (shared research tree for alliance)
+- [x] T-1189: Implement alliance event system (alliance-wide challenges)
+- [x] T-1190: Build alliance event participation tracker
+- [x] T-1191: Create social notification system (friend online, trade request, war declared)
+- [x] T-1192: Implement player gifting system for resource donations to friends
+- [x] T-1193: Build gift history log showing sent and received gifts
+- [x] T-1194: Create alliance recruitment board for posting open alliance listings
+- [x] T-1195: Build alliance recruitment browser with search and filter
+- [x] T-1196: Implement alliance merge system for combining two alliances
+- [x] T-1197: Create social achievement system (make 10 friends, complete 5 joint expeditions)
+- [x] T-1198: Build player comparison tool for comparing stats with friends
+- [x] T-1199: Implement alliance daily challenge with shared objective
+- [x] T-1200: Create alliance chat emoji reaction system
+- [x] T-1201: Build alliance announcement board for leader posts
+- [x] T-1202: Implement player mentorship system (veteran guides new player)
+- [x] T-1203: Create mentorship reward system for mentor engagement
+- [x] T-1204: Build social hub scene with chat, friends, and alliance access
+- [x] T-1205: Implement multiplayer event: world boss requiring alliance cooperation
+- [x] T-1206: Create world boss damage contribution tracker
+- [x] T-1207: Build world boss reward distribution based on contribution
+- [x] T-1208: Implement alliance banner display in guild hall
+- [x] T-1209: Create alliance territory war (compete for region control with other alliances)
+- [x] T-1210: Build territory war map with contested regions highlighted
+- [x] T-1211: Implement alliance diplomacy system (non-aggression pacts, trade agreements)
+- [x] T-1212: Create alliance ranking system with tiered prestige levels
+- [x] T-1213: Build alliance statistics dashboard (member count, total power, activity)
+- [x] T-1214: Implement social feed with recent friend and alliance activity
+- [x] T-1215: Create multiplayer sync for shared world events across all players
+- [x] T-1216: Build spectator mode for watching ally expeditions
+- [x] T-1217: Implement alliance weekly report with contribution highlights
+- [x] T-1218: Create social referral system with rewards for inviting new players
+- [x] T-1219: Build player card shareable link with stats and guild info
+- [x] T-1220: Implement anti-cheat validation for multiplayer actions
+- [x] T-1221: Create matchmaking system for guild wars based on power level
+- [x] T-1222: Build alliance calendar for scheduling cooperative events
+- [x] T-1223: Implement player achievement showcase on profile
+- [x] T-1224: Create social tutorial introducing multiplayer features
+- [x] T-1225: Build alliance officer promotion/demotion system
+- [x] T-1226: Implement alliance description and rules editor
+- [x] T-1227: Create alliance member activity score tracking
+- [x] T-1228: Build inactive member auto-kick settings for alliance leaders
+- [x] T-1229: Implement alliance emblem customization with layers and colors
+- [x] T-1230: Create multiplayer season system with ranked competitive periods
+- [x] T-1231: Build seasonal reward track for multiplayer engagement
+- [x] T-1232: Implement alliance resource donation leaderboard
+- [x] T-1233: Create cross-alliance trade fair event
+- [x] T-1234: Build social notification preferences (per category mute/unmute)
+- [x] T-1235: Implement player status message (custom text shown to friends)
+- [x] T-1236: Create alliance level system with XP from member contributions
+- [x] T-1237: Build alliance perk unlocks at alliance level milestones
+- [x] T-1238: Implement chat image/screenshot sharing in alliance chat
+- [x] T-1239: Create player follow system for tracking non-friend players
+- [x] T-1240: Build multiplayer performance optimization for large alliances
 
 ## Epic 17: Combat & Encounters
 > Auto-battler combat system, squad composition, enemy types, boss fights, combat log, and combat rewards.
