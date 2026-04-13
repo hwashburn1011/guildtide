@@ -770,6 +770,94 @@ export class RegionService {
       }));
   }
 
+  // ──── Political Map Overlay (T-1114) ────
+
+  static getPoliticalOverlay(playerId: string): object[] {
+    const state = getPlayerState(playerId);
+    const results: object[] = [];
+
+    for (const region of getAllRegions()) {
+      if (!state.discoveredRegions.has(region.id)) continue;
+
+      const rep = state.factionReputation[region.id] || {};
+      const dominantFaction = region.factions.reduce<{ name: string; rep: number } | null>((best, f) => {
+        const r = rep[f.id] || 0;
+        if (!best || r > best.rep) return { name: f.name, rep: r };
+        return best;
+      }, null);
+
+      results.push({
+        regionId: region.id,
+        regionName: region.name,
+        mapX: region.mapX,
+        mapY: region.mapY,
+        mapRadius: region.mapRadius,
+        claimed: state.claimedRegions.has(region.id),
+        dominantFaction: dominantFaction?.name || 'Unclaimed',
+        factions: region.factions.map(f => ({
+          name: f.name,
+          disposition: f.disposition,
+          reputation: rep[f.id] || 0,
+        })),
+      });
+    }
+    return results;
+  }
+
+  // ──── Active Event Indicators (T-1120) ────
+
+  static getActiveEventIndicators(playerId: string): object[] {
+    const state = getPlayerState(playerId);
+    const indicators: object[] = [];
+
+    for (const region of getAllRegions()) {
+      if (!state.discoveredRegions.has(region.id)) continue;
+
+      // Simulate active events based on region difficulty and time
+      const hour = new Date().getHours();
+      const hasEvent = (region.difficulty + hour) % 5 === 0;
+
+      if (hasEvent) {
+        const encounter = region.encounterTable[hour % region.encounterTable.length];
+        indicators.push({
+          regionId: region.id,
+          regionName: region.name,
+          mapX: region.mapX,
+          mapY: region.mapY,
+          eventName: encounter?.name || 'Unknown Event',
+          eventType: 'encounter',
+        });
+      }
+    }
+    return indicators;
+  }
+
+  // ──── Map Share/Export (T-1126) ────
+
+  static getMapExportData(playerId: string): object {
+    const state = getPlayerState(playerId);
+    const regions = getAllRegions()
+      .filter(r => state.discoveredRegions.has(r.id))
+      .map(r => ({
+        id: r.id,
+        name: r.name,
+        biome: r.biome.name,
+        mapX: r.mapX,
+        mapY: r.mapY,
+        explorationPercent: state.explorationProgress[r.id] || 0,
+        claimed: state.claimedRegions.has(r.id),
+      }));
+
+    return {
+      playerId,
+      exportDate: new Date().toISOString(),
+      totalDiscovered: state.discoveredRegions.size,
+      totalClaimed: state.claimedRegions.size,
+      totalLandmarks: state.discoveredLandmarks.size,
+      regions,
+    };
+  }
+
   // ──── Distance Calculator (T-1134) ────
 
   static getDistance(regionAId: string, regionBId: string): { distance: number; travelDays: number } | null {

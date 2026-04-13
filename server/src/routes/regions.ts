@@ -251,6 +251,24 @@ router.get('/tutorial', (_req: Request, res: Response) => {
   });
 });
 
+// T-1114: Political map overlay showing faction territories
+router.get('/political-overlay', (req: Request, res: Response) => {
+  const overlay = RegionService.getPoliticalOverlay(req.playerId);
+  res.json({ overlay });
+});
+
+// T-1120: Active event indicators per region
+router.get('/event-indicators', (req: Request, res: Response) => {
+  const indicators = RegionService.getActiveEventIndicators(req.playerId);
+  res.json({ indicators });
+});
+
+// T-1126: Map share/export
+router.get('/export', (req: Request, res: Response) => {
+  const data = RegionService.getMapExportData(req.playerId);
+  res.json(data);
+});
+
 // T-1113: Force resource regeneration (admin/tick)
 router.post('/regenerate-resources', (_req: Request, res: Response) => {
   RegionService.regenerateResources();

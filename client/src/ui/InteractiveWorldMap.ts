@@ -676,6 +676,70 @@ export class InteractiveWorldMap {
     };
   }
 
+  /**
+   * T-1120: Draw active event indicators per region.
+   */
+  drawEventIndicators(indicators: Array<{ regionId: string; mapX: number; mapY: number; eventName: string }>): void {
+    for (const ind of indicators) {
+      const px = (ind.mapX / 100) * this.mapWidth;
+      const py = (ind.mapY / 100) * this.mapHeight;
+
+      // Pulsing exclamation mark
+      const marker = this.scene.add.text(px + 15, py - 15, '\u{2757}', {
+        fontSize: '12px',
+      }).setOrigin(0.5);
+
+      this.scene.tweens.add({
+        targets: marker,
+        alpha: 0.3,
+        duration: 800,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.InOut',
+      });
+
+      this.container.add(marker);
+    }
+  }
+
+  /**
+   * T-1114: Draw political overlay showing faction territories.
+   */
+  drawPoliticalOverlay(data: Array<{ regionId: string; mapX: number; mapY: number; mapRadius: number; claimed: boolean; dominantFaction: string }>): void {
+    const gfx = this.scene.add.graphics();
+
+    for (const entry of data) {
+      const px = (entry.mapX / 100) * this.mapWidth;
+      const py = (entry.mapY / 100) * this.mapHeight;
+      const radius = (entry.mapRadius / 100) * this.mapWidth;
+
+      // Territorial border color based on claim status
+      const color = entry.claimed ? 0xffd700 : 0x4466aa;
+      gfx.lineStyle(2, color, 0.6);
+      gfx.strokeCircle(px, py, radius + 5);
+
+      // Faction label below region
+      const label = this.scene.add.text(px, py + radius + 8, entry.dominantFaction, {
+        fontFamily: FONTS.primary,
+        fontSize: '8px',
+        color: entry.claimed ? '#ffd700' : '#6688aa',
+      }).setOrigin(0.5);
+
+      this.container.add(label);
+    }
+
+    this.container.addAt(gfx, 2);
+  }
+
+  /**
+   * T-1126: Export map state as data URL (for sharing).
+   */
+  getMapSnapshot(): string {
+    // In a real implementation this would use canvas.toDataURL()
+    // For now return a placeholder
+    return `data:text/plain;base64,${btoa('Guildtide World Map Export')}`;
+  }
+
   destroy(): void {
     this.container.destroy();
   }

@@ -1790,6 +1790,21 @@ class ApiClient {
   async getRegionPopulation(regionId: string): Promise<{ population: number; activity: string }> {
     return this.request('GET', `/regions/population/${regionId}`);
   }
+
+  // T-1114: Political map overlay
+  async getPoliticalOverlay(): Promise<{ overlay: object[] }> {
+    return this.request('GET', '/regions/political-overlay');
+  }
+
+  // T-1120: Active event indicators
+  async getEventIndicators(): Promise<{ indicators: object[] }> {
+    return this.request('GET', '/regions/event-indicators');
+  }
+
+  // T-1126: Map export/share
+  async exportMapData(): Promise<Record<string, unknown>> {
+    return this.request('GET', '/regions/export');
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);
