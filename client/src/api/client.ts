@@ -676,8 +676,85 @@ class ApiClient {
     return this.request('GET', '/research');
   }
 
+  async getAdvancedResearchState(season?: string): Promise<any> {
+    const params = season ? `?season=${season}` : '';
+    return this.request('GET', `/research/advanced${params}`);
+  }
+
   async startResearch(researchId: string): Promise<any> {
     return this.request('POST', `/research/${researchId}/start`);
+  }
+
+  async cancelResearch(): Promise<{ refunded: Record<string, number> }> {
+    return this.request('POST', '/research/cancel');
+  }
+
+  async queueResearch(researchId: string): Promise<{ queue: any[] }> {
+    return this.request('POST', '/research/queue', { researchId });
+  }
+
+  async dequeueResearch(researchId: string): Promise<{ queue: any[] }> {
+    return this.request('DELETE', `/research/queue/${researchId}`);
+  }
+
+  async undoResearch(): Promise<{ undone: string; refunded: Record<string, number> }> {
+    return this.request('POST', '/research/undo');
+  }
+
+  async contributeResearch(playerName: string, points: number): Promise<{ contributions: any[] }> {
+    return this.request('POST', '/research/contribute', { playerName, points });
+  }
+
+  async triggerResearchEvent(eventId: string): Promise<{ event: any }> {
+    return this.request('POST', '/research/event', { eventId });
+  }
+
+  async searchResearch(query: string): Promise<{ results: any[] }> {
+    return this.request('GET', `/research/search?q=${encodeURIComponent(query)}`);
+  }
+
+  async filterResearch(opts: { branch?: string; status?: string; effectType?: string }): Promise<{ results: any[] }> {
+    const params = new URLSearchParams();
+    if (opts.branch) params.set('branch', opts.branch);
+    if (opts.status) params.set('status', opts.status);
+    if (opts.effectType) params.set('effectType', opts.effectType);
+    return this.request('GET', `/research/filter?${params}`);
+  }
+
+  async prestigeResearch(): Promise<{ kept: string[]; prestigeLevel: number }> {
+    return this.request('POST', '/research/prestige');
+  }
+
+  async specializeResearch(branch: string, subPath: string): Promise<{ specialization: string }> {
+    return this.request('POST', '/research/specialize', { branch, subPath });
+  }
+
+  async getResearchSpecializations(): Promise<{ specializations: Record<string, string> }> {
+    return this.request('GET', '/research/specializations');
+  }
+
+  async exportResearchTree(): Promise<any> {
+    return this.request('GET', '/research/export');
+  }
+
+  async compareResearchPaths(pathA: string[], pathB: string[]): Promise<any> {
+    return this.request('POST', '/research/compare-paths', { pathA, pathB });
+  }
+
+  async setResearchNotificationPrefs(prefs: { onComplete: boolean; onQueueAdvance: boolean; onEvent: boolean }): Promise<any> {
+    return this.request('POST', '/research/notification-prefs', prefs);
+  }
+
+  async getRecommendedPath(branch: string): Promise<{ path: any[] }> {
+    return this.request('GET', `/research/recommended-path/${branch}`);
+  }
+
+  async getBranchEffects(branch: string): Promise<{ effects: Record<string, number> }> {
+    return this.request('GET', `/research/branch-effects/${branch}`);
+  }
+
+  async getResearchAnnouncements(): Promise<{ announcements: any[] }> {
+    return this.request('GET', '/research/announcements');
   }
 
   // Items & Equipment

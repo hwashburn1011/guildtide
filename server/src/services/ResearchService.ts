@@ -123,7 +123,68 @@ export class ResearchService {
     // Complete research
     const completed: string[] = JSON.parse(guild.researchIds || '[]');
     completed.push(active.researchId);
+
+    // Record in history (T-0675)
+    const node = RESEARCH_MAP.get(active.researchId);
+    const history: Array<{ researchId: string; completedAt: number; branch: string; name: string }> =
+      resources.__researchHistory || [];
+    if (node) {
+      history.push({
+        researchId: active.researchId,
+        completedAt: Date.now(),
+        branch: node.branch,
+        name: node.name,
+      });
+    }
+    resources.__researchHistory = history;
+
+    // Guild announcement (T-0680)
+    const announcements: Array<{ type: string; message: string; timestamp: number }> =
+      resources.__guildAnnouncements || [];
+    if (node) {
+      announcements.push({
+        type: 'research_complete',
+        message: `Research complete: ${node.name} — ${node.description}`,
+        timestamp: Date.now(),
+      });
+      // Keep last 50 announcements
+      if (announcements.length > 50) announcements.splice(0, announcements.length - 50);
+    }
+    resources.__guildAnnouncements = announcements;
+
     delete resources.__activeResearch;
+
+    // Auto-start next queued research (T-0639)
+    const queue: Array<{ researchId: string; addedAt: number }> = resources.__researchQueue || [];
+    let autoStarted = false;
+    if (queue.length > 0) {
+      const next = queue[0];
+      const nextNode = RESEARCH_MAP.get(next.researchId);
+      if (nextNode && !completed.includes(next.researchId) &&
+          nextNode.prerequisites.every((p) => completed.includes(p))) {
+        // Check resources
+        let canAfford = true;
+        for (const [res, amount] of Object.entries(nextNode.cost.resources)) {
+          if ((resources[res] || 0) < (amount as number)) { canAfford = false; break; }
+        }
+        if (canAfford) {
+          for (const [res, amount] of Object.entries(nextNode.cost.resources)) {
+            resources[res] = (resources[res] || 0) - (amount as number);
+          }
+          resources.__activeResearch = {
+            researchId: next.researchId,
+            startTime: Date.now(),
+            duration: nextNode.cost.timeSeconds,
+          };
+          resources.__researchQueue = queue.slice(1);
+          autoStarted = true;
+        }
+      }
+      if (!autoStarted) {
+        // Remove unaffordable/invalid item from queue head
+        resources.__researchQueue = queue;
+      }
+    }
 
     await prisma.guild.update({
       where: { id: guildId },
