@@ -2091,121 +2091,121 @@
 ## Epic 28: Accessibility
 > Screen reader support, keyboard navigation, color contrast, ARIA labels, and reduced motion preferences.
 
-- [ ] T-1981: Audit all interactive elements for ARIA label coverage
-- [ ] T-1982: Add ARIA labels to all buttons, links, and form controls
-- [ ] T-1983: Add ARIA landmarks (main, nav, aside, footer) to page layout
-- [ ] T-1984: Implement ARIA live regions for dynamic content updates (resource changes)
-- [ ] T-1985: Add ARIA descriptions to complex UI components (research tree, combat)
-- [ ] T-1986: Implement screen reader announcements for game events and notifications
-- [ ] T-1987: Create text alternatives for all icon-only buttons
-- [ ] T-1988: Build keyboard navigation for guild hall building grid
-- [ ] T-1989: Build keyboard navigation for hero roster and detail pages
-- [ ] T-1990: Build keyboard navigation for market trading interface
-- [ ] T-1991: Build keyboard navigation for research tree nodes
-- [ ] T-1992: Build keyboard navigation for expedition planning
-- [ ] T-1993: Implement visible focus indicators on all interactive elements
-- [ ] T-1994: Create skip-to-main-content link for keyboard users
-- [ ] T-1995: Audit color contrast ratios for WCAG AA compliance (4.5:1 minimum)
-- [ ] T-1996: Fix all color contrast violations found in audit
-- [ ] T-1997: Create high contrast theme option for visually impaired users
-- [ ] T-1998: Implement reduced motion preference detection and animation disabling
-- [ ] T-1999: Add alt text to all images and illustrations
-- [ ] T-2000: Create accessibility settings page with font size, contrast, and motion options
+- [x] T-1981: Audit all interactive elements for ARIA label coverage
+- [x] T-1982: Add ARIA labels to all buttons, links, and form controls
+- [x] T-1983: Add ARIA landmarks (main, nav, aside, footer) to page layout
+- [x] T-1984: Implement ARIA live regions for dynamic content updates (resource changes)
+- [x] T-1985: Add ARIA descriptions to complex UI components (research tree, combat)
+- [x] T-1986: Implement screen reader announcements for game events and notifications
+- [x] T-1987: Create text alternatives for all icon-only buttons
+- [x] T-1988: Build keyboard navigation for guild hall building grid
+- [x] T-1989: Build keyboard navigation for hero roster and detail pages
+- [x] T-1990: Build keyboard navigation for market trading interface
+- [x] T-1991: Build keyboard navigation for research tree nodes
+- [x] T-1992: Build keyboard navigation for expedition planning
+- [x] T-1993: Implement visible focus indicators on all interactive elements
+- [x] T-1994: Create skip-to-main-content link for keyboard users
+- [x] T-1995: Audit color contrast ratios for WCAG AA compliance (4.5:1 minimum)
+- [x] T-1996: Fix all color contrast violations found in audit
+- [x] T-1997: Create high contrast theme option for visually impaired users
+- [x] T-1998: Implement reduced motion preference detection and animation disabling
+- [x] T-1999: Add alt text to all images and illustrations
+- [x] T-2000: Create accessibility settings page with font size, contrast, and motion options
 
 ## Epic 29: Localization
 > i18n framework, string extraction, translation support, RTL layout, and date/number formatting.
 
-- [ ] T-2001: Set up i18n framework (i18next or similar) with namespace support
-- [ ] T-2002: Extract all hardcoded English strings to translation key files
-- [ ] T-2003: Create translation key naming convention and documentation
-- [ ] T-2004: Build language selector UI in settings page
-- [ ] T-2005: Implement language persistence in user preferences
-- [ ] T-2006: Create English (en) base translation file
-- [ ] T-2007: Set up Spanish (es) translation file with machine-translated starter content
-- [ ] T-2008: Set up French (fr) translation file with machine-translated starter content
-- [ ] T-2009: Set up German (de) translation file with machine-translated starter content
-- [ ] T-2010: Set up Japanese (ja) translation file with machine-translated starter content
-- [ ] T-2011: Set up Portuguese (pt-BR) translation file with machine-translated starter content
-- [ ] T-2012: Implement pluralization rules per language
-- [ ] T-2013: Implement date formatting per locale (MM/DD vs DD/MM)
-- [ ] T-2014: Implement number formatting per locale (1,000.00 vs 1.000,00)
-- [ ] T-2015: Implement currency display formatting per locale
-- [ ] T-2016: Create RTL layout support for Arabic/Hebrew languages
-- [ ] T-2017: Build RTL CSS overrides for mirrored layouts
-- [ ] T-2018: Implement dynamic font loading for CJK character sets
-- [ ] T-2019: Create translation contribution guide for community translators
-- [ ] T-2020: Build translation completion percentage display per language
-- [ ] T-2021: Implement fallback chain (requested locale -> English -> key name)
-- [ ] T-2022: Create string interpolation support for dynamic values in translations
-- [ ] T-2023: Build context notes system for translators (screenshot + usage context)
-- [ ] T-2024: Implement locale-aware sorting for lists and tables
-- [ ] T-2025: Create translation testing utility to find missing keys
-- [ ] T-2026: Build visual translation tool for in-context editing
-- [ ] T-2027: Implement locale-specific asset loading (localized images where needed)
-- [ ] T-2028: Create translation memory system for consistent terminology
-- [ ] T-2029: Build locale switcher preview for testing translations
-- [ ] T-2030: Implement text expansion handling (German text 30% longer than English)
-- [ ] T-2031: Create localized tutorial content per language
-- [ ] T-2032: Build translation CI check for missing keys on new strings
-- [ ] T-2033: Implement locale-aware search functionality
-- [ ] T-2034: Create localization documentation for adding new languages
-- [ ] T-2035: Build translation export/import utility for translator workflow
-- [ ] T-2036: Implement locale-specific game content (region names, NPC names)
-- [ ] T-2037: Create translation review workflow with approval status
-- [ ] T-2038: Build locale-aware notification text rendering
-- [ ] T-2039: Implement keyboard shortcut remapping for non-QWERTY layouts
-- [ ] T-2040: Create localization QA checklist and testing procedure
+- [x] T-2001: Set up i18n framework (i18next or similar) with namespace support
+- [x] T-2002: Extract all hardcoded English strings to translation key files
+- [x] T-2003: Create translation key naming convention and documentation
+- [x] T-2004: Build language selector UI in settings page
+- [x] T-2005: Implement language persistence in user preferences
+- [x] T-2006: Create English (en) base translation file
+- [x] T-2007: Set up Spanish (es) translation file with machine-translated starter content
+- [x] T-2008: Set up French (fr) translation file with machine-translated starter content
+- [x] T-2009: Set up German (de) translation file with machine-translated starter content
+- [x] T-2010: Set up Japanese (ja) translation file with machine-translated starter content
+- [x] T-2011: Set up Portuguese (pt-BR) translation file with machine-translated starter content
+- [x] T-2012: Implement pluralization rules per language
+- [x] T-2013: Implement date formatting per locale (MM/DD vs DD/MM)
+- [x] T-2014: Implement number formatting per locale (1,000.00 vs 1.000,00)
+- [x] T-2015: Implement currency display formatting per locale
+- [x] T-2016: Create RTL layout support for Arabic/Hebrew languages
+- [x] T-2017: Build RTL CSS overrides for mirrored layouts
+- [x] T-2018: Implement dynamic font loading for CJK character sets
+- [x] T-2019: Create translation contribution guide for community translators
+- [x] T-2020: Build translation completion percentage display per language
+- [x] T-2021: Implement fallback chain (requested locale -> English -> key name)
+- [x] T-2022: Create string interpolation support for dynamic values in translations
+- [x] T-2023: Build context notes system for translators (screenshot + usage context)
+- [x] T-2024: Implement locale-aware sorting for lists and tables
+- [x] T-2025: Create translation testing utility to find missing keys
+- [x] T-2026: Build visual translation tool for in-context editing
+- [x] T-2027: Implement locale-specific asset loading (localized images where needed)
+- [x] T-2028: Create translation memory system for consistent terminology
+- [x] T-2029: Build locale switcher preview for testing translations
+- [x] T-2030: Implement text expansion handling (German text 30% longer than English)
+- [x] T-2031: Create localized tutorial content per language
+- [x] T-2032: Build translation CI check for missing keys on new strings
+- [x] T-2033: Implement locale-aware search functionality
+- [x] T-2034: Create localization documentation for adding new languages
+- [x] T-2035: Build translation export/import utility for translator workflow
+- [x] T-2036: Implement locale-specific game content (region names, NPC names)
+- [x] T-2037: Create translation review workflow with approval status
+- [x] T-2038: Build locale-aware notification text rendering
+- [x] T-2039: Implement keyboard shortcut remapping for non-QWERTY layouts
+- [x] T-2040: Create localization QA checklist and testing procedure
 
 ## Epic 30: Analytics & Monetization
 > Event tracking, retention metrics, funnel analysis, optional cosmetic shop, and supporter tier system.
 
-- [ ] T-2041: Set up analytics event tracking framework (PostHog, Mixpanel, or custom)
-- [ ] T-2042: Implement page view tracking for all scenes
-- [ ] T-2043: Implement button click tracking for key actions
-- [ ] T-2044: Create user session duration tracking
-- [ ] T-2045: Implement feature usage tracking (which features are used most)
-- [ ] T-2046: Create funnel: registration -> guild setup -> first building -> first expedition
-- [ ] T-2047: Create funnel: expedition launch -> expedition completion -> loot collection
-- [ ] T-2048: Create funnel: market visit -> browse -> purchase
-- [ ] T-2049: Create funnel: hero recruit -> level up -> skill unlock
-- [ ] T-2050: Implement daily active user (DAU) tracking
-- [ ] T-2051: Implement weekly active user (WAU) tracking
-- [ ] T-2052: Implement monthly active user (MAU) tracking
-- [ ] T-2053: Create retention cohort analysis (Day 1, Day 7, Day 30 retention)
-- [ ] T-2054: Build analytics dashboard with key metrics overview
-- [ ] T-2055: Implement user segmentation by activity level (casual, regular, hardcore)
-- [ ] T-2056: Create churn prediction model based on activity patterns
-- [ ] T-2057: Implement A/B testing framework for feature experiments
-- [ ] T-2058: Create A/B test: onboarding flow variation
-- [ ] T-2059: Build A/B test results dashboard with statistical significance
-- [ ] T-2060: Implement event tracking for real-world data engagement (weather checks, market views)
-- [ ] T-2061: Create error rate tracking by endpoint and user segment
-- [ ] T-2062: Implement performance metric tracking (page load time, API response time)
-- [ ] T-2063: Build user feedback collection widget (in-app survey)
-- [ ] T-2064: Create NPS (Net Promoter Score) survey integration
-- [ ] T-2065: Implement analytics data export for external analysis
-- [ ] T-2066: Create cosmetic shop scene with item grid layout
-- [ ] T-2067: Build cosmetic item categories (guild hall decorations, hero skins, themes)
-- [ ] T-2068: Implement guild hall decoration cosmetic items (10 items)
-- [ ] T-2069: Create hero portrait frame cosmetic items (10 frames)
-- [ ] T-2070: Build UI theme cosmetic options (5 color themes)
-- [ ] T-2071: Create guild emblem special cosmetic components (10 items)
-- [ ] T-2072: Implement building skin cosmetic variations (5 building skins)
-- [ ] T-2073: Build cosmetic preview system showing item before purchase
-- [ ] T-2074: Implement premium currency system (Gems or similar)
-- [ ] T-2075: Create premium currency purchase flow with payment integration
-- [ ] T-2076: Build premium currency balance display in header
-- [ ] T-2077: Implement cosmetic item purchase with premium currency
-- [ ] T-2078: Create supporter tier system (Bronze, Silver, Gold, Platinum)
-- [ ] T-2079: Implement supporter tier benefits (exclusive cosmetics, chat badge, bonus storage)
-- [ ] T-2080: Build supporter tier management page
-- [ ] T-2081: Create supporter recurring payment integration
-- [ ] T-2082: Implement supporter tier badge display on player profile
-- [ ] T-2083: Build supporter exclusive chat channel
-- [ ] T-2084: Create supporter early access feature flag system
-- [ ] T-2085: Implement revenue tracking dashboard for monetization metrics
-- [ ] T-2086: Build ARPU (Average Revenue Per User) calculation
-- [ ] T-2087: Create LTV (Lifetime Value) estimation model
-- [ ] T-2088: Implement refund handling workflow
-- [ ] T-2089: Build purchase history page for players
-- [ ] T-2090: Create gift system for sending cosmetics to other players
+- [x] T-2041: Set up analytics event tracking framework (PostHog, Mixpanel, or custom)
+- [x] T-2042: Implement page view tracking for all scenes
+- [x] T-2043: Implement button click tracking for key actions
+- [x] T-2044: Create user session duration tracking
+- [x] T-2045: Implement feature usage tracking (which features are used most)
+- [x] T-2046: Create funnel: registration -> guild setup -> first building -> first expedition
+- [x] T-2047: Create funnel: expedition launch -> expedition completion -> loot collection
+- [x] T-2048: Create funnel: market visit -> browse -> purchase
+- [x] T-2049: Create funnel: hero recruit -> level up -> skill unlock
+- [x] T-2050: Implement daily active user (DAU) tracking
+- [x] T-2051: Implement weekly active user (WAU) tracking
+- [x] T-2052: Implement monthly active user (MAU) tracking
+- [x] T-2053: Create retention cohort analysis (Day 1, Day 7, Day 30 retention)
+- [x] T-2054: Build analytics dashboard with key metrics overview
+- [x] T-2055: Implement user segmentation by activity level (casual, regular, hardcore)
+- [x] T-2056: Create churn prediction model based on activity patterns
+- [x] T-2057: Implement A/B testing framework for feature experiments
+- [x] T-2058: Create A/B test: onboarding flow variation
+- [x] T-2059: Build A/B test results dashboard with statistical significance
+- [x] T-2060: Implement event tracking for real-world data engagement (weather checks, market views)
+- [x] T-2061: Create error rate tracking by endpoint and user segment
+- [x] T-2062: Implement performance metric tracking (page load time, API response time)
+- [x] T-2063: Build user feedback collection widget (in-app survey)
+- [x] T-2064: Create NPS (Net Promoter Score) survey integration
+- [x] T-2065: Implement analytics data export for external analysis
+- [x] T-2066: Create cosmetic shop scene with item grid layout
+- [x] T-2067: Build cosmetic item categories (guild hall decorations, hero skins, themes)
+- [x] T-2068: Implement guild hall decoration cosmetic items (10 items)
+- [x] T-2069: Create hero portrait frame cosmetic items (10 frames)
+- [x] T-2070: Build UI theme cosmetic options (5 color themes)
+- [x] T-2071: Create guild emblem special cosmetic components (10 items)
+- [x] T-2072: Implement building skin cosmetic variations (5 building skins)
+- [x] T-2073: Build cosmetic preview system showing item before purchase
+- [x] T-2074: Implement premium currency system (Gems or similar)
+- [x] T-2075: Create premium currency purchase flow with payment integration
+- [x] T-2076: Build premium currency balance display in header
+- [x] T-2077: Implement cosmetic item purchase with premium currency
+- [x] T-2078: Create supporter tier system (Bronze, Silver, Gold, Platinum)
+- [x] T-2079: Implement supporter tier benefits (exclusive cosmetics, chat badge, bonus storage)
+- [x] T-2080: Build supporter tier management page
+- [x] T-2081: Create supporter recurring payment integration
+- [x] T-2082: Implement supporter tier badge display on player profile
+- [x] T-2083: Build supporter exclusive chat channel
+- [x] T-2084: Create supporter early access feature flag system
+- [x] T-2085: Implement revenue tracking dashboard for monetization metrics
+- [x] T-2086: Build ARPU (Average Revenue Per User) calculation
+- [x] T-2087: Create LTV (Lifetime Value) estimation model
+- [x] T-2088: Implement refund handling workflow
+- [x] T-2089: Build purchase history page for players
+- [x] T-2090: Create gift system for sending cosmetics to other players
