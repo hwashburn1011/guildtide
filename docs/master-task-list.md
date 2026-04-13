@@ -309,86 +309,86 @@
 ## Epic 5: Building System
 > All 10 buildings fully functional with visual states, worker animations, production chains, and upgrade paths.
 
-- [ ] T-0291: Define building data schema with name, type, level, cost, production, and capacity fields
-- [ ] T-0292: Create building base class with shared upgrade, produce, and render logic
-- [ ] T-0293: Implement Tavern building — hero recruitment source
-- [ ] T-0294: Design Tavern sprite with 3 upgrade-level visual variations
-- [ ] T-0295: Implement Tavern recruitment pool refresh mechanic (new heroes every 4 hours)
-- [ ] T-0296: Build Tavern UI panel with available recruits list and hire button
-- [ ] T-0297: Implement Tavern upgrade effects (more recruit slots, higher quality heroes)
-- [ ] T-0298: Implement Workshop building — equipment crafting station
-- [ ] T-0299: Design Workshop sprite with 3 upgrade-level visual variations
-- [ ] T-0300: Build Workshop UI with crafting recipe browser and craft button
-- [ ] T-0301: Implement Workshop production queue with crafting time per item
-- [ ] T-0302: Implement Workshop upgrade effects (faster crafting, unlock rare recipes)
-- [ ] T-0303: Implement Farm building — food resource production
-- [ ] T-0304: Design Farm sprite with 3 upgrade-level visual variations
-- [ ] T-0305: Build Farm UI showing crop cycle progress and harvest button
-- [ ] T-0306: Implement Farm seasonal yield modifier (spring: +30%, winter: -20%)
-- [ ] T-0307: Implement Farm weather yield modifier (rain: +15%, drought: -25%)
-- [ ] T-0308: Implement Farm upgrade effects (more plots, faster growth, better seeds)
-- [ ] T-0309: Implement Mine building — ore and gem resource production
-- [ ] T-0310: Design Mine sprite with 3 upgrade-level visual variations
-- [ ] T-0311: Build Mine UI showing vein depletion and extraction rate
-- [ ] T-0312: Implement Mine rare gem discovery chance on production ticks
-- [ ] T-0313: Implement Mine upgrade effects (deeper veins, better tools, gem chance)
-- [ ] T-0314: Implement Marketplace building — trade interface and NPC merchants
-- [ ] T-0315: Design Marketplace sprite with 3 upgrade-level visual variations
-- [ ] T-0316: Build Marketplace UI with buy/sell tabs and price display
-- [ ] T-0317: Implement Marketplace trade commission reduction on upgrade
-- [ ] T-0318: Implement Marketplace upgrade effects (more merchants, lower fees)
-- [ ] T-0319: Implement Library building — research speed bonus
-- [ ] T-0320: Design Library sprite with 3 upgrade-level visual variations
-- [ ] T-0321: Build Library UI showing current research boost and book collection
-- [ ] T-0322: Implement Library research speed multiplier per level
-- [ ] T-0323: Implement Library upgrade effects (faster research, unlock branches)
-- [ ] T-0324: Implement Barracks building — hero training and stat improvement
-- [ ] T-0325: Design Barracks sprite with 3 upgrade-level visual variations
-- [ ] T-0326: Build Barracks UI with training slot assignment and progress display
-- [ ] T-0327: Implement Barracks training time calculation based on hero and stat
-- [ ] T-0328: Implement Barracks upgrade effects (more slots, faster training, higher cap)
-- [ ] T-0329: Implement Warehouse building — resource storage cap increase
-- [ ] T-0330: Design Warehouse sprite with 3 upgrade-level visual variations
-- [ ] T-0331: Build Warehouse UI showing storage allocation per resource
-- [ ] T-0332: Implement Warehouse resource-specific storage boost configuration
-- [ ] T-0333: Implement Warehouse upgrade effects (higher caps, reduced decay)
-- [ ] T-0334: Implement Temple building — morale and blessing effects
-- [ ] T-0335: Design Temple sprite with 3 upgrade-level visual variations
-- [ ] T-0336: Build Temple UI showing active blessings and prayer schedule
-- [ ] T-0337: Implement Temple blessing system with timed buffs for guild
-- [ ] T-0338: Implement Temple upgrade effects (stronger blessings, more slots)
-- [ ] T-0339: Implement Observatory building — real-world data insight bonuses
-- [ ] T-0340: Design Observatory sprite with 3 upgrade-level visual variations
-- [ ] T-0341: Build Observatory UI showing current real-world data readings
-- [ ] T-0342: Implement Observatory prediction accuracy bonus per level
-- [ ] T-0343: Implement Observatory upgrade effects (more data sources, better predictions)
-- [ ] T-0344: Implement Expedition Hall building — expedition launch and management
-- [ ] T-0345: Design Expedition Hall sprite with 3 upgrade-level visual variations
-- [ ] T-0346: Build Expedition Hall UI with expedition queue and party formation
-- [ ] T-0347: Implement Expedition Hall simultaneous expedition cap per level
-- [ ] T-0348: Implement Expedition Hall upgrade effects (more slots, longer range, faster return)
-- [ ] T-0349: Create building production chain system (Farm food -> Tavern hero recruitment fuel)
-- [ ] T-0350: Implement production chain visualization showing resource flow arrows
-- [ ] T-0351: Build production chain optimizer suggestion engine
-- [ ] T-0352: Create building worker assignment effects on production rate
-- [ ] T-0353: Implement hero skill bonus when assigned to matching building (Miner in Mine)
-- [ ] T-0354: Build worker happiness system affecting building efficiency
-- [ ] T-0355: Create worker rotation schedule for fatigue prevention
-- [ ] T-0356: Implement building adjacency bonus system (+10% when related buildings adjacent)
-- [ ] T-0357: Build adjacency bonus indicator overlay on grid
-- [ ] T-0358: Create building special event trigger (Tavern brawl event at night)
-- [ ] T-0359: Implement building maintenance cost system (periodic resource drain)
-- [ ] T-0360: Build building maintenance overdue warning and efficiency penalty
-- [ ] T-0361: Create building auto-collect toggle for production output
-- [ ] T-0362: Implement building production notification when storage is full
-- [ ] T-0363: Build building comparison tool for upgrade decision making
-- [ ] T-0364: Create building lore entries unlocked by upgrading
-- [ ] T-0365: Implement building destruction animation for demolish action
-- [ ] T-0366: Build building quick-upgrade button with cost confirmation
-- [ ] T-0367: Create building achievement system (max level all buildings, etc.)
-- [ ] T-0368: Implement building event modifier (festival boosts Tavern output)
-- [ ] T-0369: Build building status icon overlay (producing, idle, broken, upgrading)
-- [ ] T-0370: Create building info card with stat comparison for current vs next level
+- [x] T-0291: Define building data schema with name, type, level, cost, production, and capacity fields
+- [x] T-0292: Create building base class with shared upgrade, produce, and render logic
+- [x] T-0293: Implement Tavern building — hero recruitment source
+- [x] T-0294: Design Tavern sprite with 3 upgrade-level visual variations
+- [x] T-0295: Implement Tavern recruitment pool refresh mechanic (new heroes every 4 hours)
+- [x] T-0296: Build Tavern UI panel with available recruits list and hire button
+- [x] T-0297: Implement Tavern upgrade effects (more recruit slots, higher quality heroes)
+- [x] T-0298: Implement Workshop building — equipment crafting station
+- [x] T-0299: Design Workshop sprite with 3 upgrade-level visual variations
+- [x] T-0300: Build Workshop UI with crafting recipe browser and craft button
+- [x] T-0301: Implement Workshop production queue with crafting time per item
+- [x] T-0302: Implement Workshop upgrade effects (faster crafting, unlock rare recipes)
+- [x] T-0303: Implement Farm building — food resource production
+- [x] T-0304: Design Farm sprite with 3 upgrade-level visual variations
+- [x] T-0305: Build Farm UI showing crop cycle progress and harvest button
+- [x] T-0306: Implement Farm seasonal yield modifier (spring: +30%, winter: -20%)
+- [x] T-0307: Implement Farm weather yield modifier (rain: +15%, drought: -25%)
+- [x] T-0308: Implement Farm upgrade effects (more plots, faster growth, better seeds)
+- [x] T-0309: Implement Mine building — ore and gem resource production
+- [x] T-0310: Design Mine sprite with 3 upgrade-level visual variations
+- [x] T-0311: Build Mine UI showing vein depletion and extraction rate
+- [x] T-0312: Implement Mine rare gem discovery chance on production ticks
+- [x] T-0313: Implement Mine upgrade effects (deeper veins, better tools, gem chance)
+- [x] T-0314: Implement Marketplace building — trade interface and NPC merchants
+- [x] T-0315: Design Marketplace sprite with 3 upgrade-level visual variations
+- [x] T-0316: Build Marketplace UI with buy/sell tabs and price display
+- [x] T-0317: Implement Marketplace trade commission reduction on upgrade
+- [x] T-0318: Implement Marketplace upgrade effects (more merchants, lower fees)
+- [x] T-0319: Implement Library building — research speed bonus
+- [x] T-0320: Design Library sprite with 3 upgrade-level visual variations
+- [x] T-0321: Build Library UI showing current research boost and book collection
+- [x] T-0322: Implement Library research speed multiplier per level
+- [x] T-0323: Implement Library upgrade effects (faster research, unlock branches)
+- [x] T-0324: Implement Barracks building — hero training and stat improvement
+- [x] T-0325: Design Barracks sprite with 3 upgrade-level visual variations
+- [x] T-0326: Build Barracks UI with training slot assignment and progress display
+- [x] T-0327: Implement Barracks training time calculation based on hero and stat
+- [x] T-0328: Implement Barracks upgrade effects (more slots, faster training, higher cap)
+- [x] T-0329: Implement Warehouse building — resource storage cap increase
+- [x] T-0330: Design Warehouse sprite with 3 upgrade-level visual variations
+- [x] T-0331: Build Warehouse UI showing storage allocation per resource
+- [x] T-0332: Implement Warehouse resource-specific storage boost configuration
+- [x] T-0333: Implement Warehouse upgrade effects (higher caps, reduced decay)
+- [x] T-0334: Implement Temple building — morale and blessing effects
+- [x] T-0335: Design Temple sprite with 3 upgrade-level visual variations
+- [x] T-0336: Build Temple UI showing active blessings and prayer schedule
+- [x] T-0337: Implement Temple blessing system with timed buffs for guild
+- [x] T-0338: Implement Temple upgrade effects (stronger blessings, more slots)
+- [x] T-0339: Implement Observatory building — real-world data insight bonuses
+- [x] T-0340: Design Observatory sprite with 3 upgrade-level visual variations
+- [x] T-0341: Build Observatory UI showing current real-world data readings
+- [x] T-0342: Implement Observatory prediction accuracy bonus per level
+- [x] T-0343: Implement Observatory upgrade effects (more data sources, better predictions)
+- [x] T-0344: Implement Expedition Hall building — expedition launch and management
+- [x] T-0345: Design Expedition Hall sprite with 3 upgrade-level visual variations
+- [x] T-0346: Build Expedition Hall UI with expedition queue and party formation
+- [x] T-0347: Implement Expedition Hall simultaneous expedition cap per level
+- [x] T-0348: Implement Expedition Hall upgrade effects (more slots, longer range, faster return)
+- [x] T-0349: Create building production chain system (Farm food -> Tavern hero recruitment fuel)
+- [x] T-0350: Implement production chain visualization showing resource flow arrows
+- [x] T-0351: Build production chain optimizer suggestion engine
+- [x] T-0352: Create building worker assignment effects on production rate
+- [x] T-0353: Implement hero skill bonus when assigned to matching building (Miner in Mine)
+- [x] T-0354: Build worker happiness system affecting building efficiency
+- [x] T-0355: Create worker rotation schedule for fatigue prevention
+- [x] T-0356: Implement building adjacency bonus system (+10% when related buildings adjacent)
+- [x] T-0357: Build adjacency bonus indicator overlay on grid
+- [x] T-0358: Create building special event trigger (Tavern brawl event at night)
+- [x] T-0359: Implement building maintenance cost system (periodic resource drain)
+- [x] T-0360: Build building maintenance overdue warning and efficiency penalty
+- [x] T-0361: Create building auto-collect toggle for production output
+- [x] T-0362: Implement building production notification when storage is full
+- [x] T-0363: Build building comparison tool for upgrade decision making
+- [x] T-0364: Create building lore entries unlocked by upgrading
+- [x] T-0365: Implement building destruction animation for demolish action
+- [x] T-0366: Build building quick-upgrade button with cost confirmation
+- [x] T-0367: Create building achievement system (max level all buildings, etc.)
+- [x] T-0368: Implement building event modifier (festival boosts Tavern output)
+- [x] T-0369: Build building status icon overlay (producing, idle, broken, upgrading)
+- [x] T-0370: Create building info card with stat comparison for current vs next level
 
 ## Epic 6: Hero System
 > Hero progression, skill trees, hero quests, retirement, hero stories, and portrait generation system.

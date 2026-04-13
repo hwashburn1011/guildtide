@@ -227,6 +227,21 @@ class ApiClient {
     return this.request('GET', '/guild/rates');
   }
 
+  async getResources(): Promise<{
+    current: Record<ResourceType, number>;
+    caps: Record<ResourceType, number>;
+  }> {
+    return this.request('GET', '/resources/balance');
+  }
+
+  async convertResources(recipeId: string, quantity: number): Promise<{
+    success: boolean;
+    consumed: Record<string, number>;
+    produced: Record<string, number>;
+  }> {
+    return this.request('POST', '/resources/convert', { recipeId, quantity });
+  }
+
   // Buildings
   async getBuildings(): Promise<Building[]> {
     return this.request('GET', '/buildings');
@@ -480,6 +495,98 @@ class ApiClient {
   // Complete construction
   async completeConstruction(type: string): Promise<{ building: any }> {
     return this.request('POST', `/buildings/${type}/complete`);
+  }
+
+  // Extended building detail
+  async getExtendedBuildingDetail(type: string): Promise<any> {
+    return this.request('GET', `/buildings/${type}/extended`);
+  }
+
+  // Specialize building
+  async specializeBuilding(type: string, specializationId: string): Promise<{ success: boolean }> {
+    return this.request('POST', `/buildings/${type}/specialize`, { specializationId });
+  }
+
+  // Pay building maintenance
+  async payBuildingMaintenance(type: string): Promise<{
+    success: boolean;
+    costs?: Record<string, number>;
+  }> {
+    return this.request('POST', `/buildings/${type}/maintenance`);
+  }
+
+  // Toggle auto-collect
+  async toggleBuildingAutoCollect(type: string, enabled: boolean): Promise<{ success: boolean }> {
+    return this.request('POST', `/buildings/${type}/auto-collect`, { enabled });
+  }
+
+  // Get production chains
+  async getProductionChains(): Promise<Array<{
+    id: string;
+    name: string;
+    description: string;
+    steps: Array<{ building: string; input: Record<string, number>; output: Record<string, number> }>;
+    active: boolean;
+    efficiency: number;
+  }>> {
+    return this.request('GET', '/buildings/chains/all');
+  }
+
+  // Get building comparison
+  async getBuildingComparison(type: string): Promise<{
+    current: { output: Record<string, number>; maintenance: Record<string, number> };
+    next: { output: Record<string, number>; maintenance: Record<string, number>; cost: Record<string, number> };
+  }> {
+    return this.request('GET', `/buildings/${type}/compare`);
+  }
+
+  // Get building info card
+  async getBuildingInfoCard(type: string): Promise<{
+    name: string;
+    description: string;
+    level: number;
+    maxLevel: number;
+    stats: Array<{ label: string; current: string; next: string; change: string }>;
+  }> {
+    return this.request('GET', `/buildings/${type}/info`);
+  }
+
+  // Get building lore
+  async getBuildingLore(type: string): Promise<Array<{
+    level: number;
+    title: string;
+    text: string;
+  }>> {
+    return this.request('GET', `/buildings/${type}/lore`);
+  }
+
+  // Check building achievements
+  async checkBuildingAchievements(): Promise<{
+    achievements: any[];
+    all: any[];
+  }> {
+    return this.request('GET', '/buildings/achievements/check');
+  }
+
+  // Check building storage
+  async checkBuildingStorage(type: string): Promise<{
+    full: Array<{ resource: string; current: number; cap: number }>;
+  }> {
+    return this.request('GET', `/buildings/${type}/storage-check`);
+  }
+
+  // Get worker efficiency
+  async getWorkerEfficiency(type: string): Promise<Array<{
+    heroId: string;
+    heroName: string;
+    heroRole: string;
+    baseEfficiency: number;
+    roleMatchBonus: number;
+    skillBonus: number;
+    happinessModifier: number;
+    totalEfficiency: number;
+  }>> {
+    return this.request('GET', `/buildings/${type}/worker-efficiency`);
   }
 
   // World state
