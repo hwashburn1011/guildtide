@@ -178,6 +178,7 @@ export interface CombatResult {
   bossPhaseReached?: number;
   difficulty: number;
   timestamp: string;
+  durabilityDrain?: Record<string, number>; // T-1306: equipmentId -> durability loss
 }
 
 export interface CombatStatistics {
@@ -896,6 +897,14 @@ export class CombatService {
     stats.enemiesDefeated = enemies.filter(e => !e.alive).length + (boss && !boss.alive ? 1 : 0);
     stats.heroesKnockedOut = heroes.filter(h => !h.alive).length;
 
+    // T-1306: Equipment durability drain — each battle wears equipment
+    const durabilityDrain: Record<string, number> = {};
+    for (const hero of heroes) {
+      for (const eqId of hero.equipmentIds) {
+        durabilityDrain[eqId] = (durabilityDrain[eqId] ?? 0) + Math.max(1, Math.floor(rounds.length / 5));
+      }
+    }
+
     return {
       id: `combat_${Date.now()}_${combatIdCounter++}`,
       outcome,
@@ -911,7 +920,23 @@ export class CombatService {
       bossPhaseReached: boss?.currentPhase,
       difficulty: options.difficulty ?? 1,
       timestamp: new Date().toISOString(),
+      durabilityDrain,
     };
+  }
+
+  // ── T-1299: Combat Tutorial Data ──
+
+  static getCombatTutorialSteps(): Array<{ step: number; title: string; description: string }> {
+    return [
+      { step: 1, title: 'Squad Formation', description: 'Place heroes in front (melee) and back (ranged) rows. Front row heroes take melee attacks first.' },
+      { step: 2, title: 'Turn Order', description: 'Combatants act in order of speed. Faster heroes and enemies go first each round.' },
+      { step: 3, title: 'Attacking', description: 'Heroes automatically use their best ability. Damage = (Power + Attack) - Defense. Critical hits deal 1.8x damage!' },
+      { step: 4, title: 'Elements', description: 'Fire, Ice, Lightning, Poison, Dark, and Light. Hit weaknesses for 1.5x damage, resistances for 0.5x.' },
+      { step: 5, title: 'Status Effects', description: 'Poison, Burn, Freeze, Stun, Shield, Regen, Haste, Slow, Blind, and Berserk all change combat dynamics.' },
+      { step: 6, title: 'Synergies', description: 'Squad composition matters! Having 2 Defenders grants +10% defense. Check the synergy list for bonuses.' },
+      { step: 7, title: 'Ultimates', description: 'Ultimate abilities charge over several rounds and unleash powerful effects when ready.' },
+      { step: 8, title: 'Boss Fights', description: 'Bosses have multiple phases. Watch for telegraph warnings before devastating special attacks!' },
+    ];
   }
 
   // ── T-1301: Flee Mechanic ──
