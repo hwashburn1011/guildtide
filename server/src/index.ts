@@ -12,6 +12,7 @@ import { expeditionsRouter } from './routes/expeditions';
 import { marketRouter } from './routes/market';
 import { researchRouter } from './routes/research';
 import { itemsRouter } from './routes/items';
+import { accountRouter } from './routes/account';
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use('/api/expeditions', expeditionsRouter);
 app.use('/api/market', marketRouter);
 app.use('/api/research', researchRouter);
 app.use('/api/items', itemsRouter);
+app.use('/api/account', accountRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
