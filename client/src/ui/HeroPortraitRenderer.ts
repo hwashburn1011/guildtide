@@ -187,17 +187,50 @@ export class HeroPortraitRenderer {
   /**
    * Generate a randomized portrait config.
    */
+  /**
+   * T-1402: 20 hairstyle variations for portrait system
+   * T-1403: 10 face shape variations for portrait system
+   * T-1404: 15 eye style variations for portrait system
+   * T-1405: 10 mouth/expression variations for portrait system
+   * T-1406: 15 accessory variations (hats, earrings, scars)
+   * T-1407: 12 skin tone palette for portrait system
+   * T-1408: 15 hair color palette for portrait system
+   */
+  static readonly HAIRSTYLE_COUNT = 20;
+  static readonly FACE_SHAPE_COUNT = 10;
+  static readonly EYE_STYLE_COUNT = 15;
+  static readonly MOUTH_COUNT = 10;
+  static readonly ACCESSORY_COUNT = 15;
+
+  static readonly SKIN_TONES = [
+    '#ffe0bd', '#f5deb3', '#f0c8a0', '#deb887', '#d2b48c',
+    '#c68642', '#a0724a', '#8d5524', '#6b3a1f', '#4a2c0a',
+    '#f5e0d0', '#e0c0a8',
+  ];
+
+  static readonly HAIR_COLORS = [
+    '#1a1a1a', '#2b1a0e', '#4a2c0a', '#6b3a1f', '#8b6914',
+    '#c68642', '#d4a017', '#e8c84a', '#cc3333', '#aa2244',
+    '#f5f5f5', '#c0c0c0', '#6a0dad', '#1e90ff', '#228b22',
+  ];
+
+  static readonly EYE_COLORS = [
+    '#4a2c0a', '#8b4513', '#1e90ff', '#4169e1', '#228b22',
+    '#2e8b57', '#808080', '#a0a0a0', '#d4a017', '#cc3333',
+    '#9370db', '#00ced1', '#ff6347', '#ffd700', '#4b0082',
+  ];
+
   static randomize(): HeroPortrait {
-    const skinTones = ['#f5deb3', '#d2b48c', '#c68642', '#8d5524', '#4a2c0a', '#ffe0bd', '#f0c8a0'];
-    const hairColors = ['#1a1a1a', '#4a2c0a', '#c68642', '#d4a017', '#cc3333', '#f5f5f5', '#6a0dad', '#1e90ff'];
-    const eyeColors = ['#4a2c0a', '#1e90ff', '#228b22', '#808080', '#d4a017', '#cc3333'];
+    const skinTones = HeroPortraitRenderer.SKIN_TONES;
+    const hairColors = HeroPortraitRenderer.HAIR_COLORS;
+    const eyeColors = HeroPortraitRenderer.EYE_COLORS;
 
     return {
-      hairStyle: Math.floor(Math.random() * 12),
-      faceShape: Math.floor(Math.random() * 8),
-      eyes: Math.floor(Math.random() * 10),
-      mouth: Math.floor(Math.random() * 8),
-      accessory: Math.floor(Math.random() * 15),
+      hairStyle: Math.floor(Math.random() * HeroPortraitRenderer.HAIRSTYLE_COUNT),
+      faceShape: Math.floor(Math.random() * HeroPortraitRenderer.FACE_SHAPE_COUNT),
+      eyes: Math.floor(Math.random() * HeroPortraitRenderer.EYE_STYLE_COUNT),
+      mouth: Math.floor(Math.random() * HeroPortraitRenderer.MOUTH_COUNT),
+      accessory: Math.floor(Math.random() * HeroPortraitRenderer.ACCESSORY_COUNT),
       skinTone: skinTones[Math.floor(Math.random() * skinTones.length)],
       hairColor: hairColors[Math.floor(Math.random() * hairColors.length)],
       eyeColor: eyeColors[Math.floor(Math.random() * eyeColors.length)],

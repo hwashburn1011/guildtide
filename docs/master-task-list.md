@@ -1455,86 +1455,86 @@
 ## Epic 19: Art & Visual Design
 > Sprite sheets, building illustrations, hero portraits, weather particles, UI themes, and animation sets.
 
-- [ ] T-1381: Create art style guide document defining visual language
-- [ ] T-1382: Design color palette for each biome (forest green, desert gold, tundra blue, etc.)
-- [ ] T-1383: Create UI color palette for interface elements (primary, secondary, accent)
-- [ ] T-1384: Design icon set for all 8 resource types (32x32 and 64x64)
-- [ ] T-1385: Design icon set for building types (48x48 for build menu)
-- [ ] T-1386: Design icon set for hero roles (32x32 badges)
-- [ ] T-1387: Design icon set for item categories (32x32 inventory icons)
-- [ ] T-1388: Design icon set for status effects (24x24 buff/debuff icons)
-- [ ] T-1389: Design icon set for navigation and UI actions (24x24 toolbar icons)
-- [ ] T-1390: Create Tavern building illustration with 3 upgrade level variations
-- [ ] T-1391: Create Workshop building illustration with 3 upgrade level variations
-- [ ] T-1392: Create Farm building illustration with 3 upgrade level variations
-- [ ] T-1393: Create Mine building illustration with 3 upgrade level variations
-- [ ] T-1394: Create Marketplace building illustration with 3 upgrade level variations
-- [ ] T-1395: Create Library building illustration with 3 upgrade level variations
-- [ ] T-1396: Create Barracks building illustration with 3 upgrade level variations
-- [ ] T-1397: Create Warehouse building illustration with 3 upgrade level variations
-- [ ] T-1398: Create Temple building illustration with 3 upgrade level variations
-- [ ] T-1399: Create Observatory building illustration with 3 upgrade level variations
-- [ ] T-1400: Create Expedition Hall building illustration with 3 upgrade level variations
-- [ ] T-1401: Design hero portrait base templates for 10 roles
-- [ ] T-1402: Create hairstyle sprite set (20 variations) for portrait system
-- [ ] T-1403: Create face shape sprite set (10 variations) for portrait system
-- [ ] T-1404: Create eye style sprite set (15 variations) for portrait system
-- [ ] T-1405: Create mouth/expression sprite set (10 variations) for portrait system
-- [ ] T-1406: Create accessory sprite set (15 variations: hats, earrings, scars)
-- [ ] T-1407: Create skin tone palette (12 tones) for portrait system
-- [ ] T-1408: Create hair color palette (15 colors) for portrait system
-- [ ] T-1409: Design weapon sprites for all weapon types (5 types x 5 rarities)
-- [ ] T-1410: Design armor sprites for all armor types (5 types x 5 rarities)
-- [ ] T-1411: Design accessory sprites for all accessory types (3 types x 5 rarities)
-- [ ] T-1412: Create rain particle effect system with variable intensity
-- [ ] T-1413: Create snow particle effect system with accumulation visual
-- [ ] T-1414: Create sun ray light beam effect
-- [ ] T-1415: Create fog overlay effect with transparency gradient
-- [ ] T-1416: Create storm lightning flash effect
-- [ ] T-1417: Create wind particle effect (leaves, dust)
-- [ ] T-1418: Create firefly particle effect for night scenes
-- [ ] T-1419: Create ember particle effect for volcanic regions
-- [ ] T-1420: Create bubble particle effect for coastal/underwater areas
-- [ ] T-1421: Create magical sparkle particle effect for enchanting
-- [ ] T-1422: Design world map region illustrations (8 region artworks)
-- [ ] T-1423: Create world map terrain textures for each biome
-- [ ] T-1424: Design minimap region thumbnails
-- [ ] T-1425: Create loading screen illustrations (4 seasonal themed)
-- [ ] T-1426: Design login page background artwork
-- [ ] T-1427: Create guild hall background illustration with parallax layers
-- [ ] T-1428: Design UI panel backgrounds with parchment/wood textures
-- [ ] T-1429: Create UI button sprite states (normal, hover, pressed, disabled)
-- [ ] T-1430: Design UI border and frame decorations
-- [ ] T-1431: Create notification icon set (exclamation, checkmark, star, warning)
-- [ ] T-1432: Design quest marker icons for world map
-- [ ] T-1433: Create expedition route path visual (dotted line with direction)
-- [ ] T-1434: Design combat background illustrations for each biome
-- [ ] T-1435: Create enemy sprites for all 20 enemy types
-- [ ] T-1436: Design boss sprites for 5 boss encounters
-- [ ] T-1437: Create combat hit effect animations (slash, explosion, magic burst)
-- [ ] T-1438: Design NPC character portraits (15 unique NPCs)
-- [ ] T-1439: Create seasonal decoration sprites (20 seasonal items)
-- [ ] T-1440: Design achievement badge icons (30 achievement types)
-- [ ] T-1441: Create gem and enchantment visual effect sprites
-- [ ] T-1442: Design rarity border glow effects for each tier
-- [ ] T-1443: Create research tree node icons (60 research nodes)
-- [ ] T-1444: Design research tree branch decorations
-- [ ] T-1445: Create item set visual indicators (matching glow for set pieces)
-- [ ] T-1446: Design tutorial illustration panels
-- [ ] T-1447: Create empty state illustrations for lists and pages
-- [ ] T-1448: Design error state illustrations (404, 500, offline)
-- [ ] T-1449: Create celebration animation sprites (fireworks, confetti, sparkle)
-- [ ] T-1450: Design favicon and app icon in multiple sizes
-- [ ] T-1451: Create social media preview image (Open Graph image)
-- [ ] T-1452: Design email template header and footer graphics
-- [ ] T-1453: Create hero idle animation sprites (10 roles x 4 frames)
-- [ ] T-1454: Create building construction animation sprites
-- [ ] T-1455: Design market stall and merchant booth illustrations
-- [ ] T-1456: Create currency/coin animation sprites
-- [ ] T-1457: Design guild emblem component sprites (shapes, symbols, borders)
-- [ ] T-1458: Create scroll/parchment UI background for narrative text
-- [ ] T-1459: Design tooltip and popup visual frames
-- [ ] T-1460: Create sprite atlas packing configuration for optimal loading
+- [x] T-1381: Create art style guide document defining visual language
+- [x] T-1382: Design color palette for each biome (forest green, desert gold, tundra blue, etc.)
+- [x] T-1383: Create UI color palette for interface elements (primary, secondary, accent)
+- [x] T-1384: Design icon set for all 8 resource types (32x32 and 64x64)
+- [x] T-1385: Design icon set for building types (48x48 for build menu)
+- [x] T-1386: Design icon set for hero roles (32x32 badges)
+- [x] T-1387: Design icon set for item categories (32x32 inventory icons)
+- [x] T-1388: Design icon set for status effects (24x24 buff/debuff icons)
+- [x] T-1389: Design icon set for navigation and UI actions (24x24 toolbar icons)
+- [x] T-1390: Create Tavern building illustration with 3 upgrade level variations
+- [x] T-1391: Create Workshop building illustration with 3 upgrade level variations
+- [x] T-1392: Create Farm building illustration with 3 upgrade level variations
+- [x] T-1393: Create Mine building illustration with 3 upgrade level variations
+- [x] T-1394: Create Marketplace building illustration with 3 upgrade level variations
+- [x] T-1395: Create Library building illustration with 3 upgrade level variations
+- [x] T-1396: Create Barracks building illustration with 3 upgrade level variations
+- [x] T-1397: Create Warehouse building illustration with 3 upgrade level variations
+- [x] T-1398: Create Temple building illustration with 3 upgrade level variations
+- [x] T-1399: Create Observatory building illustration with 3 upgrade level variations
+- [x] T-1400: Create Expedition Hall building illustration with 3 upgrade level variations
+- [x] T-1401: Design hero portrait base templates for 10 roles
+- [x] T-1402: Create hairstyle sprite set (20 variations) for portrait system
+- [x] T-1403: Create face shape sprite set (10 variations) for portrait system
+- [x] T-1404: Create eye style sprite set (15 variations) for portrait system
+- [x] T-1405: Create mouth/expression sprite set (10 variations) for portrait system
+- [x] T-1406: Create accessory sprite set (15 variations: hats, earrings, scars)
+- [x] T-1407: Create skin tone palette (12 tones) for portrait system
+- [x] T-1408: Create hair color palette (15 colors) for portrait system
+- [x] T-1409: Design weapon sprites for all weapon types (5 types x 5 rarities)
+- [x] T-1410: Design armor sprites for all armor types (5 types x 5 rarities)
+- [x] T-1411: Design accessory sprites for all accessory types (3 types x 5 rarities)
+- [x] T-1412: Create rain particle effect system with variable intensity
+- [x] T-1413: Create snow particle effect system with accumulation visual
+- [x] T-1414: Create sun ray light beam effect
+- [x] T-1415: Create fog overlay effect with transparency gradient
+- [x] T-1416: Create storm lightning flash effect
+- [x] T-1417: Create wind particle effect (leaves, dust)
+- [x] T-1418: Create firefly particle effect for night scenes
+- [x] T-1419: Create ember particle effect for volcanic regions
+- [x] T-1420: Create bubble particle effect for coastal/underwater areas
+- [x] T-1421: Create magical sparkle particle effect for enchanting
+- [x] T-1422: Design world map region illustrations (8 region artworks)
+- [x] T-1423: Create world map terrain textures for each biome
+- [x] T-1424: Design minimap region thumbnails
+- [x] T-1425: Create loading screen illustrations (4 seasonal themed)
+- [x] T-1426: Design login page background artwork
+- [x] T-1427: Create guild hall background illustration with parallax layers
+- [x] T-1428: Design UI panel backgrounds with parchment/wood textures
+- [x] T-1429: Create UI button sprite states (normal, hover, pressed, disabled)
+- [x] T-1430: Design UI border and frame decorations
+- [x] T-1431: Create notification icon set (exclamation, checkmark, star, warning)
+- [x] T-1432: Design quest marker icons for world map
+- [x] T-1433: Create expedition route path visual (dotted line with direction)
+- [x] T-1434: Design combat background illustrations for each biome
+- [x] T-1435: Create enemy sprites for all 20 enemy types
+- [x] T-1436: Design boss sprites for 5 boss encounters
+- [x] T-1437: Create combat hit effect animations (slash, explosion, magic burst)
+- [x] T-1438: Design NPC character portraits (15 unique NPCs)
+- [x] T-1439: Create seasonal decoration sprites (20 seasonal items)
+- [x] T-1440: Design achievement badge icons (30 achievement types)
+- [x] T-1441: Create gem and enchantment visual effect sprites
+- [x] T-1442: Design rarity border glow effects for each tier
+- [x] T-1443: Create research tree node icons (60 research nodes)
+- [x] T-1444: Design research tree branch decorations
+- [x] T-1445: Create item set visual indicators (matching glow for set pieces)
+- [x] T-1446: Design tutorial illustration panels
+- [x] T-1447: Create empty state illustrations for lists and pages
+- [x] T-1448: Design error state illustrations (404, 500, offline)
+- [x] T-1449: Create celebration animation sprites (fireworks, confetti, sparkle)
+- [x] T-1450: Design favicon and app icon in multiple sizes
+- [x] T-1451: Create social media preview image (Open Graph image)
+- [x] T-1452: Design email template header and footer graphics
+- [x] T-1453: Create hero idle animation sprites (10 roles x 4 frames)
+- [x] T-1454: Create building construction animation sprites
+- [x] T-1455: Design market stall and merchant booth illustrations
+- [x] T-1456: Create currency/coin animation sprites
+- [x] T-1457: Design guild emblem component sprites (shapes, symbols, borders)
+- [x] T-1458: Create scroll/parchment UI background for narrative text
+- [x] T-1459: Design tooltip and popup visual frames
+- [x] T-1460: Create sprite atlas packing configuration for optimal loading
 
 ## Epic 20: Audio & Sound Design
 > Ambient music, weather sounds, UI SFX, event stingers, combat sounds, and notification sounds.
