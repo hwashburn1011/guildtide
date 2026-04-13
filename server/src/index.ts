@@ -35,6 +35,7 @@ import { alliancesRouter } from './routes/alliances';
 import { leaderboardsRouter } from './routes/leaderboards';
 import { combatRouter } from './routes/combat';
 import { narrativeRouter } from './routes/narrative';
+import { analyticsRouter } from './routes/analytics';
 
 // ---------------------------------------------------------------------------
 // Validate configuration on startup
@@ -172,6 +173,7 @@ v1.use('/alliances', alliancesRouter);
 v1.use('/leaderboards', leaderboardsRouter);
 v1.use('/combat', combatRouter);
 v1.use('/narrative', narrativeRouter);
+v1.use('/analytics', analyticsRouter);
 
 // Mount v1 at both /api/v1 and /api (backward compat)
 app.use('/api/v1', v1);
