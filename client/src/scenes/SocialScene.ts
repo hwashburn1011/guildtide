@@ -6,6 +6,7 @@ import { ChatPanel } from '../ui/ChatPanel';
 import { AlliancePanel } from '../ui/AlliancePanel';
 import { LeaderboardPanel } from '../ui/LeaderboardPanel';
 import { PlayerProfilePanel } from '../ui/PlayerProfilePanel';
+import { SocialTutorial } from '../ui/SocialTutorial';
 
 type SocialTab = 'friends' | 'chat' | 'alliance' | 'leaderboard' | 'profile' | 'feed';
 
@@ -115,6 +116,11 @@ export class SocialScene extends Phaser.Scene {
 
     // Load initial data
     this.loadData();
+
+    // Show tutorial on first visit
+    if (SocialTutorial.shouldShow()) {
+      new SocialTutorial(this);
+    }
   }
 
   private switchTab(tab: SocialTab): void {
