@@ -1391,66 +1391,66 @@
 ## Epic 18: Narrative & Discovery
 > Hidden pattern system, lore entries, world history, NPC dialogue, quest lines, and journal tracking.
 
-- [ ] T-1321: Design narrative data schema (lore entries, quest stages, dialog trees)
-- [ ] T-1322: Create lore database with 50 world history entries
-- [ ] T-1323: Implement lore discovery system triggered by exploration and events
-- [ ] T-1324: Build lore codex UI with categorized entries (history, creatures, places, people)
-- [ ] T-1325: Create lore entry detail view with text, related entries, and discovery info
-- [ ] T-1326: Implement lore search and filter in codex
-- [ ] T-1327: Create hidden pattern system: real-world data combinations unlock secrets
-- [ ] T-1328: Implement 10 hidden patterns (e.g., full moon + rainstorm = hidden dungeon)
-- [ ] T-1329: Build pattern discovery notification with dramatic reveal animation
-- [ ] T-1330: Create pattern journal tracking discovered and hinted patterns
-- [ ] T-1331: Implement pattern hint system through NPC dialog and event text
-- [ ] T-1332: Build pattern completion rewards (unique items, lore, achievements)
-- [ ] T-1333: Create NPC dialog system with branching conversation trees
-- [ ] T-1334: Implement dialog tree data structure with nodes and choice edges
-- [ ] T-1335: Build dialog UI with NPC portrait, text box, and choice buttons
-- [ ] T-1336: Create 15 named NPCs with unique personalities and dialog trees
-- [ ] T-1337: Implement NPC relationship tracking based on dialog choices
-- [ ] T-1338: Create NPC gift system to improve relationships
-- [ ] T-1339: Build NPC shop integration within dialog flow
-- [ ] T-1340: Implement NPC quest offering through dialog
-- [ ] T-1341: Create quest system data structure (objectives, stages, rewards)
-- [ ] T-1342: Implement main quest line with 10 story chapters
-- [ ] T-1343: Create side quest pool with 20 procedural side quests
-- [ ] T-1344: Build quest log UI with active, completed, and failed tabs
-- [ ] T-1345: Implement quest objective tracking with progress display
-- [ ] T-1346: Create quest turn-in system with NPC dialog and reward screen
-- [ ] T-1347: Build quest chain system linking quests in narrative sequence
-- [ ] T-1348: Implement quest requirement system (level, items, reputation prerequisites)
-- [ ] T-1349: Create quest marker system on world map for active quests
-- [ ] T-1350: Build quest notification for new quest availability
-- [ ] T-1351: Create world history timeline displaying major events in chronological order
-- [ ] T-1352: Implement timeline discovery through quest completion and lore finds
-- [ ] T-1353: Build timeline UI with scrollable visual layout
-- [ ] T-1354: Create prophecy system with cryptic hints about future game events
-- [ ] T-1355: Implement prophecy revelation when conditions are met
-- [ ] T-1356: Build prophecy display in Temple building
-- [ ] T-1357: Create rumor system where NPCs share hints about nearby opportunities
-- [ ] T-1358: Implement rumor accuracy variability (some rumors are false)
-- [ ] T-1359: Build rumor log with verified/unverified status
-- [ ] T-1360: Create narrative event narrator text for expedition encounters
-- [ ] T-1361: Implement narrative text variation system (multiple descriptions for same event)
-- [ ] T-1362: Build narrative text fade-in presentation with pacing
-- [ ] T-1363: Create hero personal story arcs triggered by level milestones
-- [ ] T-1364: Implement hero story dialog sequences at key story beats
-- [ ] T-1365: Build hero story completion rewards (unique items, titles)
-- [ ] T-1366: Create world mythology entries about gods and creation
-- [ ] T-1367: Implement mythology discovery through Temple research
-- [ ] T-1368: Build mythology gallery with illustration and text pairs
-- [ ] T-1369: Create region-specific lore pools unlocked by exploring each region
-- [ ] T-1370: Implement lore completion percentage per region
-- [ ] T-1371: Build narrative achievement system (complete all lore in a category)
-- [ ] T-1372: Create NPC daily dialog that changes based on weather and events
-- [ ] T-1373: Implement NPC remembrance of past player choices in dialog
-- [ ] T-1374: Build journal quick-reference for tracking narrative progress
-- [ ] T-1375: Create Easter egg discovery system with obscure real-world data triggers
-- [ ] T-1376: Implement Easter egg collection page
-- [ ] T-1377: Build narrative recap summary when returning after absence
-- [ ] T-1378: Create in-game book collection with readable text content
-- [ ] T-1379: Build book reading UI with page-turn animation
-- [ ] T-1380: Implement book discovery in expeditions and shops
+- [x] T-1321: Design narrative data schema (lore entries, quest stages, dialog trees)
+- [x] T-1322: Create lore database with 50 world history entries
+- [x] T-1323: Implement lore discovery system triggered by exploration and events
+- [x] T-1324: Build lore codex UI with categorized entries (history, creatures, places, people)
+- [x] T-1325: Create lore entry detail view with text, related entries, and discovery info
+- [x] T-1326: Implement lore search and filter in codex
+- [x] T-1327: Create hidden pattern system: real-world data combinations unlock secrets
+- [x] T-1328: Implement 10 hidden patterns (e.g., full moon + rainstorm = hidden dungeon)
+- [x] T-1329: Build pattern discovery notification with dramatic reveal animation
+- [x] T-1330: Create pattern journal tracking discovered and hinted patterns
+- [x] T-1331: Implement pattern hint system through NPC dialog and event text
+- [x] T-1332: Build pattern completion rewards (unique items, lore, achievements)
+- [x] T-1333: Create NPC dialog system with branching conversation trees
+- [x] T-1334: Implement dialog tree data structure with nodes and choice edges
+- [x] T-1335: Build dialog UI with NPC portrait, text box, and choice buttons
+- [x] T-1336: Create 15 named NPCs with unique personalities and dialog trees
+- [x] T-1337: Implement NPC relationship tracking based on dialog choices
+- [x] T-1338: Create NPC gift system to improve relationships
+- [x] T-1339: Build NPC shop integration within dialog flow
+- [x] T-1340: Implement NPC quest offering through dialog
+- [x] T-1341: Create quest system data structure (objectives, stages, rewards)
+- [x] T-1342: Implement main quest line with 10 story chapters
+- [x] T-1343: Create side quest pool with 20 procedural side quests
+- [x] T-1344: Build quest log UI with active, completed, and failed tabs
+- [x] T-1345: Implement quest objective tracking with progress display
+- [x] T-1346: Create quest turn-in system with NPC dialog and reward screen
+- [x] T-1347: Build quest chain system linking quests in narrative sequence
+- [x] T-1348: Implement quest requirement system (level, items, reputation prerequisites)
+- [x] T-1349: Create quest marker system on world map for active quests
+- [x] T-1350: Build quest notification for new quest availability
+- [x] T-1351: Create world history timeline displaying major events in chronological order
+- [x] T-1352: Implement timeline discovery through quest completion and lore finds
+- [x] T-1353: Build timeline UI with scrollable visual layout
+- [x] T-1354: Create prophecy system with cryptic hints about future game events
+- [x] T-1355: Implement prophecy revelation when conditions are met
+- [x] T-1356: Build prophecy display in Temple building
+- [x] T-1357: Create rumor system where NPCs share hints about nearby opportunities
+- [x] T-1358: Implement rumor accuracy variability (some rumors are false)
+- [x] T-1359: Build rumor log with verified/unverified status
+- [x] T-1360: Create narrative event narrator text for expedition encounters
+- [x] T-1361: Implement narrative text variation system (multiple descriptions for same event)
+- [x] T-1362: Build narrative text fade-in presentation with pacing
+- [x] T-1363: Create hero personal story arcs triggered by level milestones
+- [x] T-1364: Implement hero story dialog sequences at key story beats
+- [x] T-1365: Build hero story completion rewards (unique items, titles)
+- [x] T-1366: Create world mythology entries about gods and creation
+- [x] T-1367: Implement mythology discovery through Temple research
+- [x] T-1368: Build mythology gallery with illustration and text pairs
+- [x] T-1369: Create region-specific lore pools unlocked by exploring each region
+- [x] T-1370: Implement lore completion percentage per region
+- [x] T-1371: Build narrative achievement system (complete all lore in a category)
+- [x] T-1372: Create NPC daily dialog that changes based on weather and events
+- [x] T-1373: Implement NPC remembrance of past player choices in dialog
+- [x] T-1374: Build journal quick-reference for tracking narrative progress
+- [x] T-1375: Create Easter egg discovery system with obscure real-world data triggers
+- [x] T-1376: Implement Easter egg collection page
+- [x] T-1377: Build narrative recap summary when returning after absence
+- [x] T-1378: Create in-game book collection with readable text content
+- [x] T-1379: Build book reading UI with page-turn animation
+- [x] T-1380: Implement book discovery in expeditions and shops
 
 ## Epic 19: Art & Visual Design
 > Sprite sheets, building illustrations, hero portraits, weather particles, UI themes, and animation sets.

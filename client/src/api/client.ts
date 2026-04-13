@@ -2344,6 +2344,130 @@ class ApiClient {
   async getArenaLeaderboard(): Promise<any> {
     return this.request('GET', '/combat/arena/leaderboard');
   }
+
+  // ── Narrative / Lore / Quest / NPC endpoints ──
+
+  async getLoreEntries(opts?: { category?: string; regionId?: string; search?: string; discoveredOnly?: boolean }): Promise<any[]> {
+    const params = new URLSearchParams();
+    if (opts?.category) params.set('category', opts.category);
+    if (opts?.regionId) params.set('regionId', opts.regionId);
+    if (opts?.search) params.set('search', opts.search);
+    if (opts?.discoveredOnly) params.set('discoveredOnly', 'true');
+    const qs = params.toString();
+    return this.request('GET', `/narrative/lore${qs ? `?${qs}` : ''}`);
+  }
+
+  async getLoreEntry(id: string): Promise<any> {
+    return this.request('GET', `/narrative/lore/${id}`);
+  }
+
+  async getLoreCompletion(): Promise<any> {
+    return this.request('GET', '/narrative/lore-completion');
+  }
+
+  async discoverLore(id: string): Promise<any> {
+    return this.request('POST', `/narrative/lore/${id}/discover`);
+  }
+
+  async getQuests(): Promise<any> {
+    return this.request('GET', '/narrative/quests');
+  }
+
+  async getQuestProgress(questId: string): Promise<any> {
+    return this.request('GET', `/narrative/quests/${questId}/progress`);
+  }
+
+  async startQuest(questId: string): Promise<any> {
+    return this.request('POST', `/narrative/quests/${questId}/start`);
+  }
+
+  async updateQuestProgress(questId: string, objectiveId: string, progress: number): Promise<any> {
+    return this.request('POST', `/narrative/quests/${questId}/progress`, { objectiveId, progress });
+  }
+
+  async turnInQuest(questId: string): Promise<any> {
+    return this.request('POST', `/narrative/quests/${questId}/turn-in`);
+  }
+
+  async getQuestMarkers(): Promise<any[]> {
+    return this.request('GET', '/narrative/quest-markers');
+  }
+
+  async getNpcList(): Promise<any[]> {
+    return this.request('GET', '/narrative/npcs');
+  }
+
+  async getNpcDialog(npcId: string, nodeId?: string, weather?: string): Promise<any> {
+    const params = new URLSearchParams();
+    if (nodeId) params.set('nodeId', nodeId);
+    if (weather) params.set('weather', weather);
+    const qs = params.toString();
+    return this.request('GET', `/narrative/npc/${npcId}/dialog${qs ? `?${qs}` : ''}`);
+  }
+
+  async chooseNpcDialog(npcId: string, nodeId: string, choiceIndex: number): Promise<any> {
+    return this.request('POST', `/narrative/npc/${npcId}/dialog`, { nodeId, choiceIndex });
+  }
+
+  async giveNpcGift(npcId: string, resource: string, amount: number): Promise<any> {
+    return this.request('POST', `/narrative/npc/${npcId}/gift`, { resource, amount });
+  }
+
+  async getPatternJournal(): Promise<any> {
+    return this.request('GET', '/narrative/patterns');
+  }
+
+  async checkPatterns(conditions: Record<string, string>): Promise<any> {
+    return this.request('POST', '/narrative/patterns/check', { conditions });
+  }
+
+  async getTimeline(): Promise<any[]> {
+    return this.request('GET', '/narrative/timeline');
+  }
+
+  async getProphecies(): Promise<any[]> {
+    return this.request('GET', '/narrative/prophecies');
+  }
+
+  async getRumors(): Promise<any[]> {
+    return this.request('GET', '/narrative/rumors');
+  }
+
+  async getBooks(): Promise<any[]> {
+    return this.request('GET', '/narrative/books');
+  }
+
+  async readBook(bookId: string): Promise<any> {
+    return this.request('GET', `/narrative/books/${bookId}`);
+  }
+
+  async discoverBook(bookId: string): Promise<any> {
+    return this.request('POST', `/narrative/books/${bookId}/discover`);
+  }
+
+  async getMythology(): Promise<any[]> {
+    return this.request('GET', '/narrative/mythology');
+  }
+
+  async researchMythology(): Promise<any> {
+    return this.request('POST', '/narrative/mythology/research');
+  }
+
+  async getEasterEggs(): Promise<any> {
+    return this.request('GET', '/narrative/easter-eggs');
+  }
+
+  async getJournal(): Promise<any> {
+    return this.request('GET', '/narrative/journal');
+  }
+
+  async getNarrativeRecap(): Promise<any> {
+    return this.request('GET', '/narrative/recap');
+  }
+
+  async getNarrativeAchievements(): Promise<string[]> {
+    return this.request('GET', '/narrative/achievements');
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

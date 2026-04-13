@@ -20,6 +20,7 @@ import { socialRouter } from './routes/social';
 import { alliancesRouter } from './routes/alliances';
 import { leaderboardsRouter } from './routes/leaderboards';
 import { combatRouter } from './routes/combat';
+import { narrativeRouter } from './routes/narrative';
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use('/api/social', socialRouter);
 app.use('/api/alliances', alliancesRouter);
 app.use('/api/leaderboards', leaderboardsRouter);
 app.use('/api/combat', combatRouter);
+app.use('/api/narrative', narrativeRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
