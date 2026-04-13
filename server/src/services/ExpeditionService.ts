@@ -1,6 +1,10 @@
 import { prisma } from '../db.js';
 import { HeroStatus, ExpeditionStatus } from '../../../shared/src/enums.js';
 import { EXPEDITION_DESTINATIONS } from '../data/expeditionData.js';
+import { RESEARCH_MAP } from '../data/researchData.js';
+import { getItemTemplate } from '../data/itemTemplates.js';
+import { WeatherService } from './WeatherService.js';
+import type { GameModifiers } from '../utils/weatherMapping.js';
 
 interface ExpeditionResult {
   success: boolean;
@@ -155,18 +159,80 @@ export class ExpeditionService {
       where: { id: { in: heroIds } },
     });
 
+    // Load guild for research data
+    const guild = await prisma.guild.findUnique({ where: { id: expedition.guildId } });
+    const completedResearch: string[] = guild ? JSON.parse(guild.researchIds || '[]') : [];
+
+    // Aggregate research effects
+    let researchTravelSpeed = 0;
+    let researchWeatherTravelReduction = 0;
+    let researchExpeditionRiskReduction = 0;
+    let researchHuntBonus = 0;
+    let researchHeroXpBonus = 0;
+
+    for (const resId of completedResearch) {
+      const node = RESEARCH_MAP.get(resId);
+      if (!node) continue;
+      researchTravelSpeed += node.effects['travel_speed'] ?? 0;
+      researchWeatherTravelReduction += node.effects['weather_travel_penalty_reduction'] ?? 0;
+      researchExpeditionRiskReduction += node.effects['expedition_risk_reduction'] ?? 0;
+      researchHuntBonus += node.effects['hunt_bonus'] ?? 0;
+      researchHeroXpBonus += node.effects['hero_xp_bonus'] ?? 0;
+    }
+
+    // Load weather modifiers for the guild's region
+    let worldMods: GameModifiers | null = null;
+    if (guild) {
+      const player = await prisma.player.findFirst({ where: { guild: { id: guild.id } } });
+      if (player?.regionId) {
+        try {
+          const worldState = await WeatherService.getWorldState(player.regionId);
+          if (worldState) worldMods = worldState.modifiers;
+        } catch { /* no weather data available */ }
+      }
+    }
+
     // Calculate party power: average of (str + agi + end) / 3 per hero, scaled by level
     let totalPower = 0;
     let traitBonus = 0;
+    let totalExpeditionBonus = 0;
 
     for (const hero of heroes) {
       const stats = JSON.parse(hero.stats) as {
         strength: number;
         agility: number;
         endurance: number;
+        intellect?: number;
+        luck?: number;
       };
+
+      // Base stat power
+      let heroStr = stats.strength;
+      let heroAgi = stats.agility;
+      let heroEnd = stats.endurance;
+
+      // Equipment bonuses: stat bonuses + expedition bonus
+      const equipment = JSON.parse(hero.equipment || '{}') as Record<string, string | null>;
+      for (const templateId of Object.values(equipment)) {
+        if (!templateId) continue;
+        const template = getItemTemplate(templateId);
+        if (!template) continue;
+
+        // Add stat bonuses from items
+        if (template.effects.statBonuses) {
+          heroStr += template.effects.statBonuses.strength ?? 0;
+          heroAgi += template.effects.statBonuses.agility ?? 0;
+          heroEnd += template.effects.statBonuses.endurance ?? 0;
+        }
+
+        // Sum expedition bonus from all equipped items
+        if (template.effects.expeditionBonus) {
+          totalExpeditionBonus += template.effects.expeditionBonus;
+        }
+      }
+
       const heroPower =
-        ((stats.strength + stats.agility + stats.endurance) / 3) *
+        ((heroStr + heroAgi + heroEnd) / 3) *
         (1 + hero.level * 0.1);
       totalPower += heroPower;
 
@@ -183,9 +249,39 @@ export class ExpeditionService {
 
     const partyPower = totalPower / Math.max(heroes.length, 1);
 
-    // Success formula: clamp(0.3 + (partyPower / difficulty) * 0.5 + traitBonus, 0.1, 0.95)
+    // Item expedition bonus: converted from percentage points to decimal (e.g. 5 = +0.05)
+    const itemBonus = totalExpeditionBonus / 100;
+
+    // Research travel speed bonus improves expedition outcomes
+    const travelBonus = researchTravelSpeed;
+
+    // Weather travel speed modifier (reduced by research)
+    let weatherPenalty = 0;
+    if (worldMods && worldMods.travelSpeed < 1.0) {
+      const rawPenalty = 1.0 - worldMods.travelSpeed;
+      weatherPenalty = rawPenalty * (1 - researchWeatherTravelReduction);
+    }
+
+    // Weather hunt bonus for hunting expeditions
+    let weatherHuntMod = 0;
+    if (worldMods && expedition.type === 'hunt') {
+      weatherHuntMod = (worldMods.huntBonus - 1.0) * 0.5; // dampen weather hunt effect
+    }
+
+    // Research hunt bonus for hunting expeditions
+    const huntMod = expedition.type === 'hunt' ? researchHuntBonus : 0;
+
+    // Success formula with all modifiers
     const successChance = clamp(
-      0.3 + (partyPower / destination.difficulty) * 0.5 + traitBonus,
+      0.3
+      + (partyPower / destination.difficulty) * 0.5
+      + traitBonus
+      + itemBonus
+      + travelBonus
+      - weatherPenalty
+      + weatherHuntMod
+      + huntMod
+      + researchExpeditionRiskReduction,  // risk reduction improves success
       0.1,
       0.95,
     );
@@ -202,9 +298,10 @@ export class ExpeditionService {
       }
     }
 
-    // XP for heroes (more on success, some on failure)
+    // XP for heroes (more on success, some on failure), with research XP bonus
     const baseXp = destination.difficulty * 5;
-    const xpGained = success ? baseXp + randomInt(5, 15) : Math.floor(baseXp * 0.3);
+    const rawXp = success ? baseXp + randomInt(5, 15) : Math.floor(baseXp * 0.3);
+    const xpGained = Math.floor(rawXp * (1 + researchHeroXpBonus));
 
     const result: ExpeditionResult = {
       success,
