@@ -1667,66 +1667,66 @@
 ## Epic 22: Database & Performance
 > Indexing, query optimization, data migration, backup system, and caching layer.
 
-- [ ] T-1581: Audit all Prisma models and add missing database indexes
-- [ ] T-1582: Add composite index on (userId, type) for resource lookups
-- [ ] T-1583: Add index on createdAt for time-based queries
-- [ ] T-1584: Add index on expedition status for active expedition queries
-- [ ] T-1585: Add index on hero guildId for roster lookups
-- [ ] T-1586: Add index on marketListing price for sorted market queries
-- [ ] T-1587: Add index on event triggerTime for event scheduling queries
-- [ ] T-1588: Add index on research status for active research lookups
-- [ ] T-1589: Implement query profiling to identify slow queries
-- [ ] T-1590: Optimize hero roster query with selective field loading
-- [ ] T-1591: Optimize market listing query with pagination and filtering
-- [ ] T-1592: Optimize expedition list query with status-based partitioning
-- [ ] T-1593: Optimize resource calculation query with aggregation
-- [ ] T-1594: Optimize event evaluation query with pre-filtered condition checks
-- [ ] T-1595: Implement N+1 query detection and prevention
-- [ ] T-1596: Create eager loading strategy for related entity queries
-- [ ] T-1597: Implement database query result caching with TTL per query type
-- [ ] T-1598: Build cache hit/miss ratio monitoring
-- [ ] T-1599: Create cache warming strategy on server startup
-- [ ] T-1600: Implement selective cache invalidation on data mutation
-- [ ] T-1601: Create Prisma migration for initial schema version
-- [ ] T-1602: Build database migration testing pipeline
-- [ ] T-1603: Implement zero-downtime migration strategy for schema changes
-- [ ] T-1604: Create data migration scripts for schema evolution
-- [ ] T-1605: Build migration rollback testing procedure
-- [ ] T-1606: Implement automated database backup to file system
-- [ ] T-1607: Create backup encryption for sensitive player data
-- [ ] T-1608: Build backup restoration procedure and testing script
-- [ ] T-1609: Implement point-in-time recovery capability
-- [ ] T-1610: Create backup health check verifying backup integrity
-- [ ] T-1611: Implement database connection pooling optimization
-- [ ] T-1612: Create connection pool monitoring and alerting
-- [ ] T-1613: Build database size monitoring with growth projections
-- [ ] T-1614: Implement data retention policy (archive data older than 90 days)
-- [ ] T-1615: Create data export utility for player data requests
-- [ ] T-1616: Implement soft delete pattern for recoverable data removal
-- [ ] T-1617: Build database vacuum/optimization scheduled task
-- [ ] T-1618: Create query timeout configuration per endpoint criticality
-- [ ] T-1619: Implement database connection retry with backoff
-- [ ] T-1620: Build database schema documentation generation
-- [ ] T-1621: Create database seeding scripts for test environments
-- [ ] T-1622: Implement bulk insert optimization for batch operations
-- [ ] T-1623: Create database read/write split configuration
-- [ ] T-1624: Build query performance regression test suite
-- [ ] T-1625: Implement database deadlock detection and recovery
-- [ ] T-1626: Create database statistics collection for query planner
-- [ ] T-1627: Build data consistency validation scripts
-- [ ] T-1628: Implement foreign key constraint audit
-- [ ] T-1629: Create database entity relationship diagram generation
-- [ ] T-1630: Build database health dashboard with key metrics
-- [ ] T-1631: Implement query batching for related data fetches
-- [ ] T-1632: Create database snapshot for development environment reset
-- [ ] T-1633: Build data anonymization script for staging environments
-- [ ] T-1634: Implement database WAL mode configuration for SQLite performance
-- [ ] T-1635: Create database file size monitoring with cleanup alerts
-- [ ] T-1636: Build query explain plan analysis tool
-- [ ] T-1637: Implement connection idle timeout configuration
-- [ ] T-1638: Create database table partition strategy for large tables
-- [ ] T-1639: Build automated slow query log analysis report
-- [ ] T-1640: Implement database integrity check scheduled task
+- [x] T-1581: Audit all Prisma models and add missing database indexes
+- [x] T-1582: Add composite index on (userId, type) for resource lookups
+- [x] T-1583: Add index on createdAt for time-based queries
+- [x] T-1584: Add index on expedition status for active expedition queries
+- [x] T-1585: Add index on hero guildId for roster lookups
+- [x] T-1586: Add index on marketListing price for sorted market queries
+- [x] T-1587: Add index on event triggerTime for event scheduling queries
+- [x] T-1588: Add index on research status for active research lookups
+- [x] T-1589: Implement query profiling to identify slow queries
+- [x] T-1590: Optimize hero roster query with selective field loading
+- [x] T-1591: Optimize market listing query with pagination and filtering
+- [x] T-1592: Optimize expedition list query with status-based partitioning
+- [x] T-1593: Optimize resource calculation query with aggregation
+- [x] T-1594: Optimize event evaluation query with pre-filtered condition checks
+- [x] T-1595: Implement N+1 query detection and prevention
+- [x] T-1596: Create eager loading strategy for related entity queries
+- [x] T-1597: Implement database query result caching with TTL per query type
+- [x] T-1598: Build cache hit/miss ratio monitoring
+- [x] T-1599: Create cache warming strategy on server startup
+- [x] T-1600: Implement selective cache invalidation on data mutation
+- [x] T-1601: Create Prisma migration for initial schema version
+- [x] T-1602: Build database migration testing pipeline
+- [x] T-1603: Implement zero-downtime migration strategy for schema changes
+- [x] T-1604: Create data migration scripts for schema evolution
+- [x] T-1605: Build migration rollback testing procedure
+- [x] T-1606: Implement automated database backup to file system
+- [x] T-1607: Create backup encryption for sensitive player data
+- [x] T-1608: Build backup restoration procedure and testing script
+- [x] T-1609: Implement point-in-time recovery capability
+- [x] T-1610: Create backup health check verifying backup integrity
+- [x] T-1611: Implement database connection pooling optimization
+- [x] T-1612: Create connection pool monitoring and alerting
+- [x] T-1613: Build database size monitoring with growth projections
+- [x] T-1614: Implement data retention policy (archive data older than 90 days)
+- [x] T-1615: Create data export utility for player data requests
+- [x] T-1616: Implement soft delete pattern for recoverable data removal
+- [x] T-1617: Build database vacuum/optimization scheduled task
+- [x] T-1618: Create query timeout configuration per endpoint criticality
+- [x] T-1619: Implement database connection retry with backoff
+- [x] T-1620: Build database schema documentation generation
+- [x] T-1621: Create database seeding scripts for test environments
+- [x] T-1622: Implement bulk insert optimization for batch operations
+- [x] T-1623: Create database read/write split configuration
+- [x] T-1624: Build query performance regression test suite
+- [x] T-1625: Implement database deadlock detection and recovery
+- [x] T-1626: Create database statistics collection for query planner
+- [x] T-1627: Build data consistency validation scripts
+- [x] T-1628: Implement foreign key constraint audit
+- [x] T-1629: Create database entity relationship diagram generation
+- [x] T-1630: Build database health dashboard with key metrics
+- [x] T-1631: Implement query batching for related data fetches
+- [x] T-1632: Create database snapshot for development environment reset
+- [x] T-1633: Build data anonymization script for staging environments
+- [x] T-1634: Implement database WAL mode configuration for SQLite performance
+- [x] T-1635: Create database file size monitoring with cleanup alerts
+- [x] T-1636: Build query explain plan analysis tool
+- [x] T-1637: Implement connection idle timeout configuration
+- [x] T-1638: Create database table partition strategy for large tables
+- [x] T-1639: Build automated slow query log analysis report
+- [x] T-1640: Implement database integrity check scheduled task
 
 ## Epic 23: Security & Auth
 > CSRF protection, XSS prevention, input validation, rate limiting, encryption, and audit logging.

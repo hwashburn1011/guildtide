@@ -1,11 +1,13 @@
 // ---------------------------------------------------------------------------
 // Database optimization helpers — query profiling, connection management,
-// migration support, cleanup, and backup utilities
+// migration support, cleanup, backup, and bulk operations
 // ---------------------------------------------------------------------------
 
-import { prisma } from '../db';
+import { prisma, testConnection, enableWALMode } from '../db';
 import { logger } from './logger';
 import { config } from '../config';
+import fs from 'fs';
+import path from 'path';
 
 // ---------------------------------------------------------------------------
 // Query profiling
@@ -39,7 +41,6 @@ export async function profileQuery<T>(
         timestamp: new Date().toISOString(),
       };
       slowQueryLog.push(profile);
-      // Keep only last 200 slow queries
       if (slowQueryLog.length > 200) {
         slowQueryLog.splice(0, slowQueryLog.length - 200);
       }
@@ -71,52 +72,58 @@ export async function getHeroRosterOptimized(guildId: string) {
       select: {
         id: true,
         name: true,
-        class: true,
+        role: true,
         level: true,
         stats: true,
         status: true,
         traits: true,
-        assignedBuildingId: true,
+        assignment: true,
       },
     }),
   );
 }
 
-/** Optimized market listing query with pagination. */
-export async function getMarketListingsOptimized(
-  filters: { type?: string; minPrice?: number; maxPrice?: number },
-  offset: number = 0,
-  limit: number = 20,
-) {
-  const where: any = { status: 'active' };
-  if (filters.type) where.itemType = filters.type;
-  if (filters.minPrice !== undefined) where.price = { ...where.price, gte: filters.minPrice };
-  if (filters.maxPrice !== undefined) where.price = { ...where.price, lte: filters.maxPrice };
-
-  return profileQuery('market-listings', async () => {
-    const [data, total] = await Promise.all([
-      prisma.marketListing.findMany({
-        where,
-        skip: offset,
-        take: limit,
-        orderBy: { createdAt: 'desc' },
-        select: {
-          id: true,
-          itemType: true,
-          itemName: true,
-          price: true,
-          quantity: true,
-          sellerGuildId: true,
-          createdAt: true,
+/** Optimized guild query with eager loading of related entities. */
+export async function getGuildWithRelationsOptimized(playerId: string) {
+  return profileQuery('guild-full', () =>
+    prisma.guild.findUnique({
+      where: { playerId },
+      include: {
+        heroes: {
+          select: {
+            id: true,
+            name: true,
+            role: true,
+            level: true,
+            status: true,
+            assignment: true,
+          },
         },
-      }),
-      prisma.marketListing.count({ where }),
-    ]);
-    return { data, total };
-  });
+        buildings: true,
+        inventory: {
+          select: {
+            id: true,
+            templateId: true,
+            quantity: true,
+          },
+        },
+        expeditions: {
+          where: { status: 'active' },
+          select: {
+            id: true,
+            type: true,
+            destination: true,
+            status: true,
+            startedAt: true,
+            duration: true,
+          },
+        },
+      },
+    }),
+  );
 }
 
-/** Optimized expedition list with status-based partitioning. */
+/** Optimized expedition list with status-based filtering. */
 export async function getExpeditionsOptimized(guildId: string, status?: string) {
   const where: any = { guildId };
   if (status) where.status = status;
@@ -124,44 +131,51 @@ export async function getExpeditionsOptimized(guildId: string, status?: string) 
   return profileQuery('expedition-list', () =>
     prisma.expedition.findMany({
       where,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { startedAt: 'desc' },
       select: {
         id: true,
-        name: true,
+        type: true,
         status: true,
-        regionId: true,
-        startTime: true,
-        endTime: true,
-        difficulty: true,
+        destination: true,
+        startedAt: true,
+        duration: true,
+        result: true,
       },
     }),
   );
 }
 
-/** Batch query related entities to prevent N+1 queries. */
-export async function batchLoadHeroEquipment(heroIds: string[]) {
-  return profileQuery('batch-hero-equipment', () =>
+/** Batch query to prevent N+1 — load items for multiple guilds. */
+export async function batchLoadGuildItems(guildIds: string[]) {
+  return profileQuery('batch-guild-items', () =>
     prisma.item.findMany({
-      where: { heroId: { in: heroIds } },
+      where: { guildId: { in: guildIds } },
       select: {
         id: true,
-        name: true,
-        type: true,
-        rarity: true,
-        heroId: true,
+        templateId: true,
+        quantity: true,
+        guildId: true,
         metadata: true,
       },
     }),
   );
 }
 
+/** Resource aggregation query. */
+export async function aggregateGuildResources(guildId: string) {
+  return profileQuery('resource-aggregation', async () => {
+    const guild = await prisma.guild.findUnique({
+      where: { id: guildId },
+      select: { resources: true },
+    });
+    return guild ? JSON.parse(guild.resources) : {};
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Database transaction wrapper with automatic rollback
 // ---------------------------------------------------------------------------
 
-/**
- * Execute operations within a transaction. Automatically rolls back on error.
- */
 export async function withTransaction<T>(
   operation: (tx: typeof prisma) => Promise<T>,
 ): Promise<T> {
@@ -201,12 +215,24 @@ export async function withRetry<T>(
 }
 
 // ---------------------------------------------------------------------------
+// Bulk insert optimization
+// ---------------------------------------------------------------------------
+
+export async function bulkInsertItems(
+  items: Array<{ guildId: string; templateId: string; quantity: number; metadata?: string }>,
+): Promise<number> {
+  return profileQuery('bulk-insert-items', async () => {
+    const result = await prisma.item.createMany({ data: items });
+    return result.count;
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Connection pool monitoring
 // ---------------------------------------------------------------------------
 
 export async function getConnectionPoolStatus() {
   try {
-    // Prisma doesn't expose pool metrics directly, but we can test connectivity
     const start = Date.now();
     await prisma.$queryRaw`SELECT 1`;
     return {
@@ -224,25 +250,25 @@ export async function getConnectionPoolStatus() {
 // Database cleanup & maintenance
 // ---------------------------------------------------------------------------
 
-/** Clean up old data beyond retention period. */
+/** Clean up old event logs beyond retention period. */
 export async function cleanupOldData(retentionDays: number = 90): Promise<{
-  deletedEvents: number;
+  deletedEventLogs: number;
   deletedExpeditions: number;
 }> {
   const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
 
   return profileQuery('cleanup-old-data', async () => {
-    const [events, expeditions] = await Promise.all([
-      prisma.event.deleteMany({
-        where: { createdAt: { lt: cutoff }, status: 'completed' },
+    const [eventLogs, expeditions] = await Promise.all([
+      prisma.eventLog.deleteMany({
+        where: { createdAt: { lt: cutoff } },
       }).catch(() => ({ count: 0 })),
       prisma.expedition.deleteMany({
-        where: { createdAt: { lt: cutoff }, status: { in: ['completed', 'failed'] } },
+        where: { startedAt: { lt: cutoff }, status: { in: ['completed', 'failed'] } },
       }).catch(() => ({ count: 0 })),
     ]);
 
     const result = {
-      deletedEvents: events.count,
+      deletedEventLogs: eventLogs.count,
       deletedExpeditions: expeditions.count,
     };
     logger.info('Data cleanup complete', result);
@@ -250,14 +276,48 @@ export async function cleanupOldData(retentionDays: number = 90): Promise<{
   });
 }
 
+/** Database integrity check — verify foreign key consistency. */
+export async function integrityCheck(): Promise<{ ok: boolean; errors: string[] }> {
+  const errors: string[] = [];
+  try {
+    // SQLite PRAGMA integrity check
+    const result: any[] = await prisma.$queryRaw`PRAGMA integrity_check`;
+    const isOk = result.length === 1 && (result[0] as any).integrity_check === 'ok';
+    if (!isOk) {
+      errors.push('SQLite integrity check failed');
+    }
+
+    // Check for orphaned heroes (no guild)
+    const orphanedHeroes = await prisma.$queryRaw`
+      SELECT COUNT(*) as cnt FROM Hero WHERE guildId NOT IN (SELECT id FROM Guild)
+    ` as any[];
+    if (orphanedHeroes[0]?.cnt > 0) {
+      errors.push(`Found ${orphanedHeroes[0].cnt} orphaned hero records`);
+    }
+
+    // Check for orphaned items
+    const orphanedItems = await prisma.$queryRaw`
+      SELECT COUNT(*) as cnt FROM Item WHERE guildId NOT IN (SELECT id FROM Guild)
+    ` as any[];
+    if (orphanedItems[0]?.cnt > 0) {
+      errors.push(`Found ${orphanedItems[0].cnt} orphaned item records`);
+    }
+
+    return { ok: errors.length === 0, errors };
+  } catch (err: any) {
+    return { ok: false, errors: [err.message] };
+  }
+}
+
 /** Validate database schema on startup. */
 export async function validateDatabaseSchema(): Promise<boolean> {
   try {
-    // Run a lightweight query against each critical table
     await Promise.all([
       prisma.guild.count(),
       prisma.hero.count(),
       prisma.item.count(),
+      prisma.expedition.count(),
+      prisma.eventLog.count(),
     ]);
     logger.info('Database schema validation passed');
     return true;
@@ -267,41 +327,142 @@ export async function validateDatabaseSchema(): Promise<boolean> {
   }
 }
 
-/** Seed data for development environment. */
-export async function seedDevelopmentData(): Promise<void> {
-  if (config.isProduction) {
-    logger.warn('Seed data skipped in production');
-    return;
-  }
-  logger.info('Development seed data applied (placeholder)');
+/** Initialize database optimizations on startup. */
+export async function initializeDatabaseOptimizations(): Promise<void> {
+  await enableWALMode();
+  await validateDatabaseSchema();
+  logger.info('Database optimizations initialized');
 }
 
 // ---------------------------------------------------------------------------
-// Data export utility (for GDPR / player data requests)
+// Backup utilities
+// ---------------------------------------------------------------------------
+
+/** Create a database backup to the filesystem. */
+export async function createBackup(backupDir: string = './backups'): Promise<string> {
+  fs.mkdirSync(backupDir, { recursive: true });
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const backupPath = path.join(backupDir, `guildtide-${timestamp}.db`);
+
+  // For SQLite, we can use the backup PRAGMA
+  try {
+    await prisma.$executeRawUnsafe(`VACUUM INTO '${backupPath}'`);
+    logger.info('Database backup created', { path: backupPath });
+
+    // Verify backup integrity
+    const stats = fs.statSync(backupPath);
+    if (stats.size === 0) {
+      throw new Error('Backup file is empty');
+    }
+
+    return backupPath;
+  } catch (err: any) {
+    // Fallback: copy the database file
+    const dbUrl = config.databaseUrl;
+    const dbPath = dbUrl.replace('file:', '').replace('./', 'server/prisma/');
+    if (fs.existsSync(dbPath)) {
+      fs.copyFileSync(dbPath, backupPath);
+      logger.info('Database backup created (file copy)', { path: backupPath });
+      return backupPath;
+    }
+    logger.error('Database backup failed', { error: err.message });
+    throw err;
+  }
+}
+
+/** Get database size information. */
+export async function getDatabaseSize(): Promise<{
+  fileSizeBytes: number;
+  fileSizeMB: number;
+  tables: Array<{ name: string; rowCount: number }>;
+}> {
+  const tables = await Promise.all([
+    prisma.player.count().then((c) => ({ name: 'Player', rowCount: c })),
+    prisma.guild.count().then((c) => ({ name: 'Guild', rowCount: c })),
+    prisma.hero.count().then((c) => ({ name: 'Hero', rowCount: c })),
+    prisma.building.count().then((c) => ({ name: 'Building', rowCount: c })),
+    prisma.item.count().then((c) => ({ name: 'Item', rowCount: c })),
+    prisma.expedition.count().then((c) => ({ name: 'Expedition', rowCount: c })),
+    prisma.regionState.count().then((c) => ({ name: 'RegionState', rowCount: c })),
+    prisma.eventLog.count().then((c) => ({ name: 'EventLog', rowCount: c })),
+  ]);
+
+  // Try to get file size
+  let fileSizeBytes = 0;
+  try {
+    const dbPath = 'server/prisma/dev.db';
+    if (fs.existsSync(dbPath)) {
+      fileSizeBytes = fs.statSync(dbPath).size;
+    }
+  } catch {
+    // Ignore — file may not be accessible
+  }
+
+  return {
+    fileSizeBytes,
+    fileSizeMB: Math.round(fileSizeBytes / 1048576 * 100) / 100,
+    tables,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Data export utility (GDPR / player data requests)
 // ---------------------------------------------------------------------------
 
 export async function exportPlayerData(playerId: string): Promise<Record<string, unknown>> {
   return profileQuery('export-player-data', async () => {
-    const [guild, heroes, items, expeditions] = await Promise.all([
-      prisma.guild.findUnique({ where: { playerId } }),
-      prisma.hero.findMany({ where: { guild: { playerId } } }),
-      prisma.item.findMany({ where: { guild: { playerId } } }),
-      prisma.expedition.findMany({ where: { guild: { playerId } } }),
-    ]);
+    const player = await prisma.player.findUnique({
+      where: { id: playerId },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        bio: true,
+        createdAt: true,
+        lastLoginAt: true,
+      },
+    });
+
+    const guild = await prisma.guild.findUnique({
+      where: { playerId },
+      include: {
+        heroes: true,
+        buildings: true,
+        inventory: true,
+        expeditions: true,
+      },
+    });
+
+    const eventLogs = await prisma.eventLog.findMany({
+      where: { guildId: guild?.id },
+      orderBy: { createdAt: 'desc' },
+      take: 1000,
+    });
 
     return {
       exportedAt: new Date().toISOString(),
-      playerId,
+      player,
       guild,
-      heroes,
-      items,
-      expeditions,
+      eventLogs,
     };
   });
 }
 
 // ---------------------------------------------------------------------------
-// Index recommendations (document which indexes should exist)
+// Seed data for development
+// ---------------------------------------------------------------------------
+
+export async function seedDevelopmentData(): Promise<void> {
+  if (config.isProduction) {
+    logger.warn('Seed data skipped in production');
+    return;
+  }
+  // Placeholder — seeding is handled by existing game setup flows
+  logger.info('Development seed data check completed');
+}
+
+// ---------------------------------------------------------------------------
+// Index recommendations (documentation)
 // ---------------------------------------------------------------------------
 
 export const RECOMMENDED_INDEXES = [
@@ -309,18 +470,33 @@ export const RECOMMENDED_INDEXES = [
   { model: 'Hero', fields: ['guildId'], reason: 'Roster queries' },
   { model: 'Hero', fields: ['guildId', 'status'], reason: 'Active hero filtering' },
   { model: 'Item', fields: ['guildId'], reason: 'Inventory queries' },
-  { model: 'Item', fields: ['heroId'], reason: 'Equipment lookup' },
-  { model: 'MarketListing', fields: ['status', 'price'], reason: 'Active listing sort' },
-  { model: 'MarketListing', fields: ['sellerGuildId'], reason: 'Seller listings' },
+  { model: 'Item', fields: ['guildId', 'templateId'], reason: 'Inventory dedup' },
   { model: 'Expedition', fields: ['guildId', 'status'], reason: 'Active expedition queries' },
-  { model: 'Expedition', fields: ['status', 'endTime'], reason: 'Completion checks' },
-  { model: 'Event', fields: ['status', 'triggerTime'], reason: 'Event scheduling' },
-  { model: 'Research', fields: ['guildId', 'status'], reason: 'Active research lookup' },
-  { model: 'Region', fields: ['currentWeather'], reason: 'Weather-based queries' },
-  { model: 'Resource', fields: ['userId', 'type'], reason: 'Resource lookups' },
+  { model: 'Expedition', fields: ['status', 'resolvedAt'], reason: 'Completion checks' },
+  { model: 'EventLog', fields: ['guildId', 'type'], reason: 'Event type filtering' },
+  { model: 'EventLog', fields: ['createdAt'], reason: 'Time-based log queries' },
+  { model: 'RegionState', fields: ['regionId'], reason: 'Region lookups' },
   { model: 'Building', fields: ['guildId'], reason: 'Building queries' },
-  // Time-based indexes
-  { model: 'Event', fields: ['createdAt'], reason: 'Time-based event queries' },
-  { model: 'Expedition', fields: ['createdAt'], reason: 'Time-based expedition queries' },
-  { model: 'MarketListing', fields: ['createdAt'], reason: 'Recent listings' },
+  { model: 'Player', fields: ['createdAt'], reason: 'Time-based player queries' },
 ];
+
+// ---------------------------------------------------------------------------
+// Database health dashboard data
+// ---------------------------------------------------------------------------
+
+export async function getDatabaseHealthDashboard() {
+  const [poolStatus, dbSize, integrity, slowQueries] = await Promise.all([
+    getConnectionPoolStatus(),
+    getDatabaseSize(),
+    integrityCheck(),
+    Promise.resolve(getSlowQueryLog()),
+  ]);
+
+  return {
+    connection: poolStatus,
+    size: dbSize,
+    integrity,
+    slowQueries: slowQueries.slice(-20),
+    recommendations: RECOMMENDED_INDEXES,
+  };
+}
