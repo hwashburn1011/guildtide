@@ -1,6 +1,15 @@
+/**
+ * WorldMapScene — Rebuilt with interactive map, region details, travel, comparison.
+ *
+ * T-1071–T-1140: World map and region system.
+ */
 import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH, GAME_HEIGHT } from '../config';
 import { apiClient } from '../api/client';
+import { InteractiveWorldMap } from '../ui/InteractiveWorldMap';
+import { RegionDetailPanel } from '../ui/RegionDetailPanel';
+import { RegionComparisonPanel } from '../ui/RegionComparisonPanel';
+import { TravelPanel } from '../ui/TravelPanel';
 
 const WEATHER_EMOTES: Record<string, string> = {
   clear: '\u2600',
@@ -19,61 +28,14 @@ const SEASON_ICONS: Record<string, string> = {
   winter: '\u2744',
 };
 
-const MODIFIER_LABELS: Record<string, string> = {
-  cropGrowth: 'Crop Growth',
-  floodRisk: 'Flood Risk',
-  travelSpeed: 'Travel Speed',
-  huntBonus: 'Hunt Bonus',
-  alchemyOutput: 'Alchemy',
-  essenceDrops: 'Essence',
-  morale: 'Morale',
-  marketConfidence: 'Market',
-};
-
-const CLIMATE_FLAVOR: Record<string, string> = {
-  tropical: 'Lush jungles and warm rains fuel abundant growth. The air hums with life.',
-  temperate: 'Rolling hills and mild seasons make this a balanced land for all trades.',
-  arid: 'Sun-scorched plains demand resilience, but rare minerals hide beneath the dust.',
-  cold: 'Frost-bound tundra where only the hardiest guilds survive — and thrive.',
-  mediterranean: 'Sun-drenched coasts and olive groves. Trade winds carry fortune to the bold.',
-  continental: 'Vast steppes with extreme seasons. Preparation separates the strong from the fallen.',
-};
-
-const FESTIVAL_BUFF_LABELS: Record<string, string> = {
-  morale: 'Morale',
-  goldIncome: 'Gold Income',
-  marketDiscount: 'Market Discount',
-  xpBonus: 'XP Bonus',
-};
-
-interface FestivalData {
-  name: string;
-  flavorText: string;
-  buffs: Record<string, number>;
-  duration: number;
-}
-
 export class WorldMapScene extends Phaser.Scene {
-  private worldState: {
-    regionId: string;
-    date: string;
-    weather: {
-      condition: string;
-      temperature: number;
-      humidity: number;
-      windSpeed: number;
-      rainMm: number;
-    };
-    modifiers: Record<string, number>;
-    activeEvents: unknown[];
-    marketState: unknown;
-    season: string;
-    festival: FestivalData | null;
-  } | null = null;
-
-  private activeEvents: any[] = [];
-  private regionName: string = '';
-  private climate: string = '';
+  private worldMap: InteractiveWorldMap | null = null;
+  private detailPanel: RegionDetailPanel | null = null;
+  private comparisonPanel: RegionComparisonPanel | null = null;
+  private travelPanel: TravelPanel | null = null;
+  private currentSeason: string = '';
+  private currentRegionId: string = '';
+  private selectedRegions: string[] = [];
 
   constructor() {
     super({ key: 'WorldMapScene' });
@@ -82,30 +44,25 @@ export class WorldMapScene extends Phaser.Scene {
   async create(): Promise<void> {
     this.cameras.main.setBackgroundColor(COLORS.background);
 
-    const loadingText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'Loading world...', {
+    const loadingText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'Loading world map...', {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.heading}px`,
       color: COLORS.textSecondary,
     }).setOrigin(0.5);
 
     try {
-      const [worldState, events] = await Promise.all([
+      const [mapData, worldState] = await Promise.all([
+        apiClient.getMapOverview(),
         apiClient.getWorldState(),
-        apiClient.getEvents(),
       ]);
 
-      this.worldState = worldState;
-      this.activeEvents = events;
-
-      // Derive region name and climate from regionId
-      // regionId format is like "tropical_coast" or "temperate_valley"
-      this.regionName = this.formatRegionName(worldState.regionId);
-      this.climate = this.deriveClimate(worldState.regionId);
+      this.currentSeason = worldState.season;
+      this.currentRegionId = worldState.regionId;
 
       loadingText.destroy();
-      this.buildUI();
+      this.buildUI(mapData, worldState);
     } catch (err) {
-      loadingText.setText('Failed to load world data');
+      loadingText.setText('Failed to load world map');
       if (err instanceof Error && err.message.includes('401')) {
         localStorage.removeItem('guildtide_token');
         this.scene.start('LoginScene');
@@ -113,333 +70,325 @@ export class WorldMapScene extends Phaser.Scene {
     }
   }
 
-  private formatRegionName(regionId: string): string {
-    return regionId
-      .split(/[_-]/)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ');
-  }
-
-  private deriveClimate(regionId: string): string {
-    const id = regionId.toLowerCase();
-    const climates = ['tropical', 'temperate', 'arid', 'cold', 'mediterranean', 'continental'];
-    for (const c of climates) {
-      if (id.includes(c)) return c;
-    }
-    return 'temperate';
-  }
-
-  private buildUI(): void {
-    if (!this.worldState) return;
-
-    const ws = this.worldState;
-
-    // --- Header ---
+  private buildUI(mapData: Awaited<ReturnType<typeof apiClient.getMapOverview>>, worldState: Awaited<ReturnType<typeof apiClient.getWorldState>>): void {
+    // ── Header ──
     const headerBg = this.add.graphics();
     headerBg.fillStyle(COLORS.panelBg, 0.9);
-    headerBg.fillRect(0, 0, GAME_WIDTH, 55);
+    headerBg.fillRect(0, 0, GAME_WIDTH, 50);
     headerBg.lineStyle(2, COLORS.panelBorder);
-    headerBg.strokeRect(0, 0, GAME_WIDTH, 55);
+    headerBg.strokeRect(0, 0, GAME_WIDTH, 50);
 
-    this.add.text(20, 10, 'World Map', {
+    this.add.text(16, 8, 'World Map', {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.heading}px`,
       color: COLORS.textGold,
       fontStyle: 'bold',
     });
 
-    this.add.text(20, 36, `${this.regionName} - ${this.climate.charAt(0).toUpperCase() + this.climate.slice(1)} Region`, {
+    // Season & weather
+    const seasonIcon = SEASON_ICONS[this.currentSeason] || '';
+    const weatherEmote = WEATHER_EMOTES[worldState.weather.condition] || '\u2600';
+    this.add.text(16, 32, `${seasonIcon} ${this.currentSeason.charAt(0).toUpperCase() + this.currentSeason.slice(1)} | ${weatherEmote} ${Math.round(worldState.weather.temperature)}\u00B0C`, {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.tiny}px`,
       color: COLORS.textSecondary,
     });
 
-    // Date display
-    this.add.text(GAME_WIDTH - 20, 20, `Date: ${ws.date}`, {
+    // Date
+    this.add.text(GAME_WIDTH - 16, 14, `Date: ${worldState.date}`, {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.small}px`,
       color: COLORS.textSecondary,
     }).setOrigin(1, 0);
 
-    // --- Left column: Weather + Modifiers ---
-    this.buildWeatherSection(20, 65);
+    // Header buttons
+    this.buildHeaderButtons();
 
-    // --- Right column: Events ---
-    this.buildEventsSection(GAME_WIDTH / 2 + 20, 65);
+    // ── Interactive Map ──
+    const mapY = 52;
+    const mapH = GAME_HEIGHT - 52 - 50;
+    this.worldMap = new InteractiveWorldMap(this, 0, mapY, GAME_WIDTH, mapH);
+    this.worldMap.render(mapData.regions, this.currentSeason);
 
-    // --- Climate flavor text at bottom ---
-    const flavorText = CLIMATE_FLAVOR[this.climate] || CLIMATE_FLAVOR.temperate;
-    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 70, flavorText, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: '#6a7a8a',
-      fontStyle: 'italic',
-      wordWrap: { width: GAME_WIDTH - 60 },
-      align: 'center',
-    }).setOrigin(0.5);
+    // Apply day/night overlay
+    this.worldMap.applyDayNightOverlay(mapData.dayNight.overlayOpacity);
 
-    // --- Bottom nav ---
+    // Click handler
+    this.worldMap.setOnRegionClick((regionId) => {
+      this.onRegionClick(regionId);
+    });
+
+    // Load travel status and caravan routes in parallel
+    this.loadTravelAndCaravans();
+    this.loadPins();
+
+    // ── Side Panels ──
+    this.detailPanel = new RegionDetailPanel(this);
+    this.detailPanel.setOnAction((action, regionId) => {
+      this.handleRegionAction(action, regionId);
+    });
+
+    this.comparisonPanel = new RegionComparisonPanel(this);
+
+    this.travelPanel = new TravelPanel(this);
+    this.travelPanel.setOnTravel((toRegionId) => {
+      this.startTravel(toRegionId);
+    });
+
+    // ── Bottom Nav ──
     this.buildBottomNav();
   }
 
-  private buildWeatherSection(x: number, startY: number): void {
-    if (!this.worldState) return;
-    const ws = this.worldState;
-    const panelW = GAME_WIDTH / 2 - 40;
-
-    // Panel background
-    const bg = this.add.graphics();
-    bg.fillStyle(COLORS.panelBg, 0.85);
-    bg.fillRoundedRect(x, startY, panelW, 260, 8);
-    bg.lineStyle(1, COLORS.panelBorder);
-    bg.strokeRoundedRect(x, startY, panelW, 260, 8);
-
-    let y = startY + 12;
-
-    // Season display
-    const seasonIcon = SEASON_ICONS[ws.season] || '';
-    const seasonLabel = ws.season ? ws.season.charAt(0).toUpperCase() + ws.season.slice(1) : '';
-    this.add.text(x + 14, y, `${seasonIcon} ${seasonLabel}`, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.body}px`,
-      color: '#a0c4ff',
-      fontStyle: 'bold',
-    });
-    y += 26;
-
-    // Weather condition
-    const emote = WEATHER_EMOTES[ws.weather.condition] || '\u2600';
-    this.add.text(x + 14, y, `${emote} ${ws.weather.condition.charAt(0).toUpperCase() + ws.weather.condition.slice(1)}`, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.heading}px`,
-      color: COLORS.textGold,
-      fontStyle: 'bold',
-    });
-    y += 32;
-
-    // Weather details
-    this.add.text(x + 14, y, `${Math.round(ws.weather.temperature)}\u00B0C  |  ${Math.round(ws.weather.humidity)}% humidity  |  Wind: ${Math.round(ws.weather.windSpeed)} km/h`, {
+  private buildHeaderButtons(): void {
+    const btnStyle = {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.tiny}px`,
       color: COLORS.textSecondary,
-    });
-    y += 20;
+      backgroundColor: '#0f3460',
+      padding: { x: 8, y: 4 },
+    };
 
-    if (ws.weather.rainMm > 0) {
-      this.add.text(x + 14, y, `Rain: ${ws.weather.rainMm.toFixed(1)} mm`, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color: '#5dade2',
-      });
-      y += 18;
-    }
+    // T-1105: Search button
+    const searchBtn = this.add.text(GAME_WIDTH - 280, 30, '\u{1F50D} Search', btnStyle)
+      .setInteractive({ useHandCursor: true });
+    searchBtn.on('pointerup', () => this.showSearch());
 
-    // Separator
-    const sep = this.add.graphics();
-    sep.lineStyle(1, COLORS.panelBorder, 0.5);
-    sep.lineBetween(x + 10, y + 4, x + panelW - 10, y + 4);
-    y += 12;
+    // T-1107: Compare button
+    const compareBtn = this.add.text(GAME_WIDTH - 210, 30, '\u{2696} Compare', btnStyle)
+      .setInteractive({ useHandCursor: true });
+    compareBtn.on('pointerup', () => this.showComparison());
 
-    // Active modifiers
-    this.add.text(x + 14, y, 'Active Modifiers', {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.small}px`,
-      color: COLORS.textSecondary,
-      fontStyle: 'bold',
-    });
-    y += 20;
+    // T-1098: Achievements button
+    const achieveBtn = this.add.text(GAME_WIDTH - 135, 30, '\u{1F3C6} Achievements', btnStyle)
+      .setInteractive({ useHandCursor: true });
+    achieveBtn.on('pointerup', () => this.showAchievements());
+  }
 
-    for (const [key, value] of Object.entries(ws.modifiers)) {
-      if (key === 'floodRisk' && value <= 0) continue;
-      if (Math.abs(value - 1.0) < 0.01 && key !== 'floodRisk') continue;
-
-      const label = MODIFIER_LABELS[key] || key;
-      let display: string;
-      let color: string;
-
-      if (key === 'floodRisk') {
-        display = `${Math.round(value * 100)}%`;
-        color = value > 0.1 ? '#e94560' : '#f59f00';
-      } else {
-        const pct = Math.round((value - 1) * 100);
-        display = pct >= 0 ? `+${pct}%` : `${pct}%`;
-        color = pct >= 0 ? '#4ecca3' : '#e94560';
+  private async onRegionClick(regionId: string): Promise<void> {
+    try {
+      const detail = await apiClient.getRegionDetail(regionId);
+      if (detail.discovered === false) {
+        // Try to discover
+        const result = await apiClient.discoverRegion(regionId);
+        if (result.success) {
+          this.worldMap?.playDiscoveryAnimation(regionId);
+          // Refresh map
+          const mapData = await apiClient.getMapOverview();
+          this.worldMap?.render(mapData.regions, this.currentSeason);
+          // Re-fetch detail
+          const newDetail = await apiClient.getRegionDetail(regionId);
+          this.detailPanel?.show(newDetail as any);
+        }
+        return;
       }
 
-      this.add.text(x + 14, y, label, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color: COLORS.textSecondary,
-      });
-
-      this.add.text(x + panelW - 14, y, display, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color,
-        fontStyle: 'bold',
-      }).setOrigin(1, 0);
-
-      y += 18;
-    }
-
-    // Festival section
-    if (ws.festival) {
-      this.buildFestivalSection(x, startY + 270, panelW, ws.festival);
+      this.detailPanel?.show(detail as any);
+      this.worldMap?.zoomToRegion(regionId);
+    } catch (err) {
+      console.error('Region click error:', err);
     }
   }
 
-  private buildFestivalSection(x: number, startY: number, panelW: number, festival: FestivalData): void {
-    const bg = this.add.graphics();
-    bg.fillStyle(COLORS.panelBg, 0.85);
-    bg.fillRoundedRect(x, startY, panelW, 140, 8);
-    bg.lineStyle(1, 0xffd700, 0.6);
-    bg.strokeRoundedRect(x, startY, panelW, 140, 8);
-
-    let y = startY + 12;
-
-    this.add.text(x + 14, y, `\u2726 ${festival.name}`, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.body}px`,
-      color: '#ffd700',
-      fontStyle: 'bold',
-    });
-    y += 24;
-
-    this.add.text(x + 14, y, festival.flavorText, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.tiny}px`,
-      color: '#c8a84e',
-      wordWrap: { width: panelW - 28 },
-    });
-    y += 30;
-
-    for (const [key, value] of Object.entries(festival.buffs)) {
-      if (value <= 0) continue;
-      const buffLabel = FESTIVAL_BUFF_LABELS[key] || key;
-      const pct = `+${Math.round(value * 100)}%`;
-
-      this.add.text(x + 14, y, buffLabel, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color: '#c8a84e',
-      });
-
-      this.add.text(x + panelW - 14, y, pct, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color: '#ffd700',
-        fontStyle: 'bold',
-      }).setOrigin(1, 0);
-
-      y += 18;
+  private async handleRegionAction(action: string, regionId: string): Promise<void> {
+    try {
+      switch (action) {
+        case 'travel':
+          await this.showTravelOptions(regionId);
+          break;
+        case 'explore': {
+          const result = await apiClient.exploreRegion(regionId, 10);
+          // Refresh detail
+          const detail = await apiClient.getRegionDetail(regionId);
+          this.detailPanel?.show(detail as any);
+          break;
+        }
+        case 'claim': {
+          const claimResult = await apiClient.claimRegion(regionId);
+          if (claimResult.success) {
+            const detail = await apiClient.getRegionDetail(regionId);
+            this.detailPanel?.show(detail as any);
+            const mapData = await apiClient.getMapOverview();
+            this.worldMap?.render(mapData.regions, this.currentSeason);
+          }
+          break;
+        }
+        case 'buildOutpost': {
+          const outResult = await apiClient.buildOutpost(regionId, 'resource_camp');
+          if (outResult.success) {
+            const detail = await apiClient.getRegionDetail(regionId);
+            this.detailPanel?.show(detail as any);
+          }
+          break;
+        }
+      }
+    } catch (err) {
+      console.error('Region action error:', err);
     }
   }
 
-  private buildEventsSection(x: number, startY: number): void {
-    const panelW = GAME_WIDTH / 2 - 40;
+  private async showTravelOptions(toRegionId: string): Promise<void> {
+    try {
+      // Get distance info and map overview for connected regions
+      const mapData = await apiClient.getMapOverview();
+      const detail = await apiClient.getRegionDetail(toRegionId) as any;
 
-    // Panel background
-    const bg = this.add.graphics();
-    const panelH = Math.max(260, 40 + this.activeEvents.length * 100);
-    bg.fillStyle(COLORS.panelBg, 0.85);
-    bg.fillRoundedRect(x, startY, panelW, Math.min(panelH, GAME_HEIGHT - startY - 120), 8);
-    bg.lineStyle(1, COLORS.panelBorder);
-    bg.strokeRoundedRect(x, startY, panelW, Math.min(panelH, GAME_HEIGHT - startY - 120), 8);
+      if (!detail.connections) return;
 
-    let y = startY + 12;
-
-    this.add.text(x + 14, y, `Active Events (${this.activeEvents.length})`, {
-      fontFamily: FONTS.primary,
-      fontSize: `${FONTS.sizes.body}px`,
-      color: COLORS.textPrimary,
-      fontStyle: 'bold',
-    });
-    y += 28;
-
-    if (this.activeEvents.length === 0) {
-      this.add.text(x + 14, y, 'No active events at this time.\nCheck back as the world evolves.', {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.small}px`,
-        color: COLORS.textSecondary,
-        lineSpacing: 4,
+      const options = [];
+      // Show travel TO this region from current
+      const dist = await apiClient.getRegionDistance(this.currentRegionId, toRegionId);
+      options.push({
+        regionId: toRegionId,
+        regionName: detail.name || toRegionId,
+        distance: dist.distance,
+        travelDays: dist.travelDays,
+        hasOutpost: detail.hasOutpost || false,
+        embargoActive: detail.embargoActive || false,
       });
-      return;
+
+      this.travelPanel?.showPlanTravel(
+        this.currentRegionId.replace(/[-_]/g, ' '),
+        options,
+      );
+    } catch (err) {
+      console.error('Travel options error:', err);
     }
+  }
 
-    this.activeEvents.forEach((event) => {
-      if (y + 85 > GAME_HEIGHT - 120) return;
+  private async startTravel(toRegionId: string): Promise<void> {
+    try {
+      const result = await apiClient.startRegionTravel(this.currentRegionId, toRegionId);
+      if (result.success) {
+        this.loadTravelAndCaravans();
+      }
+    } catch (err) {
+      console.error('Start travel error:', err);
+    }
+  }
 
-      // Event card
-      const cardW = panelW - 28;
-      const cardH = 80;
-      const cardBg = this.add.graphics();
-      cardBg.fillStyle(COLORS.background, 0.8);
-      cardBg.fillRoundedRect(x + 14, y, cardW, cardH, 6);
-      cardBg.lineStyle(1, COLORS.panelBorder, 0.5);
-      cardBg.strokeRoundedRect(x + 14, y, cardW, cardH, 6);
+  private async loadTravelAndCaravans(): Promise<void> {
+    try {
+      const [travelStatus, caravans] = await Promise.all([
+        apiClient.getTravelStatus(),
+        apiClient.getCaravanRoutes(),
+      ]);
 
-      // Title
-      this.add.text(x + 24, y + 8, event.title, {
+      if (travelStatus.travel && !('arrived' in travelStatus.travel && travelStatus.travel.arrived)) {
+        this.worldMap?.drawTravelRoute(travelStatus.travel as any);
+        this.travelPanel?.showActiveTravel(travelStatus.travel as any);
+      }
+
+      if (caravans.routes.length > 0) {
+        this.worldMap?.drawCaravanRoutes(caravans.routes as any);
+      }
+    } catch {
+      // Non-critical failure
+    }
+  }
+
+  private async loadPins(): Promise<void> {
+    try {
+      const pinData = await apiClient.getMapPins();
+      this.worldMap?.drawPins(pinData.pins);
+    } catch {
+      // Non-critical failure
+    }
+  }
+
+  private async showSearch(): Promise<void> {
+    // Simple search prompt using DOM
+    const query = prompt('Search regions by name, biome, or climate:');
+    if (!query) return;
+
+    try {
+      const results = await apiClient.searchRegions(query);
+      if (results.results.length > 0) {
+        const first = results.results[0] as any;
+        this.onRegionClick(first.id);
+      }
+    } catch (err) {
+      console.error('Search error:', err);
+    }
+  }
+
+  private async showComparison(): Promise<void> {
+    try {
+      // Compare first 4 discovered regions
+      const mapData = await apiClient.getMapOverview();
+      const discovered = mapData.regions.filter(r => r.discovered).slice(0, 4);
+      if (discovered.length < 2) return;
+
+      const ids = discovered.map(r => r.id);
+      const result = await apiClient.compareRegions(ids);
+      this.comparisonPanel?.show(result.comparison as any);
+    } catch (err) {
+      console.error('Comparison error:', err);
+    }
+  }
+
+  private async showAchievements(): Promise<void> {
+    try {
+      const data = await apiClient.getRegionAchievements();
+      const achievements = (data as any).achievements || [];
+
+      // Simple modal
+      const bg = this.add.graphics();
+      bg.fillStyle(0x000000, 0.6);
+      bg.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+      bg.setDepth(120);
+
+      const panel = this.add.graphics();
+      const pw = 400;
+      const ph = 300;
+      const px = (GAME_WIDTH - pw) / 2;
+      const py = (GAME_HEIGHT - ph) / 2;
+      panel.fillStyle(COLORS.panelBg, 0.98);
+      panel.fillRoundedRect(px, py, pw, ph, 10);
+      panel.lineStyle(2, COLORS.panelBorder);
+      panel.strokeRoundedRect(px, py, pw, ph, 10);
+      panel.setDepth(121);
+
+      const title = this.add.text(GAME_WIDTH / 2, py + 16, '\u{1F3C6} Region Achievements', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.small}px`,
+        fontSize: `${FONTS.sizes.body}px`,
         color: COLORS.textGold,
         fontStyle: 'bold',
-      });
+      }).setOrigin(0.5, 0).setDepth(122);
 
-      // Expiry
-      const expiresIn = Math.max(0, Math.floor((new Date(event.expiresAt).getTime() - Date.now()) / 3600000));
-      this.add.text(x + cardW, y + 10, `${expiresIn}h left`, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color: expiresIn < 3 ? '#e94560' : COLORS.textSecondary,
-      }).setOrigin(1, 0);
+      let ay = py + 50;
+      const texts: Phaser.GameObjects.Text[] = [title];
+      for (const ach of achievements) {
+        const icon = ach.earned ? '\u{2705}' : '\u{2B1C}';
+        const t = this.add.text(px + 20, ay, `${icon} ${ach.name} — ${ach.description}`, {
+          fontFamily: FONTS.primary,
+          fontSize: `${FONTS.sizes.tiny}px`,
+          color: ach.earned ? '#4ecca3' : COLORS.textSecondary,
+        }).setDepth(122);
+        texts.push(t);
+        ay += 22;
+      }
 
-      // Description (truncated)
-      const desc = event.description.length > 80
-        ? event.description.substring(0, 77) + '...'
-        : event.description;
-      this.add.text(x + 24, y + 28, desc, {
+      // Stats
+      const stats = `Discovered: ${(data as any).regionsDiscovered}/${(data as any).totalRegions} | Explored: ${(data as any).fullyExplored} | Landmarks: ${(data as any).landmarksFound}/${(data as any).totalLandmarks}`;
+      const statText = this.add.text(GAME_WIDTH / 2, py + ph - 30, stats, {
         fontFamily: FONTS.primary,
         fontSize: `${FONTS.sizes.tiny}px`,
         color: COLORS.textSecondary,
-        wordWrap: { width: cardW - 20 },
+      }).setOrigin(0.5).setDepth(122);
+      texts.push(statText);
+
+      // Close on click
+      const closeZone = this.add.zone(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT)
+        .setInteractive().setDepth(119);
+      closeZone.on('pointerup', () => {
+        bg.destroy();
+        panel.destroy();
+        texts.forEach(t => t.destroy());
+        closeZone.destroy();
       });
-
-      // Choices count
-      const choiceCount = event.choices?.length || 0;
-      this.add.text(x + 24, y + 58, `${choiceCount} choice${choiceCount !== 1 ? 's' : ''} available`, {
-        fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.tiny}px`,
-        color: COLORS.textAccent,
-      });
-
-      // Clickable zone - navigate to GuildHallScene to interact
-      const hitZone = this.add.zone(x + 14 + cardW / 2, y + cardH / 2, cardW, cardH)
-        .setInteractive({ useHandCursor: true });
-
-      hitZone.on('pointerover', () => {
-        cardBg.clear();
-        cardBg.fillStyle(0x0f3460, 0.9);
-        cardBg.fillRoundedRect(x + 14, y, cardW, cardH, 6);
-        cardBg.lineStyle(1, COLORS.gold, 0.8);
-        cardBg.strokeRoundedRect(x + 14, y, cardW, cardH, 6);
-      });
-
-      hitZone.on('pointerout', () => {
-        cardBg.clear();
-        cardBg.fillStyle(COLORS.background, 0.8);
-        cardBg.fillRoundedRect(x + 14, y, cardW, cardH, 6);
-        cardBg.lineStyle(1, COLORS.panelBorder, 0.5);
-        cardBg.strokeRoundedRect(x + 14, y, cardW, cardH, 6);
-      });
-
-      hitZone.on('pointerup', () => {
-        // Go to Guild Hall where events can be interacted with
-        this.scene.start('GuildHallScene');
-      });
-
-      y += cardH + 10;
-    });
+    } catch (err) {
+      console.error('Achievements error:', err);
+    }
   }
 
   private buildBottomNav(): void {
@@ -461,7 +410,7 @@ export class WorldMapScene extends Phaser.Scene {
 
     tabs.forEach((tab, i) => {
       const x = tabWidth * i + tabWidth / 2;
-      const isActive = i === 3; // World Map is active
+      const isActive = i === 3;
       const text = this.add.text(x, navY + 25, tab.label, {
         fontFamily: FONTS.primary,
         fontSize: `${FONTS.sizes.small}px`,
@@ -474,10 +423,15 @@ export class WorldMapScene extends Phaser.Scene {
       });
 
       if (!isActive) {
-        text.on('pointerup', () => {
-          this.scene.start(tab.scene);
-        });
+        text.on('pointerup', () => this.scene.start(tab.scene));
       }
     });
+  }
+
+  shutdown(): void {
+    this.worldMap?.destroy();
+    this.detailPanel?.destroy();
+    this.comparisonPanel?.destroy();
+    this.travelPanel?.destroy();
   }
 }

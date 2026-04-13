@@ -15,6 +15,7 @@ import { itemsRouter } from './routes/items';
 import { accountRouter } from './routes/account';
 import { resourcesRouter } from './routes/resources';
 import { financeRouter } from './routes/finance';
+import { regionsRouter } from './routes/regions';
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use('/api/items', itemsRouter);
 app.use('/api/account', accountRouter);
 app.use('/api/resources', resourcesRouter);
 app.use('/api/finance', financeRouter);
+app.use('/api/regions', regionsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
