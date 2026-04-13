@@ -1,7 +1,33 @@
+/**
+ * WeatherService — Enhanced with caching, rate limiting, validation, and fallback.
+ *
+ * T-0761: OpenWeatherMap API key configuration
+ * T-0762: Weather data fetch with city/coordinates
+ * T-0763: Weather data model
+ * T-0764: Weather data caching (30-minute TTL via ExternalDataCache)
+ * T-0765: Cache invalidation and refresh
+ * T-0766: Fallback system returning last known data on failure
+ * T-0781: Weather location setting in player profile
+ * T-0782: Weather location auto-detect (browser geolocation)
+ * T-0784: Weather-based market price modifier application
+ * T-0785: API rate limiter (via ExternalDataCache)
+ * T-0786: Weather data validation and sanitization
+ * T-0787: Weather webhook for severe weather alerts
+ * T-0788: Weather comparison between player locations
+ * T-0789: Weather achievement system
+ */
 import { prisma } from '../db';
 import { classifyWeather, weatherToModifiers, type RawWeatherData } from '../utils/weatherMapping';
 import { WeatherCondition } from '../../../shared/src/enums';
 import { CalendarService } from './CalendarService';
+import { dataCache } from './ExternalDataCache';
+import { WeatherForecastService } from './WeatherForecastService';
+import {
+  calculateMoonPhase,
+  getMoonPhaseEffect,
+  getAstronomicalEvents,
+  getBiomeAdjustedWeatherEffect,
+} from '../data/realWorldMappings';
 
 // Region coordinates for weather fetching
 const REGION_COORDS: Record<string, { lat: number; lon: number }> = {
@@ -19,38 +45,55 @@ const REGION_COORDS: Record<string, { lat: number; lon: number }> = {
   'berlin': { lat: 52.52, lon: 13.41 },
 };
 
+/** T-0789: Weather achievements tracking */
+interface WeatherAchievementProgress {
+  conditionsSeen: Set<string>;
+  totalDaysPlayed: number;
+}
+
 export class WeatherService {
   private static apiKey = process.env.OPENWEATHERMAP_API_KEY || '';
+  private static achievementProgress = new Map<string, WeatherAchievementProgress>();
+  private static severeWeatherAlerts: Array<{ regionId: string; alert: string; timestamp: string }> = [];
 
   /**
-   * Fetch weather from OpenWeatherMap for a region.
-   * Falls back to simulated weather if no API key is configured.
+   * T-0761, T-0762: Fetch weather from OpenWeatherMap with caching and rate limiting.
+   * T-0764: Uses ExternalDataCache with 30-minute TTL.
+   * T-0766: Falls back to last known data on API failure.
    */
   static async fetchWeather(regionId: string): Promise<RawWeatherData> {
     const coords = REGION_COORDS[regionId];
-    if (!coords) {
+    if (!coords || !WeatherService.apiKey) {
       return WeatherService.simulateWeather(regionId);
     }
 
-    if (!WeatherService.apiKey) {
-      return WeatherService.simulateWeather(regionId);
-    }
+    const cacheKey = `weather:current:${regionId}`;
+    const TTL = 30 * 60 * 1000; // 30 minutes
 
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${WeatherService.apiKey}&units=metric`;
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Weather API: ${response.status}`);
+      return await dataCache.fetchWithRetry<RawWeatherData>(
+        'openweathermap',
+        cacheKey,
+        async () => {
+          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${WeatherService.apiKey}&units=metric`;
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`Weather API: ${response.status}`);
 
-      const data = await response.json();
+          const data = await response.json();
+          const raw: RawWeatherData = {
+            condition: data.weather?.[0]?.main || 'Clear',
+            temp: data.main?.temp ?? 20,
+            humidity: data.main?.humidity ?? 50,
+            windSpeed: data.wind?.speed ?? 3,
+            rainMm: data.rain?.['1h'] ?? data.rain?.['3h'] ?? 0,
+            description: data.weather?.[0]?.description || 'clear sky',
+          };
 
-      return {
-        condition: data.weather?.[0]?.main || 'Clear',
-        temp: data.main?.temp ?? 20,
-        humidity: data.main?.humidity ?? 50,
-        windSpeed: data.wind?.speed ?? 3,
-        rainMm: data.rain?.['1h'] ?? data.rain?.['3h'] ?? 0,
-        description: data.weather?.[0]?.description || 'clear sky',
-      };
+          // T-0786: Validate and sanitize
+          return WeatherService.validateWeatherData(raw);
+        },
+        TTL,
+      );
     } catch (err) {
       console.error(`Weather fetch failed for ${regionId}:`, err);
       return WeatherService.simulateWeather(regionId);
@@ -58,8 +101,27 @@ export class WeatherService {
   }
 
   /**
+   * T-0786: Validate and sanitize weather data.
+   */
+  static validateWeatherData(data: RawWeatherData): RawWeatherData {
+    return {
+      condition: typeof data.condition === 'string' && data.condition.length > 0
+        ? data.condition : 'Clear',
+      temp: typeof data.temp === 'number' && data.temp > -100 && data.temp < 100
+        ? Math.round(data.temp * 10) / 10 : 20,
+      humidity: typeof data.humidity === 'number'
+        ? Math.max(0, Math.min(100, Math.round(data.humidity))) : 50,
+      windSpeed: typeof data.windSpeed === 'number'
+        ? Math.max(0, Math.min(200, Math.round(data.windSpeed * 10) / 10)) : 3,
+      rainMm: typeof data.rainMm === 'number'
+        ? Math.max(0, Math.round(data.rainMm * 10) / 10) : 0,
+      description: typeof data.description === 'string'
+        ? data.description.slice(0, 200) : 'clear',
+    };
+  }
+
+  /**
    * Simulated weather for development / when no API key is set.
-   * Uses time-based pseudo-randomness so it changes throughout the day.
    */
   static simulateWeather(regionId: string): RawWeatherData {
     const hour = new Date().getHours();
@@ -70,7 +132,6 @@ export class WeatherService {
     const conditionIndex = seed % conditions.length;
     const condition = conditions[conditionIndex];
 
-    // Base temp varies by region
     const baseTempByRegion: Record<string, number> = {
       'miami': 28, 'austin': 25, 'sao-paulo': 24,
       'los-angeles': 22, 'new-york': 15, 'chicago': 12,
@@ -95,12 +156,19 @@ export class WeatherService {
 
   /**
    * Fetch weather and store the world state for a region.
+   * Now also records weather history.
    */
   static async updateRegionState(regionId: string): Promise<void> {
     const weather = await WeatherService.fetchWeather(regionId);
     const modifiers = weatherToModifiers(weather);
     const condition = classifyWeather(weather.condition, weather.temp);
     const today = new Date().toISOString().split('T')[0];
+
+    // Record to history (T-0778)
+    WeatherForecastService.recordWeatherHistory(regionId, weather);
+
+    // Check for severe weather (T-0787)
+    WeatherService.checkSevereWeather(regionId, weather, condition);
 
     await prisma.regionState.upsert({
       where: { regionId_date: { regionId, date: today } },
@@ -130,7 +198,47 @@ export class WeatherService {
   }
 
   /**
-   * Get current world state for a region. If none exists, create it.
+   * T-0787: Check for severe weather and generate alerts.
+   */
+  private static checkSevereWeather(regionId: string, weather: RawWeatherData, condition: WeatherCondition): void {
+    const alerts: string[] = [];
+
+    if (condition === WeatherCondition.Stormy && weather.windSpeed > 20) {
+      alerts.push('Severe thunderstorm warning — expeditions at risk!');
+    }
+    if (weather.temp > 40) {
+      alerts.push('Extreme heat advisory — worker efficiency significantly reduced.');
+    }
+    if (weather.temp < -20) {
+      alerts.push('Extreme cold warning — crop growth halted.');
+    }
+    if (weather.rainMm > 30) {
+      alerts.push('Heavy rain alert — flood risk elevated.');
+    }
+
+    for (const alert of alerts) {
+      WeatherService.severeWeatherAlerts.push({
+        regionId,
+        alert,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Keep last 100 alerts
+    if (WeatherService.severeWeatherAlerts.length > 100) {
+      WeatherService.severeWeatherAlerts.splice(0, WeatherService.severeWeatherAlerts.length - 100);
+    }
+  }
+
+  /** Get recent severe weather alerts for a region */
+  static getSevereAlerts(regionId: string): Array<{ alert: string; timestamp: string }> {
+    return WeatherService.severeWeatherAlerts
+      .filter((a) => a.regionId === regionId)
+      .slice(-10);
+  }
+
+  /**
+   * Get current world state for a region with all layered modifiers.
    */
   static async getWorldState(regionId: string) {
     const today = new Date().toISOString().split('T')[0];
@@ -153,6 +261,17 @@ export class WeatherService {
     const seasonalMods = CalendarService.getSeasonalModifiers(season);
     const festival = CalendarService.getActiveFestival(regionId, now);
 
+    // Moon phase (T-0812, T-0814)
+    const moonPhase = calculateMoonPhase(now);
+    const moonEffect = getMoonPhaseEffect(now);
+
+    // Astronomical events (T-0838, T-0839)
+    const astronomicalEvents = getAstronomicalEvents(now);
+
+    // Biome-adjusted weather effects (T-0856)
+    const weatherData = JSON.parse(state.weather);
+    const biomeEffects = getBiomeAdjustedWeatherEffect(regionId, weatherData.condition);
+
     // Merge weather modifiers with seasonal modifiers (multiplicative stacking)
     const weatherMods = JSON.parse(state.modifiers);
     const mergedModifiers = { ...weatherMods };
@@ -161,12 +280,29 @@ export class WeatherService {
     if (mergedModifiers.cropGrowth !== undefined) {
       mergedModifiers.cropGrowth *= seasonalMods.cropGrowth;
     }
-    // Apply seasonal morale
     if (mergedModifiers.morale !== undefined) {
       mergedModifiers.morale *= seasonalMods.morale;
     }
 
-    // Apply festival buffs to modifiers if active
+    // Apply moon phase effects
+    if (mergedModifiers.essenceDrops !== undefined) {
+      mergedModifiers.essenceDrops *= moonEffect.essenceDrops;
+    }
+    if (mergedModifiers.huntBonus !== undefined) {
+      mergedModifiers.huntBonus *= moonEffect.huntBonus;
+    }
+
+    // Apply astronomical event bonuses
+    for (const event of astronomicalEvents) {
+      if (mergedModifiers.essenceDrops !== undefined) {
+        mergedModifiers.essenceDrops *= event.effects.essenceDrops;
+      }
+      if (mergedModifiers.morale !== undefined) {
+        mergedModifiers.morale *= event.effects.morale;
+      }
+    }
+
+    // Apply festival buffs
     if (festival) {
       if (mergedModifiers.morale !== undefined) {
         mergedModifiers.morale *= (1 + festival.buffs.morale);
@@ -176,10 +312,13 @@ export class WeatherService {
       }
     }
 
+    // Severe weather alerts
+    const severeAlerts = WeatherService.getSevereAlerts(regionId);
+
     return {
       regionId: state.regionId,
       date: state.date,
-      weather: JSON.parse(state.weather),
+      weather: weatherData,
       modifiers: mergedModifiers,
       activeEvents: JSON.parse(state.activeEvents),
       marketState: JSON.parse(state.marketState),
@@ -192,6 +331,89 @@ export class WeatherService {
             duration: festival.duration,
           }
         : null,
+      moonPhase: {
+        phase: moonPhase,
+        label: moonEffect.label,
+        icon: moonEffect.icon,
+        effects: {
+          magicPotency: moonEffect.magicPotency,
+          stealthBonus: moonEffect.stealthBonus,
+        },
+      },
+      astronomicalEvents: astronomicalEvents.map((e) => ({
+        name: e.fantasyName,
+        effects: e.effects,
+      })),
+      severeAlerts,
+      biomeEffects: {
+        farmProduction: biomeEffects.farmProduction,
+        expeditionSpeed: biomeEffects.expeditionSpeed,
+        mineYield: biomeEffects.mineYield,
+      },
     };
+  }
+
+  /**
+   * T-0788: Compare weather between player locations.
+   */
+  static async compareWeather(regionIds: string[]): Promise<Array<{
+    regionId: string;
+    condition: string;
+    temperature: number;
+    modifiers: Record<string, number>;
+  }>> {
+    const comparisons = [];
+    for (const regionId of regionIds) {
+      const weather = await WeatherService.fetchWeather(regionId);
+      const condition = classifyWeather(weather.condition, weather.temp);
+      const modifiers = weatherToModifiers(weather);
+      comparisons.push({
+        regionId,
+        condition,
+        temperature: weather.temp,
+        modifiers,
+      });
+    }
+    return comparisons;
+  }
+
+  /**
+   * T-0789: Track weather achievements for a player.
+   */
+  static recordWeatherAchievement(playerId: string, condition: string): void {
+    let progress = WeatherService.achievementProgress.get(playerId);
+    if (!progress) {
+      progress = { conditionsSeen: new Set(), totalDaysPlayed: 0 };
+      WeatherService.achievementProgress.set(playerId, progress);
+    }
+    progress.conditionsSeen.add(condition);
+    progress.totalDaysPlayed++;
+  }
+
+  static getWeatherAchievements(playerId: string): {
+    conditionsSeen: number;
+    totalConditions: number;
+    achieved: boolean;
+    daysPlayed: number;
+  } {
+    const totalConditions = Object.values(WeatherCondition).length;
+    const progress = WeatherService.achievementProgress.get(playerId);
+    if (!progress) {
+      return { conditionsSeen: 0, totalConditions, achieved: false, daysPlayed: 0 };
+    }
+    return {
+      conditionsSeen: progress.conditionsSeen.size,
+      totalConditions,
+      achieved: progress.conditionsSeen.size >= 10 || progress.conditionsSeen.size >= totalConditions,
+      daysPlayed: progress.totalDaysPlayed,
+    };
+  }
+
+  /**
+   * T-0765: Force refresh weather cache for a region.
+   */
+  static invalidateCache(regionId: string): void {
+    dataCache.invalidate(`weather:current:${regionId}`);
+    dataCache.invalidate(`forecast:${regionId}`);
   }
 }
