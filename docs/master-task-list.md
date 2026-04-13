@@ -245,66 +245,66 @@
 ## Epic 4: Resource System
 > Storage caps, resource decay mechanics, conversion recipes, and resource visualization including charts and indicators.
 
-- [ ] T-0231: Define all 8 resource types with icons, colors, and descriptions
-- [ ] T-0232: Implement resource storage model in database with current amount and cap
-- [ ] T-0233: Create resource service with add, subtract, and check balance methods
-- [ ] T-0234: Implement storage cap enforcement preventing resource gain beyond cap
-- [ ] T-0235: Build resource overflow notification when production is wasted due to cap
-- [ ] T-0236: Implement storage cap increase through building upgrades
-- [ ] T-0237: Create resource cap display on resource bar (current / max format)
-- [ ] T-0238: Implement resource decay system for perishable resources (food decay at 2%/hour)
-- [ ] T-0239: Create resource decay rate modifiers from building effects (cold storage)
-- [ ] T-0240: Build resource decay warning notification when resources are decaying
-- [ ] T-0241: Implement resource production rate calculation from all sources
-- [ ] T-0242: Create resource consumption rate calculation from all drains
-- [ ] T-0243: Build net resource rate display (production minus consumption per hour)
-- [ ] T-0244: Implement resource conversion recipe system (e.g., 5 ore -> 1 metal)
-- [ ] T-0245: Create recipe list UI showing available conversions and costs
-- [ ] T-0246: Build recipe execution endpoint with resource validation
-- [ ] T-0247: Implement batch conversion UI with quantity selector
-- [ ] T-0248: Create auto-conversion toggle for setting up recurring resource conversions
-- [ ] T-0249: Build resource conversion animation showing input transforming to output
-- [ ] T-0250: Implement resource history tracking (hourly snapshots for charts)
-- [ ] T-0251: Build resource history chart component using Canvas line graphs
-- [ ] T-0252: Add time range selector for resource charts (1h, 6h, 24h, 7d)
-- [ ] T-0253: Implement resource forecast projection based on current rates
-- [ ] T-0254: Build resource alert system (notify when resource drops below threshold)
-- [ ] T-0255: Create resource alert configuration UI per resource type
-- [ ] T-0256: Implement resource trading between resources at variable exchange rates
-- [ ] T-0257: Build resource detailed breakdown panel (sources and sinks list)
-- [ ] T-0258: Create resource production multiplier system (weather bonuses, season bonuses)
-- [ ] T-0259: Implement resource bonus display showing active multipliers
-- [ ] T-0260: Build resource collection mini-game for active play bonus
-- [ ] T-0261: Implement resource gifting between allied guild players
-- [ ] T-0262: Create resource milestone rewards (first 1000 gold collected, etc.)
-- [ ] T-0263: Build resource efficiency rating based on storage usage percentage
-- [ ] T-0264: Implement resource priority system for allocation during shortages
-- [ ] T-0265: Create resource event modifiers (famine reduces food production 50%)
-- [ ] T-0266: Build resource comparison widget showing relative values
-- [ ] T-0267: Implement resource tooltip showing production/consumption breakdown
-- [ ] T-0268: Create resource scarcity indicators changing icon color when low
-- [ ] T-0269: Build resource storage upgrade path UI for each resource
-- [ ] T-0270: Implement resource batch collection endpoint for idle gains
-- [ ] T-0271: Create resource audit log showing all transactions with timestamps
-- [ ] T-0272: Build resource dashboard summary page with all resources at a glance
-- [ ] T-0273: Implement resource balance snapshot on logout for offline calculation
-- [ ] T-0274: Create resource offline production calculation on login
-- [ ] T-0275: Build offline production summary dialog shown on return
-- [ ] T-0276: Implement resource production cap per tick to prevent exploit
-- [ ] T-0277: Create seasonal resource bonuses (spring: +food, winter: +fuel)
-- [ ] T-0278: Build resource icon animation for active production state
-- [ ] T-0279: Implement resource transfer endpoint between player's own storage locations
-- [ ] T-0280: Create resource value index influenced by global player economy
-- [ ] T-0281: Build resource tutorial explaining each resource type and its uses
-- [ ] T-0282: Implement resource achievement badges (hoarder, trader, converter)
-- [ ] T-0283: Create resource emergency reserve system (locked reserve for critical needs)
-- [ ] T-0284: Build resource production queue visualization
-- [ ] T-0285: Implement resource webhook notifications for critical thresholds
-- [ ] T-0286: Create resource analytics API endpoint for external tracking
-- [ ] T-0287: Build resource comparison between players in alliance view
-- [ ] T-0288: Implement resource donation to guild treasury from personal stores
-- [ ] T-0289: Create resource treasure chest random reward from exploration
-- [ ] T-0290: Build resource management guide NPC with tips based on current state
+- [x] T-0231: Define all 8 resource types with icons, colors, and descriptions
+- [x] T-0232: Implement resource storage model in database with current amount and cap
+- [x] T-0233: Create resource service with add, subtract, and check balance methods
+- [x] T-0234: Implement storage cap enforcement preventing resource gain beyond cap
+- [x] T-0235: Build resource overflow notification when production is wasted due to cap
+- [x] T-0236: Implement storage cap increase through building upgrades
+- [x] T-0237: Create resource cap display on resource bar (current / max format)
+- [x] T-0238: Implement resource decay system for perishable resources (food decay at 2%/hour)
+- [x] T-0239: Create resource decay rate modifiers from building effects (cold storage)
+- [x] T-0240: Build resource decay warning notification when resources are decaying
+- [x] T-0241: Implement resource production rate calculation from all sources
+- [x] T-0242: Create resource consumption rate calculation from all drains
+- [x] T-0243: Build net resource rate display (production minus consumption per hour)
+- [x] T-0244: Implement resource conversion recipe system (e.g., 5 ore -> 1 metal)
+- [x] T-0245: Create recipe list UI showing available conversions and costs
+- [x] T-0246: Build recipe execution endpoint with resource validation
+- [x] T-0247: Implement batch conversion UI with quantity selector
+- [x] T-0248: Create auto-conversion toggle for setting up recurring resource conversions
+- [x] T-0249: Build resource conversion animation showing input transforming to output
+- [x] T-0250: Implement resource history tracking (hourly snapshots for charts)
+- [x] T-0251: Build resource history chart component using Canvas line graphs
+- [x] T-0252: Add time range selector for resource charts (1h, 6h, 24h, 7d)
+- [x] T-0253: Implement resource forecast projection based on current rates
+- [x] T-0254: Build resource alert system (notify when resource drops below threshold)
+- [x] T-0255: Create resource alert configuration UI per resource type
+- [x] T-0256: Implement resource trading between resources at variable exchange rates
+- [x] T-0257: Build resource detailed breakdown panel (sources and sinks list)
+- [x] T-0258: Create resource production multiplier system (weather bonuses, season bonuses)
+- [x] T-0259: Implement resource bonus display showing active multipliers
+- [x] T-0260: Build resource collection mini-game for active play bonus
+- [x] T-0261: Implement resource gifting between allied guild players
+- [x] T-0262: Create resource milestone rewards (first 1000 gold collected, etc.)
+- [x] T-0263: Build resource efficiency rating based on storage usage percentage
+- [x] T-0264: Implement resource priority system for allocation during shortages
+- [x] T-0265: Create resource event modifiers (famine reduces food production 50%)
+- [x] T-0266: Build resource comparison widget showing relative values
+- [x] T-0267: Implement resource tooltip showing production/consumption breakdown
+- [x] T-0268: Create resource scarcity indicators changing icon color when low
+- [x] T-0269: Build resource storage upgrade path UI for each resource
+- [x] T-0270: Implement resource batch collection endpoint for idle gains
+- [x] T-0271: Create resource audit log showing all transactions with timestamps
+- [x] T-0272: Build resource dashboard summary page with all resources at a glance
+- [x] T-0273: Implement resource balance snapshot on logout for offline calculation
+- [x] T-0274: Create resource offline production calculation on login
+- [x] T-0275: Build offline production summary dialog shown on return
+- [x] T-0276: Implement resource production cap per tick to prevent exploit
+- [x] T-0277: Create seasonal resource bonuses (spring: +food, winter: +fuel)
+- [x] T-0278: Build resource icon animation for active production state
+- [x] T-0279: Implement resource transfer endpoint between player's own storage locations
+- [x] T-0280: Create resource value index influenced by global player economy
+- [x] T-0281: Build resource tutorial explaining each resource type and its uses
+- [x] T-0282: Implement resource achievement badges (hoarder, trader, converter)
+- [x] T-0283: Create resource emergency reserve system (locked reserve for critical needs)
+- [x] T-0284: Build resource production queue visualization
+- [x] T-0285: Implement resource webhook notifications for critical thresholds
+- [x] T-0286: Create resource analytics API endpoint for external tracking
+- [x] T-0287: Build resource comparison between players in alliance view
+- [x] T-0288: Implement resource donation to guild treasury from personal stores
+- [x] T-0289: Create resource treasure chest random reward from exploration
+- [x] T-0290: Build resource management guide NPC with tips based on current state
 
 ## Epic 5: Building System
 > All 10 buildings fully functional with visual states, worker animations, production chains, and upgrade paths.
