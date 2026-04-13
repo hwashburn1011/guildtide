@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { authMiddleware } from '../middleware/auth';
 import { AllianceService } from '../services/AllianceService';
 import { GuildWarService } from '../services/GuildWarService';
+import { JointExpeditionService } from '../services/JointExpeditionService';
 import { GuildWarObjective } from '../../../shared/src/enums';
 
 const router = Router();
@@ -636,6 +637,77 @@ router.get('/:allianceId/banner', (req: Request, res: Response) => {
     res.json(banner);
   } catch (err) {
     console.error('Get banner error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// ========================================
+// Joint Expeditions
+// ========================================
+
+// Create joint expedition
+router.post('/joint-expedition', async (req: Request, res: Response) => {
+  try {
+    const { guildId, allianceId, destination, heroIds, durationHours } = req.body;
+    const expedition = await JointExpeditionService.createJointExpedition(
+      guildId, allianceId, destination, heroIds ?? [], durationHours ?? 4,
+    );
+    res.json(expedition);
+  } catch (err: any) {
+    res.status(400).json({ error: 'validation', message: err.message });
+  }
+});
+
+// Join joint expedition
+router.post('/joint-expedition/:expId/join', async (req: Request, res: Response) => {
+  try {
+    const { guildId, heroIds } = req.body;
+    const expedition = await JointExpeditionService.joinExpedition(
+      req.params.expId, guildId, heroIds ?? [],
+    );
+    res.json(expedition);
+  } catch (err: any) {
+    res.status(400).json({ error: 'validation', message: err.message });
+  }
+});
+
+// Get active joint expeditions for alliance
+router.get('/joint-expedition/active/:allianceId', (req: Request, res: Response) => {
+  try {
+    const expeditions = JointExpeditionService.getActiveExpeditions(req.params.allianceId);
+    res.json(expeditions);
+  } catch (err) {
+    console.error('Get joint expeditions error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get joint expedition details
+router.get('/joint-expedition/:expId', (req: Request, res: Response) => {
+  try {
+    const expedition = JointExpeditionService.getExpedition(req.params.expId);
+    if (!expedition) {
+      res.status(404).json({ error: 'not_found', message: 'Expedition not found' });
+      return;
+    }
+    res.json(expedition);
+  } catch (err) {
+    console.error('Get joint expedition error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Resolve joint expedition
+router.post('/joint-expedition/:expId/resolve', (req: Request, res: Response) => {
+  try {
+    const expedition = JointExpeditionService.resolveExpedition(req.params.expId);
+    if (!expedition) {
+      res.status(404).json({ error: 'not_found', message: 'Expedition not found or not active' });
+      return;
+    }
+    res.json(expedition);
+  } catch (err) {
+    console.error('Resolve expedition error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
   }
 });

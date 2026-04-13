@@ -2200,6 +2200,63 @@ class ApiClient {
   async getRankChanges(): Promise<any[]> {
     return this.request('GET', '/leaderboards/my/rank-changes');
   }
+
+  // ============================================================
+  // Joint Expeditions API
+  // ============================================================
+
+  async createJointExpedition(guildId: string, allianceId: string, destination: string, heroIds: string[]): Promise<any> {
+    return this.request('POST', '/alliances/joint-expedition', { guildId, allianceId, destination, heroIds });
+  }
+
+  async joinJointExpedition(expId: string, guildId: string, heroIds: string[]): Promise<any> {
+    return this.request('POST', `/alliances/joint-expedition/${expId}/join`, { guildId, heroIds });
+  }
+
+  async getActiveJointExpeditions(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/joint-expedition/active/${allianceId}`);
+  }
+
+  async getJointExpedition(expId: string): Promise<any> {
+    return this.request('GET', `/alliances/joint-expedition/${expId}`);
+  }
+
+  async resolveJointExpedition(expId: string): Promise<any> {
+    return this.request('POST', `/alliances/joint-expedition/${expId}/resolve`);
+  }
+
+  async getInactiveMembers(allianceId: string, days?: number): Promise<any[]> {
+    const params = days ? `?days=${days}` : '';
+    return this.request('GET', `/alliances/${allianceId}/inactive${params}`);
+  }
+
+  async autoKickInactive(allianceId: string, days?: number): Promise<{ kicked: string[] }> {
+    return this.request('POST', `/alliances/${allianceId}/auto-kick`, { days });
+  }
+
+  async getAllianceDonations(allianceId: string): Promise<any[]> {
+    return this.request('GET', `/alliances/${allianceId}/donations`);
+  }
+
+  async createDiplomacyPact(allianceId: string, type: string, otherAllianceId: string, durationDays?: number): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/diplomacy`, { type, otherAllianceId, durationDays });
+  }
+
+  async contestTerritory(regionId: string, allianceId: string, points?: number): Promise<any> {
+    return this.request('POST', `/alliances/territory/${regionId}/contest`, { allianceId, points });
+  }
+
+  async mergeAlliances(allianceAId: string, allianceBId: string): Promise<any> {
+    return this.request('POST', '/alliances/merge', { allianceAId, allianceBId });
+  }
+
+  async postRecruitment(allianceId: string, description: string, minGuildLevel?: number, tags?: string[]): Promise<any> {
+    return this.request('POST', `/alliances/${allianceId}/recruitment`, { description, minGuildLevel, tags });
+  }
+
+  async shareChatImage(channel: string, channelId: string, imageUrl: string): Promise<any> {
+    return this.request('POST', '/social/chat/image', { channel, channelId, imageUrl });
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);
