@@ -1023,4 +1023,135 @@ export class HeroProgressionService {
       equipment: JSON.parse(h.equipment),
     }));
   }
+
+  /** Check and trigger hero birthday events (T-0443) */
+  static async checkBirthdays(guildId: string): Promise<Array<{ heroId: string; heroName: string; message: string }>> {
+    const guild = await prisma.guild.findUnique({
+      where: { id: guildId },
+      include: { heroes: true },
+    });
+    if (!guild) return [];
+
+    const today = new Date().toISOString().split('T')[0];
+    const birthdayHeroes: Array<{ heroId: string; heroName: string; message: string }> = [];
+
+    for (const hero of guild.heroes) {
+      const metadata = hero.metadata ? JSON.parse(hero.metadata) : {};
+      if (metadata.birthday === today) {
+        // Morale boost for birthday
+        metadata.morale = Math.min(MORALE_MAX, (metadata.morale ?? MORALE_DEFAULT) + 20);
+        metadata.activityLog = metadata.activityLog || [];
+        metadata.activityLog.push({ action: 'Birthday celebration! +20 morale', timestamp: new Date().toISOString() });
+
+        await prisma.hero.update({
+          where: { id: hero.id },
+          data: { metadata: JSON.stringify(metadata) },
+        });
+
+        birthdayHeroes.push({
+          heroId: hero.id,
+          heroName: hero.name,
+          message: `Happy Birthday, ${hero.name}! The guild celebrates with a feast. (+20 morale)`,
+        });
+      }
+    }
+
+    return birthdayHeroes;
+  }
+
+  /** Reroll hero attributes with premium token (T-0450) */
+  static async rerollStats(heroId: string, guildId: string): Promise<{ success: boolean; newStats: Record<string, number> }> {
+    const hero = await prisma.hero.findUnique({ where: { id: heroId } });
+    if (!hero || hero.guildId !== guildId) throw new Error('Hero not found');
+
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) throw new Error('Guild not found');
+
+    // Costs 100 essence (premium currency)
+    const resources = JSON.parse(guild.resources);
+    const essenceCost = 100;
+    if ((resources.essence || 0) < essenceCost) {
+      throw new Error(`Not enough essence. Need ${essenceCost}, have ${Math.floor(resources.essence || 0)}`);
+    }
+
+    resources.essence -= essenceCost;
+
+    // Regenerate stats with same role
+    const role = hero.role as HeroRole;
+    const baseStats = ROLE_STAT_GROWTH[role] || {};
+    const stats = JSON.parse(hero.stats);
+
+    // Reroll each stat with a +-2 variance from current
+    for (const stat of Object.keys(stats)) {
+      const current = stats[stat] as number;
+      const variance = Math.floor(Math.random() * 5) - 2; // -2 to +2
+      stats[stat] = Math.max(1, current + variance);
+    }
+
+    await prisma.guild.update({ where: { id: guildId }, data: { resources: JSON.stringify(resources) } });
+    await prisma.hero.update({ where: { id: heroId }, data: { stats: JSON.stringify(stats) } });
+
+    return { success: true, newStats: stats };
+  }
+
+  /** Set hero wish list (T-0456) */
+  static async setWishList(heroId: string, items: string[], guildId: string): Promise<{ success: boolean }> {
+    const hero = await prisma.hero.findUnique({ where: { id: heroId } });
+    if (!hero || hero.guildId !== guildId) throw new Error('Hero not found');
+
+    const metadata = hero.metadata ? JSON.parse(hero.metadata) : {};
+    metadata.wishList = items.slice(0, 5); // max 5 wishes
+
+    await prisma.hero.update({
+      where: { id: heroId },
+      data: { metadata: JSON.stringify(metadata) },
+    });
+
+    return { success: true };
+  }
+
+  /** Get recruitment history (T-0459) */
+  static async getRecruitmentHistory(guildId: string): Promise<any[]> {
+    const guild = await prisma.guild.findUnique({
+      where: { id: guildId },
+      include: { heroes: true },
+    });
+    if (!guild) return [];
+
+    return guild.heroes.map(h => {
+      const metadata = h.metadata ? JSON.parse(h.metadata) : {};
+      return {
+        heroId: h.id,
+        heroName: h.name,
+        role: h.role,
+        hiredAt: h.hiredAt,
+        cost: metadata.recruitmentHistory?.cost || 50,
+        quality: metadata.recruitmentHistory?.quality || 1,
+      };
+    }).sort((a, b) => new Date(b.hiredAt).getTime() - new Date(a.hiredAt).getTime());
+  }
+
+  /** Create hero memorial (T-0453) */
+  static async createMemorial(heroId: string, heroName: string, heroRole: string, heroLevel: number, guildId: string): Promise<{ success: boolean }> {
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) throw new Error('Guild not found');
+
+    const guildMeta = guild.emblem ? JSON.parse(guild.emblem) : {};
+    const memorials = guildMeta.memorials || [];
+    memorials.push({
+      heroName,
+      heroRole,
+      heroLevel,
+      lostAt: new Date().toISOString(),
+      epitaph: `${heroName}, a brave ${heroRole}, served the guild faithfully for ${heroLevel} levels.`,
+    });
+    guildMeta.memorials = memorials;
+
+    await prisma.guild.update({
+      where: { id: guildId },
+      data: { emblem: JSON.stringify(guildMeta) },
+    });
+
+    return { success: true };
+  }
 }

@@ -351,6 +351,22 @@ class ApiClient {
     return this.request('GET', `/heroes/evolutions/${role}`);
   }
 
+  async checkBirthdays(): Promise<Array<{ heroId: string; heroName: string; message: string }>> {
+    return this.request('GET', '/heroes/birthdays');
+  }
+
+  async rerollHeroStats(heroId: string): Promise<{ success: boolean; newStats: Record<string, number> }> {
+    return this.request('POST', `/heroes/${heroId}/reroll`);
+  }
+
+  async setHeroWishList(heroId: string, items: string[]): Promise<{ success: boolean }> {
+    return this.request('POST', `/heroes/${heroId}/wishlist`, { items });
+  }
+
+  async getRecruitmentHistory(): Promise<any[]> {
+    return this.request('GET', '/heroes/recruitment-history');
+  }
+
   // Events
   async getEvents(): Promise<any[]> {
     return this.request('GET', '/events');

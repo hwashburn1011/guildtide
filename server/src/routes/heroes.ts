@@ -362,4 +362,61 @@ router.get('/evolutions/:role', async (req: Request, res: Response) => {
   res.json(evolutions);
 });
 
+// Check birthdays
+router.get('/birthdays', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
+
+    const birthdays = await HeroProgressionService.checkBirthdays(guild.id);
+    res.json(birthdays);
+  } catch (err) {
+    console.error('Birthday check error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Reroll hero stats
+router.post('/:id/reroll', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
+
+    const result = await HeroProgressionService.rerollStats(req.params.id, guild.id);
+    res.json(result);
+  } catch (err) {
+    if (err instanceof Error) res.status(400).json({ error: 'reroll_failed', message: err.message });
+    else res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Set wish list
+router.post('/:id/wishlist', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
+
+    const { items } = req.body;
+    const result = await HeroProgressionService.setWishList(req.params.id, items || [], guild.id);
+    res.json(result);
+  } catch (err) {
+    if (err instanceof Error) res.status(400).json({ error: 'wishlist_failed', message: err.message });
+    else res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// Get recruitment history
+router.get('/recruitment-history', async (req: Request, res: Response) => {
+  try {
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
+
+    const history = await HeroProgressionService.getRecruitmentHistory(guild.id);
+    res.json(history);
+  } catch (err) {
+    console.error('Recruitment history error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
 export { router as heroesRouter };
