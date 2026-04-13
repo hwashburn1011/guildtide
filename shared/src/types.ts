@@ -153,6 +153,13 @@ export interface WorldState {
   modifiers: WorldModifiers;
   activeEvents: WorldEvent[];
   marketState: MarketState;
+  season: 'spring' | 'summer' | 'autumn' | 'winter';
+  festival: {
+    name: string;
+    flavorText: string;
+    buffs: Record<string, number>;
+    duration: number;
+  } | null;
 }
 
 // --- Market ---
@@ -203,4 +210,39 @@ export interface SetRegionRequest {
 export interface ApiError {
   error: string;
   message: string;
+}
+
+// --- Research ---
+export interface ResearchState {
+  completed: string[];
+  active: {
+    researchId: string;
+    startedAt: string;
+    duration: number;
+  } | null;
+  available: string[];
+  tree: any;
+}
+
+// --- Item Templates & Effects ---
+export interface ItemEffect {
+  statBonuses?: Record<string, number>;
+  expeditionBonus?: number;
+  buildingBonus?: number;
+  resourceBonuses?: Record<string, number>;
+  weatherResistance?: Record<string, number>;
+}
+
+export interface ItemTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: ItemCategory;
+  rarity: ItemRarity;
+  slot: string;
+  effects: ItemEffect;
+  craftCost: Partial<Record<ResourceType, number>>;
+  requiredBuilding: string | null;
+  requiredBuildingLevel: number;
+  maxStack: number;
 }
