@@ -262,6 +262,12 @@ export class GuildHallScene extends Phaser.Scene {
       text.on('pointerout', () => {
         if (i !== 0) text.setColor(COLORS.textSecondary);
       });
+
+      if (i === 1) {
+        text.on('pointerup', () => {
+          this.scene.start('ExpeditionScene');
+        });
+      }
     });
   }
 }

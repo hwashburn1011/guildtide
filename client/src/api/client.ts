@@ -9,6 +9,7 @@ import type {
   Resources,
   Building,
   Hero,
+  Expedition,
 } from '@shared/types';
 import type { ResourceType } from '@shared/enums';
 
@@ -128,6 +129,31 @@ class ApiClient {
 
   async getEventLog(): Promise<any[]> {
     return this.request('GET', '/events/log');
+  }
+
+  // Expeditions
+  async getExpeditions(): Promise<Expedition[]> {
+    return this.request('GET', '/expeditions');
+  }
+
+  async getDestinations(): Promise<any[]> {
+    return this.request('GET', '/expeditions/destinations');
+  }
+
+  async launchExpedition(
+    type: string,
+    heroIds: string[],
+    destinationId: string,
+  ): Promise<Expedition> {
+    return this.request('POST', '/expeditions/launch', {
+      type,
+      heroIds,
+      destinationId,
+    });
+  }
+
+  async collectExpedition(expeditionId: string): Promise<Expedition> {
+    return this.request('POST', `/expeditions/${expeditionId}/collect`);
   }
 
   // World state
