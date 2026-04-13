@@ -2,21 +2,22 @@ import Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH, GAME_HEIGHT } from '../config';
 import { apiClient } from '../api/client';
 import type { Region } from '@shared/types';
+import { Climate } from '@shared/enums';
 
 // Pre-defined regions for MVP — expandable later
 const REGIONS: Region[] = [
-  { id: 'miami', name: 'Miami, FL', country: 'US', latitude: 25.76, longitude: -80.19, climate: 'tropical' as const, timezone: 'America/New_York' },
-  { id: 'new-york', name: 'New York, NY', country: 'US', latitude: 40.71, longitude: -74.01, climate: 'continental' as const, timezone: 'America/New_York' },
-  { id: 'chicago', name: 'Chicago, IL', country: 'US', latitude: 41.88, longitude: -87.63, climate: 'continental' as const, timezone: 'America/Chicago' },
-  { id: 'denver', name: 'Denver, CO', country: 'US', latitude: 39.74, longitude: -104.99, climate: 'arid' as const, timezone: 'America/Denver' },
-  { id: 'seattle', name: 'Seattle, WA', country: 'US', latitude: 47.61, longitude: -122.33, climate: 'temperate' as const, timezone: 'America/Los_Angeles' },
-  { id: 'los-angeles', name: 'Los Angeles, CA', country: 'US', latitude: 34.05, longitude: -118.24, climate: 'mediterranean' as const, timezone: 'America/Los_Angeles' },
-  { id: 'austin', name: 'Austin, TX', country: 'US', latitude: 30.27, longitude: -97.74, climate: 'temperate' as const, timezone: 'America/Chicago' },
-  { id: 'london', name: 'London', country: 'GB', latitude: 51.51, longitude: -0.13, climate: 'temperate' as const, timezone: 'Europe/London' },
-  { id: 'tokyo', name: 'Tokyo', country: 'JP', latitude: 35.68, longitude: 139.69, climate: 'temperate' as const, timezone: 'Asia/Tokyo' },
-  { id: 'sydney', name: 'Sydney', country: 'AU', latitude: -33.87, longitude: 151.21, climate: 'temperate' as const, timezone: 'Australia/Sydney' },
-  { id: 'sao-paulo', name: 'São Paulo', country: 'BR', latitude: -23.55, longitude: -46.63, climate: 'tropical' as const, timezone: 'America/Sao_Paulo' },
-  { id: 'berlin', name: 'Berlin', country: 'DE', latitude: 52.52, longitude: 13.41, climate: 'continental' as const, timezone: 'Europe/Berlin' },
+  { id: 'miami', name: 'Miami, FL', country: 'US', latitude: 25.76, longitude: -80.19, climate: Climate.Tropical, timezone: 'America/New_York' },
+  { id: 'new-york', name: 'New York, NY', country: 'US', latitude: 40.71, longitude: -74.01, climate: Climate.Continental, timezone: 'America/New_York' },
+  { id: 'chicago', name: 'Chicago, IL', country: 'US', latitude: 41.88, longitude: -87.63, climate: Climate.Continental, timezone: 'America/Chicago' },
+  { id: 'denver', name: 'Denver, CO', country: 'US', latitude: 39.74, longitude: -104.99, climate: Climate.Arid, timezone: 'America/Denver' },
+  { id: 'seattle', name: 'Seattle, WA', country: 'US', latitude: 47.61, longitude: -122.33, climate: Climate.Temperate, timezone: 'America/Los_Angeles' },
+  { id: 'los-angeles', name: 'Los Angeles, CA', country: 'US', latitude: 34.05, longitude: -118.24, climate: Climate.Mediterranean, timezone: 'America/Los_Angeles' },
+  { id: 'austin', name: 'Austin, TX', country: 'US', latitude: 30.27, longitude: -97.74, climate: Climate.Temperate, timezone: 'America/Chicago' },
+  { id: 'london', name: 'London', country: 'GB', latitude: 51.51, longitude: -0.13, climate: Climate.Temperate, timezone: 'Europe/London' },
+  { id: 'tokyo', name: 'Tokyo', country: 'JP', latitude: 35.68, longitude: 139.69, climate: Climate.Temperate, timezone: 'Asia/Tokyo' },
+  { id: 'sydney', name: 'Sydney', country: 'AU', latitude: -33.87, longitude: 151.21, climate: Climate.Temperate, timezone: 'Australia/Sydney' },
+  { id: 'sao-paulo', name: 'São Paulo', country: 'BR', latitude: -23.55, longitude: -46.63, climate: Climate.Tropical, timezone: 'America/Sao_Paulo' },
+  { id: 'berlin', name: 'Berlin', country: 'DE', latitude: 52.52, longitude: 13.41, climate: Climate.Continental, timezone: 'Europe/Berlin' },
 ];
 
 export class RegionSelectScene extends Phaser.Scene {

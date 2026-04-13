@@ -70,7 +70,7 @@ router.post('/:id/assign', async (req: Request, res: Response) => {
     }
 
     const { assignment } = req.body; // building type or null to unassign
-    const hero = await HeroService.assign(req.params.id, assignment ?? null, guild.id);
+    const hero = await HeroService.assign(req.params.id as string, assignment ?? null, guild.id);
 
     res.json(hero);
   } catch (err) {
