@@ -9,6 +9,7 @@ import type {
   Resources,
   Building,
   Hero,
+  Item,
   Expedition,
 } from '@shared/types';
 import type { ResourceType } from '@shared/enums';
@@ -197,6 +198,27 @@ class ApiClient {
 
   async startResearch(researchId: string): Promise<any> {
     return this.request('POST', `/research/${researchId}/start`);
+  }
+
+  // Items & Equipment
+  async getInventory(): Promise<any[]> {
+    return this.request('GET', '/items');
+  }
+
+  async getItemTemplates(): Promise<any[]> {
+    return this.request('GET', '/items/templates');
+  }
+
+  async craftItem(templateId: string): Promise<{ item: any; resources: Record<string, number> }> {
+    return this.request('POST', '/items/craft', { templateId });
+  }
+
+  async equipItem(heroId: string, itemId: string, slot: string): Promise<Hero> {
+    return this.request('POST', '/items/equip', { heroId, itemId, slot });
+  }
+
+  async unequipItem(heroId: string, slot: string): Promise<Hero> {
+    return this.request('POST', '/items/unequip', { heroId, slot });
   }
 
   // World state

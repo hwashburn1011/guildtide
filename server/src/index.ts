@@ -11,6 +11,7 @@ import { eventsRouter } from './routes/events.js';
 import { expeditionsRouter } from './routes/expeditions.js';
 import { marketRouter } from './routes/market.js';
 import { researchRouter } from './routes/research.js';
+import { itemsRouter } from './routes/items.js';
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/api/events', eventsRouter);
 app.use('/api/expeditions', expeditionsRouter);
 app.use('/api/market', marketRouter);
 app.use('/api/research', researchRouter);
+app.use('/api/items', itemsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
