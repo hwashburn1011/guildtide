@@ -1,16 +1,40 @@
+/** T-0861: Enhanced event data schema */
+export type EventRarity = 'common' | 'uncommon' | 'rare' | 'legendary';
+export type EventCategory =
+  | 'weather'
+  | 'economy'
+  | 'military'
+  | 'exploration'
+  | 'social'
+  | 'magical'
+  | 'seasonal'
+  | 'crisis'
+  | 'opportunity';
+
 export interface EventTemplate {
   id: string;
   title: string;
   description: string;
+  category: EventCategory;
+  rarity: EventRarity;
+  /** Illustration placeholder key for client-side art */
+  illustration?: string;
   trigger: {
     weather?: string[];
     minFloodRisk?: number;
     minEssence?: number;
     season?: string[];
     chance: number;
+    /** Minimum guild level required */
+    minGuildLevel?: number;
+    /** Cooldown in hours before this event can fire again */
+    cooldownHours?: number;
   };
   durationHours: number;
   choices: EventChoice[];
+  /** If set, resolving this event can trigger a chain follow-up */
+  chainId?: string;
+  chainStep?: number;
 }
 
 export interface EventChoice {
@@ -31,6 +55,8 @@ export interface EventChoice {
     narrative: string;
   };
   failNarrative: string;
+  /** Next chain step triggered on success (for branching narratives) */
+  nextChainStep?: number;
 }
 
 export const EVENT_TEMPLATES: EventTemplate[] = [
@@ -38,7 +64,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'storm_beast_hunt',
     title: 'Storm-Touched Beast Sighted',
     description: 'Lightning has awakened something in the marshes. Strange tracks lead deep into storm-soaked territory. A hunting party could pursue it — or you could set traps and wait.',
-    trigger: { weather: ['stormy'], chance: 0.35 },
+    category: 'weather',
+    rarity: 'uncommon',
+    illustration: 'storm_beast',
+    trigger: { weather: ['stormy'], chance: 0.35, cooldownHours: 48 },
     durationHours: 12,
     choices: [
       {
@@ -80,7 +109,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'flood_salvage',
     title: 'Floodwaters Reveal Ancient Ruins',
     description: 'Rising waters have eroded the riverbank, exposing what appears to be an old structure buried underground. The flooding makes access dangerous, but the potential finds could be valuable.',
-    trigger: { minFloodRisk: 0.15, chance: 0.3 },
+    category: 'exploration',
+    rarity: 'uncommon',
+    illustration: 'flood_ruins',
+    trigger: { minFloodRisk: 0.15, chance: 0.3, cooldownHours: 72 },
     durationHours: 8,
     choices: [
       {
@@ -112,7 +144,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'merchant_windfall',
     title: 'Traveling Merchant Caravan',
     description: 'A merchant caravan has arrived seeking shelter. They offer to trade exotic goods at favorable prices — but only briefly.',
-    trigger: { weather: ['clear'], chance: 0.2 },
+    category: 'economy',
+    rarity: 'common',
+    illustration: 'merchant_caravan',
+    trigger: { weather: ['clear'], chance: 0.2, cooldownHours: 24 },
     durationHours: 6,
     choices: [
       {
@@ -145,7 +180,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'rare_herb_bloom',
     title: 'Rare Herb Bloom',
     description: 'The recent moisture conditions have triggered a rare bloom of medicinal herbs in the surrounding meadows. They won\'t last long.',
-    trigger: { weather: ['rainy'], chance: 0.25 },
+    category: 'opportunity',
+    rarity: 'common',
+    illustration: 'herb_bloom',
+    trigger: { weather: ['rainy'], chance: 0.25, cooldownHours: 36 },
     durationHours: 10,
     choices: [
       {
@@ -177,7 +215,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'cold_preservation',
     title: 'Deep Freeze Opportunity',
     description: 'The extreme cold has created perfect conditions for long-term food preservation. Your stores could benefit greatly if you act fast.',
-    trigger: { weather: ['snowy'], chance: 0.3 },
+    category: 'weather',
+    rarity: 'common',
+    illustration: 'deep_freeze',
+    trigger: { weather: ['snowy'], chance: 0.3, cooldownHours: 48 },
     durationHours: 12,
     choices: [
       {
@@ -209,7 +250,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'fog_essence_surge',
     title: 'Mystical Fog Rolls In',
     description: 'An unusually thick fog has descended, and your mystics sense powerful essence currents within it. The fog distorts perception but offers rare opportunities.',
-    trigger: { weather: ['foggy'], chance: 0.35 },
+    category: 'magical',
+    rarity: 'uncommon',
+    illustration: 'mystical_fog',
+    trigger: { weather: ['foggy'], chance: 0.35, cooldownHours: 48 },
     durationHours: 8,
     choices: [
       {
@@ -241,7 +285,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'wind_damage',
     title: 'Strong Winds Threaten Structures',
     description: 'Powerful gusts are battering your guild buildings. Quick action could prevent damage — or you could hunker down and wait it out.',
-    trigger: { weather: ['windy', 'stormy'], chance: 0.2 },
+    category: 'crisis',
+    rarity: 'common',
+    illustration: 'wind_damage',
+    trigger: { weather: ['windy', 'stormy'], chance: 0.2, cooldownHours: 36 },
     durationHours: 6,
     choices: [
       {
@@ -273,7 +320,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'heat_alchemy',
     title: 'Alchemical Resonance',
     description: 'The intense heat has activated dormant minerals in your stores. Your alchemists report that certain reactions are unusually potent right now.',
-    trigger: { weather: ['hot'], chance: 0.25 },
+    category: 'magical',
+    rarity: 'common',
+    illustration: 'alchemy_lab',
+    trigger: { weather: ['hot'], chance: 0.25, cooldownHours: 36 },
     durationHours: 10,
     choices: [
       {
@@ -306,7 +356,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'market_crash_opportunity',
     title: 'Merchant Guild Panic',
     description: 'The merchant guilds are in disarray — confidence is low and prices are volatile. Distressed traders are offloading goods cheaply, but the instability could spread.',
-    trigger: { chance: 0.1 },
+    category: 'economy',
+    rarity: 'rare',
+    illustration: 'market_panic',
+    trigger: { chance: 0.1, cooldownHours: 96 },
     durationHours: 14,
     choices: [
       {
@@ -338,7 +391,10 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
     id: 'clear_sky_festival',
     title: 'Perfect Weather Festival',
     description: 'The beautiful clear weather has your guild members in high spirits. They want to celebrate with a small festival. It would boost morale significantly.',
-    trigger: { weather: ['clear'], chance: 0.15 },
+    category: 'social',
+    rarity: 'common',
+    illustration: 'festival',
+    trigger: { weather: ['clear'], chance: 0.15, cooldownHours: 48 },
     durationHours: 8,
     choices: [
       {
@@ -362,6 +418,1549 @@ export const EVENT_TEMPLATES: EventTemplate[] = [
           xp: 10,
           narrative: 'A pleasant evening. Your guild members appreciate the gesture.',
         },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0871: Merchant Caravan (trade opportunity)
+  {
+    id: 'merchant_caravan_exotic',
+    title: 'Exotic Merchant Caravan',
+    description: 'A caravan of far-traveling merchants has arrived bearing wares from distant lands. Their goods are unusual and their prices negotiable.',
+    category: 'economy',
+    rarity: 'common',
+    illustration: 'exotic_caravan',
+    trigger: { chance: 0.2, cooldownHours: 24 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Buy exotic goods',
+        description: 'Spend gold for rare materials unavailable locally.',
+        requires: { resource: 'gold', amount: 50 },
+        risk: 0.1,
+        rewards: { resources: { herbs: 30, ore: 20, essence: 8 }, xp: 20, narrative: 'The merchants had remarkable wares. Your stores are now filled with exotic materials.' },
+        failNarrative: 'Some of the exotic goods turned out to be counterfeits. A costly lesson.',
+      },
+      {
+        label: 'Trade local goods',
+        description: 'Exchange surplus local resources for gold.',
+        requires: { resource: 'wood', amount: 30 },
+        risk: 0,
+        rewards: { resources: { gold: 45 }, xp: 15, narrative: 'The merchants eagerly bought your quality timber. A fair exchange.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0872: Bandit Raid (defense challenge)
+  {
+    id: 'bandit_raid',
+    title: 'Bandit Raid',
+    description: 'A band of raiders has been spotted approaching your guild territory. They demand tribute or threaten to attack your stores.',
+    category: 'military',
+    rarity: 'common',
+    illustration: 'bandit_raid',
+    trigger: { chance: 0.15, cooldownHours: 48 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Fight them off',
+        description: 'Send warriors to defend the guild.',
+        requires: { heroRole: 'fighter', heroCount: 2 },
+        risk: 0.3,
+        rewards: { resources: { gold: 60, ore: 15 }, xp: 40, narrative: 'Your fighters drove the bandits off and seized their supplies!' },
+        failNarrative: 'The bandits were tougher than expected. Your fighters retreated with minor injuries.',
+      },
+      {
+        label: 'Pay tribute',
+        description: 'Offer gold to avoid conflict.',
+        requires: { resource: 'gold', amount: 25 },
+        risk: 0,
+        rewards: { xp: 5, narrative: 'The bandits took your gold and left. Peace comes at a price.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Set an ambush',
+        description: 'Use scouts to surprise the raiders.',
+        requires: { heroRole: 'scout', heroCount: 1 },
+        risk: 0.2,
+        rewards: { resources: { gold: 80, wood: 20 }, xp: 35, narrative: 'Your scouts caught the bandits off guard. They fled leaving their loot behind!' },
+        failNarrative: 'The ambush was spotted. The bandits retreated but took nothing either.',
+      },
+    ],
+  },
+  // T-0873: Wandering Scholar (research boost)
+  {
+    id: 'wandering_scholar',
+    title: 'Wandering Scholar',
+    description: 'A learned traveler requests lodging in exchange for sharing knowledge. Their expertise could advance your research significantly.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'wandering_scholar',
+    trigger: { chance: 0.12, cooldownHours: 72 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Offer a research position',
+        description: 'Provide food and shelter for extended study.',
+        requires: { resource: 'food', amount: 20 },
+        risk: 0,
+        rewards: { resources: { essence: 15 }, xp: 50, narrative: 'The scholar shared profound insights. Your researchers are inspired and energized.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Commission a lecture',
+        description: 'Pay for a public lecture to boost all heroes.',
+        requires: { resource: 'gold', amount: 30 },
+        risk: 0,
+        rewards: { xp: 40, narrative: 'The lecture was illuminating. All guild members gained valuable knowledge.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0874: Festival (morale boost with mini-game)
+  {
+    id: 'guild_festival',
+    title: 'Guild Festival',
+    description: 'Your guild members are organizing a grand celebration. Games, feasts, and competitions await!',
+    category: 'social',
+    rarity: 'common',
+    illustration: 'guild_festival',
+    trigger: { chance: 0.15, cooldownHours: 72 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Grand celebration',
+        description: 'Spare no expense for an unforgettable party.',
+        requires: { resource: 'food', amount: 40 },
+        risk: 0,
+        rewards: { resources: { gold: 20, essence: 5 }, xp: 35, narrative: 'The festival was legendary! Morale soars and travelers spread word of your generous guild.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Tournament games',
+        description: 'Host competitive events for glory and prizes.',
+        requires: { heroRole: 'fighter', heroCount: 1 },
+        risk: 0.1,
+        rewards: { resources: { gold: 30 }, xp: 45, narrative: 'The tournament drew contestants from afar. Your heroes proved their mettle!' },
+        failNarrative: 'An injury during the games dampened the mood somewhat.',
+      },
+      {
+        label: 'Modest gathering',
+        description: 'A simple but heartfelt celebration.',
+        risk: 0,
+        rewards: { resources: { gold: 5 }, xp: 15, narrative: 'A pleasant evening together. Simple joys are often the best.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0875: Plague (health crisis)
+  {
+    id: 'plague_outbreak',
+    title: 'Plague Outbreak',
+    description: 'A mysterious illness sweeps through your guild. Heroes fall sick and productivity plummets unless you act quickly.',
+    category: 'crisis',
+    rarity: 'uncommon',
+    illustration: 'plague',
+    trigger: { chance: 0.08, cooldownHours: 120 },
+    durationHours: 14,
+    choices: [
+      {
+        label: 'Herbal remedy',
+        description: 'Use herbs to treat the sick.',
+        requires: { resource: 'herbs', amount: 35 },
+        risk: 0.1,
+        rewards: { xp: 40, narrative: 'Your healers brewed effective remedies. The plague is contained and your guild recovers.' },
+        failNarrative: 'The herbs slowed the illness but did not cure it. Recovery will take time.',
+      },
+      {
+        label: 'Quarantine',
+        description: 'Isolate the sick to protect the healthy.',
+        risk: 0.05,
+        rewards: { xp: 20, narrative: 'The quarantine was effective. The illness passed without spreading further.' },
+        failNarrative: 'Some healthy members fell ill despite precautions.',
+      },
+      {
+        label: 'Seek magical cure',
+        description: 'Use essence to purge the disease.',
+        requires: { resource: 'essence', amount: 15 },
+        risk: 0,
+        rewards: { xp: 30, narrative: 'Essence-infused water cured the plague overnight. Your mystics earned deep respect.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0876: Drought (water scarcity)
+  {
+    id: 'drought',
+    title: 'Drought',
+    description: 'A prolonged dry spell threatens your water supply and crops. Without intervention, food production will suffer.',
+    category: 'crisis',
+    rarity: 'uncommon',
+    illustration: 'drought',
+    trigger: { weather: ['hot'], chance: 0.15, cooldownHours: 96 },
+    durationHours: 16,
+    choices: [
+      {
+        label: 'Dig emergency wells',
+        description: 'Invest labor and stone to find water underground.',
+        requires: { resource: 'stone', amount: 25 },
+        risk: 0.15,
+        rewards: { resources: { water: 50, food: 20 }, xp: 30, narrative: 'Your workers struck an underground spring! Water flows freely once more.' },
+        failNarrative: 'The dig yielded only dry earth. Your stone was wasted.',
+      },
+      {
+        label: 'Ration water',
+        description: 'Carefully distribute remaining water supplies.',
+        risk: 0,
+        rewards: { xp: 15, narrative: 'Strict rationing got you through the worst. No one went thirsty, though comfort suffered.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0877: Treasure Map (expedition trigger)
+  {
+    id: 'treasure_map',
+    title: 'Treasure Map Found',
+    description: 'A worker discovered a faded map hidden in an old wall. It marks a location deep in uncharted territory.',
+    category: 'exploration',
+    rarity: 'rare',
+    illustration: 'treasure_map',
+    trigger: { chance: 0.06, cooldownHours: 168 },
+    durationHours: 24,
+    choices: [
+      {
+        label: 'Send an expedition',
+        description: 'Assemble a team to follow the map.',
+        requires: { heroRole: 'scout', heroCount: 2 },
+        risk: 0.3,
+        rewards: { resources: { gold: 120, essence: 20, ore: 30 }, xp: 60, items: ['ancient_compass'], narrative: 'The expedition found a hidden vault filled with ancient treasures!' },
+        failNarrative: 'The map led to a collapsed tunnel. The expedition returned empty-handed but unharmed.',
+      },
+      {
+        label: 'Sell the map',
+        description: 'A collector would pay good gold for this.',
+        risk: 0,
+        rewards: { resources: { gold: 40 }, xp: 10, narrative: 'A collector paid handsomely for the map. Easy gold, though who knows what was lost.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0878: Diplomatic Envoy (alliance opportunity)
+  {
+    id: 'diplomatic_envoy',
+    title: 'Diplomatic Envoy',
+    description: 'Representatives from a neighboring guild arrive bearing gifts and a proposal for alliance. Their terms seem favorable.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'diplomatic_envoy',
+    trigger: { chance: 0.1, cooldownHours: 96 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Accept alliance',
+        description: 'Form a trade and defense pact.',
+        requires: { resource: 'gold', amount: 20 },
+        risk: 0,
+        rewards: { resources: { gold: 30, food: 25 }, xp: 35, narrative: 'The alliance is sealed! Trade routes open and mutual defense strengthens both guilds.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Counter-offer',
+        description: 'Negotiate for better terms.',
+        risk: 0.2,
+        rewards: { resources: { gold: 50, essence: 10 }, xp: 40, narrative: 'Your bold negotiation paid off. The envoy agreed to premium terms!' },
+        failNarrative: 'The envoy found your counter-offer insulting and left. Perhaps another time.',
+      },
+      {
+        label: 'Decline politely',
+        description: 'Thank them but maintain independence.',
+        risk: 0,
+        rewards: { xp: 10, narrative: 'The envoy departed peacefully. Your independence is preserved.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0879: Monster Sighting (boss expedition unlock)
+  {
+    id: 'monster_sighting',
+    title: 'Monster Sighting',
+    description: 'Terrified scouts report a massive creature in the northern caves. It guards something valuable, but approaching it is extremely dangerous.',
+    category: 'military',
+    rarity: 'rare',
+    illustration: 'monster_sighting',
+    trigger: { chance: 0.05, cooldownHours: 168 },
+    durationHours: 20,
+    choices: [
+      {
+        label: 'Slay the beast',
+        description: 'Assemble your strongest warriors.',
+        requires: { heroRole: 'fighter', heroCount: 3 },
+        risk: 0.4,
+        rewards: { resources: { gold: 150, essence: 30, ore: 40 }, xp: 80, items: ['monster_trophy'], narrative: 'After a fierce battle, the creature fell! Its hoard yielded legendary treasures.' },
+        failNarrative: 'The beast was too powerful. Your fighters barely escaped with their lives.',
+      },
+      {
+        label: 'Sneak past and steal',
+        description: 'A stealthy approach to grab the treasure.',
+        requires: { heroRole: 'scout', heroCount: 2 },
+        risk: 0.35,
+        rewards: { resources: { gold: 100, essence: 15 }, xp: 50, narrative: 'Your scouts crept past the sleeping beast and filled their packs with treasure!' },
+        failNarrative: 'The creature detected your scouts. They fled empty-handed.',
+      },
+      {
+        label: 'Study from afar',
+        description: 'Observe the creature for research purposes.',
+        risk: 0,
+        rewards: { resources: { essence: 10 }, xp: 25, narrative: 'Detailed observations of the creature yielded valuable research data.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0880: Harvest Festival (seasonal food bonus)
+  {
+    id: 'harvest_festival',
+    title: 'Harvest Festival',
+    description: 'The autumn harvest has been bountiful this year. Your farmers want to celebrate with a grand harvest feast.',
+    category: 'seasonal',
+    rarity: 'common',
+    illustration: 'harvest_festival',
+    trigger: { season: ['autumn'], chance: 0.25, cooldownHours: 168 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Grand harvest feast',
+        description: 'Celebrate with a massive communal meal.',
+        requires: { resource: 'food', amount: 30 },
+        risk: 0,
+        rewards: { resources: { gold: 25, food: 50, herbs: 15 }, xp: 30, narrative: 'The harvest feast was magnificent! Surplus food was preserved and spirits soared.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Sell surplus at market',
+        description: 'Take advantage of harvest-time demand.',
+        requires: { heroRole: 'merchant', heroCount: 1 },
+        risk: 0.05,
+        rewards: { resources: { gold: 60 }, xp: 20, narrative: 'Your merchants drove hard bargains at the harvest market. Gold flows freely!' },
+        failNarrative: 'Market prices dropped before your merchants arrived. Modest returns.',
+      },
+    ],
+  },
+  // T-0881: Earthquake (building damage)
+  {
+    id: 'earthquake',
+    title: 'Earthquake',
+    description: 'The ground shakes violently! Buildings sway and cracks appear in walls. Quick action could minimize the damage.',
+    category: 'crisis',
+    rarity: 'rare',
+    illustration: 'earthquake',
+    trigger: { chance: 0.04, cooldownHours: 240 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Emergency repairs',
+        description: 'Mobilize workers to shore up damaged structures.',
+        requires: { resource: 'stone', amount: 30 },
+        risk: 0.1,
+        rewards: { xp: 35, narrative: 'Your workers reinforced critical structures just in time. Damage was minimal.' },
+        failNarrative: 'Despite efforts, some buildings sustained significant damage.',
+      },
+      {
+        label: 'Evacuate and wait',
+        description: 'Get everyone to safety and assess after.',
+        risk: 0,
+        rewards: { xp: 15, narrative: 'Everyone evacuated safely. Some buildings need repair but no one was hurt.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0882: Eclipse (magical boost)
+  {
+    id: 'eclipse',
+    title: 'Solar Eclipse',
+    description: 'A rare eclipse darkens the sky. Mystics report that essence flows intensify dramatically during this celestial event.',
+    category: 'magical',
+    rarity: 'rare',
+    illustration: 'eclipse',
+    trigger: { chance: 0.03, cooldownHours: 336 },
+    durationHours: 4,
+    choices: [
+      {
+        label: 'Harvest eclipse essence',
+        description: 'Mystics channel the amplified energy.',
+        requires: { heroRole: 'mystic', heroCount: 2 },
+        risk: 0.15,
+        rewards: { resources: { essence: 50 }, xp: 60, narrative: 'The eclipse amplified your mystics\' power tenfold. Pure essence crystallized in their hands!' },
+        failNarrative: 'The eclipse energy was too chaotic to control. A wild surge scattered the essence.',
+      },
+      {
+        label: 'Perform a ritual',
+        description: 'Attempt a powerful enchantment.',
+        requires: { resource: 'essence', amount: 10 },
+        risk: 0.2,
+        rewards: { resources: { essence: 35, gold: 40 }, xp: 50, items: ['eclipse_shard'], narrative: 'The ritual succeeded! An eclipse shard materialized — a fragment of concentrated celestial power.' },
+        failNarrative: 'The ritual fizzled. The invested essence dissipated harmlessly.',
+      },
+      {
+        label: 'Observe and document',
+        description: 'Record the eclipse for future study.',
+        risk: 0,
+        rewards: { xp: 25, narrative: 'Detailed observations were recorded. This data will aid future magical research.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0883: Tax Collector
+  {
+    id: 'tax_collector',
+    title: 'Tax Collector Arrives',
+    description: 'A royal tax collector demands payment. You can pay, negotiate, or resist — each with different consequences.',
+    category: 'economy',
+    rarity: 'common',
+    illustration: 'tax_collector',
+    trigger: { chance: 0.12, cooldownHours: 72 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Pay in full',
+        description: 'Hand over the demanded gold.',
+        requires: { resource: 'gold', amount: 35 },
+        risk: 0,
+        rewards: { xp: 10, narrative: 'Taxes paid. The collector noted your compliance — future audits may be lighter.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Negotiate reduction',
+        description: 'Argue for a lower tax rate.',
+        requires: { heroRole: 'merchant', heroCount: 1 },
+        risk: 0.25,
+        rewards: { resources: { gold: 15 }, xp: 25, narrative: 'Your merchant\'s silver tongue convinced the collector to halve the tax!' },
+        failNarrative: 'The collector was not amused. Full payment demanded, plus a fine.',
+      },
+      {
+        label: 'Refuse to pay',
+        description: 'Stand your ground against the crown.',
+        risk: 0.4,
+        rewards: { resources: { gold: 35 }, xp: 30, narrative: 'The collector backed down! Your defiance earned respect among free guilds.' },
+        failNarrative: 'Guards arrived. You paid double and earned the crown\'s displeasure.',
+      },
+    ],
+  },
+  // T-0884: Hero Duel
+  {
+    id: 'hero_duel',
+    title: 'Hero Duel Challenge',
+    description: 'A renowned champion challenges your best fighter to single combat. Honor and glory — or disgrace — await.',
+    category: 'military',
+    rarity: 'uncommon',
+    illustration: 'hero_duel',
+    trigger: { chance: 0.08, cooldownHours: 96 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Accept the duel',
+        description: 'Send your champion to fight.',
+        requires: { heroRole: 'fighter', heroCount: 1 },
+        risk: 0.35,
+        rewards: { resources: { gold: 75, essence: 10 }, xp: 55, narrative: 'Your champion triumphed! The crowd roared and gold rained down.' },
+        failNarrative: 'Your champion fought bravely but was outmatched. A lesson in humility.',
+      },
+      {
+        label: 'Decline with grace',
+        description: 'Politely refuse the challenge.',
+        risk: 0,
+        rewards: { xp: 5, narrative: 'You declined. The champion moved on to find another opponent.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0885: Artifact Discovery
+  {
+    id: 'artifact_discovery',
+    title: 'Ancient Artifact Unearthed',
+    description: 'Workers excavating a foundation unearthed a glowing artifact of unknown origin. It pulses with power.',
+    category: 'exploration',
+    rarity: 'legendary',
+    illustration: 'artifact_discovery',
+    trigger: { chance: 0.02, cooldownHours: 336 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Study the artifact',
+        description: 'Have your mystics examine it carefully.',
+        requires: { heroRole: 'mystic', heroCount: 1 },
+        risk: 0.15,
+        rewards: { resources: { essence: 40, gold: 50 }, xp: 70, items: ['ancient_artifact'], narrative: 'The artifact revealed its secrets! A relic of immense power now serves your guild.' },
+        failNarrative: 'The artifact\'s defenses triggered, sealing it in a magical shell. It cannot be opened yet.',
+      },
+      {
+        label: 'Sell to a collector',
+        description: 'A wealthy collector would pay a fortune.',
+        risk: 0,
+        rewards: { resources: { gold: 200 }, xp: 20, narrative: 'The collector paid an astronomical sum. Sometimes gold is more practical than mystery.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Offer to the temple',
+        description: 'Donate it for spiritual protection.',
+        risk: 0,
+        rewards: { resources: { essence: 25 }, xp: 50, narrative: 'The temple blessed your guild in return. Divine protection surrounds your territory.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0886: Trade Embargo
+  {
+    id: 'trade_embargo',
+    title: 'Trade Embargo',
+    description: 'A powerful merchant coalition has declared an embargo on your region. Trade routes are blocked and prices spike.',
+    category: 'economy',
+    rarity: 'uncommon',
+    illustration: 'trade_embargo',
+    trigger: { chance: 0.07, cooldownHours: 168 },
+    durationHours: 18,
+    choices: [
+      {
+        label: 'Find smugglers',
+        description: 'Hire smugglers to bypass the embargo.',
+        requires: { resource: 'gold', amount: 40 },
+        risk: 0.25,
+        rewards: { resources: { herbs: 30, ore: 25 }, xp: 30, narrative: 'Your smugglers slipped through the blockade with full cargo holds.' },
+        failNarrative: 'The smugglers were caught. Your gold is gone and the goods were confiscated.',
+      },
+      {
+        label: 'Become self-sufficient',
+        description: 'Double down on local production.',
+        risk: 0,
+        rewards: { resources: { food: 30, wood: 20 }, xp: 25, narrative: 'Your guild adapted to produce locally. When the embargo lifts, you will be stronger.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0887: Refugee Influx
+  {
+    id: 'refugee_influx',
+    title: 'Refugee Influx',
+    description: 'Displaced people from a war-torn region seek shelter in your guild territory. They bring skills but need resources.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'refugees',
+    trigger: { chance: 0.08, cooldownHours: 120 },
+    durationHours: 14,
+    choices: [
+      {
+        label: 'Welcome them all',
+        description: 'Provide food and shelter to everyone.',
+        requires: { resource: 'food', amount: 40 },
+        risk: 0,
+        rewards: { resources: { wood: 20, stone: 15, herbs: 10 }, xp: 45, narrative: 'The refugees settled in and brought diverse skills. Your guild grows stronger!' },
+        failNarrative: '',
+      },
+      {
+        label: 'Accept skilled workers only',
+        description: 'Screen for useful abilities.',
+        risk: 0.1,
+        rewards: { resources: { ore: 20 }, xp: 25, narrative: 'The selected workers quickly proved their worth in your workshops.' },
+        failNarrative: 'The screening caused resentment. Some skilled workers left with the others.',
+      },
+      {
+        label: 'Turn them away',
+        description: 'Your resources cannot support more people.',
+        risk: 0,
+        rewards: { xp: 5, narrative: 'The refugees moved on. A practical decision, though not a popular one.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0888: Magical Storm (arcane resource surge)
+  {
+    id: 'magical_storm',
+    title: 'Arcane Tempest',
+    description: 'A storm crackling with raw magical energy sweeps through the region. Essence crystallizes in the air itself.',
+    category: 'magical',
+    rarity: 'rare',
+    illustration: 'arcane_tempest',
+    trigger: { weather: ['stormy'], chance: 0.08, cooldownHours: 120 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Deploy essence collectors',
+        description: 'Set up magical conduits to capture raw essence.',
+        requires: { heroRole: 'mystic', heroCount: 1 },
+        risk: 0.2,
+        rewards: { resources: { essence: 35 }, xp: 45, narrative: 'Your conduits captured torrents of raw essence. A windfall of magical power!' },
+        failNarrative: 'The storm overloaded your collectors. Some essence was captured, but most dissipated.',
+      },
+      {
+        label: 'Shelter and observe',
+        description: 'Stay safe and study the phenomenon.',
+        risk: 0,
+        rewards: { resources: { essence: 8 }, xp: 20, narrative: 'Stray essence drifted into your stores. The observations will aid future research.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0889: Mining Collapse
+  {
+    id: 'mining_collapse',
+    title: 'Mine Collapse',
+    description: 'A section of your mines has collapsed, trapping workers and blocking ore veins. Rescue efforts are needed.',
+    category: 'crisis',
+    rarity: 'uncommon',
+    illustration: 'mine_collapse',
+    trigger: { chance: 0.06, cooldownHours: 168 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Full rescue operation',
+        description: 'Commit resources to save everyone.',
+        requires: { resource: 'wood', amount: 25 },
+        risk: 0.15,
+        rewards: { resources: { ore: 20, stone: 15 }, xp: 40, narrative: 'All workers rescued! The collapse actually revealed a new ore vein.' },
+        failNarrative: 'Rescue efforts were partially successful. Some ore was recovered during operations.',
+      },
+      {
+        label: 'Seal and reroute',
+        description: 'Abandon the collapsed section, dig new tunnels.',
+        requires: { resource: 'stone', amount: 15 },
+        risk: 0.05,
+        rewards: { resources: { ore: 10 }, xp: 20, narrative: 'New tunnels bypassed the collapse. Mining resumes at reduced capacity.' },
+        failNarrative: 'The reroute hit solid rock. More investment will be needed.',
+      },
+    ],
+  },
+  // T-0890: Celestial Alignment (global buff)
+  {
+    id: 'celestial_alignment',
+    title: 'Celestial Alignment',
+    description: 'The stars align in a once-in-a-generation pattern. Every action taken during this time seems blessed by fate.',
+    category: 'magical',
+    rarity: 'legendary',
+    illustration: 'celestial_alignment',
+    trigger: { chance: 0.015, cooldownHours: 480 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Channel the alignment',
+        description: 'Perform a grand ritual to capture celestial power.',
+        requires: { heroRole: 'mystic', heroCount: 2 },
+        risk: 0.1,
+        rewards: { resources: { essence: 60, gold: 80 }, xp: 100, items: ['star_fragment'], narrative: 'The heavens poured power into your guild. A star fragment materialized — priceless!' },
+        failNarrative: 'The alignment\'s power was too vast to fully channel. Still, residual energy enriches your stores.',
+      },
+      {
+        label: 'Work under the stars',
+        description: 'All activities benefit from celestial luck.',
+        risk: 0,
+        rewards: { resources: { gold: 40, food: 30, ore: 20, herbs: 15 }, xp: 50, narrative: 'Everything your guild touched turned to gold today. A truly blessed event!' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0891: Thieves Guild (crime wave)
+  {
+    id: 'thieves_guild',
+    title: 'Thieves Guild Activity',
+    description: 'Reports of theft and burglary are rising. A local thieves guild is operating in your territory.',
+    category: 'crisis',
+    rarity: 'common',
+    illustration: 'thieves_guild',
+    trigger: { chance: 0.1, cooldownHours: 72 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Crack down',
+        description: 'Send fighters to root out the thieves.',
+        requires: { heroRole: 'fighter', heroCount: 2 },
+        risk: 0.2,
+        rewards: { resources: { gold: 50 }, xp: 35, narrative: 'Your fighters captured the ringleaders and recovered stolen goods!' },
+        failNarrative: 'The thieves were slippery. They evaded your forces and went deeper underground.',
+      },
+      {
+        label: 'Negotiate a truce',
+        description: 'Offer immunity in exchange for information.',
+        requires: { resource: 'gold', amount: 20 },
+        risk: 0.1,
+        rewards: { xp: 30, narrative: 'The thieves agreed to leave your guild alone — and shared valuable intelligence.' },
+        failNarrative: 'They took your gold and continued stealing. Lesson learned.',
+      },
+    ],
+  },
+  // T-0892: Royal Decree
+  {
+    id: 'royal_decree',
+    title: 'Royal Decree',
+    description: 'The crown has issued a decree affecting all guilds. You must decide how to respond to the new mandate.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'royal_decree',
+    trigger: { chance: 0.06, cooldownHours: 168 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Comply enthusiastically',
+        description: 'Show loyalty to earn royal favor.',
+        requires: { resource: 'gold', amount: 25 },
+        risk: 0,
+        rewards: { resources: { gold: 50, essence: 5 }, xp: 30, narrative: 'Your loyalty was noted. Royal contracts and tax breaks follow.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Comply minimally',
+        description: 'Follow the letter, not the spirit.',
+        risk: 0,
+        rewards: { xp: 15, narrative: 'You did just enough to satisfy the decree. No one is particularly impressed or upset.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Defy the decree',
+        description: 'Stand against the crown\'s overreach.',
+        risk: 0.35,
+        rewards: { resources: { gold: 30 }, xp: 40, narrative: 'Your defiance inspired others. A free-guild movement gains momentum.' },
+        failNarrative: 'The crown sent enforcers. Fines and sanctions hit your guild hard.',
+      },
+    ],
+  },
+  // T-0893: Dragon Sighting (legendary expedition)
+  {
+    id: 'dragon_sighting',
+    title: 'Dragon Sighting',
+    description: 'A dragon has been spotted circling the mountains. Ancient tales speak of their hoards — but also their wrath.',
+    category: 'military',
+    rarity: 'legendary',
+    illustration: 'dragon_sighting',
+    trigger: { chance: 0.01, cooldownHours: 480 },
+    durationHours: 24,
+    choices: [
+      {
+        label: 'Slay the dragon',
+        description: 'Assemble a legendary hunting party.',
+        requires: { heroRole: 'fighter', heroCount: 3 },
+        risk: 0.5,
+        rewards: { resources: { gold: 300, essence: 50, ore: 60 }, xp: 150, items: ['dragon_scale', 'dragon_heart'], narrative: 'Against all odds, your heroes slew the dragon! Songs will be sung of this day for generations.' },
+        failNarrative: 'The dragon was too powerful. Your heroes barely escaped. The beast flew away, perhaps to return another day.',
+      },
+      {
+        label: 'Offer tribute',
+        description: 'Leave gifts to appease the dragon.',
+        requires: { resource: 'gold', amount: 100 },
+        risk: 0.1,
+        rewards: { resources: { essence: 20 }, xp: 40, narrative: 'The dragon accepted your tribute and departed peacefully. It even left a scale as a token.' },
+        failNarrative: 'The dragon ignored your tribute and flew off. At least it didn\'t attack.',
+      },
+      {
+        label: 'Hide and pray',
+        description: 'Stay indoors until it passes.',
+        risk: 0.05,
+        rewards: { xp: 10, narrative: 'The dragon passed without incident. Your guild breathes a collective sigh of relief.' },
+        failNarrative: 'The dragon swooped low, rattling rooftops. Some minor damage but everyone is safe.',
+      },
+    ],
+  },
+  // T-0894: Merchant Competition
+  {
+    id: 'merchant_competition',
+    title: 'Merchant Price War',
+    description: 'Rival merchants have started a price war in the local market. Prices are dropping — a chance to buy cheap or sell to undercut.',
+    category: 'economy',
+    rarity: 'common',
+    illustration: 'price_war',
+    trigger: { chance: 0.12, cooldownHours: 48 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Buy cheap goods',
+        description: 'Stock up while prices are low.',
+        requires: { resource: 'gold', amount: 30 },
+        risk: 0.05,
+        rewards: { resources: { ore: 25, wood: 25, herbs: 15 }, xp: 15, narrative: 'You bought materials at rock-bottom prices. Your stores overflow!' },
+        failNarrative: 'The best deals were already snapped up. You got average goods at average prices.',
+      },
+      {
+        label: 'Undercut everyone',
+        description: 'Sell your surplus to dominate the market.',
+        requires: { resource: 'food', amount: 25 },
+        risk: 0.15,
+        rewards: { resources: { gold: 55 }, xp: 20, narrative: 'Your aggressive pricing drove competitors out. You now control the local market!' },
+        failNarrative: 'A bigger merchant undercut your prices. You sold at a loss.',
+      },
+    ],
+  },
+  // T-0895: Plague Cure (research opportunity)
+  {
+    id: 'plague_cure_research',
+    title: 'Plague Cure Breakthrough',
+    description: 'Your alchemists believe they are on the verge of discovering a universal plague cure. They need resources to complete the research.',
+    category: 'opportunity',
+    rarity: 'rare',
+    illustration: 'plague_cure',
+    trigger: { chance: 0.04, cooldownHours: 240 },
+    durationHours: 16,
+    choices: [
+      {
+        label: 'Fund the research',
+        description: 'Provide everything the alchemists need.',
+        requires: { resource: 'herbs', amount: 30 },
+        risk: 0.2,
+        rewards: { resources: { gold: 80, essence: 15 }, xp: 60, narrative: 'The cure works! Your alchemists created a remedy that will save thousands.' },
+        failNarrative: 'The formula was close but unstable. More research is needed.',
+      },
+      {
+        label: 'Partial funding',
+        description: 'Contribute what you can spare.',
+        requires: { resource: 'herbs', amount: 15 },
+        risk: 0.1,
+        rewards: { xp: 30, narrative: 'Progress was made but the cure is incomplete. Still, valuable knowledge was gained.' },
+        failNarrative: 'The partial funding was not enough. The research stalled.',
+      },
+    ],
+  },
+  // T-0896: Ancient Ruins
+  {
+    id: 'ancient_ruins_exploration',
+    title: 'Ancient Ruins Discovered',
+    description: 'Scouts have found sprawling ruins half-buried in the wilderness. They appear to be from a civilization predating recorded history.',
+    category: 'exploration',
+    rarity: 'rare',
+    illustration: 'ancient_ruins',
+    trigger: { chance: 0.05, cooldownHours: 168 },
+    durationHours: 20,
+    choices: [
+      {
+        label: 'Full expedition',
+        description: 'Send a well-equipped team to explore thoroughly.',
+        requires: { heroRole: 'scout', heroCount: 2 },
+        risk: 0.25,
+        rewards: { resources: { gold: 90, essence: 25, stone: 30 }, xp: 55, items: ['ancient_codex'], narrative: 'The ruins held treasures beyond imagination. An ancient codex reveals lost knowledge!' },
+        failNarrative: 'The ruins were treacherous. Your team retreated after triggering ancient traps.',
+      },
+      {
+        label: 'Surface salvage',
+        description: 'Gather materials from accessible areas.',
+        risk: 0.05,
+        rewards: { resources: { stone: 40, gold: 20 }, xp: 20, narrative: 'Surface exploration yielded quality building materials and some gold artifacts.' },
+        failNarrative: 'The surface had already been picked clean by earlier visitors.',
+      },
+    ],
+  },
+  // T-0897: Guild Challenge
+  {
+    id: 'guild_challenge',
+    title: 'Inter-Guild Challenge',
+    description: 'A rival guild has issued a formal challenge. Competitions in crafting, combat, and trade will determine the victor.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'guild_challenge',
+    trigger: { chance: 0.08, cooldownHours: 120 },
+    durationHours: 14,
+    choices: [
+      {
+        label: 'Accept all challenges',
+        description: 'Compete in every category.',
+        requires: { heroRole: 'fighter', heroCount: 1 },
+        risk: 0.3,
+        rewards: { resources: { gold: 100, essence: 10 }, xp: 60, narrative: 'Your guild dominated the competition! Victory brings gold, glory, and renown.' },
+        failNarrative: 'Your guild lost more events than it won. A humbling but educational experience.',
+      },
+      {
+        label: 'Compete selectively',
+        description: 'Enter only your strongest categories.',
+        risk: 0.15,
+        rewards: { resources: { gold: 50 }, xp: 35, narrative: 'Focused effort paid off. Your guild won where it mattered most.' },
+        failNarrative: 'Even your best categories saw tough competition. Modest results.',
+      },
+    ],
+  },
+  // T-0898: Seasonal Migration
+  {
+    id: 'seasonal_migration',
+    title: 'Seasonal Migration',
+    description: 'Great herds of animals are migrating through your territory. This is a rare opportunity for hunting and trapping.',
+    category: 'seasonal',
+    rarity: 'common',
+    illustration: 'migration',
+    trigger: { season: ['spring', 'autumn'], chance: 0.2, cooldownHours: 72 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Organize a hunt',
+        description: 'Harvest meat and hides from the herds.',
+        requires: { heroRole: 'hunter', heroCount: 1 },
+        risk: 0.1,
+        rewards: { resources: { food: 50, gold: 15 }, xp: 25, narrative: 'The hunt was successful! Your stores are stocked with fresh provisions.' },
+        failNarrative: 'The herds were wary. Only a modest catch was made.',
+      },
+      {
+        label: 'Set traps along the path',
+        description: 'Passive trapping for steady returns.',
+        risk: 0.05,
+        rewards: { resources: { food: 30 }, xp: 15, narrative: 'Your traps caught a steady stream of game. A reliable method.' },
+        failNarrative: 'The animals avoided your traps this time.',
+      },
+    ],
+  },
+  // T-0899: Black Market
+  {
+    id: 'black_market',
+    title: 'Black Market Contact',
+    description: 'A shady figure approaches with access to rare and forbidden goods. The prices are steep, but the items are unique.',
+    category: 'economy',
+    rarity: 'rare',
+    illustration: 'black_market',
+    trigger: { chance: 0.04, cooldownHours: 168 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Buy rare items',
+        description: 'Pay premium prices for unique goods.',
+        requires: { resource: 'gold', amount: 80 },
+        risk: 0.2,
+        rewards: { resources: { essence: 20 }, xp: 35, items: ['shadow_cloak', 'poison_vial'], narrative: 'The black market delivered. You now possess items unavailable anywhere else.' },
+        failNarrative: 'The goods were fakes. Your gold is gone and you have nothing to show for it.',
+      },
+      {
+        label: 'Report to authorities',
+        description: 'Turn the criminals in for a reward.',
+        risk: 0.1,
+        rewards: { resources: { gold: 30 }, xp: 20, narrative: 'The authorities rewarded your civic duty with gold and commendation.' },
+        failNarrative: 'The criminals escaped before guards arrived. No reward was given.',
+      },
+    ],
+  },
+  // T-0900: War Declaration
+  {
+    id: 'war_declaration',
+    title: 'War Declaration',
+    description: 'A hostile faction has declared war on all guilds in the region. Preparations must be made immediately.',
+    category: 'military',
+    rarity: 'rare',
+    illustration: 'war_declaration',
+    trigger: { chance: 0.03, cooldownHours: 240 },
+    durationHours: 24,
+    choices: [
+      {
+        label: 'Prepare for war',
+        description: 'Arm your fighters and fortify defenses.',
+        requires: { resource: 'ore', amount: 30 },
+        risk: 0.25,
+        rewards: { resources: { gold: 80, essence: 15 }, xp: 50, narrative: 'Your preparations proved decisive. The enemy forces were repelled at your walls!' },
+        failNarrative: 'Despite preparations, the enemy broke through. Losses were sustained but you held.',
+      },
+      {
+        label: 'Seek alliance',
+        description: 'Unite with neighboring guilds for defense.',
+        requires: { resource: 'gold', amount: 40 },
+        risk: 0.1,
+        rewards: { resources: { gold: 60, food: 30 }, xp: 40, narrative: 'The allied defense was overwhelming. The enemy retreated without engaging.' },
+        failNarrative: 'Allies were slow to respond. You faced the brunt alone but survived.',
+      },
+      {
+        label: 'Negotiate peace',
+        description: 'Attempt diplomacy before blood is shed.',
+        risk: 0.35,
+        rewards: { resources: { gold: 20 }, xp: 30, narrative: 'Diplomacy prevailed! The war was called off and trade resumed.' },
+        failNarrative: 'The enemy rejected your peace terms. War continues.',
+      },
+    ],
+  },
+  // T-0901: Peace Treaty
+  {
+    id: 'peace_treaty',
+    title: 'Peace Treaty',
+    description: 'After prolonged tensions, a peace treaty is being negotiated. Your guild can play a key role in the outcome.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'peace_treaty',
+    trigger: { chance: 0.08, cooldownHours: 120 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Host the negotiations',
+        description: 'Offer your guild hall as neutral ground.',
+        requires: { resource: 'food', amount: 25 },
+        risk: 0,
+        rewards: { resources: { gold: 40, essence: 8 }, xp: 35, narrative: 'The treaty was signed in your hall! Your guild\'s reputation as peacemaker soars.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Broker trade terms',
+        description: 'Use your merchant contacts to shape the deal.',
+        requires: { heroRole: 'merchant', heroCount: 1 },
+        risk: 0.1,
+        rewards: { resources: { gold: 60 }, xp: 30, narrative: 'Your merchants secured favorable trade terms in the treaty. Gold flows!' },
+        failNarrative: 'The other parties rejected your trade proposals.',
+      },
+    ],
+  },
+  // T-0902: Volcano Eruption
+  {
+    id: 'volcano_eruption',
+    title: 'Volcanic Eruption',
+    description: 'A distant volcano has erupted, sending ash clouds and tremors across the region. Immediate action is needed to protect your guild.',
+    category: 'crisis',
+    rarity: 'legendary',
+    illustration: 'volcano',
+    trigger: { chance: 0.01, cooldownHours: 480 },
+    durationHours: 18,
+    choices: [
+      {
+        label: 'Fortify against ash',
+        description: 'Seal buildings and protect crops.',
+        requires: { resource: 'wood', amount: 35 },
+        risk: 0.15,
+        rewards: { resources: { ore: 30, stone: 25 }, xp: 45, narrative: 'Your preparations saved the guild. Volcanic ash enriched the soil and revealed ore deposits!' },
+        failNarrative: 'Some crops were lost despite efforts. The ash will take time to clear.',
+      },
+      {
+        label: 'Evacuate temporarily',
+        description: 'Move everyone to safety.',
+        risk: 0,
+        rewards: { xp: 20, narrative: 'Everyone evacuated safely. When you returned, ash had covered everything but damage was minimal.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0903: Sea Serpent
+  {
+    id: 'sea_serpent',
+    title: 'Sea Serpent Spotted',
+    description: 'Fishermen report a massive serpent in the coastal waters. It blocks shipping lanes but its scales are said to be priceless.',
+    category: 'exploration',
+    rarity: 'legendary',
+    illustration: 'sea_serpent',
+    trigger: { chance: 0.015, cooldownHours: 336 },
+    durationHours: 16,
+    choices: [
+      {
+        label: 'Hunt the serpent',
+        description: 'Send your bravest to the seas.',
+        requires: { heroRole: 'fighter', heroCount: 2 },
+        risk: 0.45,
+        rewards: { resources: { gold: 200, essence: 40 }, xp: 100, items: ['serpent_scale'], narrative: 'The sea serpent was slain! Its scales alone are worth a fortune.' },
+        failNarrative: 'The serpent was too fast in the water. Your hunters returned seasick but alive.',
+      },
+      {
+        label: 'Lure it away',
+        description: 'Use bait to draw it from the shipping lanes.',
+        requires: { resource: 'food', amount: 30 },
+        risk: 0.15,
+        rewards: { resources: { gold: 30 }, xp: 25, narrative: 'The bait worked! The serpent followed the food trail away from your waters.' },
+        failNarrative: 'The serpent ate the bait and stayed. More creative solutions are needed.',
+      },
+    ],
+  },
+  // T-0904: Goblin Market
+  {
+    id: 'goblin_market',
+    title: 'Goblin Market',
+    description: 'A mysterious goblin market has appeared overnight. The goods are strange, the prices stranger, but magic permeates everything.',
+    category: 'economy',
+    rarity: 'rare',
+    illustration: 'goblin_market',
+    trigger: { chance: 0.04, cooldownHours: 168 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Browse and buy',
+        description: 'Spend gold on magical curiosities.',
+        requires: { resource: 'gold', amount: 50 },
+        risk: 0.2,
+        rewards: { resources: { essence: 25, herbs: 20 }, xp: 30, items: ['goblin_trinket'], narrative: 'The goblin goods were genuine! Strange but powerful items fill your stores.' },
+        failNarrative: 'The goblin merchants tricked you with illusions. Half your purchases vanished at dawn.',
+      },
+      {
+        label: 'Trade essence',
+        description: 'Goblins prize essence above all.',
+        requires: { resource: 'essence', amount: 10 },
+        risk: 0.05,
+        rewards: { resources: { gold: 60, herbs: 30 }, xp: 25, narrative: 'The goblins eagerly traded gold and herbs for your essence. A profitable exchange!' },
+        failNarrative: 'The goblins wanted more essence than you offered. Deal fell through.',
+      },
+    ],
+  },
+  // T-0905: Lunar Festival
+  {
+    id: 'lunar_festival',
+    title: 'Lunar Festival',
+    description: 'A full moon bathes the land in silver light. Ancient tradition calls for a festival under the moonlight.',
+    category: 'seasonal',
+    rarity: 'uncommon',
+    illustration: 'lunar_festival',
+    trigger: { chance: 0.1, cooldownHours: 96 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Moonlight ceremony',
+        description: 'Perform a mystical ritual under the moon.',
+        requires: { heroRole: 'mystic', heroCount: 1 },
+        risk: 0.05,
+        rewards: { resources: { essence: 20, gold: 15 }, xp: 35, narrative: 'The moonlight ceremony channeled lunar energy. Essence crystallized like frost!' },
+        failNarrative: 'The clouds obscured the moon at the crucial moment. The ritual was incomplete.',
+      },
+      {
+        label: 'Night market',
+        description: 'Host a festive night market.',
+        risk: 0,
+        rewards: { resources: { gold: 25 }, xp: 20, narrative: 'The night market was a hit! Visitors spent freely under the beautiful moon.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0906: Frost Giant Approach (winter danger)
+  {
+    id: 'frost_giant',
+    title: 'Frost Giant Approach',
+    description: 'A frost giant has been spotted descending from the mountains. It leaves frozen devastation in its wake.',
+    category: 'military',
+    rarity: 'legendary',
+    illustration: 'frost_giant',
+    trigger: { weather: ['snowy'], chance: 0.02, cooldownHours: 336, season: ['winter'] },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Confront the giant',
+        description: 'Rally your strongest heroes to battle.',
+        requires: { heroRole: 'fighter', heroCount: 3 },
+        risk: 0.45,
+        rewards: { resources: { gold: 180, essence: 35, ore: 50 }, xp: 120, items: ['frost_heart'], narrative: 'The frost giant fell! Its frozen heart radiates incredible power.' },
+        failNarrative: 'The giant was unstoppable. Your heroes retreated through the blizzard.',
+      },
+      {
+        label: 'Offer warmth tribute',
+        description: 'Fire and hot food might appease it.',
+        requires: { resource: 'food', amount: 40 },
+        risk: 0.2,
+        rewards: { resources: { ore: 30 }, xp: 30, narrative: 'The giant accepted your warmth and wandered off. It left behind chunks of magical ice-ore.' },
+        failNarrative: 'The giant ignored your offerings and marched through. Minor property damage ensued.',
+      },
+    ],
+  },
+  // T-0907: Spring Bloom (nature resource bonanza)
+  {
+    id: 'spring_bloom',
+    title: 'Spring Bloom',
+    description: 'Nature erupts in spectacular growth. Flowers, herbs, and crops burst forth with unusual vigor.',
+    category: 'seasonal',
+    rarity: 'common',
+    illustration: 'spring_bloom',
+    trigger: { season: ['spring'], chance: 0.25, cooldownHours: 72 },
+    durationHours: 14,
+    choices: [
+      {
+        label: 'Intensive foraging',
+        description: 'Gather everything nature offers.',
+        requires: { heroRole: 'farmer', heroCount: 1 },
+        risk: 0,
+        rewards: { resources: { herbs: 40, food: 35 }, xp: 25, narrative: 'The spring bounty was extraordinary! Herbs and food overflow your stores.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Plant for the future',
+        description: 'Use the fertile conditions to plant new crops.',
+        requires: { resource: 'gold', amount: 15 },
+        risk: 0,
+        rewards: { resources: { food: 20 }, xp: 30, narrative: 'New crops planted in ideal conditions. The harvest will be magnificent.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0908: Summer Solstice (daylight bonus)
+  {
+    id: 'summer_solstice',
+    title: 'Summer Solstice',
+    description: 'The longest day of the year! Extra daylight means extra productivity if you can keep your workers motivated.',
+    category: 'seasonal',
+    rarity: 'uncommon',
+    illustration: 'summer_solstice',
+    trigger: { season: ['summer'], chance: 0.15, cooldownHours: 168 },
+    durationHours: 16,
+    choices: [
+      {
+        label: 'Extended work day',
+        description: 'Work through the extra daylight hours.',
+        risk: 0.1,
+        rewards: { resources: { wood: 30, stone: 25, ore: 15 }, xp: 30, narrative: 'The long day was put to excellent use. Production soared!' },
+        failNarrative: 'Workers tired in the heat. Productivity was only slightly better than normal.',
+      },
+      {
+        label: 'Solstice celebration',
+        description: 'Celebrate the sun with a feast.',
+        requires: { resource: 'food', amount: 20 },
+        risk: 0,
+        rewards: { resources: { gold: 20, essence: 5 }, xp: 25, narrative: 'The solstice feast lifted everyone\'s spirits. The rest of summer will be productive!' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0909: Autumn Harvest (food stockpile)
+  {
+    id: 'autumn_harvest_stockpile',
+    title: 'Abundant Autumn Harvest',
+    description: 'The autumn harvest exceeds all expectations. Granaries overflow and the air smells of ripe fruit and fresh bread.',
+    category: 'seasonal',
+    rarity: 'common',
+    illustration: 'autumn_harvest',
+    trigger: { season: ['autumn'], chance: 0.25, cooldownHours: 72 },
+    durationHours: 12,
+    choices: [
+      {
+        label: 'Preserve everything',
+        description: 'Focus on long-term food storage.',
+        requires: { heroRole: 'farmer', heroCount: 1 },
+        risk: 0,
+        rewards: { resources: { food: 70 }, xp: 20, narrative: 'Every scrap of the harvest was preserved. Your guild will feast all winter!' },
+        failNarrative: '',
+      },
+      {
+        label: 'Sell at market',
+        description: 'Cash in on the surplus.',
+        requires: { heroRole: 'merchant', heroCount: 1 },
+        risk: 0.05,
+        rewards: { resources: { gold: 55 }, xp: 20, narrative: 'Your merchants sold the surplus at premium autumn prices. Gold fills the coffers!' },
+        failNarrative: 'Market was flooded with harvest goods. Prices were lower than hoped.',
+      },
+    ],
+  },
+  // T-0910: Comet Sighting
+  {
+    id: 'comet_sighting',
+    title: 'Comet in the Sky',
+    description: 'A brilliant comet streaks across the night sky. Mystics say it carries cosmic essence in its tail.',
+    category: 'magical',
+    rarity: 'rare',
+    illustration: 'comet',
+    trigger: { chance: 0.03, cooldownHours: 240 },
+    durationHours: 6,
+    choices: [
+      {
+        label: 'Channel comet energy',
+        description: 'Mystics attempt to capture cosmic essence.',
+        requires: { heroRole: 'mystic', heroCount: 1 },
+        risk: 0.2,
+        rewards: { resources: { essence: 30, gold: 25 }, xp: 50, narrative: 'Cosmic essence rained down like stardust! Your mystics captured a magnificent haul.' },
+        failNarrative: 'The comet\'s energy was too diffuse to capture effectively.',
+      },
+      {
+        label: 'Make a wish',
+        description: 'The old tradition says comets grant wishes.',
+        risk: 0,
+        rewards: { resources: { gold: 10, essence: 5 }, xp: 15, narrative: 'You wished for prosperity. The next day, a forgotten debt was repaid with interest!' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0911: Dungeon Discovery
+  {
+    id: 'dungeon_discovery',
+    title: 'Dungeon Entrance Found',
+    description: 'Miners broke through into an underground passage system. Ancient architecture lines the walls. Something lurks within.',
+    category: 'exploration',
+    rarity: 'rare',
+    illustration: 'dungeon_entrance',
+    trigger: { chance: 0.04, cooldownHours: 168 },
+    durationHours: 20,
+    choices: [
+      {
+        label: 'Explore the dungeon',
+        description: 'Send a well-armed expedition into the depths.',
+        requires: { heroRole: 'scout', heroCount: 1 },
+        risk: 0.3,
+        rewards: { resources: { gold: 100, essence: 20, ore: 25 }, xp: 55, items: ['dungeon_key'], narrative: 'The dungeon yielded incredible treasures and a key to deeper levels!' },
+        failNarrative: 'Traps and creatures forced your team to retreat. The dungeon remains unconquered.',
+      },
+      {
+        label: 'Seal it for now',
+        description: 'Mark the entrance and prepare properly.',
+        risk: 0,
+        rewards: { xp: 15, narrative: 'The entrance is sealed and mapped. Your guild will return when properly equipped.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0912: Hero Reunion
+  {
+    id: 'hero_reunion',
+    title: 'Retired Hero Returns',
+    description: 'A legendary hero who once served your guild has returned for a visit. They offer to share their wisdom.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'hero_reunion',
+    trigger: { chance: 0.07, cooldownHours: 120 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Request training',
+        description: 'Ask the hero to train your current fighters.',
+        risk: 0,
+        rewards: { xp: 60, narrative: 'The retired hero spent days training your fighters. Their skills improved dramatically!' },
+        failNarrative: '',
+      },
+      {
+        label: 'Host a welcome feast',
+        description: 'Celebrate the return with food and drink.',
+        requires: { resource: 'food', amount: 20 },
+        risk: 0,
+        rewards: { resources: { gold: 20, essence: 5 }, xp: 30, narrative: 'The feast in the hero\'s honor was legendary. Stories of old glory inspired everyone.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0913: Prophecy (cryptic hint)
+  {
+    id: 'prophecy',
+    title: 'A Prophecy Unfolds',
+    description: 'A blind oracle arrives at your gates, speaking of visions. Her words are cryptic but feel important.',
+    category: 'magical',
+    rarity: 'uncommon',
+    illustration: 'prophecy',
+    trigger: { chance: 0.06, cooldownHours: 168 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Heed the prophecy',
+        description: 'Listen carefully and prepare accordingly.',
+        requires: { resource: 'essence', amount: 5 },
+        risk: 0.1,
+        rewards: { resources: { essence: 15, gold: 20 }, xp: 40, narrative: 'The oracle\'s words proved true! By heeding them, you avoided disaster and found opportunity.' },
+        failNarrative: 'The prophecy was too vague to interpret correctly. Perhaps next time.',
+      },
+      {
+        label: 'Dismiss as nonsense',
+        description: 'Thank the oracle and move on.',
+        risk: 0,
+        rewards: { xp: 5, narrative: 'The oracle left quietly. Time will tell if her words held truth.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0914: Innovation Fair (research speed)
+  {
+    id: 'innovation_fair',
+    title: 'Innovation Fair',
+    description: 'Inventors and scholars from across the realm are hosting a grand innovation fair. Attending could spark breakthrough ideas.',
+    category: 'opportunity',
+    rarity: 'uncommon',
+    illustration: 'innovation_fair',
+    trigger: { chance: 0.08, cooldownHours: 96 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Send researchers',
+        description: 'Your best minds attend the fair.',
+        requires: { heroRole: 'archivist', heroCount: 1 },
+        risk: 0,
+        rewards: { resources: { essence: 12, gold: 15 }, xp: 45, narrative: 'Your researchers returned brimming with new ideas. Research projects will advance faster!' },
+        failNarrative: '',
+      },
+      {
+        label: 'Sponsor the fair',
+        description: 'Invest gold for visibility and connections.',
+        requires: { resource: 'gold', amount: 35 },
+        risk: 0,
+        rewards: { resources: { essence: 8 }, xp: 35, narrative: 'Your sponsorship attracted top talent. Several inventors offered their services.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0915: Market Crash (economic disruption)
+  {
+    id: 'market_crash',
+    title: 'Regional Market Crash',
+    description: 'The regional economy has collapsed. Prices are in freefall and merchants are panicking.',
+    category: 'economy',
+    rarity: 'rare',
+    illustration: 'market_crash',
+    trigger: { chance: 0.04, cooldownHours: 240 },
+    durationHours: 18,
+    choices: [
+      {
+        label: 'Buy at rock-bottom',
+        description: 'Invest everything while prices are lowest.',
+        requires: { resource: 'gold', amount: 60 },
+        risk: 0.2,
+        rewards: { resources: { ore: 40, wood: 35, herbs: 25, stone: 20 }, xp: 40, narrative: 'You bought mountains of goods at crash prices. When the market recovers, you will be rich!' },
+        failNarrative: 'The crash went deeper than expected. Your purchased goods lost even more value.',
+      },
+      {
+        label: 'Hoard resources',
+        description: 'Hold onto what you have and wait.',
+        risk: 0,
+        rewards: { xp: 15, narrative: 'You weathered the storm by staying conservative. Your stores held steady.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0916: Gold Rush
+  {
+    id: 'gold_rush',
+    title: 'Gold Rush!',
+    description: 'Gold deposits have been discovered nearby. Prospectors are flooding in. Your guild could stake a claim before the rush overwhelms everything.',
+    category: 'opportunity',
+    rarity: 'rare',
+    illustration: 'gold_rush',
+    trigger: { chance: 0.04, cooldownHours: 168 },
+    durationHours: 14,
+    choices: [
+      {
+        label: 'Stake a claim',
+        description: 'Send miners to claim the richest vein.',
+        requires: { heroRole: 'miner', heroCount: 1 },
+        risk: 0.25,
+        rewards: { resources: { gold: 120, ore: 20 }, xp: 45, narrative: 'Your miners struck it rich! Gold nuggets the size of fists fill your coffers!' },
+        failNarrative: 'Rival prospectors reached the best veins first. Your miners found only modest deposits.',
+      },
+      {
+        label: 'Sell supplies to prospectors',
+        description: 'Miners need food, tools, and lodging.',
+        requires: { resource: 'food', amount: 20 },
+        risk: 0,
+        rewards: { resources: { gold: 60 }, xp: 25, narrative: 'You made a fortune selling supplies to desperate prospectors. Easy gold!' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0917: Tournament Arc (multi-day competition)
+  {
+    id: 'tournament_arc',
+    title: 'Grand Tournament',
+    description: 'The realm\'s greatest tournament is beginning. Warriors, merchants, and scholars compete for glory and prizes.',
+    category: 'social',
+    rarity: 'rare',
+    illustration: 'grand_tournament',
+    trigger: { chance: 0.04, cooldownHours: 240 },
+    durationHours: 24,
+    chainId: 'tournament_chain',
+    chainStep: 1,
+    choices: [
+      {
+        label: 'Enter the combat bracket',
+        description: 'Your best fighter competes for the crown.',
+        requires: { heroRole: 'fighter', heroCount: 1 },
+        risk: 0.3,
+        rewards: { resources: { gold: 100, essence: 15 }, xp: 70, narrative: 'Your champion fought valiantly and reached the finals! Glory and gold are yours.' },
+        failNarrative: 'Your champion was eliminated in the early rounds. There is always next time.',
+        nextChainStep: 2,
+      },
+      {
+        label: 'Enter the trade competition',
+        description: 'Compete in merchant challenges.',
+        requires: { heroRole: 'merchant', heroCount: 1 },
+        risk: 0.2,
+        rewards: { resources: { gold: 80 }, xp: 50, narrative: 'Your merchant out-traded all competitors! Lucrative contracts were secured.' },
+        failNarrative: 'The competition was fierce. Your merchant placed mid-pack.',
+        nextChainStep: 2,
+      },
+      {
+        label: 'Spectate',
+        description: 'Watch and learn from the competitors.',
+        risk: 0,
+        rewards: { xp: 20, narrative: 'The tournament was entertaining and educational. You learned from the best.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0918: Cursed Artifact (risk/reward)
+  {
+    id: 'cursed_artifact',
+    title: 'Cursed Artifact',
+    description: 'A dark artifact has been found pulsating with malevolent energy. It offers great power but at a terrible cost.',
+    category: 'magical',
+    rarity: 'rare',
+    illustration: 'cursed_artifact',
+    trigger: { chance: 0.03, cooldownHours: 240 },
+    durationHours: 10,
+    choices: [
+      {
+        label: 'Harness the curse',
+        description: 'Attempt to wield the dark power.',
+        requires: { heroRole: 'mystic', heroCount: 1 },
+        risk: 0.4,
+        rewards: { resources: { essence: 45, gold: 30 }, xp: 60, items: ['cursed_blade'], narrative: 'Your mystic tamed the curse! The artifact\'s dark power now serves your guild.' },
+        failNarrative: 'The curse lashed out! Your mystic was weakened and the artifact vanished in smoke.',
+      },
+      {
+        label: 'Purify and destroy',
+        description: 'Cleanse the corruption at the cost of resources.',
+        requires: { resource: 'essence', amount: 15 },
+        risk: 0.1,
+        rewards: { resources: { gold: 20 }, xp: 40, narrative: 'The artifact was purified and shattered. A core of pure gold remained.' },
+        failNarrative: 'The purification ritual failed. The artifact remains, unchanged.',
+      },
+      {
+        label: 'Bury it deep',
+        description: 'Some things are best left alone.',
+        risk: 0,
+        rewards: { xp: 10, narrative: 'The artifact was buried in a sealed vault. Its malice fades with distance.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0919: Alliance Offer (multiplayer cooperation)
+  {
+    id: 'alliance_offer',
+    title: 'Alliance Invitation',
+    description: 'A prestigious guild alliance has sent an invitation. Membership offers trade bonuses and mutual defense.',
+    category: 'social',
+    rarity: 'uncommon',
+    illustration: 'alliance_offer',
+    trigger: { chance: 0.06, cooldownHours: 168 },
+    durationHours: 14,
+    choices: [
+      {
+        label: 'Join the alliance',
+        description: 'Accept membership and its obligations.',
+        requires: { resource: 'gold', amount: 30 },
+        risk: 0,
+        rewards: { resources: { gold: 50, food: 20, ore: 15 }, xp: 35, narrative: 'Welcome to the alliance! Trade routes open and allies stand ready to help.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Negotiate observer status',
+        description: 'Attend meetings without full commitment.',
+        risk: 0,
+        rewards: { resources: { gold: 10 }, xp: 20, narrative: 'As an observer, you gain knowledge and contacts without obligations. Clever.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Decline',
+        description: 'Your guild walks its own path.',
+        risk: 0,
+        rewards: { xp: 5, narrative: 'Independence preserved. The alliance respects your decision — for now.' },
+        failNarrative: '',
+      },
+    ],
+  },
+  // T-0920: Traveling Circus (entertainment and morale)
+  {
+    id: 'traveling_circus',
+    title: 'Traveling Circus',
+    description: 'A colorful circus troupe sets up tents outside your guild. Acrobats, fire-breathers, and exotic animals draw excited crowds.',
+    category: 'social',
+    rarity: 'common',
+    illustration: 'traveling_circus',
+    trigger: { chance: 0.1, cooldownHours: 72 },
+    durationHours: 8,
+    choices: [
+      {
+        label: 'Attend the show',
+        description: 'Give workers the day off to enjoy.',
+        requires: { resource: 'gold', amount: 15 },
+        risk: 0,
+        rewards: { resources: { gold: 5, essence: 3 }, xp: 25, narrative: 'The circus was spectacular! Morale soars and workers return refreshed and inspired.' },
+        failNarrative: '',
+      },
+      {
+        label: 'Hire performers',
+        description: 'Recruit talented individuals.',
+        requires: { resource: 'gold', amount: 30 },
+        risk: 0.1,
+        rewards: { xp: 35, narrative: 'A talented performer joined your guild! Their unique skills will prove valuable.' },
+        failNarrative: 'The performers were already under contract. Perhaps next time.',
+      },
+      {
+        label: 'Ignore the distraction',
+        description: 'Keep workers focused on their tasks.',
+        risk: 0,
+        rewards: { resources: { wood: 10, stone: 10 }, xp: 10, narrative: 'Productivity held steady while others were distracted. Practical, if unexciting.' },
         failNarrative: '',
       },
     ],

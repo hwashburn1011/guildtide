@@ -380,8 +380,42 @@ class ApiClient {
     return this.request('POST', `/events/${eventId}/respond`, { choiceIndex });
   }
 
-  async getEventLog(): Promise<any[]> {
-    return this.request('GET', '/events/log');
+  async getEventLog(opts?: { category?: string; rarity?: string; limit?: number; offset?: number }): Promise<any[]> {
+    const params = new URLSearchParams();
+    if (opts?.category) params.set('category', opts.category);
+    if (opts?.rarity) params.set('rarity', opts.rarity);
+    if (opts?.limit) params.set('limit', String(opts.limit));
+    if (opts?.offset) params.set('offset', String(opts.offset));
+    const qs = params.toString();
+    return this.request('GET', `/events/log${qs ? `?${qs}` : ''}`);
+  }
+
+  async getEventStats(): Promise<any> {
+    return this.request('GET', '/events/stats');
+  }
+
+  async getEventAchievements(): Promise<any> {
+    return this.request('GET', '/events/achievements');
+  }
+
+  async getEventReputation(): Promise<any> {
+    return this.request('GET', '/events/reputation');
+  }
+
+  async getEventPredictions(): Promise<any[]> {
+    return this.request('GET', '/events/predictions');
+  }
+
+  async getEventChains(): Promise<any> {
+    return this.request('GET', '/events/chains');
+  }
+
+  async getEventPreferences(): Promise<any> {
+    return this.request('GET', '/events/preferences');
+  }
+
+  async updateEventPreferences(prefs: any): Promise<void> {
+    return this.request('PUT', '/events/preferences', prefs);
   }
 
   // Expeditions
