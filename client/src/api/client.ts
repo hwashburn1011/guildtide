@@ -190,6 +190,15 @@ class ApiClient {
     return this.request('POST', '/market/sell', { resource, quantity });
   }
 
+  // Research
+  async getResearchState(): Promise<any> {
+    return this.request('GET', '/research');
+  }
+
+  async startResearch(researchId: string): Promise<any> {
+    return this.request('POST', `/research/${researchId}/start`);
+  }
+
   // World state
   async getWorldState(): Promise<{
     regionId: string;

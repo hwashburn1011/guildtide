@@ -666,6 +666,18 @@ export class ExpeditionScene extends Phaser.Scene {
           this.scene.start('GuildHallScene');
         });
       }
+      if (i === 2) {
+        text.on('pointerup', () => {
+          if (this.refreshTimer) this.refreshTimer.destroy();
+          this.scene.start('MarketScene');
+        });
+      }
+      if (i === 4) {
+        text.on('pointerup', () => {
+          if (this.refreshTimer) this.refreshTimer.destroy();
+          this.scene.start('ResearchScene');
+        });
+      }
     });
   }
 }

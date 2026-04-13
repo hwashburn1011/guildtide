@@ -354,6 +354,8 @@ export class MarketScene extends Phaser.Scene {
         text.on('pointerup', () => this.scene.start('GuildHallScene'));
       } else if (i === 1) {
         text.on('pointerup', () => this.scene.start('ExpeditionScene'));
+      } else if (i === 4) {
+        text.on('pointerup', () => this.scene.start('ResearchScene'));
       }
     });
   }
