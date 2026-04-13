@@ -1671,6 +1671,140 @@ class ApiClient {
   async getInflationMeter(): Promise<{ inflationMeter: number }> {
     return this.request('GET', '/finance/inflation');
   }
+
+  // ──── Region / World Map (T-1071–T-1140) ────
+
+  async getMapOverview(): Promise<{
+    regions: Array<{
+      id: string;
+      name?: string;
+      biome?: { id: string; name: string; color: number; icon: string };
+      mapX: number;
+      mapY: number;
+      mapRadius: number;
+      difficulty?: number;
+      discovered: boolean;
+      fogOfWar: boolean;
+      explorationPercent?: number;
+      hasOutpost?: boolean;
+      claimed?: boolean;
+      connections?: string[];
+      bossCount?: number;
+      resourceNodeCount?: number;
+      gridCoordinate?: string;
+    }>;
+    dayNight: { utcHour: number; isDay: boolean; sunPosition: number; overlayOpacity: number };
+    legend: object;
+  }> {
+    return this.request('GET', '/regions/map');
+  }
+
+  async getRegionDetail(regionId: string): Promise<Record<string, unknown>> {
+    return this.request('GET', `/regions/detail/${regionId}`);
+  }
+
+  async discoverRegion(regionId: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', `/regions/discover/${regionId}`);
+  }
+
+  async startRegionTravel(fromRegionId: string, toRegionId: string, speedBonus?: number): Promise<{ success: boolean; message: string; arriveAt?: number }> {
+    return this.request('POST', '/regions/travel', { fromRegionId, toRegionId, speedBonus });
+  }
+
+  async getTravelStatus(): Promise<{ travel: Record<string, unknown> | null }> {
+    return this.request('GET', '/regions/travel/status');
+  }
+
+  async buildOutpost(regionId: string, buildingType: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', '/regions/outpost', { regionId, buildingType });
+  }
+
+  async getOutpostProduction(regionId: string): Promise<{ production: Array<{ resource: string; amount: number }> }> {
+    return this.request('GET', `/regions/outpost/${regionId}/production`);
+  }
+
+  async getRegionFactions(regionId: string): Promise<{ factions: Array<{ factionId: string; name: string; reputation: number; disposition: string }> }> {
+    return this.request('GET', `/regions/factions/${regionId}`);
+  }
+
+  async exploreRegion(regionId: string, amount?: number): Promise<{ progress: number; newDiscoveries: string[] }> {
+    return this.request('POST', `/regions/explore/${regionId}`, { amount: amount || 5 });
+  }
+
+  async claimRegion(regionId: string): Promise<{ success: boolean; message: string }> {
+    return this.request('POST', `/regions/claim/${regionId}`);
+  }
+
+  async compareRegions(regionIds: string[]): Promise<{ comparison: object[] }> {
+    return this.request('GET', `/regions/compare?regions=${regionIds.join(',')}`);
+  }
+
+  async getRegionAchievements(): Promise<Record<string, unknown>> {
+    return this.request('GET', '/regions/achievements');
+  }
+
+  async searchRegions(query: string): Promise<{ results: object[] }> {
+    return this.request('GET', `/regions/search?q=${encodeURIComponent(query)}`);
+  }
+
+  async getWeatherOverlay(): Promise<{ overlay: object[] }> {
+    return this.request('GET', '/regions/weather-overlay');
+  }
+
+  async getMapPins(): Promise<{ pins: Array<{ id: string; x: number; y: number; label: string; color: string }> }> {
+    return this.request('GET', '/regions/pins');
+  }
+
+  async addMapPin(x: number, y: number, label: string, color: string): Promise<{ pin: object }> {
+    return this.request('POST', '/regions/pins', { x, y, label, color });
+  }
+
+  async removeMapPin(pinId: string): Promise<{ success: boolean }> {
+    return this.request('DELETE', `/regions/pins/${pinId}`);
+  }
+
+  async getRegionDistance(from: string, to: string): Promise<{ distance: number; travelDays: number }> {
+    return this.request('GET', `/regions/distance?from=${from}&to=${to}`);
+  }
+
+  async getCaravanRoutes(): Promise<{ routes: object[] }> {
+    return this.request('GET', '/regions/caravans');
+  }
+
+  async getRegionGallery(): Promise<{ gallery: object[] }> {
+    return this.request('GET', '/regions/gallery');
+  }
+
+  async getRegionTutorial(): Promise<{ steps: Array<{ title: string; text: string }> }> {
+    return this.request('GET', '/regions/tutorial');
+  }
+
+  async getDefenseMission(regionId: string): Promise<{ mission: object | null }> {
+    return this.request('GET', `/regions/defense/${regionId}`);
+  }
+
+  async setTradeEmbargo(regionId: string, active: boolean): Promise<{ success: boolean }> {
+    return this.request('POST', `/regions/embargo/${regionId}`, { active });
+  }
+
+  async getRegionPopulation(regionId: string): Promise<{ population: number; activity: string }> {
+    return this.request('GET', `/regions/population/${regionId}`);
+  }
+
+  // T-1114: Political map overlay
+  async getPoliticalOverlay(): Promise<{ overlay: object[] }> {
+    return this.request('GET', '/regions/political-overlay');
+  }
+
+  // T-1120: Active event indicators
+  async getEventIndicators(): Promise<{ indicators: object[] }> {
+    return this.request('GET', '/regions/event-indicators');
+  }
+
+  // T-1126: Map export/share
+  async exportMapData(): Promise<Record<string, unknown>> {
+    return this.request('GET', '/regions/export');
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);
