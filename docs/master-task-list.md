@@ -1593,194 +1593,194 @@
 ## Epic 21: Backend Infrastructure
 > Cron jobs, background workers, rate limiting, logging, error tracking, and API versioning.
 
-- [ ] T-1511: Set up Express middleware chain (cors, helmet, compression, body-parser)
-- [ ] T-1512: Implement request logging middleware with timestamp, method, path, and duration
-- [ ] T-1513: Create structured logging service with log levels (debug, info, warn, error)
-- [ ] T-1514: Implement log file rotation (daily rotation, 30-day retention)
-- [ ] T-1515: Build error tracking integration (Sentry or similar service)
-- [ ] T-1516: Create global error handler middleware catching unhandled exceptions
-- [ ] T-1517: Implement error response formatter with consistent error object shape
-- [ ] T-1518: Build health check endpoint returning server status and dependencies
-- [ ] T-1519: Create readiness probe endpoint checking database and cache connectivity
-- [ ] T-1520: Implement API rate limiting middleware (100 requests/minute per user)
-- [ ] T-1521: Create rate limit tier system (standard, premium with higher limits)
-- [ ] T-1522: Build rate limit response headers (X-RateLimit-Limit, Remaining, Reset)
-- [ ] T-1523: Implement API versioning with /api/v1/ prefix routing
-- [ ] T-1524: Create API version deprecation warning headers
-- [ ] T-1525: Build API documentation generation with Swagger/OpenAPI
-- [ ] T-1526: Implement cron job scheduler for recurring tasks
-- [ ] T-1527: Create resource production cron job (runs every 5 minutes)
-- [ ] T-1528: Create resource decay cron job (runs every 15 minutes)
-- [ ] T-1529: Create market price update cron job (runs every hour)
-- [ ] T-1530: Create expedition progress cron job (runs every minute)
-- [ ] T-1531: Create weather data refresh cron job (runs every 30 minutes)
-- [ ] T-1532: Create daily reset cron job (daily challenges, merchant refresh)
-- [ ] T-1533: Create session cleanup cron job (purge expired sessions daily)
-- [ ] T-1534: Create database backup cron job (daily automated backup)
-- [ ] T-1535: Implement background worker queue using Bull or similar
-- [ ] T-1536: Create email sending worker (password reset, notifications)
-- [ ] T-1537: Create data pipeline worker (fetch and process external APIs)
-- [ ] T-1538: Create event generation worker (evaluate and trigger game events)
-- [ ] T-1539: Create notification dispatch worker (process and send notifications)
-- [ ] T-1540: Build worker health monitoring dashboard
-- [ ] T-1541: Implement request validation middleware using Joi or Zod schemas
-- [ ] T-1542: Create request sanitization middleware (strip XSS, trim strings)
-- [ ] T-1543: Implement response compression for large payloads
-- [ ] T-1544: Create API response pagination utility (offset + limit)
-- [ ] T-1545: Build API response caching layer with Redis or memory cache
-- [ ] T-1546: Implement cache invalidation strategy per resource type
-- [ ] T-1547: Create database connection pool configuration with limits
-- [ ] T-1548: Implement database query timeout protection
-- [ ] T-1549: Build database migration runner with rollback support
-- [ ] T-1550: Create seed data generator for development environment
-- [ ] T-1551: Implement graceful server shutdown handling (finish requests, close connections)
-- [ ] T-1552: Create server startup validation (check required env vars, DB connection)
-- [ ] T-1553: Build configuration management with environment-based config files
-- [ ] T-1554: Implement feature flag system for gradual feature rollout
-- [ ] T-1555: Create admin API endpoints with role-based access control
-- [ ] T-1556: Build admin dashboard for monitoring server metrics
-- [ ] T-1557: Implement webhook system for external integrations
-- [ ] T-1558: Create API changelog endpoint returning version history
-- [ ] T-1559: Implement request correlation ID for tracing requests through system
-- [ ] T-1560: Build automated database schema validation on startup
-- [ ] T-1561: Create API response time monitoring and alerting
-- [ ] T-1562: Implement retry logic for transient database failures
-- [ ] T-1563: Build server metrics collection (request count, error rate, response time)
-- [ ] T-1564: Create server metrics visualization dashboard
-- [ ] T-1565: Implement API rate limit bypass for internal service calls
-- [ ] T-1566: Create data archival system for old game data
-- [ ] T-1567: Build automated SSL certificate renewal check
-- [ ] T-1568: Implement API key authentication for service-to-service calls
-- [ ] T-1569: Create database read replica routing for read-heavy queries
-- [ ] T-1570: Build server cluster management with PM2 or similar
-- [ ] T-1571: Implement WebSocket message queuing for offline clients
-- [ ] T-1572: Create server-side event validation preventing impossible game states
-- [ ] T-1573: Build automated dependency vulnerability scanning
-- [ ] T-1574: Implement API idempotency key system for safe retries
-- [ ] T-1575: Create server load testing configuration and baseline benchmarks
-- [ ] T-1576: Build automated server restart on critical error detection
-- [ ] T-1577: Implement request body size limit configuration
-- [ ] T-1578: Create file upload handling with size and type validation
-- [ ] T-1579: Build server timezone configuration for consistent date handling
-- [ ] T-1580: Implement database transaction wrapper with automatic rollback on error
+- [x] T-1511: Set up Express middleware chain (cors, helmet, compression, body-parser)
+- [x] T-1512: Implement request logging middleware with timestamp, method, path, and duration
+- [x] T-1513: Create structured logging service with log levels (debug, info, warn, error)
+- [x] T-1514: Implement log file rotation (daily rotation, 30-day retention)
+- [x] T-1515: Build error tracking integration (Sentry or similar service)
+- [x] T-1516: Create global error handler middleware catching unhandled exceptions
+- [x] T-1517: Implement error response formatter with consistent error object shape
+- [x] T-1518: Build health check endpoint returning server status and dependencies
+- [x] T-1519: Create readiness probe endpoint checking database and cache connectivity
+- [x] T-1520: Implement API rate limiting middleware (100 requests/minute per user)
+- [x] T-1521: Create rate limit tier system (standard, premium with higher limits)
+- [x] T-1522: Build rate limit response headers (X-RateLimit-Limit, Remaining, Reset)
+- [x] T-1523: Implement API versioning with /api/v1/ prefix routing
+- [x] T-1524: Create API version deprecation warning headers
+- [x] T-1525: Build API documentation generation with Swagger/OpenAPI
+- [x] T-1526: Implement cron job scheduler for recurring tasks
+- [x] T-1527: Create resource production cron job (runs every 5 minutes)
+- [x] T-1528: Create resource decay cron job (runs every 15 minutes)
+- [x] T-1529: Create market price update cron job (runs every hour)
+- [x] T-1530: Create expedition progress cron job (runs every minute)
+- [x] T-1531: Create weather data refresh cron job (runs every 30 minutes)
+- [x] T-1532: Create daily reset cron job (daily challenges, merchant refresh)
+- [x] T-1533: Create session cleanup cron job (purge expired sessions daily)
+- [x] T-1534: Create database backup cron job (daily automated backup)
+- [x] T-1535: Implement background worker queue using Bull or similar
+- [x] T-1536: Create email sending worker (password reset, notifications)
+- [x] T-1537: Create data pipeline worker (fetch and process external APIs)
+- [x] T-1538: Create event generation worker (evaluate and trigger game events)
+- [x] T-1539: Create notification dispatch worker (process and send notifications)
+- [x] T-1540: Build worker health monitoring dashboard
+- [x] T-1541: Implement request validation middleware using Joi or Zod schemas
+- [x] T-1542: Create request sanitization middleware (strip XSS, trim strings)
+- [x] T-1543: Implement response compression for large payloads
+- [x] T-1544: Create API response pagination utility (offset + limit)
+- [x] T-1545: Build API response caching layer with Redis or memory cache
+- [x] T-1546: Implement cache invalidation strategy per resource type
+- [x] T-1547: Create database connection pool configuration with limits
+- [x] T-1548: Implement database query timeout protection
+- [x] T-1549: Build database migration runner with rollback support
+- [x] T-1550: Create seed data generator for development environment
+- [x] T-1551: Implement graceful server shutdown handling (finish requests, close connections)
+- [x] T-1552: Create server startup validation (check required env vars, DB connection)
+- [x] T-1553: Build configuration management with environment-based config files
+- [x] T-1554: Implement feature flag system for gradual feature rollout
+- [x] T-1555: Create admin API endpoints with role-based access control
+- [x] T-1556: Build admin dashboard for monitoring server metrics
+- [x] T-1557: Implement webhook system for external integrations
+- [x] T-1558: Create API changelog endpoint returning version history
+- [x] T-1559: Implement request correlation ID for tracing requests through system
+- [x] T-1560: Build automated database schema validation on startup
+- [x] T-1561: Create API response time monitoring and alerting
+- [x] T-1562: Implement retry logic for transient database failures
+- [x] T-1563: Build server metrics collection (request count, error rate, response time)
+- [x] T-1564: Create server metrics visualization dashboard
+- [x] T-1565: Implement API rate limit bypass for internal service calls
+- [x] T-1566: Create data archival system for old game data
+- [x] T-1567: Build automated SSL certificate renewal check
+- [x] T-1568: Implement API key authentication for service-to-service calls
+- [x] T-1569: Create database read replica routing for read-heavy queries
+- [x] T-1570: Build server cluster management with PM2 or similar
+- [x] T-1571: Implement WebSocket message queuing for offline clients
+- [x] T-1572: Create server-side event validation preventing impossible game states
+- [x] T-1573: Build automated dependency vulnerability scanning
+- [x] T-1574: Implement API idempotency key system for safe retries
+- [x] T-1575: Create server load testing configuration and baseline benchmarks
+- [x] T-1576: Build automated server restart on critical error detection
+- [x] T-1577: Implement request body size limit configuration
+- [x] T-1578: Create file upload handling with size and type validation
+- [x] T-1579: Build server timezone configuration for consistent date handling
+- [x] T-1580: Implement database transaction wrapper with automatic rollback on error
 
 ## Epic 22: Database & Performance
 > Indexing, query optimization, data migration, backup system, and caching layer.
 
-- [ ] T-1581: Audit all Prisma models and add missing database indexes
-- [ ] T-1582: Add composite index on (userId, type) for resource lookups
-- [ ] T-1583: Add index on createdAt for time-based queries
-- [ ] T-1584: Add index on expedition status for active expedition queries
-- [ ] T-1585: Add index on hero guildId for roster lookups
-- [ ] T-1586: Add index on marketListing price for sorted market queries
-- [ ] T-1587: Add index on event triggerTime for event scheduling queries
-- [ ] T-1588: Add index on research status for active research lookups
-- [ ] T-1589: Implement query profiling to identify slow queries
-- [ ] T-1590: Optimize hero roster query with selective field loading
-- [ ] T-1591: Optimize market listing query with pagination and filtering
-- [ ] T-1592: Optimize expedition list query with status-based partitioning
-- [ ] T-1593: Optimize resource calculation query with aggregation
-- [ ] T-1594: Optimize event evaluation query with pre-filtered condition checks
-- [ ] T-1595: Implement N+1 query detection and prevention
-- [ ] T-1596: Create eager loading strategy for related entity queries
-- [ ] T-1597: Implement database query result caching with TTL per query type
-- [ ] T-1598: Build cache hit/miss ratio monitoring
-- [ ] T-1599: Create cache warming strategy on server startup
-- [ ] T-1600: Implement selective cache invalidation on data mutation
-- [ ] T-1601: Create Prisma migration for initial schema version
-- [ ] T-1602: Build database migration testing pipeline
-- [ ] T-1603: Implement zero-downtime migration strategy for schema changes
-- [ ] T-1604: Create data migration scripts for schema evolution
-- [ ] T-1605: Build migration rollback testing procedure
-- [ ] T-1606: Implement automated database backup to file system
-- [ ] T-1607: Create backup encryption for sensitive player data
-- [ ] T-1608: Build backup restoration procedure and testing script
-- [ ] T-1609: Implement point-in-time recovery capability
-- [ ] T-1610: Create backup health check verifying backup integrity
-- [ ] T-1611: Implement database connection pooling optimization
-- [ ] T-1612: Create connection pool monitoring and alerting
-- [ ] T-1613: Build database size monitoring with growth projections
-- [ ] T-1614: Implement data retention policy (archive data older than 90 days)
-- [ ] T-1615: Create data export utility for player data requests
-- [ ] T-1616: Implement soft delete pattern for recoverable data removal
-- [ ] T-1617: Build database vacuum/optimization scheduled task
-- [ ] T-1618: Create query timeout configuration per endpoint criticality
-- [ ] T-1619: Implement database connection retry with backoff
-- [ ] T-1620: Build database schema documentation generation
-- [ ] T-1621: Create database seeding scripts for test environments
-- [ ] T-1622: Implement bulk insert optimization for batch operations
-- [ ] T-1623: Create database read/write split configuration
-- [ ] T-1624: Build query performance regression test suite
-- [ ] T-1625: Implement database deadlock detection and recovery
-- [ ] T-1626: Create database statistics collection for query planner
-- [ ] T-1627: Build data consistency validation scripts
-- [ ] T-1628: Implement foreign key constraint audit
-- [ ] T-1629: Create database entity relationship diagram generation
-- [ ] T-1630: Build database health dashboard with key metrics
-- [ ] T-1631: Implement query batching for related data fetches
-- [ ] T-1632: Create database snapshot for development environment reset
-- [ ] T-1633: Build data anonymization script for staging environments
-- [ ] T-1634: Implement database WAL mode configuration for SQLite performance
-- [ ] T-1635: Create database file size monitoring with cleanup alerts
-- [ ] T-1636: Build query explain plan analysis tool
-- [ ] T-1637: Implement connection idle timeout configuration
-- [ ] T-1638: Create database table partition strategy for large tables
-- [ ] T-1639: Build automated slow query log analysis report
-- [ ] T-1640: Implement database integrity check scheduled task
+- [x] T-1581: Audit all Prisma models and add missing database indexes
+- [x] T-1582: Add composite index on (userId, type) for resource lookups
+- [x] T-1583: Add index on createdAt for time-based queries
+- [x] T-1584: Add index on expedition status for active expedition queries
+- [x] T-1585: Add index on hero guildId for roster lookups
+- [x] T-1586: Add index on marketListing price for sorted market queries
+- [x] T-1587: Add index on event triggerTime for event scheduling queries
+- [x] T-1588: Add index on research status for active research lookups
+- [x] T-1589: Implement query profiling to identify slow queries
+- [x] T-1590: Optimize hero roster query with selective field loading
+- [x] T-1591: Optimize market listing query with pagination and filtering
+- [x] T-1592: Optimize expedition list query with status-based partitioning
+- [x] T-1593: Optimize resource calculation query with aggregation
+- [x] T-1594: Optimize event evaluation query with pre-filtered condition checks
+- [x] T-1595: Implement N+1 query detection and prevention
+- [x] T-1596: Create eager loading strategy for related entity queries
+- [x] T-1597: Implement database query result caching with TTL per query type
+- [x] T-1598: Build cache hit/miss ratio monitoring
+- [x] T-1599: Create cache warming strategy on server startup
+- [x] T-1600: Implement selective cache invalidation on data mutation
+- [x] T-1601: Create Prisma migration for initial schema version
+- [x] T-1602: Build database migration testing pipeline
+- [x] T-1603: Implement zero-downtime migration strategy for schema changes
+- [x] T-1604: Create data migration scripts for schema evolution
+- [x] T-1605: Build migration rollback testing procedure
+- [x] T-1606: Implement automated database backup to file system
+- [x] T-1607: Create backup encryption for sensitive player data
+- [x] T-1608: Build backup restoration procedure and testing script
+- [x] T-1609: Implement point-in-time recovery capability
+- [x] T-1610: Create backup health check verifying backup integrity
+- [x] T-1611: Implement database connection pooling optimization
+- [x] T-1612: Create connection pool monitoring and alerting
+- [x] T-1613: Build database size monitoring with growth projections
+- [x] T-1614: Implement data retention policy (archive data older than 90 days)
+- [x] T-1615: Create data export utility for player data requests
+- [x] T-1616: Implement soft delete pattern for recoverable data removal
+- [x] T-1617: Build database vacuum/optimization scheduled task
+- [x] T-1618: Create query timeout configuration per endpoint criticality
+- [x] T-1619: Implement database connection retry with backoff
+- [x] T-1620: Build database schema documentation generation
+- [x] T-1621: Create database seeding scripts for test environments
+- [x] T-1622: Implement bulk insert optimization for batch operations
+- [x] T-1623: Create database read/write split configuration
+- [x] T-1624: Build query performance regression test suite
+- [x] T-1625: Implement database deadlock detection and recovery
+- [x] T-1626: Create database statistics collection for query planner
+- [x] T-1627: Build data consistency validation scripts
+- [x] T-1628: Implement foreign key constraint audit
+- [x] T-1629: Create database entity relationship diagram generation
+- [x] T-1630: Build database health dashboard with key metrics
+- [x] T-1631: Implement query batching for related data fetches
+- [x] T-1632: Create database snapshot for development environment reset
+- [x] T-1633: Build data anonymization script for staging environments
+- [x] T-1634: Implement database WAL mode configuration for SQLite performance
+- [x] T-1635: Create database file size monitoring with cleanup alerts
+- [x] T-1636: Build query explain plan analysis tool
+- [x] T-1637: Implement connection idle timeout configuration
+- [x] T-1638: Create database table partition strategy for large tables
+- [x] T-1639: Build automated slow query log analysis report
+- [x] T-1640: Implement database integrity check scheduled task
 
 ## Epic 23: Security & Auth
 > CSRF protection, XSS prevention, input validation, rate limiting, encryption, and audit logging.
 
-- [ ] T-1641: Implement CSRF token generation and validation middleware
-- [ ] T-1642: Add CSRF token to all state-changing form submissions
-- [ ] T-1643: Implement Content Security Policy (CSP) headers
-- [ ] T-1644: Configure X-Content-Type-Options: nosniff header
-- [ ] T-1645: Configure X-Frame-Options: DENY header
-- [ ] T-1646: Configure Strict-Transport-Security (HSTS) header
-- [ ] T-1647: Implement XSS sanitization for all user text inputs
-- [ ] T-1648: Create HTML entity encoding for rendered user content
-- [ ] T-1649: Implement SQL injection prevention audit (parameterized queries check)
-- [ ] T-1650: Create input validation schemas for all API endpoints
-- [ ] T-1651: Implement file upload validation (type whitelist, size limit, content check)
-- [ ] T-1652: Create password hashing with bcrypt (12 salt rounds)
-- [ ] T-1653: Implement password complexity requirements (min 8 chars, mixed case, number)
-- [ ] T-1654: Create secure session token generation with crypto.randomBytes
-- [ ] T-1655: Implement JWT signature validation on every authenticated request
-- [ ] T-1656: Create JWT expiration and refresh token rotation
-- [ ] T-1657: Implement secure cookie flags (httpOnly, secure, sameSite)
-- [ ] T-1658: Create API authentication middleware with token extraction
-- [ ] T-1659: Implement role-based access control (RBAC) with user, mod, admin roles
-- [ ] T-1660: Create permission check middleware for admin endpoints
-- [ ] T-1661: Implement account lockout after repeated failed login attempts
-- [ ] T-1662: Create IP-based rate limiting for authentication endpoints
-- [ ] T-1663: Implement brute force detection and auto-blocking
-- [ ] T-1664: Create security audit log recording auth events and admin actions
-- [ ] T-1665: Build audit log viewer for admin dashboard
-- [ ] T-1666: Implement sensitive data encryption at rest (API keys, tokens)
-- [ ] T-1667: Create environment variable validation preventing default/empty secrets
-- [ ] T-1668: Implement secure API key storage with hashing
-- [ ] T-1669: Create data privacy compliance system (consent tracking, data access)
-- [ ] T-1670: Implement user data deletion endpoint with cascade handling
-- [ ] T-1671: Create security headers middleware combining all header configurations
-- [ ] T-1672: Implement CORS policy with strict origin whitelist
-- [ ] T-1673: Create dependency vulnerability scanning in CI pipeline
-- [ ] T-1674: Implement subresource integrity (SRI) for CDN-loaded scripts
-- [ ] T-1675: Create clickjacking protection with frame-busting script
-- [ ] T-1676: Implement session fixation prevention (regenerate session on login)
-- [ ] T-1677: Create suspicious activity detection (impossible travel, unusual patterns)
-- [ ] T-1678: Implement user notification for suspicious login activity
-- [ ] T-1679: Create admin impersonation audit logging
-- [ ] T-1680: Implement API endpoint authorization matrix documentation
-- [ ] T-1681: Create security incident response procedure document
-- [ ] T-1682: Implement password breach check against Have I Been Pwned API
-- [ ] T-1683: Create rate limit configuration per endpoint sensitivity
-- [ ] T-1684: Implement request body schema validation rejecting unknown fields
-- [ ] T-1685: Create automated security header scan and compliance check
-- [ ] T-1686: Implement OAuth state parameter validation for CSRF protection
-- [ ] T-1687: Create secure redirect URL validation preventing open redirect
-- [ ] T-1688: Implement API response sanitization removing internal data
-- [ ] T-1689: Create database query parameterization audit script
-- [ ] T-1690: Implement security monitoring alerting for critical events
+- [x] T-1641: Implement CSRF token generation and validation middleware
+- [x] T-1642: Add CSRF token to all state-changing form submissions
+- [x] T-1643: Implement Content Security Policy (CSP) headers
+- [x] T-1644: Configure X-Content-Type-Options: nosniff header
+- [x] T-1645: Configure X-Frame-Options: DENY header
+- [x] T-1646: Configure Strict-Transport-Security (HSTS) header
+- [x] T-1647: Implement XSS sanitization for all user text inputs
+- [x] T-1648: Create HTML entity encoding for rendered user content
+- [x] T-1649: Implement SQL injection prevention audit (parameterized queries check)
+- [x] T-1650: Create input validation schemas for all API endpoints
+- [x] T-1651: Implement file upload validation (type whitelist, size limit, content check)
+- [x] T-1652: Create password hashing with bcrypt (12 salt rounds)
+- [x] T-1653: Implement password complexity requirements (min 8 chars, mixed case, number)
+- [x] T-1654: Create secure session token generation with crypto.randomBytes
+- [x] T-1655: Implement JWT signature validation on every authenticated request
+- [x] T-1656: Create JWT expiration and refresh token rotation
+- [x] T-1657: Implement secure cookie flags (httpOnly, secure, sameSite)
+- [x] T-1658: Create API authentication middleware with token extraction
+- [x] T-1659: Implement role-based access control (RBAC) with user, mod, admin roles
+- [x] T-1660: Create permission check middleware for admin endpoints
+- [x] T-1661: Implement account lockout after repeated failed login attempts
+- [x] T-1662: Create IP-based rate limiting for authentication endpoints
+- [x] T-1663: Implement brute force detection and auto-blocking
+- [x] T-1664: Create security audit log recording auth events and admin actions
+- [x] T-1665: Build audit log viewer for admin dashboard
+- [x] T-1666: Implement sensitive data encryption at rest (API keys, tokens)
+- [x] T-1667: Create environment variable validation preventing default/empty secrets
+- [x] T-1668: Implement secure API key storage with hashing
+- [x] T-1669: Create data privacy compliance system (consent tracking, data access)
+- [x] T-1670: Implement user data deletion endpoint with cascade handling
+- [x] T-1671: Create security headers middleware combining all header configurations
+- [x] T-1672: Implement CORS policy with strict origin whitelist
+- [x] T-1673: Create dependency vulnerability scanning in CI pipeline
+- [x] T-1674: Implement subresource integrity (SRI) for CDN-loaded scripts
+- [x] T-1675: Create clickjacking protection with frame-busting script
+- [x] T-1676: Implement session fixation prevention (regenerate session on login)
+- [x] T-1677: Create suspicious activity detection (impossible travel, unusual patterns)
+- [x] T-1678: Implement user notification for suspicious login activity
+- [x] T-1679: Create admin impersonation audit logging
+- [x] T-1680: Implement API endpoint authorization matrix documentation
+- [x] T-1681: Create security incident response procedure document
+- [x] T-1682: Implement password breach check against Have I Been Pwned API
+- [x] T-1683: Create rate limit configuration per endpoint sensitivity
+- [x] T-1684: Implement request body schema validation rejecting unknown fields
+- [x] T-1685: Create automated security header scan and compliance check
+- [x] T-1686: Implement OAuth state parameter validation for CSRF protection
+- [x] T-1687: Create secure redirect URL validation preventing open redirect
+- [x] T-1688: Implement API response sanitization removing internal data
+- [x] T-1689: Create database query parameterization audit script
+- [x] T-1690: Implement security monitoring alerting for critical events
 
 ## Epic 24: Playwright Testing
 > Install, configure, and write E2E tests for every scene, flow, and edge case with screenshot comparisons.
