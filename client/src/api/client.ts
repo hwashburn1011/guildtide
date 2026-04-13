@@ -745,6 +745,18 @@ class ApiClient {
     return this.request('POST', '/research/notification-prefs', prefs);
   }
 
+  async getRecommendedPath(branch: string): Promise<{ path: any[] }> {
+    return this.request('GET', `/research/recommended-path/${branch}`);
+  }
+
+  async getBranchEffects(branch: string): Promise<{ effects: Record<string, number> }> {
+    return this.request('GET', `/research/branch-effects/${branch}`);
+  }
+
+  async getResearchAnnouncements(): Promise<{ announcements: any[] }> {
+    return this.request('GET', '/research/announcements');
+  }
+
   // Items & Equipment
   async getInventory(): Promise<any[]> {
     return this.request('GET', '/items');

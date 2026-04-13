@@ -52,6 +52,31 @@ const RESEARCH_EVENTS: ResearchEvent[] = [
     effects: { cost_reduction: 0.20 },
     duration: 86400,
   },
+  // T-0671: Real-world triggered events
+  {
+    id: 'market_crash_boost',
+    type: 'boost',
+    title: 'Market Instability',
+    description: 'Economic turmoil drives scholars to innovate — Economic branch +25% speed.',
+    effects: { economic_branch_speed: 0.25 },
+    duration: 43200,
+  },
+  {
+    id: 'celestial_alignment',
+    type: 'boost',
+    title: 'Celestial Alignment',
+    description: 'The stars align to empower arcane research — Arcane branch +30% speed.',
+    effects: { arcane_branch_speed: 0.30 },
+    duration: 21600,
+  },
+  {
+    id: 'border_conflict',
+    type: 'boost',
+    title: 'Border Conflict',
+    description: 'Tensions at the border spur military innovation — Combat branch +20% speed.',
+    effects: { combat_branch_speed: 0.20 },
+    duration: 43200,
+  },
 ];
 
 // ── Research queue (T-0639) ──

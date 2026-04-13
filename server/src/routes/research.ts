@@ -305,4 +305,72 @@ router.post('/notification-prefs', async (req: Request, res: Response) => {
   }
 });
 
+// GET /recommended-path/:branch — recommended path for a branch (T-0679)
+router.get('/recommended-path/:branch', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const completed: string[] = JSON.parse(guild.researchIds || '[]');
+    const { ResearchBranch } = await import('../data/researchData');
+    const branch = req.params.branch as string;
+    const path = ResearchAdvancedService.getRecommendedPath(branch as any, completed);
+    res.json({ path });
+  } catch (err) {
+    console.error('Recommended path error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// GET /branch-effects/:branch — all effects of a branch (T-0678)
+router.get('/branch-effects/:branch', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const completed: string[] = JSON.parse(guild.researchIds || '[]');
+    const effects = ResearchAdvancedService.getBranchEffects(req.params.branch as any, completed);
+    res.json({ effects });
+  } catch (err) {
+    console.error('Branch effects error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
+// GET /announcements — guild research announcements (T-0680)
+router.get('/announcements', async (req: Request, res: Response) => {
+  try {
+    const guildId = await getGuildId(req.playerId);
+    if (!guildId) {
+      res.status(404).json({ error: 'not_found', message: 'No guild found' });
+      return;
+    }
+    const guild = await prisma.guild.findUnique({ where: { id: guildId } });
+    if (!guild) {
+      res.json({ announcements: [] });
+      return;
+    }
+    const resources = JSON.parse(guild.resources || '{}');
+    const announcements = resources.__guildAnnouncements || [];
+    res.json({ announcements });
+  } catch (err) {
+    console.error('Announcements error:', err);
+    res.status(500).json({ error: 'server', message: 'Internal server error' });
+  }
+});
+
 export { router as researchRouter };

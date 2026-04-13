@@ -138,6 +138,20 @@ export class ResearchService {
     }
     resources.__researchHistory = history;
 
+    // Guild announcement (T-0680)
+    const announcements: Array<{ type: string; message: string; timestamp: number }> =
+      resources.__guildAnnouncements || [];
+    if (node) {
+      announcements.push({
+        type: 'research_complete',
+        message: `Research complete: ${node.name} — ${node.description}`,
+        timestamp: Date.now(),
+      });
+      // Keep last 50 announcements
+      if (announcements.length > 50) announcements.splice(0, announcements.length - 50);
+    }
+    resources.__guildAnnouncements = announcements;
+
     delete resources.__activeResearch;
 
     // Auto-start next queued research (T-0639)
