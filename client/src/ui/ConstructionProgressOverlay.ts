@@ -12,7 +12,7 @@ import type { Building } from '@shared/types';
 export class ConstructionProgressOverlay {
   private scene: Phaser.Scene;
   private container: Phaser.GameObjects.Container;
-  private progressBar: UIProgressBar;
+  private progressBar!: UIProgressBar;
   private timerEvent: Phaser.Time.TimerEvent | null = null;
   private building: Building;
   private onComplete: () => void;
@@ -78,7 +78,7 @@ export class ConstructionProgressOverlay {
         to: 100,
         duration: remaining,
         onUpdate: (tween) => {
-          this.progressBar.setValue(tween.getValue(), false);
+          this.progressBar.setValue(tween.getValue() ?? 0, false);
         },
         onComplete: () => this.completeConstruction(),
       });
