@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH, GAME_HEIGHT } from '../config';
 import { apiClient } from '../api/client';
+import { GAME_VERSION } from '@shared/constants';
 
 export class LoginScene extends Phaser.Scene {
   private errorText!: Phaser.GameObjects.Text;
@@ -29,6 +30,21 @@ export class LoginScene extends Phaser.Scene {
       fontSize: `${FONTS.sizes.body}px`,
       color: COLORS.textSecondary,
     }).setOrigin(0.5);
+
+    this.add.text(centerX, 200, 'Build your guild, recruit heroes, and conquer\na world shaped by real weather.', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.small}px`,
+      color: '#7a7a8e',
+      align: 'center',
+      lineSpacing: 4,
+    }).setOrigin(0.5);
+
+    // Version
+    this.add.text(GAME_WIDTH - 12, GAME_HEIGHT - 12, `v${GAME_VERSION}`, {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.tiny}px`,
+      color: '#555566',
+    }).setOrigin(1, 1);
 
     // Error text (hidden initially)
     this.errorText = this.add.text(centerX, centerY + 120, '', {

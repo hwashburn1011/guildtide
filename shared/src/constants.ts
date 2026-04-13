@@ -1,31 +1,34 @@
 import { ResourceType, BuildingType } from './enums';
 
+/** Game version */
+export const GAME_VERSION = '1.0.0';
+
 /** Maximum seconds of offline progress (24 hours) */
 export const MAX_OFFLINE_SECONDS = 86400;
 
 /** Default starting resources for a new guild */
 export const STARTING_RESOURCES: Record<ResourceType, number> = {
-  [ResourceType.Gold]: 100,
-  [ResourceType.Wood]: 50,
-  [ResourceType.Stone]: 30,
-  [ResourceType.Herbs]: 20,
-  [ResourceType.Ore]: 15,
-  [ResourceType.Water]: 40,
-  [ResourceType.Food]: 60,
+  [ResourceType.Gold]: 150,
+  [ResourceType.Wood]: 80,
+  [ResourceType.Stone]: 50,
+  [ResourceType.Herbs]: 30,
+  [ResourceType.Ore]: 20,
+  [ResourceType.Water]: 60,
+  [ResourceType.Food]: 80,
   [ResourceType.Essence]: 0,
 };
 
-/** Building upgrade cost multiplier per level */
-export const BUILDING_COST_MULTIPLIER = 1.4;
+/** Building upgrade cost multiplier per level (lower = smoother early curve) */
+export const BUILDING_COST_MULTIPLIER = 1.35;
 
-/** Building output bonus per level (15% per level) */
-export const BUILDING_LEVEL_BONUS = 0.15;
+/** Building output bonus per level (18% per level for noticeable growth) */
+export const BUILDING_LEVEL_BONUS = 0.18;
 
 /** Hero XP curve multiplier */
-export const HERO_XP_MULTIPLIER = 1.3;
+export const HERO_XP_MULTIPLIER = 1.25;
 
 /** Hero base XP to level 2 */
-export const HERO_BASE_XP = 100;
+export const HERO_BASE_XP = 80;
 
 /** Max modifier swing from world state (±50%) */
 export const MAX_MODIFIER_SWING = 0.5;
@@ -41,43 +44,43 @@ export const BUILDING_DEFINITIONS: Record<BuildingType, {
   [BuildingType.Farm]: {
     name: 'Farm',
     description: 'Grows food and crops for your guild.',
-    baseCost: { [ResourceType.Gold]: 50, [ResourceType.Wood]: 30 },
-    baseOutput: { [ResourceType.Food]: 0.5 },
+    baseCost: { [ResourceType.Gold]: 30, [ResourceType.Wood]: 15 },
+    baseOutput: { [ResourceType.Food]: 0.6 },
     maxLevel: 20,
   },
   [BuildingType.LumberMill]: {
     name: 'Lumber Mill',
     description: 'Harvests and processes timber.',
-    baseCost: { [ResourceType.Gold]: 60, [ResourceType.Stone]: 20 },
-    baseOutput: { [ResourceType.Wood]: 0.4 },
+    baseCost: { [ResourceType.Gold]: 40, [ResourceType.Stone]: 15 },
+    baseOutput: { [ResourceType.Wood]: 0.5 },
     maxLevel: 20,
   },
   [BuildingType.Quarry]: {
     name: 'Quarry',
     description: 'Extracts stone from the earth.',
-    baseCost: { [ResourceType.Gold]: 70, [ResourceType.Wood]: 40 },
-    baseOutput: { [ResourceType.Stone]: 0.3 },
+    baseCost: { [ResourceType.Gold]: 50, [ResourceType.Wood]: 25 },
+    baseOutput: { [ResourceType.Stone]: 0.4 },
     maxLevel: 20,
   },
   [BuildingType.HerbGarden]: {
     name: 'Herb Garden',
     description: 'Cultivates rare herbs and plants.',
-    baseCost: { [ResourceType.Gold]: 45, [ResourceType.Water]: 20 },
-    baseOutput: { [ResourceType.Herbs]: 0.25 },
+    baseCost: { [ResourceType.Gold]: 35, [ResourceType.Water]: 15 },
+    baseOutput: { [ResourceType.Herbs]: 0.3 },
     maxLevel: 20,
   },
   [BuildingType.Mine]: {
     name: 'Mine',
     description: 'Digs deep for valuable ores.',
-    baseCost: { [ResourceType.Gold]: 80, [ResourceType.Wood]: 50, [ResourceType.Stone]: 30 },
-    baseOutput: { [ResourceType.Ore]: 0.2 },
+    baseCost: { [ResourceType.Gold]: 60, [ResourceType.Wood]: 35, [ResourceType.Stone]: 20 },
+    baseOutput: { [ResourceType.Ore]: 0.25 },
     maxLevel: 20,
   },
   [BuildingType.Well]: {
     name: 'Well',
     description: 'Provides fresh water to the guild.',
-    baseCost: { [ResourceType.Gold]: 40, [ResourceType.Stone]: 25 },
-    baseOutput: { [ResourceType.Water]: 0.45 },
+    baseCost: { [ResourceType.Gold]: 25, [ResourceType.Stone]: 15 },
+    baseOutput: { [ResourceType.Water]: 0.55 },
     maxLevel: 20,
   },
   [BuildingType.Workshop]: {

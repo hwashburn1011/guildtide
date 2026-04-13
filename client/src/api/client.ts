@@ -16,9 +16,27 @@ import type { ResourceType } from '@shared/enums';
 
 class ApiClient {
   private baseUrl: string;
+  private _online = true;
+  private onStatusChange: ((online: boolean) => void) | null = null;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
+  }
+
+  get online(): boolean {
+    return this._online;
+  }
+
+  /** Register a callback for connection status changes */
+  setStatusListener(cb: (online: boolean) => void): void {
+    this.onStatusChange = cb;
+  }
+
+  private setOnlineStatus(online: boolean): void {
+    if (this._online !== online) {
+      this._online = online;
+      this.onStatusChange?.(online);
+    }
   }
 
   private getToken(): string | null {
@@ -30,20 +48,45 @@ class ApiClient {
     path: string,
     body?: unknown,
   ): Promise<T> {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+    const doFetch = async (): Promise<Response> => {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      const token = this.getToken();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      return fetch(`${this.baseUrl}${path}`, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+      });
     };
 
-    const token = this.getToken();
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+    let response: Response;
+    try {
+      response = await doFetch();
+    } catch (err) {
+      // Network error — retry once after 2s
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      try {
+        response = await doFetch();
+      } catch {
+        this.setOnlineStatus(false);
+        throw new Error('Network error: unable to reach server');
+      }
     }
 
-    const response = await fetch(`${this.baseUrl}${path}`, {
-      method,
-      headers,
-      body: body ? JSON.stringify(body) : undefined,
-    });
+    this.setOnlineStatus(true);
+
+    if (response.status === 401) {
+      localStorage.removeItem('guildtide_token');
+      window.location.hash = '';
+      window.location.reload();
+      throw new Error('Session expired. Please log in again.');
+    }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
