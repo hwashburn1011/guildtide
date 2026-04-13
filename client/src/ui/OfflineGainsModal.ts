@@ -14,7 +14,13 @@ const RESOURCE_LABELS: Record<string, string> = {
 };
 
 export class OfflineGainsModal {
-  static show(scene: Phaser.Scene, gains: Partial<Record<ResourceType, number>>, elapsedMinutes: number): void {
+  static show(
+    scene: Phaser.Scene,
+    gains: Partial<Record<ResourceType, number>>,
+    elapsedMinutes: number,
+    caps?: Record<ResourceType, number>,
+    decayLosses?: Partial<Record<ResourceType, number>>,
+  ): void {
     const centerX = GAME_WIDTH / 2;
     const centerY = GAME_HEIGHT / 2;
     const DEPTH = 200;
@@ -92,6 +98,41 @@ export class OfflineGainsModal {
           }).setOrigin(1, 0).setDepth(DEPTH + 2)
         );
         yOffset += 28;
+      }
+    }
+
+    // Show decay losses if any
+    if (decayLosses) {
+      const decayEntries = Object.entries(decayLosses).filter(([, v]) => v && v > 0);
+      if (decayEntries.length > 0) {
+        yOffset += 10;
+        allElements.push(
+          scene.add.text(centerX, yOffset, 'Decay Losses:', {
+            fontFamily: FONTS.primary,
+            fontSize: `${FONTS.sizes.small}px`,
+            color: '#ff8c00',
+          }).setOrigin(0.5).setDepth(DEPTH + 2)
+        );
+        yOffset += 22;
+        for (const [resource, amount] of decayEntries) {
+          const label = RESOURCE_LABELS[resource] || resource;
+          allElements.push(
+            scene.add.text(centerX - 80, yOffset, label, {
+              fontFamily: FONTS.primary,
+              fontSize: `${FONTS.sizes.small}px`,
+              color: '#ff8c00',
+            }).setDepth(DEPTH + 2)
+          );
+          allElements.push(
+            scene.add.text(centerX + 80, yOffset, `-${Math.floor(amount!)}`, {
+              fontFamily: FONTS.primary,
+              fontSize: `${FONTS.sizes.small}px`,
+              color: '#ff6b6b',
+              fontStyle: 'bold',
+            }).setOrigin(1, 0).setDepth(DEPTH + 2)
+          );
+          yOffset += 22;
+        }
       }
     }
 

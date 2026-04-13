@@ -3,12 +3,14 @@ import {
   BUILDING_DEFINITIONS,
   BUILDING_LEVEL_BONUS,
   MAX_OFFLINE_SECONDS,
+  MAX_PRODUCTION_PER_SECOND,
 } from '../../../shared/src/constants';
 import { BuildingType, ResourceType } from '../../../shared/src/enums';
 import { WeatherService } from './WeatherService';
 import type { GameModifiers } from '../utils/weatherMapping';
 import { RESEARCH_MAP } from '../data/researchData';
 import { getItemTemplate } from '../data/itemTemplates';
+import { ResourceService } from './ResourceService';
 
 export interface IdleGains {
   resources: Partial<Record<ResourceType, number>>;
@@ -59,11 +61,37 @@ export class IdleProgressService {
       }
     }
 
-    // Apply gains to guild resources
+    // Clamp rates to prevent exploit
+    const clampedRates = ResourceService.clampRates(rates);
+    // Recalculate gains with clamped rates
+    for (const [resource, ratePerSec] of Object.entries(clampedRates)) {
+      if (ratePerSec > 0) {
+        gains[resource as ResourceType] = ratePerSec * cappedElapsed;
+      }
+    }
+
+    // Apply gains to guild resources, enforcing storage caps
     const currentResources = JSON.parse(guild.resources) as Record<ResourceType, number>;
+    const caps = ResourceService.calculateCaps(guild.buildings);
     for (const [resource, amount] of Object.entries(gains)) {
       const resType = resource as ResourceType;
-      currentResources[resType] = (currentResources[resType] || 0) + (amount || 0);
+      const current = currentResources[resType] || 0;
+      const cap = caps[resType];
+      currentResources[resType] = Math.min(current + (amount || 0), cap);
+    }
+
+    // Apply resource decay for perishable resources
+    const elapsedHours = cappedElapsed / 3600;
+    if (elapsedHours > 0) {
+      const decayRates = ResourceService.getEffectiveDecayRates(guild.buildings);
+      for (const [resType, decayRate] of Object.entries(decayRates)) {
+        const resource = resType as ResourceType;
+        const current = currentResources[resource] || 0;
+        if (current > 0 && decayRate) {
+          const decayAmount = current * decayRate * elapsedHours;
+          currentResources[resource] = Math.max(0, current - decayAmount);
+        }
+      }
     }
 
     // Update guild resources and player tick time
