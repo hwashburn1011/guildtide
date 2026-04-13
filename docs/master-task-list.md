@@ -655,66 +655,66 @@
 ## Epic 9: Research System
 > Visual tech tree rendering, research animations, branch specialization, and research event triggers.
 
-- [ ] T-0621: Define research node data schema (name, cost, time, prerequisites, effects)
-- [ ] T-0622: Create research service with start, progress, complete, and unlock methods
-- [ ] T-0623: Implement research tree data structure with 5 branches
-- [ ] T-0624: Create Military research branch with 12 nodes (combat upgrades)
-- [ ] T-0625: Create Economic research branch with 12 nodes (resource and trade upgrades)
-- [ ] T-0626: Create Exploration research branch with 12 nodes (expedition upgrades)
-- [ ] T-0627: Create Arcane research branch with 12 nodes (magic and special abilities)
-- [ ] T-0628: Create Civic research branch with 12 nodes (guild and social upgrades)
-- [ ] T-0629: Build research tree visual renderer using canvas with node positioning
-- [ ] T-0630: Implement research node connection lines between prerequisite nodes
-- [ ] T-0631: Create research node visual states (locked, available, in-progress, completed)
-- [ ] T-0632: Build research node tooltip with description, cost, time, and effects
-- [ ] T-0633: Implement research node click to start research with confirmation
-- [ ] T-0634: Build research progress timer display with time remaining
-- [ ] T-0635: Implement research progress acceleration through Library building bonus
-- [ ] T-0636: Create research completion notification with effects summary
-- [ ] T-0637: Build research completion animation (glow, sparkle, unlock cascade)
-- [ ] T-0638: Implement research effect application system (global modifier updates)
-- [ ] T-0639: Create research queue system allowing 1 active + queued nodes
-- [ ] T-0640: Build research queue UI showing current and next researches
-- [ ] T-0641: Implement research cancel with partial resource refund (50%)
-- [ ] T-0642: Create research branch specialization at branch tier 3 (choose sub-path)
-- [ ] T-0643: Build specialization choice dialog with comparison of sub-paths
-- [ ] T-0644: Implement research boost events (Scholar hero assigned: -10% time)
-- [ ] T-0645: Create research breakthrough random event (instant complete one node)
-- [ ] T-0646: Build research tree overview statistics (% completed per branch)
-- [ ] T-0647: Implement research tree search function to find nodes by name
-- [ ] T-0648: Create research tree zoom and pan controls for navigation
-- [ ] T-0649: Build research tree mini-map for large tree orientation
-- [ ] T-0650: Implement research synergy system (completing nodes in both branches gives bonus)
-- [ ] T-0651: Create research milestone rewards at 25%, 50%, 75%, 100% completion
-- [ ] T-0652: Build research advisor NPC suggesting next research based on playstyle
-- [ ] T-0653: Implement research tree reset with prestige system (keep some unlocks)
-- [ ] T-0654: Create research-gated building unlocks
-- [ ] T-0655: Create research-gated expedition destinations
-- [ ] T-0656: Create research-gated item recipes
-- [ ] T-0657: Implement research cost scaling formula per branch depth
-- [ ] T-0658: Build research tree comparison between players in alliance
-- [ ] T-0659: Create research event: ancient library discovery reduces all costs for 24h
-- [ ] T-0660: Implement research tree export/share as image
-- [ ] T-0661: Build research progress notification preferences
-- [ ] T-0662: Create research tree legend explaining node types and symbols
-- [ ] T-0663: Implement research tree A/B path comparison tool
-- [ ] T-0664: Build research dependency visualizer highlighting what unlocks what
-- [ ] T-0665: Create research lore entries unlocked alongside node completion
-- [ ] T-0666: Implement research tree seasonal modifiers (winter: Arcane +20% speed)
-- [ ] T-0667: Build research tree achievement badges (completionist, specialist)
-- [ ] T-0668: Create research collaboration system (alliance members contribute)
-- [ ] T-0669: Implement research tree undo last research within grace period
-- [ ] T-0670: Build research tree filter by branch, status, and effect type
-- [ ] T-0671: Create research event triggered by real-world data (market crash boosts Economic branch)
-- [ ] T-0672: Implement research node flavor text and lore descriptions
-- [ ] T-0673: Build research tree tutorial walkthrough for new players
-- [ ] T-0674: Create research speed modifier display on tree header
-- [ ] T-0675: Implement research tree progress persistence across sessions
-- [ ] T-0676: Build research tree accessibility — keyboard navigation between nodes
-- [ ] T-0677: Create research tree node animation for currently researching node
-- [ ] T-0678: Implement research tree batch info display (all effects of a branch)
-- [ ] T-0679: Build research tree recommended path visualization
-- [ ] T-0680: Create research completion celebration with guild announcement
+- [x] T-0621: Define research node data schema (name, cost, time, prerequisites, effects)
+- [x] T-0622: Create research service with start, progress, complete, and unlock methods
+- [x] T-0623: Implement research tree data structure with 5 branches
+- [x] T-0624: Create Military research branch with 12 nodes (combat upgrades)
+- [x] T-0625: Create Economic research branch with 12 nodes (resource and trade upgrades)
+- [x] T-0626: Create Exploration research branch with 12 nodes (expedition upgrades)
+- [x] T-0627: Create Arcane research branch with 12 nodes (magic and special abilities)
+- [x] T-0628: Create Civic research branch with 12 nodes (guild and social upgrades)
+- [x] T-0629: Build research tree visual renderer using canvas with node positioning
+- [x] T-0630: Implement research node connection lines between prerequisite nodes
+- [x] T-0631: Create research node visual states (locked, available, in-progress, completed)
+- [x] T-0632: Build research node tooltip with description, cost, time, and effects
+- [x] T-0633: Implement research node click to start research with confirmation
+- [x] T-0634: Build research progress timer display with time remaining
+- [x] T-0635: Implement research progress acceleration through Library building bonus
+- [x] T-0636: Create research completion notification with effects summary
+- [x] T-0637: Build research completion animation (glow, sparkle, unlock cascade)
+- [x] T-0638: Implement research effect application system (global modifier updates)
+- [x] T-0639: Create research queue system allowing 1 active + queued nodes
+- [x] T-0640: Build research queue UI showing current and next researches
+- [x] T-0641: Implement research cancel with partial resource refund (50%)
+- [x] T-0642: Create research branch specialization at branch tier 3 (choose sub-path)
+- [x] T-0643: Build specialization choice dialog with comparison of sub-paths
+- [x] T-0644: Implement research boost events (Scholar hero assigned: -10% time)
+- [x] T-0645: Create research breakthrough random event (instant complete one node)
+- [x] T-0646: Build research tree overview statistics (% completed per branch)
+- [x] T-0647: Implement research tree search function to find nodes by name
+- [x] T-0648: Create research tree zoom and pan controls for navigation
+- [x] T-0649: Build research tree mini-map for large tree orientation
+- [x] T-0650: Implement research synergy system (completing nodes in both branches gives bonus)
+- [x] T-0651: Create research milestone rewards at 25%, 50%, 75%, 100% completion
+- [x] T-0652: Build research advisor NPC suggesting next research based on playstyle
+- [x] T-0653: Implement research tree reset with prestige system (keep some unlocks)
+- [x] T-0654: Create research-gated building unlocks
+- [x] T-0655: Create research-gated expedition destinations
+- [x] T-0656: Create research-gated item recipes
+- [x] T-0657: Implement research cost scaling formula per branch depth
+- [x] T-0658: Build research tree comparison between players in alliance
+- [x] T-0659: Create research event: ancient library discovery reduces all costs for 24h
+- [x] T-0660: Implement research tree export/share as image
+- [x] T-0661: Build research progress notification preferences
+- [x] T-0662: Create research tree legend explaining node types and symbols
+- [x] T-0663: Implement research tree A/B path comparison tool
+- [x] T-0664: Build research dependency visualizer highlighting what unlocks what
+- [x] T-0665: Create research lore entries unlocked alongside node completion
+- [x] T-0666: Implement research tree seasonal modifiers (winter: Arcane +20% speed)
+- [x] T-0667: Build research tree achievement badges (completionist, specialist)
+- [x] T-0668: Create research collaboration system (alliance members contribute)
+- [x] T-0669: Implement research tree undo last research within grace period
+- [x] T-0670: Build research tree filter by branch, status, and effect type
+- [x] T-0671: Create research event triggered by real-world data (market crash boosts Economic branch)
+- [x] T-0672: Implement research node flavor text and lore descriptions
+- [x] T-0673: Build research tree tutorial walkthrough for new players
+- [x] T-0674: Create research speed modifier display on tree header
+- [x] T-0675: Implement research tree progress persistence across sessions
+- [x] T-0676: Build research tree accessibility — keyboard navigation between nodes
+- [x] T-0677: Create research tree node animation for currently researching node
+- [x] T-0678: Implement research tree batch info display (all effects of a branch)
+- [x] T-0679: Build research tree recommended path visualization
+- [x] T-0680: Create research completion celebration with guild announcement
 
 ## Epic 10: Items & Equipment
 > Full crafting system, item sets, enchanting, item trading, and visual equipment previews on heroes.
