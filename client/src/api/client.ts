@@ -112,6 +112,24 @@ class ApiClient {
   async assignHero(heroId: string, assignment: string | null): Promise<Hero> {
     return this.request('POST', `/heroes/${heroId}/assign`, { assignment });
   }
+
+  // World state
+  async getWorldState(): Promise<{
+    regionId: string;
+    date: string;
+    weather: {
+      condition: string;
+      temperature: number;
+      humidity: number;
+      windSpeed: number;
+      rainMm: number;
+    };
+    modifiers: Record<string, number>;
+    activeEvents: unknown[];
+    marketState: unknown;
+  }> {
+    return this.request('GET', '/world/state');
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

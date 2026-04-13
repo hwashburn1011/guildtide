@@ -7,12 +7,14 @@ import { ResourceBar } from '../ui/ResourceBar';
 import { BuildingPanel } from '../ui/BuildingPanel';
 import { OfflineGainsModal } from '../ui/OfflineGainsModal';
 import { HeroRoster } from '../ui/HeroRoster';
+import { WeatherPanel } from '../ui/WeatherPanel';
 
 export class GuildHallScene extends Phaser.Scene {
   private guild: Guild | null = null;
   private resourceBar: ResourceBar | null = null;
   private buildingPanel: BuildingPanel | null = null;
   private heroRoster: HeroRoster | null = null;
+  private weatherPanel: WeatherPanel | null = null;
   private syncTimer: Phaser.Time.TimerEvent | null = null;
 
   constructor() {
@@ -51,6 +53,14 @@ export class GuildHallScene extends Phaser.Scene {
       // Fetch rates and set them
       const rates = await apiClient.getRates();
       this.resourceBar?.setRates(rates);
+
+      // Fetch and display weather
+      try {
+        const worldState = await apiClient.getWorldState();
+        this.weatherPanel?.setWeatherData(worldState.weather, worldState.modifiers);
+      } catch {
+        // Weather may not be available yet
+      }
 
       // Periodic server sync every 30 seconds
       this.syncTimer = this.time.addEvent({
@@ -129,6 +139,9 @@ export class GuildHallScene extends Phaser.Scene {
       this.guild.buildings,
       (building) => this.handleUpgrade(building.type),
     );
+
+    // Weather panel (right side)
+    this.weatherPanel = new WeatherPanel(this, GAME_WIDTH - 240, 115);
 
     // Hero roster (hidden until opened)
     this.heroRoster = new HeroRoster(

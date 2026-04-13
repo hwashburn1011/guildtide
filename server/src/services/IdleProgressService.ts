@@ -5,6 +5,8 @@ import {
   MAX_OFFLINE_SECONDS,
 } from '../../../shared/src/constants.js';
 import { BuildingType, ResourceType } from '../../../shared/src/enums.js';
+import { WeatherService } from './WeatherService.js';
+import type { GameModifiers } from '../utils/weatherMapping.js';
 
 export interface IdleGains {
   resources: Partial<Record<ResourceType, number>>;
@@ -32,8 +34,17 @@ export class IdleProgressService {
 
     if (cappedElapsed < 1) return { resources: {}, elapsedSeconds: 0 };
 
-    // Calculate production rates from buildings
-    const rates = IdleProgressService.calculateRates(guild.buildings, guild.heroes);
+    // Get world modifiers for the player's region
+    let worldMods: GameModifiers | null = null;
+    if (player.regionId) {
+      const worldState = await WeatherService.getWorldState(player.regionId);
+      if (worldState) {
+        worldMods = worldState.modifiers;
+      }
+    }
+
+    // Calculate production rates from buildings (with world modifiers)
+    const rates = IdleProgressService.calculateRates(guild.buildings, guild.heroes, worldMods);
 
     // Calculate gains
     const gains: Partial<Record<ResourceType, number>> = {};
@@ -64,11 +75,12 @@ export class IdleProgressService {
   }
 
   /**
-   * Calculate per-second production rates for all resources based on buildings.
+   * Calculate per-second production rates based on buildings, heroes, and world modifiers.
    */
   static calculateRates(
     buildings: Array<{ type: string; level: number }>,
     heroes: Array<{ role: string; assignment: string | null; status: string; level: number }>,
+    worldMods?: GameModifiers | null,
   ): Record<ResourceType, number> {
     const rates: Record<ResourceType, number> = {
       [ResourceType.Gold]: 0,
@@ -87,20 +99,35 @@ export class IdleProgressService {
       const def = BUILDING_DEFINITIONS[building.type as BuildingType];
       if (!def) continue;
 
-      // Base output × level scaling
       for (const [resource, baseOutput] of Object.entries(def.baseOutput)) {
-        const output = (baseOutput as number) * (1 + building.level * BUILDING_LEVEL_BONUS);
+        let output = (baseOutput as number) * (1 + building.level * BUILDING_LEVEL_BONUS);
 
-        // Check for assigned hero bonus
+        // Hero bonus
         let heroMultiplier = 1.0;
         const assignedHero = heroes.find(
           h => h.assignment === building.type && h.status === 'assigned'
         );
         if (assignedHero) {
-          heroMultiplier = 1.3 + assignedHero.level * 0.05; // 1.3x base + 5% per hero level
+          heroMultiplier = 1.3 + assignedHero.level * 0.05;
         }
 
-        rates[resource as ResourceType] += output * heroMultiplier;
+        output *= heroMultiplier;
+
+        // Apply world modifiers based on resource type
+        if (worldMods) {
+          const resType = resource as ResourceType;
+          if (resType === ResourceType.Food || resType === ResourceType.Herbs) {
+            output *= worldMods.cropGrowth;
+          }
+          if (resType === ResourceType.Essence) {
+            output *= worldMods.essenceDrops;
+          }
+          if (resType === ResourceType.Gold) {
+            output *= worldMods.marketConfidence;
+          }
+        }
+
+        rates[resource as ResourceType] += output;
       }
     }
 
@@ -111,6 +138,7 @@ export class IdleProgressService {
    * Get current rates for a guild (for display purposes).
    */
   static async getRates(playerId: string): Promise<Record<ResourceType, number>> {
+    const player = await prisma.player.findUnique({ where: { id: playerId } });
     const guild = await prisma.guild.findUnique({
       where: { playerId },
       include: { buildings: true, heroes: true },
@@ -120,6 +148,13 @@ export class IdleProgressService {
         Object.values(ResourceType).map(r => [r, 0])
       ) as Record<ResourceType, number>;
     }
-    return IdleProgressService.calculateRates(guild.buildings, guild.heroes);
+
+    let worldMods: GameModifiers | null = null;
+    if (player?.regionId) {
+      const worldState = await WeatherService.getWorldState(player.regionId);
+      if (worldState) worldMods = worldState.modifiers;
+    }
+
+    return IdleProgressService.calculateRates(guild.buildings, guild.heroes, worldMods);
   }
 }
