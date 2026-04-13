@@ -397,16 +397,92 @@ class ApiClient {
     type: string,
     heroIds: string[],
     destinationId: string,
+    options?: {
+      bossId?: string;
+      chainId?: string;
+      chainStep?: number;
+      isTimedChallenge?: boolean;
+      isFleet?: boolean;
+    },
   ): Promise<Expedition> {
     return this.request('POST', '/expeditions/launch', {
       type,
       heroIds,
       destinationId,
+      ...options,
     });
   }
 
   async collectExpedition(expeditionId: string): Promise<Expedition> {
     return this.request('POST', `/expeditions/${expeditionId}/collect`);
+  }
+
+  async retreatExpedition(expeditionId: string): Promise<{ retreated: boolean; xpGained: number }> {
+    return this.request('POST', `/expeditions/${expeditionId}/retreat`);
+  }
+
+  async getExpeditionStatistics(): Promise<any> {
+    return this.request('GET', '/expeditions/statistics');
+  }
+
+  async getExpeditionDiary(page: number = 0, pageSize: number = 20): Promise<any> {
+    return this.request('GET', `/expeditions/diary?page=${page}&pageSize=${pageSize}`);
+  }
+
+  async getExpeditionDiscoveries(): Promise<any[]> {
+    return this.request('GET', '/expeditions/discoveries');
+  }
+
+  async getExpeditionBosses(): Promise<any[]> {
+    return this.request('GET', '/expeditions/bosses');
+  }
+
+  async getExpeditionChains(): Promise<any[]> {
+    return this.request('GET', '/expeditions/chains');
+  }
+
+  async getExpeditionFogOfWar(): Promise<Record<string, boolean>> {
+    return this.request('GET', '/expeditions/fog-of-war');
+  }
+
+  async getExpeditionWeatherForecast(): Promise<any> {
+    return this.request('GET', '/expeditions/weather-forecast');
+  }
+
+  async getExpeditionLeaderboard(destinationId: string): Promise<any[]> {
+    return this.request('GET', `/expeditions/leaderboard/${destinationId}`);
+  }
+
+  async getEncounterHistory(destinationId: string): Promise<any[]> {
+    return this.request('GET', `/expeditions/encounter-history/${destinationId}`);
+  }
+
+  async validateExpeditionParty(heroIds: string[], destinationId: string): Promise<{ valid: boolean; errors: string[] }> {
+    return this.request('POST', '/expeditions/validate-party', { heroIds, destinationId });
+  }
+
+  async getExpeditionPartyPower(heroIds: string[]): Promise<{ power: number }> {
+    return this.request('POST', '/expeditions/party-power', { heroIds });
+  }
+
+  async getExpeditionRecommendation(destinationId: string): Promise<any> {
+    return this.request('GET', `/expeditions/recommend/${destinationId}`);
+  }
+
+  async scoutDestination(destinationId: string, scoutLevel: number = 1): Promise<any> {
+    return this.request('GET', `/expeditions/scout/${destinationId}?scoutLevel=${scoutLevel}`);
+  }
+
+  async getExpeditionPostMortem(destinationId: string): Promise<any> {
+    return this.request('GET', `/expeditions/post-mortem/${destinationId}`);
+  }
+
+  async getExpeditionTemplates(): Promise<any[]> {
+    return this.request('GET', '/expeditions/templates');
+  }
+
+  async saveExpeditionTemplate(name: string, heroIds: string[], destinationId?: string): Promise<any> {
+    return this.request('POST', '/expeditions/templates', { name, heroIds, destinationId });
   }
 
   // Market

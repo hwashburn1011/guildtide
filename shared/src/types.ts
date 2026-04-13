@@ -240,6 +240,17 @@ export interface Expedition {
   resolvedAt: string | null;
   result: ExpeditionResult | null;
   status: ExpeditionStatus;
+  log?: ExpeditionLogEntry[];
+  encounters?: ExpeditionEncounterResult[];
+  routeWaypoints?: RouteWaypoint[];
+  supplies?: ExpeditionSupplies;
+  chainId?: string | null;
+  chainStep?: number;
+  chainTotal?: number;
+  isBoss?: boolean;
+  difficultyRating?: number;
+  partyMorale?: number;
+  templateId?: string | null;
 }
 
 export interface ExpeditionResult {
@@ -249,6 +260,121 @@ export interface ExpeditionResult {
   xpGained: number;
   injuries: string[];
   narrative: string;
+  encounterSummary?: ExpeditionEncounterResult[];
+  rareDiscovery?: RareDiscovery | null;
+  bossResult?: BossEncounterResult | null;
+  heroPerformance?: Record<string, HeroPerformanceRating>;
+  suppliesRemaining?: ExpeditionSupplies;
+  milestoneUnlocked?: string | null;
+  rewardMultiplier?: number;
+}
+
+// --- Expedition Log ---
+export interface ExpeditionLogEntry {
+  timestamp: string;
+  type: 'departure' | 'encounter' | 'discovery' | 'rest' | 'hazard' | 'arrival' | 'boss' | 'camp' | 'merchant' | 'lore';
+  title: string;
+  narrative: string;
+  effects?: Record<string, number>;
+  heroId?: string;
+}
+
+// --- Expedition Encounters ---
+export interface ExpeditionEncounterResult {
+  encounterId: string;
+  type: 'combat' | 'treasure' | 'trap' | 'npc' | 'rest' | 'weather' | 'merchant' | 'hazard';
+  title: string;
+  narrative: string;
+  outcome: 'success' | 'failure' | 'partial';
+  effects: Record<string, number>;
+  loot?: Partial<Resources>;
+}
+
+// --- Route & Waypoints ---
+export interface RouteWaypoint {
+  id: string;
+  name: string;
+  x: number;
+  y: number;
+  type: 'start' | 'encounter' | 'rest' | 'boss' | 'destination';
+  reached: boolean;
+  encounterResult?: ExpeditionEncounterResult;
+}
+
+// --- Supplies ---
+export interface ExpeditionSupplies {
+  food: number;
+  materials: number;
+  maxFood: number;
+  maxMaterials: number;
+}
+
+// --- Rare Discoveries ---
+export interface RareDiscovery {
+  id: string;
+  name: string;
+  description: string;
+  category: 'artifact' | 'lore_fragment' | 'map_piece' | 'npc_contact' | 'resource_node';
+  rarity: 'rare' | 'epic' | 'legendary';
+  discoveredAt: string;
+  destinationId: string;
+  effects?: Record<string, number>;
+}
+
+// --- Boss Encounters ---
+export interface BossEncounterResult {
+  bossId: string;
+  bossName: string;
+  phases: number;
+  phasesCleared: number;
+  success: boolean;
+  exclusiveLoot: string[];
+}
+
+// --- Hero Performance ---
+export interface HeroPerformanceRating {
+  heroId: string;
+  heroName: string;
+  combatScore: number;
+  explorationScore: number;
+  supportScore: number;
+  overallRating: number; // 1-5 stars
+}
+
+// --- Expedition Achievement ---
+export interface ExpeditionAchievement {
+  id: string;
+  name: string;
+  description: string;
+  category: 'explorer' | 'treasure_hunter' | 'boss_slayer' | 'veteran' | 'discoverer';
+  requirement: number;
+  current: number;
+  unlocked: boolean;
+  unlockedAt?: string;
+}
+
+// --- Expedition Statistics ---
+export interface ExpeditionStatistics {
+  totalExpeditions: number;
+  successCount: number;
+  failureCount: number;
+  successRate: number;
+  totalLootValue: number;
+  totalXpEarned: number;
+  fastestCompletion: Record<string, number>;
+  bossesDefeated: number;
+  rareDiscoveries: number;
+  chainsCompleted: number;
+  achievements: ExpeditionAchievement[];
+}
+
+// --- Party Template ---
+export interface PartyTemplate {
+  id: string;
+  name: string;
+  heroIds: string[];
+  destinationId?: string;
+  createdAt: string;
 }
 
 // --- World State ---
