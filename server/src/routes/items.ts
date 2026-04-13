@@ -399,6 +399,23 @@ router.get('/set-bonuses/:heroId', async (req: Request, res: Response) => {
   }
 });
 
+// GET /recommended/:heroId — recommended gear for hero
+router.get('/recommended/:heroId', async (req: Request, res: Response) => {
+  try {
+    const guild = await getGuild(req, res);
+    if (!guild) return;
+
+    const recommendations = await ItemService.getRecommendedGear(guild.id, req.params.heroId);
+    res.json(recommendations);
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(400).json({ error: 'recommend_failed', message: err.message });
+    } else {
+      res.status(500).json({ error: 'server', message: 'Internal server error' });
+    }
+  }
+});
+
 // ===== DURABILITY & REPAIR =====
 
 // POST /repair — repair an item

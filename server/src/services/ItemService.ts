@@ -820,4 +820,95 @@ export class ItemService {
       .filter(t => t.lore && ownedIds.has(t.id))
       .map(t => ({ templateId: t.id, name: t.name, lore: t.lore! }));
   }
+
+  // ========== RECOMMENDED GEAR (T-0741) ==========
+
+  /** Get recommended gear suggestions for a hero based on role and level */
+  static async getRecommendedGear(
+    guildId: string,
+    heroId: string,
+  ): Promise<Array<{ slot: string; currentTemplateId: string | null; recommendedTemplateId: string; reason: string }>> {
+    const hero = await prisma.hero.findUnique({ where: { id: heroId } });
+    if (!hero) throw new Error('Hero not found');
+    if (hero.guildId !== guildId) throw new Error('Hero does not belong to your guild');
+
+    const equipment = JSON.parse(hero.equipment) as Record<string, string | null>;
+    const inventory = await this.getInventory(guildId);
+    const recommendations: Array<{
+      slot: string;
+      currentTemplateId: string | null;
+      recommendedTemplateId: string;
+      reason: string;
+    }> = [];
+
+    // Role-specific stat priorities
+    const rolePriorities: Record<string, string[]> = {
+      farmer: ['endurance', 'luck'],
+      scout: ['agility', 'luck'],
+      merchant: ['luck', 'intellect'],
+      blacksmith: ['strength', 'endurance'],
+      alchemist: ['intellect', 'luck'],
+      hunter: ['agility', 'strength'],
+      defender: ['endurance', 'strength'],
+      mystic: ['intellect', 'endurance'],
+      caravan_master: ['endurance', 'luck'],
+      archivist: ['intellect', 'luck'],
+    };
+
+    const heroStats = JSON.parse(hero.stats);
+    const role = hero.role || 'scout';
+    const priorities = rolePriorities[role] || ['strength', 'agility'];
+
+    for (const slot of VALID_SLOTS) {
+      const currentId = equipment[slot];
+      const candidates = inventory.filter(item => {
+        const t = item.template;
+        if (!t) return false;
+        return CATEGORY_TO_SLOT[t.category] === slot;
+      });
+
+      if (candidates.length === 0) continue;
+
+      // Score based on role priorities
+      const scored = candidates.map(item => {
+        const t = item.template!;
+        let score = 0;
+        if (t.effects.statBonuses) {
+          for (let i = 0; i < priorities.length; i++) {
+            const stat = priorities[i];
+            const val = (t.effects.statBonuses as Record<string, number>)[stat] || 0;
+            score += val * (priorities.length - i + 1); // Higher weight for primary stat
+          }
+        }
+        if (t.effects.expeditionBonus) score += t.effects.expeditionBonus;
+        if (t.effects.buildingBonus) score += t.effects.buildingBonus * 50;
+        return { item, score };
+      }).sort((a, b) => b.score - a.score);
+
+      const best = scored[0];
+      if (!best || best.item.templateId === currentId) continue;
+
+      // Check if better than current
+      let currentScore = 0;
+      if (currentId) {
+        const ct = getItemTemplate(currentId);
+        if (ct && ct.effects.statBonuses) {
+          for (let i = 0; i < priorities.length; i++) {
+            currentScore += ((ct.effects.statBonuses as Record<string, number>)[priorities[i]] || 0) * (priorities.length - i + 1);
+          }
+        }
+      }
+
+      if (best.score > currentScore) {
+        recommendations.push({
+          slot,
+          currentTemplateId: currentId,
+          recommendedTemplateId: best.item.templateId,
+          reason: `Better ${priorities[0]} stats for ${role} role`,
+        });
+      }
+    }
+
+    return recommendations;
+  }
 }

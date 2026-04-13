@@ -796,6 +796,10 @@ class ApiClient {
     return this.request('GET', '/items/capacity');
   }
 
+  async getRecommendedGear(heroId: string): Promise<Array<{ slot: string; currentTemplateId: string | null; recommendedTemplateId: string; reason: string }>> {
+    return this.request('GET', `/items/recommended/${heroId}`);
+  }
+
   async getItemPriceEstimate(templateId: string): Promise<{ templateId: string; estimatedPrice: number }> {
     return this.request('GET', `/items/price-estimate/${templateId}`);
   }
