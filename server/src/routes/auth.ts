@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { prisma } from '../db.js';
 import { config } from '../config.js';
 import { STARTING_RESOURCES } from '../../../shared/src/constants.js';
+import { IdleProgressService } from '../services/IdleProgressService.js';
 
 const router = Router();
 
@@ -96,6 +97,9 @@ router.post('/login', async (req: Request, res: Response) => {
       return;
     }
 
+    // Calculate offline gains before updating login time
+    const idleGains = await IdleProgressService.calculateAndApply(player.id);
+
     // Update last login
     await prisma.player.update({
       where: { id: player.id },
@@ -106,20 +110,37 @@ router.post('/login', async (req: Request, res: Response) => {
       expiresIn: config.jwtExpiresIn,
     });
 
-    // Parse guild resources if guild exists
+    // Re-fetch guild with updated resources
+    const updatedGuild = await prisma.guild.findUnique({
+      where: { playerId: player.id },
+      include: { heroes: true, buildings: true, inventory: true },
+    });
+
     let guild = null;
-    if (player.guild) {
+    if (updatedGuild) {
       guild = {
-        ...player.guild,
-        resources: JSON.parse(player.guild.resources),
-        heroes: player.guild.heroes.map(h => ({
+        ...updatedGuild,
+        resources: JSON.parse(updatedGuild.resources),
+        researchIds: JSON.parse(updatedGuild.researchIds),
+        heroes: updatedGuild.heroes.map(h => ({
           ...h,
           traits: JSON.parse(h.traits),
           stats: JSON.parse(h.stats),
           equipment: JSON.parse(h.equipment),
         })),
+        inventory: updatedGuild.inventory.map(i => ({
+          ...i,
+          metadata: i.metadata ? JSON.parse(i.metadata) : null,
+        })),
+        buildings: updatedGuild.buildings.map(b => ({
+          ...b,
+          metadata: b.metadata ? JSON.parse(b.metadata) : null,
+        })),
       };
     }
+
+    // Get current production rates
+    const rates = await IdleProgressService.getRates(player.id);
 
     res.json({
       token,
@@ -132,7 +153,9 @@ router.post('/login', async (req: Request, res: Response) => {
         lastLoginAt: player.lastLoginAt,
       },
       guild,
-      offlineGains: null, // TODO: calculate offline gains
+      offlineGains: idleGains.elapsedSeconds > 0 ? idleGains.resources : null,
+      elapsedSeconds: idleGains.elapsedSeconds,
+      rates,
     });
   } catch (err) {
     console.error('Login error:', err);
