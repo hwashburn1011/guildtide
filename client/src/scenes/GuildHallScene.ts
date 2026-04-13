@@ -6,11 +6,13 @@ import { ResourceType } from '@shared/enums';
 import { ResourceBar } from '../ui/ResourceBar';
 import { BuildingPanel } from '../ui/BuildingPanel';
 import { OfflineGainsModal } from '../ui/OfflineGainsModal';
+import { HeroRoster } from '../ui/HeroRoster';
 
 export class GuildHallScene extends Phaser.Scene {
   private guild: Guild | null = null;
   private resourceBar: ResourceBar | null = null;
   private buildingPanel: BuildingPanel | null = null;
+  private heroRoster: HeroRoster | null = null;
   private syncTimer: Phaser.Time.TimerEvent | null = null;
 
   constructor() {
@@ -93,6 +95,18 @@ export class GuildHallScene extends Phaser.Scene {
       color: COLORS.textSecondary,
     });
 
+    // Heroes button
+    const heroesBtn = this.add.text(GAME_WIDTH - 160, 20, 'Heroes', {
+      fontFamily: FONTS.primary,
+      fontSize: `${FONTS.sizes.small}px`,
+      color: COLORS.textAccent,
+      fontStyle: 'bold',
+    }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
+
+    heroesBtn.on('pointerup', () => {
+      this.heroRoster?.show();
+    });
+
     // Logout button
     const logoutText = this.add.text(GAME_WIDTH - 20, 20, 'Logout', {
       fontFamily: FONTS.primary,
@@ -116,6 +130,14 @@ export class GuildHallScene extends Phaser.Scene {
       (building) => this.handleUpgrade(building.type),
     );
 
+    // Hero roster (hidden until opened)
+    this.heroRoster = new HeroRoster(
+      this,
+      this.guild.heroes,
+      this.guild.buildings,
+      () => this.refreshGuild(),
+    );
+
     // Bottom nav
     this.buildBottomNav();
   }
@@ -123,17 +145,8 @@ export class GuildHallScene extends Phaser.Scene {
   private async handleUpgrade(buildingType: string): Promise<void> {
     try {
       const result = await apiClient.upgradeBuilding(buildingType);
-      // Update local state
       this.resourceBar?.setResources(result.resources as Resources);
-
-      // Refresh guild data
-      const guildData = await apiClient.getGuild();
-      this.guild = guildData;
-      this.buildingPanel?.setBuildings(guildData.buildings);
-
-      // Refresh rates
-      const rates = await apiClient.getRates();
-      this.resourceBar?.setRates(rates);
+      await this.refreshGuild();
     } catch (err) {
       // Show error briefly
       const errorText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 80,
@@ -146,6 +159,21 @@ export class GuildHallScene extends Phaser.Scene {
       }).setOrigin(0.5);
 
       this.time.delayedCall(3000, () => errorText.destroy());
+    }
+  }
+
+  private async refreshGuild(): Promise<void> {
+    try {
+      const guildData = await apiClient.getGuild();
+      this.guild = guildData;
+      this.resourceBar?.setResources(guildData.resources);
+      this.buildingPanel?.setBuildings(guildData.buildings);
+      this.heroRoster?.setHeroes(guildData.heroes);
+      this.heroRoster?.setBuildings(guildData.buildings);
+      const rates = await apiClient.getRates();
+      this.resourceBar?.setRates(rates);
+    } catch {
+      // Silently fail
     }
   }
 
