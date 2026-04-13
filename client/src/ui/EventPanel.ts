@@ -2,6 +2,21 @@ import * as Phaser from 'phaser';
 import { COLORS, FONTS, GAME_WIDTH, GAME_HEIGHT } from '../config';
 import { apiClient } from '../api/client';
 
+/** T-0866/T-0867: Enhanced event display with rarity, category, illustrations, chain info */
+const RARITY_BORDER_COLORS: Record<string, number> = {
+  common: 0x888888,
+  uncommon: 0x4ecca3,
+  rare: 0x5b9bd5,
+  legendary: 0xffd700,
+};
+
+const RARITY_LABEL_COLORS: Record<string, string> = {
+  common: '#aaaaaa',
+  uncommon: '#4ecca3',
+  rare: '#5b9bd5',
+  legendary: '#ffd700',
+};
+
 export class EventPanel {
   private scene: Phaser.Scene;
   private overlay: Phaser.GameObjects.Graphics | null = null;
@@ -17,6 +32,9 @@ export class EventPanel {
     const centerX = GAME_WIDTH / 2;
     const centerY = GAME_HEIGHT / 2;
 
+    const rarity: string = event.rarity || 'common';
+    const borderColor = RARITY_BORDER_COLORS[rarity] || RARITY_BORDER_COLORS.common;
+
     // Overlay
     this.overlay = this.scene.add.graphics();
     this.overlay.fillStyle(0x000000, 0.7);
@@ -30,20 +48,36 @@ export class EventPanel {
     this.container = this.scene.add.container(0, 0).setDepth(101);
 
     const panelW = 600;
-    const panelH = 450;
+    const panelH = 480;
     const px = (GAME_WIDTH - panelW) / 2;
     const py = (GAME_HEIGHT - panelH) / 2;
 
-    // Background
+    // Background with rarity-colored border
     const bg = this.scene.add.graphics();
     bg.fillStyle(COLORS.panelBg, 0.98);
     bg.fillRoundedRect(px, py, panelW, panelH, 12);
-    bg.lineStyle(2, COLORS.panelBorder);
+    bg.lineStyle(2, borderColor);
     bg.strokeRoundedRect(px, py, panelW, panelH, 12);
     this.container.add(bg);
 
+    // Illustration placeholder area
+    if (event.illustration) {
+      const illustBg = this.scene.add.graphics();
+      illustBg.fillStyle(COLORS.background, 0.5);
+      illustBg.fillRoundedRect(px + panelW - 120, py + 15, 100, 60, 6);
+      this.container.add(illustBg);
+      this.container.add(
+        this.scene.add.text(px + panelW - 70, py + 45, event.illustration, {
+          fontFamily: FONTS.primary,
+          fontSize: '9px',
+          color: '#555',
+          align: 'center',
+        }).setOrigin(0.5)
+      );
+    }
+
     // Close button
-    const closeBtn = this.scene.add.text(px + panelW - 20, py + 15, 'X', {
+    const closeBtn = this.scene.add.text(px + panelW - 20, py + 80, 'X', {
       fontFamily: FONTS.primary,
       fontSize: `${FONTS.sizes.heading}px`,
       color: COLORS.textSecondary,
@@ -61,10 +95,44 @@ export class EventPanel {
       })
     );
 
-    // Expiry
-    const expiresIn = Math.max(0, Math.floor((new Date(event.expiresAt).getTime() - Date.now()) / 3600000));
+    // Rarity + Category badges
+    const rarityLabel = rarity.charAt(0).toUpperCase() + rarity.slice(1);
     this.container.add(
-      this.scene.add.text(px + 25, py + 50, `Expires in ${expiresIn}h`, {
+      this.scene.add.text(px + 25, py + 50, rarityLabel, {
+        fontFamily: FONTS.primary,
+        fontSize: '11px',
+        color: RARITY_LABEL_COLORS[rarity] || '#aaa',
+        fontStyle: 'bold',
+      })
+    );
+
+    if (event.category) {
+      this.container.add(
+        this.scene.add.text(px + 110, py + 50, event.category, {
+          fontFamily: FONTS.primary,
+          fontSize: '11px',
+          color: COLORS.textSecondary,
+        })
+      );
+    }
+
+    // Chain indicator
+    if (event.chainId) {
+      this.container.add(
+        this.scene.add.text(px + 200, py + 50, `Chain Step ${event.chainStep || '?'}`, {
+          fontFamily: FONTS.primary,
+          fontSize: '11px',
+          color: '#ffd700',
+        })
+      );
+    }
+
+    // Expiry with countdown
+    const remainingMs = event.remainingMs || (new Date(event.expiresAt).getTime() - Date.now());
+    const expiresIn = Math.max(0, Math.floor(remainingMs / 3600000));
+    const expiresMinutes = Math.max(0, Math.floor((remainingMs % 3600000) / 60000));
+    this.container.add(
+      this.scene.add.text(px + 25, py + 68, `Expires in ${expiresIn}h ${expiresMinutes}m`, {
         fontFamily: FONTS.primary,
         fontSize: `${FONTS.sizes.tiny}px`,
         color: expiresIn < 3 ? '#e94560' : COLORS.textSecondary,
@@ -73,7 +141,7 @@ export class EventPanel {
 
     // Description
     this.container.add(
-      this.scene.add.text(px + 25, py + 75, event.description, {
+      this.scene.add.text(px + 25, py + 90, event.description, {
         fontFamily: FONTS.primary,
         fontSize: `${FONTS.sizes.small}px`,
         color: COLORS.textPrimary,
@@ -83,7 +151,7 @@ export class EventPanel {
     );
 
     // Choices
-    let choiceY = py + 180;
+    let choiceY = py + 195;
     event.choices.forEach((choice: any, i: number) => {
       const choiceBg = this.scene.add.graphics();
       choiceBg.fillStyle(COLORS.background, 0.8);
@@ -184,7 +252,7 @@ export class EventPanel {
     }
   }
 
-  private showResult(result: { success: boolean; narrative: string; rewards?: Record<string, number> }): void {
+  private showResult(result: { success: boolean; narrative: string; rewards?: Record<string, number>; chainAdvanced?: boolean }): void {
     const centerX = GAME_WIDTH / 2;
     const centerY = GAME_HEIGHT / 2;
 
@@ -235,6 +303,16 @@ export class EventPanel {
         }).setOrigin(0.5).setDepth(102);
         rewardY += 22;
       }
+    }
+
+    // Chain advancement indicator
+    if (result.chainAdvanced) {
+      this.scene.add.text(centerX, py + panelH - 60, 'Chain continues...', {
+        fontFamily: FONTS.primary,
+        fontSize: `${FONTS.sizes.small}px`,
+        color: '#ffd700',
+        fontStyle: 'bold',
+      }).setOrigin(0.5).setDepth(102);
     }
 
     const okBtn = this.scene.add.text(centerX, py + panelH - 30, 'OK', {

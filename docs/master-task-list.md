@@ -907,86 +907,86 @@
 ## Epic 12: Events System
 > 50+ event templates, event chains, branching narratives, seasonal events, and player-driven events.
 
-- [ ] T-0861: Define event data schema (type, title, description, effects, duration, conditions)
-- [ ] T-0862: Create event engine service with trigger, evaluate, resolve, and expire methods
-- [ ] T-0863: Implement event trigger system checking conditions each game tick
-- [ ] T-0864: Build event condition evaluator (time, weather, resource level, guild state)
-- [ ] T-0865: Create event queue system managing concurrent events with priority
-- [ ] T-0866: Implement event display popup with title, narrative, and options
-- [ ] T-0867: Build event choice UI with 2-4 option buttons and outcome preview hints
-- [ ] T-0868: Create event outcome resolution based on player choice and RNG
-- [ ] T-0869: Implement event effect application (resource change, hero stat change, etc.)
-- [ ] T-0870: Build event log page showing all past events and outcomes
-- [ ] T-0871: Create event template: Merchant Caravan — trade opportunity event
-- [ ] T-0872: Create event template: Bandit Raid — defense challenge event
-- [ ] T-0873: Create event template: Wandering Scholar — research boost event
-- [ ] T-0874: Create event template: Festival — morale boost with mini-game
-- [ ] T-0875: Create event template: Plague — health crisis requiring resources
-- [ ] T-0876: Create event template: Drought — water scarcity affecting farms
-- [ ] T-0877: Create event template: Treasure Map — special expedition trigger
-- [ ] T-0878: Create event template: Diplomatic Envoy — alliance opportunity
-- [ ] T-0879: Create event template: Monster Sighting — boss expedition unlock
-- [ ] T-0880: Create event template: Harvest Festival — seasonal food bonus
-- [ ] T-0881: Create event template: Earthquake — building damage event
-- [ ] T-0882: Create event template: Eclipse — magical boost event
-- [ ] T-0883: Create event template: Tax Collector — gold drain or resistance choice
-- [ ] T-0884: Create event template: Hero Duel — PvP challenge event
-- [ ] T-0885: Create event template: Artifact Discovery — unique item reward
-- [ ] T-0886: Create event template: Trade Embargo — market disruption event
-- [ ] T-0887: Create event template: Refugee Influx — population growth event
-- [ ] T-0888: Create event template: Magical Storm — arcane resource surge
-- [ ] T-0889: Create event template: Mining Collapse — mine disruption event
-- [ ] T-0890: Create event template: Celestial Alignment — global buff event
-- [ ] T-0891: Create event template: Thieves Guild — crime wave event
-- [ ] T-0892: Create event template: Royal Decree — forced policy change event
-- [ ] T-0893: Create event template: Dragon Sighting — legendary expedition event
-- [ ] T-0894: Create event template: Merchant Competition — market price war event
-- [ ] T-0895: Create event template: Plague Cure — research opportunity event
-- [ ] T-0896: Create event template: Ancient Ruins — exploration opportunity
-- [ ] T-0897: Create event template: Guild Challenge — competitive event with leaderboard
-- [ ] T-0898: Create event template: Seasonal Migration — animal herding mini-event
-- [ ] T-0899: Create event template: Black Market — rare item availability event
-- [ ] T-0900: Create event template: War Declaration — military preparation event
-- [ ] T-0901: Create event template: Peace Treaty — trade bonus event
-- [ ] T-0902: Create event template: Volcano Eruption — regional destruction event
-- [ ] T-0903: Create event template: Sea Serpent — coastal expedition special
-- [ ] T-0904: Create event template: Goblin Market — unusual trade event
-- [ ] T-0905: Create event template: Lunar Festival — moon phase celebration
-- [ ] T-0906: Create event template: Frost Giant Approach — winter danger event
-- [ ] T-0907: Create event template: Spring Bloom — nature resource bonanza
-- [ ] T-0908: Create event template: Summer Solstice — daylight bonus event
-- [ ] T-0909: Create event template: Autumn Harvest — food stockpile event
-- [ ] T-0910: Create event template: Comet Sighting — rare astronomical event
-- [ ] T-0911: Create event template: Dungeon Discovery — new expedition area unlock
-- [ ] T-0912: Create event template: Hero Reunion — returning retired hero visit
-- [ ] T-0913: Create event template: Prophecy — cryptic hint about upcoming events
-- [ ] T-0914: Create event template: Innovation Fair — research speed event
-- [ ] T-0915: Create event template: Market Crash — economic disruption event
-- [ ] T-0916: Create event template: Gold Rush — mining bonanza event
-- [ ] T-0917: Create event template: Tournament Arc — multi-day competition event
-- [ ] T-0918: Create event template: Cursed Artifact — risk/reward decision event
-- [ ] T-0919: Create event template: Alliance Offer — multiplayer cooperation event
-- [ ] T-0920: Create event template: Traveling Circus — entertainment and morale event
-- [ ] T-0921: Implement event chain system linking related events in sequence
-- [ ] T-0922: Create 5 event chains with 3-5 linked events each
-- [ ] T-0923: Build event chain progress tracker showing completed/remaining events
-- [ ] T-0924: Implement branching narrative within events (choice A leads to event X, choice B leads to event Y)
-- [ ] T-0925: Create event outcome memory system (past choices affect future events)
-- [ ] T-0926: Build event reputation tracker (merciful, ruthless, wise, etc.)
-- [ ] T-0927: Implement seasonal event scheduling (certain events only in certain seasons)
-- [ ] T-0928: Create holiday-specific event content for 8 major real-world holidays
-- [ ] T-0929: Build player-driven event system (player actions trigger events for others)
-- [ ] T-0930: Implement event cooldown system preventing repeat events too quickly
-- [ ] T-0931: Create event rarity tiers (common, uncommon, rare, legendary events)
-- [ ] T-0932: Build event prediction system in Observatory (forecast upcoming events)
-- [ ] T-0933: Implement event modifier stacking rules (multiple active events)
-- [ ] T-0934: Create event achievement system (experience all event types)
-- [ ] T-0935: Build event statistics page (most common event, best outcomes)
-- [ ] T-0936: Implement event notification preferences (which events to alert on)
-- [ ] T-0937: Create event visual theme system (seasonal decorations during events)
-- [ ] T-0938: Build event countdown timer for upcoming scheduled events
-- [ ] T-0939: Implement event reward scaling based on guild level
-- [ ] T-0940: Create event difficulty scaling based on guild progression
+- [x] T-0861: Define event data schema (type, title, description, effects, duration, conditions)
+- [x] T-0862: Create event engine service with trigger, evaluate, resolve, and expire methods
+- [x] T-0863: Implement event trigger system checking conditions each game tick
+- [x] T-0864: Build event condition evaluator (time, weather, resource level, guild state)
+- [x] T-0865: Create event queue system managing concurrent events with priority
+- [x] T-0866: Implement event display popup with title, narrative, and options
+- [x] T-0867: Build event choice UI with 2-4 option buttons and outcome preview hints
+- [x] T-0868: Create event outcome resolution based on player choice and RNG
+- [x] T-0869: Implement event effect application (resource change, hero stat change, etc.)
+- [x] T-0870: Build event log page showing all past events and outcomes
+- [x] T-0871: Create event template: Merchant Caravan — trade opportunity event
+- [x] T-0872: Create event template: Bandit Raid — defense challenge event
+- [x] T-0873: Create event template: Wandering Scholar — research boost event
+- [x] T-0874: Create event template: Festival — morale boost with mini-game
+- [x] T-0875: Create event template: Plague — health crisis requiring resources
+- [x] T-0876: Create event template: Drought — water scarcity affecting farms
+- [x] T-0877: Create event template: Treasure Map — special expedition trigger
+- [x] T-0878: Create event template: Diplomatic Envoy — alliance opportunity
+- [x] T-0879: Create event template: Monster Sighting — boss expedition unlock
+- [x] T-0880: Create event template: Harvest Festival — seasonal food bonus
+- [x] T-0881: Create event template: Earthquake — building damage event
+- [x] T-0882: Create event template: Eclipse — magical boost event
+- [x] T-0883: Create event template: Tax Collector — gold drain or resistance choice
+- [x] T-0884: Create event template: Hero Duel — PvP challenge event
+- [x] T-0885: Create event template: Artifact Discovery — unique item reward
+- [x] T-0886: Create event template: Trade Embargo — market disruption event
+- [x] T-0887: Create event template: Refugee Influx — population growth event
+- [x] T-0888: Create event template: Magical Storm — arcane resource surge
+- [x] T-0889: Create event template: Mining Collapse — mine disruption event
+- [x] T-0890: Create event template: Celestial Alignment — global buff event
+- [x] T-0891: Create event template: Thieves Guild — crime wave event
+- [x] T-0892: Create event template: Royal Decree — forced policy change event
+- [x] T-0893: Create event template: Dragon Sighting — legendary expedition event
+- [x] T-0894: Create event template: Merchant Competition — market price war event
+- [x] T-0895: Create event template: Plague Cure — research opportunity event
+- [x] T-0896: Create event template: Ancient Ruins — exploration opportunity
+- [x] T-0897: Create event template: Guild Challenge — competitive event with leaderboard
+- [x] T-0898: Create event template: Seasonal Migration — animal herding mini-event
+- [x] T-0899: Create event template: Black Market — rare item availability event
+- [x] T-0900: Create event template: War Declaration — military preparation event
+- [x] T-0901: Create event template: Peace Treaty — trade bonus event
+- [x] T-0902: Create event template: Volcano Eruption — regional destruction event
+- [x] T-0903: Create event template: Sea Serpent — coastal expedition special
+- [x] T-0904: Create event template: Goblin Market — unusual trade event
+- [x] T-0905: Create event template: Lunar Festival — moon phase celebration
+- [x] T-0906: Create event template: Frost Giant Approach — winter danger event
+- [x] T-0907: Create event template: Spring Bloom — nature resource bonanza
+- [x] T-0908: Create event template: Summer Solstice — daylight bonus event
+- [x] T-0909: Create event template: Autumn Harvest — food stockpile event
+- [x] T-0910: Create event template: Comet Sighting — rare astronomical event
+- [x] T-0911: Create event template: Dungeon Discovery — new expedition area unlock
+- [x] T-0912: Create event template: Hero Reunion — returning retired hero visit
+- [x] T-0913: Create event template: Prophecy — cryptic hint about upcoming events
+- [x] T-0914: Create event template: Innovation Fair — research speed event
+- [x] T-0915: Create event template: Market Crash — economic disruption event
+- [x] T-0916: Create event template: Gold Rush — mining bonanza event
+- [x] T-0917: Create event template: Tournament Arc — multi-day competition event
+- [x] T-0918: Create event template: Cursed Artifact — risk/reward decision event
+- [x] T-0919: Create event template: Alliance Offer — multiplayer cooperation event
+- [x] T-0920: Create event template: Traveling Circus — entertainment and morale event
+- [x] T-0921: Implement event chain system linking related events in sequence
+- [x] T-0922: Create 5 event chains with 3-5 linked events each
+- [x] T-0923: Build event chain progress tracker showing completed/remaining events
+- [x] T-0924: Implement branching narrative within events (choice A leads to event X, choice B leads to event Y)
+- [x] T-0925: Create event outcome memory system (past choices affect future events)
+- [x] T-0926: Build event reputation tracker (merciful, ruthless, wise, etc.)
+- [x] T-0927: Implement seasonal event scheduling (certain events only in certain seasons)
+- [x] T-0928: Create holiday-specific event content for 8 major real-world holidays
+- [x] T-0929: Build player-driven event system (player actions trigger events for others)
+- [x] T-0930: Implement event cooldown system preventing repeat events too quickly
+- [x] T-0931: Create event rarity tiers (common, uncommon, rare, legendary events)
+- [x] T-0932: Build event prediction system in Observatory (forecast upcoming events)
+- [x] T-0933: Implement event modifier stacking rules (multiple active events)
+- [x] T-0934: Create event achievement system (experience all event types)
+- [x] T-0935: Build event statistics page (most common event, best outcomes)
+- [x] T-0936: Implement event notification preferences (which events to alert on)
+- [x] T-0937: Create event visual theme system (seasonal decorations during events)
+- [x] T-0938: Build event countdown timer for upcoming scheduled events
+- [x] T-0939: Implement event reward scaling based on guild level
+- [x] T-0940: Create event difficulty scaling based on guild progression
 
 ## Epic 13: Calendar & Seasons
 > 4 seasons with visual changes, holiday festivals with unique content, and lunar cycle mechanics.
