@@ -181,31 +181,31 @@
 - [x] T-0168: Create guild level-up reward table (levels 1-50)
 - [x] T-0169: Implement guild level-up celebration animation and reward display
 - [x] T-0170: Build guild milestone achievements list with unlock requirements
-- [ ] T-0171: Implement building unlock progression tied to guild level
-- [ ] T-0172: Implement feature unlock progression (expeditions at level 3, market at level 5)
-- [ ] T-0173: Build build menu panel listing available buildings with costs
-- [ ] T-0174: Add building preview tooltip showing stats and production info
-- [ ] T-0175: Implement building construction animation (scaffolding to complete)
-- [ ] T-0176: Create building visual upgrade stages (level 1, 2, 3 sprite variations)
-- [ ] T-0177: Implement building upgrade UI with cost and stat comparison
-- [ ] T-0178: Build building detail panel showing production rates, workers, and level
-- [ ] T-0179: Implement worker assignment UI for buildings (drag heroes to buildings)
-- [ ] T-0180: Add worker count display on each building sprite
-- [ ] T-0181: Create idle worker animation for heroes assigned to buildings
-- [ ] T-0182: Implement building production tick display (floating +resource icons)
-- [ ] T-0183: Build guild hall decoration system with cosmetic placement items
-- [ ] T-0184: Implement decorative item shop with cosmetic items purchasable with resources
-- [ ] T-0185: Add ambient NPC characters wandering in guild hall
-- [ ] T-0186: Create guild hall expansion system (unlock additional grid rows/columns)
-- [ ] T-0187: Implement guild hall expansion cost scaling
-- [ ] T-0188: Build guild hall zoom controls (zoom in/out with mouse wheel or pinch)
-- [ ] T-0189: Implement mini-map overview of entire guild hall for zoomed-in navigation
-- [ ] T-0190: Add sound effects for building placement, construction, and upgrade
-- [ ] T-0191: Build guild activity feed showing recent events (building built, hero recruited)
-- [ ] T-0192: Implement guild daily login reward calendar
-- [ ] T-0193: Create guild hall seasonal decorations (snow in winter, flowers in spring)
-- [ ] T-0194: Build building quick-action buttons (upgrade, repair, assign, demolish)
-- [ ] T-0195: Implement building durability/repair system with maintenance costs
+- [x] T-0171: Implement building unlock progression tied to guild level
+- [x] T-0172: Implement feature unlock progression (expeditions at level 3, market at level 5)
+- [x] T-0173: Build build menu panel listing available buildings with costs
+- [x] T-0174: Add building preview tooltip showing stats and production info
+- [x] T-0175: Implement building construction animation (scaffolding to complete)
+- [x] T-0176: Create building visual upgrade stages (level 1, 2, 3 sprite variations)
+- [x] T-0177: Implement building upgrade UI with cost and stat comparison
+- [x] T-0178: Build building detail panel showing production rates, workers, and level
+- [x] T-0179: Implement worker assignment UI for buildings (drag heroes to buildings)
+- [x] T-0180: Add worker count display on each building sprite
+- [x] T-0181: Create idle worker animation for heroes assigned to buildings
+- [x] T-0182: Implement building production tick display (floating +resource icons)
+- [x] T-0183: Build guild hall decoration system with cosmetic placement items
+- [x] T-0184: Implement decorative item shop with cosmetic items purchasable with resources
+- [x] T-0185: Add ambient NPC characters wandering in guild hall
+- [x] T-0186: Create guild hall expansion system (unlock additional grid rows/columns)
+- [x] T-0187: Implement guild hall expansion cost scaling
+- [x] T-0188: Build guild hall zoom controls (zoom in/out with mouse wheel or pinch)
+- [x] T-0189: Implement mini-map overview of entire guild hall for zoomed-in navigation
+- [x] T-0190: Add sound effects for building placement, construction, and upgrade
+- [x] T-0191: Build guild activity feed showing recent events (building built, hero recruited)
+- [x] T-0192: Implement guild daily login reward calendar
+- [x] T-0193: Create guild hall seasonal decorations (snow in winter, flowers in spring)
+- [x] T-0194: Build building quick-action buttons (upgrade, repair, assign, demolish)
+- [x] T-0195: Implement building durability/repair system with maintenance costs
 - [ ] T-0196: Add building efficiency modifier based on adjacent building synergies
 - [ ] T-0197: Create building blueprint discovery system from research or expeditions
 - [ ] T-0198: Implement guild hall screenshot/share feature
