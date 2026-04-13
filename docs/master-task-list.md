@@ -3,56 +3,56 @@
 ## Epic 1: UI/UX Foundation & Polish
 > Responsive layouts, animations, transitions, loading states, error states, tooltips, and accessibility across the entire application.
 
-- [ ] T-0001: Create base responsive grid layout system with breakpoints for mobile, tablet, and desktop
-- [ ] T-0002: Implement CSS custom property theme system with light/dark mode variables
-- [ ] T-0003: Build reusable Button component with primary, secondary, danger, and ghost variants
-- [ ] T-0004: Build reusable Modal component with open/close animations and backdrop click handling
-- [ ] T-0005: Build reusable Tooltip component with configurable placement (top, bottom, left, right)
-- [ ] T-0006: Build reusable Toast notification system with success, warning, error, and info types
-- [ ] T-0007: Build reusable ProgressBar component with animated fill and label support
-- [ ] T-0008: Build reusable TabPanel component with keyboard navigation between tabs
-- [ ] T-0009: Build reusable Dropdown/Select component with search filtering
-- [ ] T-0010: Build reusable Card component with header, body, and footer slots
-- [ ] T-0011: Build reusable Badge component for counts, statuses, and notifications
-- [ ] T-0012: Build reusable Accordion component with expand/collapse animations
-- [ ] T-0013: Build reusable Spinner/Loading component with multiple size variants
-- [ ] T-0014: Build reusable Skeleton loader component for content placeholder states
-- [ ] T-0015: Build reusable ConfirmDialog component for destructive action confirmations
-- [ ] T-0016: Build reusable Pagination component with page size selector
-- [ ] T-0017: Build reusable Breadcrumb navigation component
-- [ ] T-0018: Build reusable ContextMenu component with nested submenus
-- [ ] T-0019: Build reusable Slider/Range input component with value display
-- [ ] T-0020: Build reusable Toggle/Switch component with label and disabled state
-- [ ] T-0021: Implement global loading overlay for full-page transitions
-- [ ] T-0022: Implement inline loading spinners for individual component data fetches
-- [ ] T-0023: Create empty state illustrations and messages for lists with no data
-- [ ] T-0024: Create error boundary component that catches rendering errors gracefully
-- [ ] T-0025: Implement 404 page with navigation back to main scenes
-- [ ] T-0026: Implement 500 error page with retry and report options
-- [ ] T-0027: Implement network disconnection banner with auto-reconnect indicator
-- [ ] T-0028: Add fade-in animation for scene transitions
-- [ ] T-0029: Add slide-in animation for side panels and drawers
-- [ ] T-0030: Add scale-up animation for modal and dialog appearances
-- [ ] T-0031: Add bounce animation for notification badge updates
-- [ ] T-0032: Add shimmer animation for loading skeleton placeholders
-- [ ] T-0033: Add pulse animation for active/selected elements
-- [ ] T-0034: Add particle burst animation for reward popups
-- [ ] T-0035: Implement smooth number counter animation for resource changes
-- [ ] T-0036: Implement typewriter text animation for narrative event displays
-- [ ] T-0037: Build main navigation bar with scene links and active state indicators
-- [ ] T-0038: Build sidebar navigation for sub-sections within scenes
-- [ ] T-0039: Build bottom navigation bar for mobile layout
-- [ ] T-0040: Implement keyboard shortcut system for common actions (Ctrl+1 through Ctrl+9 for scenes)
-- [ ] T-0041: Add keyboard shortcut overlay panel toggled by pressing "?"
-- [ ] T-0042: Create global search/command palette (Ctrl+K) for quick navigation
-- [ ] T-0043: Implement drag-and-drop utility for item and hero rearrangement
-- [ ] T-0044: Build scroll-to-top button for long scrollable content areas
-- [ ] T-0045: Implement pull-to-refresh gesture handler for mobile views
-- [ ] T-0046: Add hover state previews for heroes, items, and buildings
-- [ ] T-0047: Build info panel slide-out for detailed entity inspection
-- [ ] T-0048: Implement responsive typography scale that adjusts to viewport width
-- [ ] T-0049: Create icon system with SVG sprite sheet and icon component
-- [ ] T-0050: Build color-coded rarity system (common, uncommon, rare, epic, legendary)
+- [x] T-0001: Create base responsive grid layout system with breakpoints for mobile, tablet, and desktop
+- [x] T-0002: Implement CSS custom property theme system with light/dark mode variables
+- [x] T-0003: Build reusable Button component with primary, secondary, danger, and ghost variants
+- [x] T-0004: Build reusable Modal component with open/close animations and backdrop click handling
+- [x] T-0005: Build reusable Tooltip component with configurable placement (top, bottom, left, right)
+- [x] T-0006: Build reusable Toast notification system with success, warning, error, and info types
+- [x] T-0007: Build reusable ProgressBar component with animated fill and label support
+- [x] T-0008: Build reusable TabPanel component with keyboard navigation between tabs
+- [x] T-0009: Build reusable Dropdown/Select component with search filtering
+- [x] T-0010: Build reusable Card component with header, body, and footer slots
+- [x] T-0011: Build reusable Badge component for counts, statuses, and notifications
+- [x] T-0012: Build reusable Accordion component with expand/collapse animations
+- [x] T-0013: Build reusable Spinner/Loading component with multiple size variants
+- [x] T-0014: Build reusable Skeleton loader component for content placeholder states
+- [x] T-0015: Build reusable ConfirmDialog component for destructive action confirmations
+- [x] T-0016: Build reusable Pagination component with page size selector
+- [x] T-0017: Build reusable Breadcrumb navigation component
+- [x] T-0018: Build reusable ContextMenu component with nested submenus
+- [x] T-0019: Build reusable Slider/Range input component with value display
+- [x] T-0020: Build reusable Toggle/Switch component with label and disabled state
+- [x] T-0021: Implement global loading overlay for full-page transitions
+- [x] T-0022: Implement inline loading spinners for individual component data fetches
+- [x] T-0023: Create empty state illustrations and messages for lists with no data
+- [x] T-0024: Create error boundary component that catches rendering errors gracefully
+- [x] T-0025: Implement 404 page with navigation back to main scenes
+- [x] T-0026: Implement 500 error page with retry and report options
+- [x] T-0027: Implement network disconnection banner with auto-reconnect indicator
+- [x] T-0028: Add fade-in animation for scene transitions
+- [x] T-0029: Add slide-in animation for side panels and drawers
+- [x] T-0030: Add scale-up animation for modal and dialog appearances
+- [x] T-0031: Add bounce animation for notification badge updates
+- [x] T-0032: Add shimmer animation for loading skeleton placeholders
+- [x] T-0033: Add pulse animation for active/selected elements
+- [x] T-0034: Add particle burst animation for reward popups
+- [x] T-0035: Implement smooth number counter animation for resource changes
+- [x] T-0036: Implement typewriter text animation for narrative event displays
+- [x] T-0037: Build main navigation bar with scene links and active state indicators
+- [x] T-0038: Build sidebar navigation for sub-sections within scenes
+- [x] T-0039: Build bottom navigation bar for mobile layout
+- [x] T-0040: Implement keyboard shortcut system for common actions (Ctrl+1 through Ctrl+9 for scenes)
+- [x] T-0041: Add keyboard shortcut overlay panel toggled by pressing "?"
+- [x] T-0042: Create global search/command palette (Ctrl+K) for quick navigation
+- [x] T-0043: Implement drag-and-drop utility for item and hero rearrangement
+- [x] T-0044: Build scroll-to-top button for long scrollable content areas
+- [x] T-0045: Implement pull-to-refresh gesture handler for mobile views
+- [x] T-0046: Add hover state previews for heroes, items, and buildings
+- [x] T-0047: Build info panel slide-out for detailed entity inspection
+- [x] T-0048: Implement responsive typography scale that adjusts to viewport width
+- [x] T-0049: Create icon system with SVG sprite sheet and icon component
+- [x] T-0050: Build color-coded rarity system (common, uncommon, rare, epic, legendary)
 - [ ] T-0051: Implement focus ring styles for keyboard navigation accessibility
 - [ ] T-0052: Add reduced-motion media query support to disable animations when preferred
 - [ ] T-0053: Create consistent form layout with validation message display
