@@ -62,7 +62,7 @@ export class GuildHallScene extends Phaser.Scene {
       // Fetch and display weather + events
       try {
         const worldState = await apiClient.getWorldState();
-        this.weatherPanel?.setWeatherData(worldState.weather, worldState.modifiers);
+        this.weatherPanel?.setWeatherData(worldState.weather, worldState.modifiers, worldState.season, worldState.festival);
 
         const events = await apiClient.getEvents();
         this.activeEvents = events;

@@ -235,6 +235,18 @@ class ApiClient {
     modifiers: Record<string, number>;
     activeEvents: unknown[];
     marketState: unknown;
+    season: 'spring' | 'summer' | 'autumn' | 'winter';
+    festival: {
+      name: string;
+      flavorText: string;
+      buffs: {
+        morale: number;
+        goldIncome: number;
+        marketDiscount: number;
+        xpBonus: number;
+      };
+      duration: number;
+    } | null;
   }> {
     return this.request('GET', '/world/state');
   }

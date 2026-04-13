@@ -1,6 +1,7 @@
 import { prisma } from '../db.js';
 import { classifyWeather, weatherToModifiers, type RawWeatherData } from '../utils/weatherMapping.js';
 import { WeatherCondition } from '../../../shared/src/enums.js';
+import { CalendarService } from './CalendarService.js';
 
 // Region coordinates for weather fetching
 const REGION_COORDS: Record<string, { lat: number; lon: number }> = {
@@ -147,13 +148,50 @@ export class WeatherService {
 
     if (!state) return null;
 
+    const now = new Date();
+    const season = CalendarService.getCurrentSeason(regionId, now);
+    const seasonalMods = CalendarService.getSeasonalModifiers(season);
+    const festival = CalendarService.getActiveFestival(regionId, now);
+
+    // Merge weather modifiers with seasonal modifiers (multiplicative stacking)
+    const weatherMods = JSON.parse(state.modifiers);
+    const mergedModifiers = { ...weatherMods };
+
+    // Apply seasonal crop growth
+    if (mergedModifiers.cropGrowth !== undefined) {
+      mergedModifiers.cropGrowth *= seasonalMods.cropGrowth;
+    }
+    // Apply seasonal morale
+    if (mergedModifiers.morale !== undefined) {
+      mergedModifiers.morale *= seasonalMods.morale;
+    }
+
+    // Apply festival buffs to modifiers if active
+    if (festival) {
+      if (mergedModifiers.morale !== undefined) {
+        mergedModifiers.morale *= (1 + festival.buffs.morale);
+      }
+      if (mergedModifiers.marketConfidence !== undefined) {
+        mergedModifiers.marketConfidence *= (1 + festival.buffs.goldIncome);
+      }
+    }
+
     return {
       regionId: state.regionId,
       date: state.date,
       weather: JSON.parse(state.weather),
-      modifiers: JSON.parse(state.modifiers),
+      modifiers: mergedModifiers,
       activeEvents: JSON.parse(state.activeEvents),
       marketState: JSON.parse(state.marketState),
+      season,
+      festival: festival
+        ? {
+            name: festival.fantasyName,
+            flavorText: festival.flavorText,
+            buffs: festival.buffs,
+            duration: festival.duration,
+          }
+        : null,
     };
   }
 }
