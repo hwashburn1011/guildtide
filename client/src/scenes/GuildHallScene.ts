@@ -124,7 +124,7 @@ export class GuildHallScene extends Phaser.Scene {
     }
   }
 
-  update(_time: number, delta: number): void {
+  update(time: number, delta: number): void {
     this.resourceBar?.update(delta);
   }
 
