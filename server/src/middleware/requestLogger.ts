@@ -85,8 +85,10 @@ export function performanceMonitor(req: Request, res: Response, next: NextFuncti
     stats.maxMs = Math.max(stats.maxMs, duration);
     if (res.statusCode >= 500) stats.errors++;
 
-    // Set server timing header
-    res.setHeader('Server-Timing', `total;dur=${duration}`);
+    // Set server timing header (only if headers not yet sent)
+    if (!res.headersSent) {
+      res.setHeader('Server-Timing', `total;dur=${duration}`);
+    }
   });
 
   next();

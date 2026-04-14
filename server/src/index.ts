@@ -247,6 +247,11 @@ process.on('SIGINT', () => shutdown('SIGINT'));
 // Handle uncaught errors
 process.on('uncaughtException', (err) => {
   logger.error('Uncaught exception', { error: err.message, stack: err.stack });
+  // Don't shut down for non-fatal header errors
+  if (err.message?.includes('Cannot set headers after they are sent')) {
+    logger.warn('Non-fatal header error, continuing...');
+    return;
+  }
   shutdown('uncaughtException');
 });
 

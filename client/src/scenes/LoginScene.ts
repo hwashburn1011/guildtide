@@ -96,13 +96,13 @@ export class LoginScene extends Phaser.Scene {
         font-family: Arial, sans-serif;
       ">
         <h3 style="color: #ffd700; margin: 0 0 16px 0; font-size: 18px; text-align: center;">Sign In</h3>
-        <input id="gt-email" type="email" placeholder="Email" autocomplete="email" style="
+        <input id="gt-email" type="email" placeholder="Email" autocomplete="email" value="play@guildtide.com" style="
           width: 100%; padding: 12px; margin-bottom: 10px;
           background: #1a1a2e; border: 1px solid #0f3460; border-radius: 6px;
           color: white; font-size: 15px; outline: none; box-sizing: border-box;
         " />
         <div id="gt-email-error" style="color: #ff4444; font-size: 12px; margin-bottom: 4px; min-height: 16px;"></div>
-        <input id="gt-password" type="password" placeholder="Password" autocomplete="current-password" style="
+        <input id="gt-password" type="password" placeholder="Password" autocomplete="current-password" value="Password1!" style="
           width: 100%; padding: 12px; margin-bottom: 6px;
           background: #1a1a2e; border: 1px solid #0f3460; border-radius: 6px;
           color: white; font-size: 15px; outline: none; box-sizing: border-box;
