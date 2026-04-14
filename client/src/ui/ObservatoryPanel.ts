@@ -93,7 +93,7 @@ export class ObservatoryPanel {
       fillColor: accuracy > 75 ? COLORS.success : accuracy > 50 ? COLORS.warning : COLORS.danger,
       label: `${accuracy}% accuracy`,
     });
-    container.add(accBar.getContainer());
+    container.add(accBar);
     y += 35;
 
     // World data readings

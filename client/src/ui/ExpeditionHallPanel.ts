@@ -155,7 +155,7 @@ export class ExpeditionHallPanel {
           fillColor: progress >= 100 ? COLORS.success : COLORS.warning,
           label: progress >= 100 ? 'Ready!' : `${Math.round(progress)}%`,
         });
-        container.add(bar.getContainer());
+        container.add(bar);
 
         y += cardH + 6;
       }
@@ -182,12 +182,12 @@ export class ExpeditionHallPanel {
           width: 160,
           height: 36,
           text: 'Launch Expedition',
-          style: 'primary',
+          variant: 'primary',
           onClick: () => {
-            NotificationSystem.getInstance(this.scene).showSuccess('Open the Expeditions panel to launch!');
+            NotificationSystem.show(this.scene, 'Open the Expeditions panel to launch!', 'success');
           },
         });
-        container.add(launchBtn.getContainer());
+        container.add(launchBtn);
       }
     } else {
       container.add(

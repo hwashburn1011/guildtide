@@ -86,7 +86,7 @@ export class WeatherForecastPanel {
         apiClient.getWeatherHistory(7),
       ]);
 
-      this.renderForecast(content, forecastData.forecast, forecastData.pattern);
+      this.renderForecast(content, forecastData.forecast, forecastData.pattern as WeatherPattern | null);
       this.renderHistory(content, historyData.history);
     } catch {
       content.add(

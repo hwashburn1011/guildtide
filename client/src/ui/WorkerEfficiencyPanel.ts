@@ -161,7 +161,7 @@ export class WorkerEfficiencyPanel {
         maxValue: 200,
         fillColor: effColor,
       });
-      container.add(bar.getContainer());
+      container.add(bar);
 
       y += cardH + 8;
     }

@@ -148,10 +148,10 @@ export class TavernPanel {
         width: 70,
         height: 28,
         text: 'Hire',
-        style: 'primary',
+        variant: 'primary',
         onClick: () => this.hireHero(role),
       });
-      container.add(hireBtn.getContainer());
+      container.add(hireBtn);
 
       y += cardH + 6;
     }
@@ -173,12 +173,12 @@ export class TavernPanel {
   private async hireHero(role: string): Promise<void> {
     try {
       await apiClient.recruitHero(role);
-      NotificationSystem.getInstance(this.scene).showSuccess(`Recruited a ${role}!`);
+      NotificationSystem.show(this.scene, `Recruited a ${role}!`, 'success');
       this.modal?.destroy();
       this.modal = null;
       this.onRefresh();
     } catch {
-      NotificationSystem.getInstance(this.scene).showError('Failed to recruit hero');
+      NotificationSystem.show(this.scene, 'Failed to recruit hero', 'error');
     }
   }
 

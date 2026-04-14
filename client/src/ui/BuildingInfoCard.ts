@@ -209,10 +209,10 @@ export class BuildingInfoCard {
         width: 160,
         height: 36,
         text: 'Quick Upgrade',
-        style: 'primary',
+        variant: 'primary',
         onClick: () => this.quickUpgrade(buildingType, info.name),
       });
-      container.add(upgradeBtn.getContainer());
+      container.add(upgradeBtn);
       y += 50;
     }
 
@@ -254,17 +254,16 @@ export class BuildingInfoCard {
   private async quickUpgrade(buildingType: string, buildingName: string): Promise<void> {
     try {
       const result = await apiClient.upgradeBuilding(buildingType);
-      const notifications = NotificationSystem.getInstance(this.scene);
-      notifications.showSuccess(`Upgraded ${buildingName}!`);
+      NotificationSystem.show(this.scene, `Upgraded ${buildingName}!`, 'success');
 
       if ((result as any).milestones?.length > 0) {
         for (const m of (result as any).milestones) {
-          notifications.showSuccess(`Milestone: ${m.label}`);
+          NotificationSystem.show(this.scene, `Milestone: ${m.label}`, 'success');
         }
       }
       if ((result as any).achievements?.length > 0) {
         for (const a of (result as any).achievements) {
-          notifications.showSuccess(`Achievement: ${a.name}`);
+          NotificationSystem.show(this.scene, `Achievement: ${a.name}`, 'success');
         }
       }
 
@@ -272,7 +271,7 @@ export class BuildingInfoCard {
       this.modal = null;
       this.onRefresh();
     } catch {
-      NotificationSystem.getInstance(this.scene).showError('Upgrade failed — check resources');
+      NotificationSystem.show(this.scene, 'Upgrade failed — check resources', 'error');
     }
   }
 

@@ -144,7 +144,7 @@ export class LibraryPanel {
         fillColor: COLORS.success,
         label: `${Math.round(progress)}%`,
       });
-      container.add(bar.getContainer());
+      container.add(bar);
       y += 35;
     } else {
       container.add(

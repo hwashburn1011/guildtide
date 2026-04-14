@@ -152,10 +152,10 @@ export class MarketplacePanel {
         width: 50,
         height: 22,
         text: 'Buy',
-        style: 'primary',
+        variant: 'primary',
         onClick: () => this.trade('buy', item.resource),
       });
-      container.add(buyBtn.getContainer());
+      container.add(buyBtn);
 
       const sellBtn = new UIButton(this.scene, {
         x: cols[4] + 20,
@@ -163,10 +163,10 @@ export class MarketplacePanel {
         width: 50,
         height: 22,
         text: 'Sell',
-        style: 'secondary',
+        variant: 'secondary',
         onClick: () => this.trade('sell', item.resource),
       });
-      container.add(sellBtn.getContainer());
+      container.add(sellBtn);
 
       y += 30;
     }
@@ -179,10 +179,10 @@ export class MarketplacePanel {
       } else {
         await apiClient.marketSell(resource, 10);
       }
-      NotificationSystem.getInstance(this.scene).showSuccess(`${action === 'buy' ? 'Bought' : 'Sold'} 10 ${resource}`);
+      NotificationSystem.show(this.scene, `${action === 'buy' ? 'Bought' : 'Sold'} 10 ${resource}`, 'success');
       this.onRefresh();
     } catch {
-      NotificationSystem.getInstance(this.scene).showError(`Failed to ${action} ${resource}`);
+      NotificationSystem.show(this.scene, `Failed to ${action} ${resource}`, 'error');
     }
   }
 

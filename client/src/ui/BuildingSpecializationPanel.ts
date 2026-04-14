@@ -188,10 +188,10 @@ export class BuildingSpecializationPanel {
         width: 120,
         height: 36,
         text: 'Choose',
-        style: i === 0 ? 'primary' : 'secondary',
+        variant: i === 0 ? 'primary' : 'secondary',
         onClick: () => this.selectSpecialization(buildingType, spec.id, spec.name),
       });
-      container.add(btn.getContainer());
+      container.add(btn);
     });
   }
 
@@ -202,12 +202,12 @@ export class BuildingSpecializationPanel {
   ): Promise<void> {
     try {
       await apiClient.specializeBuilding(buildingType, specId);
-      NotificationSystem.getInstance(this.scene).showSuccess(`Specialized as ${specName}!`);
+      NotificationSystem.show(this.scene, `Specialized as ${specName}!`, 'success');
       this.modal?.destroy();
       this.modal = null;
       this.onRefresh();
     } catch (err) {
-      NotificationSystem.getInstance(this.scene).showError('Failed to specialize building');
+      NotificationSystem.show(this.scene, 'Failed to specialize building', 'error');
     }
   }
 

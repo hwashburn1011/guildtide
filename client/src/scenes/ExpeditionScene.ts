@@ -605,8 +605,7 @@ export class ExpeditionScene extends Phaser.Scene {
 
     try {
       // T-0480: Launch animation
-      const notification = NotificationSystem.getInstance(this);
-      notification.showSuccess('Expedition launched! Heroes are departing...');
+      NotificationSystem.show(this, 'Expedition launched! Heroes are departing...', 'success');
 
       await apiClient.launchExpedition(
         this.selectedDestination.type,
@@ -657,7 +656,7 @@ export class ExpeditionScene extends Phaser.Scene {
         Array.from(this.selectedHeroIds),
         this.selectedDestination.id,
       );
-      NotificationSystem.getInstance(this).showSuccess('Party template saved!');
+      NotificationSystem.show(this, 'Party template saved!', 'success');
     } catch {
       this.showError('Failed to save template');
     }
@@ -1036,11 +1035,10 @@ export class ExpeditionScene extends Phaser.Scene {
       const result = await apiClient.collectExpedition(expeditionId);
 
       // T-0508: Celebration animation
-      const notification = NotificationSystem.getInstance(this);
       if (result.result?.success) {
-        notification.showSuccess('Expedition successful! Heroes return with spoils!');
+        NotificationSystem.show(this, 'Expedition successful! Heroes return with spoils!', 'success');
       } else {
-        notification.showWarning('Expedition failed. Heroes return battered.');
+        NotificationSystem.show(this, 'Expedition failed. Heroes return battered.', 'warning');
       }
 
       // Show detailed log
@@ -1056,7 +1054,7 @@ export class ExpeditionScene extends Phaser.Scene {
   private async handleRetreat(expeditionId: string): Promise<void> {
     try {
       await apiClient.retreatExpedition(expeditionId);
-      NotificationSystem.getInstance(this).showWarning('Party retreated from expedition.');
+      NotificationSystem.show(this, 'Party retreated from expedition.', 'warning');
       await this.loadData();
       this.renderContent();
     } catch (err) {

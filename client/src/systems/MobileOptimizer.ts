@@ -264,7 +264,7 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(
         'YOUR_VAPID_PUBLIC_KEY_PLACEHOLDER'
-      ),
+      ) as BufferSource,
     });
     return sub;
   } catch {

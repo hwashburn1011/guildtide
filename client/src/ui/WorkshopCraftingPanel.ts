@@ -159,10 +159,10 @@ export class WorkshopCraftingPanel {
           width: 60,
           height: 26,
           text: 'Craft',
-          style: hasResources ? 'primary' : 'secondary',
+          variant: hasResources ? 'primary' : 'secondary',
           onClick: hasResources ? () => this.craftRecipe(recipe.id, recipe.name) : () => {},
         });
-        container.add(craftBtn.getContainer());
+        container.add(craftBtn);
       }
 
       y += cardH + 6;
@@ -173,12 +173,12 @@ export class WorkshopCraftingPanel {
     try {
       // Use resource conversion endpoint
       const result = await apiClient.convertResources(recipeId, 1);
-      NotificationSystem.getInstance(this.scene).showSuccess(`Crafted ${recipeName}!`);
+      NotificationSystem.show(this.scene, `Crafted ${recipeName}!`, 'success');
       this.modal?.destroy();
       this.modal = null;
       this.onRefresh();
     } catch {
-      NotificationSystem.getInstance(this.scene).showError('Crafting failed');
+      NotificationSystem.show(this.scene, 'Crafting failed', 'error');
     }
   }
 

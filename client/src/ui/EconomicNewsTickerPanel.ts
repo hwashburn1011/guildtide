@@ -101,7 +101,7 @@ export class EconomicNewsTickerPanel {
     container.add(
       this.scene.add.text(10, y, 'Today\'s Headlines', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );

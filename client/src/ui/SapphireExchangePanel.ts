@@ -103,7 +103,7 @@ export class SapphireExchangePanel {
     container.add(
       this.scene.add.text(10, y, `Sapphire Exchange Index`, {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -195,7 +195,7 @@ export class SapphireExchangePanel {
     container.add(
       this.scene.add.text(10, y, 'Commodity Markets', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -225,7 +225,7 @@ export class SapphireExchangePanel {
     container.add(
       this.scene.add.text(10, y, 'Guild Sectors', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );

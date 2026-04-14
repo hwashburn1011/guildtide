@@ -1951,7 +1951,7 @@ class ApiClient {
     return this.request('POST', '/social/notifications/read-all');
   }
 
-  async getNotificationPrefs(): Promise<any> {
+  async getSocialNotificationPrefs(): Promise<any> {
     return this.request('GET', '/social/notifications/prefs');
   }
 

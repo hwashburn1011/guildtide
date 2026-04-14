@@ -94,7 +94,7 @@ export class VentureInvestmentPanel {
     container.add(
       this.scene.add.text(10, y, 'Portfolio Summary', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -136,7 +136,7 @@ export class VentureInvestmentPanel {
     container.add(
       this.scene.add.text(10, y, 'Active Ventures', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -197,7 +197,7 @@ export class VentureInvestmentPanel {
     container.add(
       this.scene.add.text(10, y, 'Commodity Futures', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );

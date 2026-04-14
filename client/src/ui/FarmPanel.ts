@@ -193,7 +193,7 @@ export class FarmPanel {
       fillColor: COLORS.success,
       label: `${Math.round(cycleProgress)}%`,
     });
-    container.add(cropBar.getContainer());
+    container.add(cropBar);
     y += 40;
 
     // Specialization info
