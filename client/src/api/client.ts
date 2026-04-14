@@ -124,9 +124,7 @@ class ApiClient {
       }
       localStorage.removeItem('guildtide_token');
       localStorage.removeItem('guildtide_remember');
-      window.location.hash = '';
-      window.location.reload();
-      throw new Error('Session expired. Please log in again.');
+      throw new Error('401: Session expired');
     }
 
     if (!response.ok) {

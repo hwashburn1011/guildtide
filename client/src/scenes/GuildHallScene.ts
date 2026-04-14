@@ -110,10 +110,16 @@ export class GuildHallScene extends Phaser.Scene {
         loop: true,
       });
     } catch (err) {
-      loadingText.setText('Failed to load guild data');
       if (err instanceof Error && err.message.includes('401')) {
         localStorage.removeItem('guildtide_token');
         this.scene.start('LoginScene');
+        return;
+      }
+      loadingText.setText('Failed to load guild data. Click to retry.');
+      loadingText.setInteractive({ useHandCursor: true });
+      loadingText.on('pointerup', () => {
+        this.scene.restart();
+      });
       }
     }
   }
