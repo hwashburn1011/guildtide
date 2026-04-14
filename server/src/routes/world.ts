@@ -51,7 +51,7 @@ router.use(authMiddleware);
 router.get('/state', async (req: Request, res: Response) => {
   try {
     const player = await prisma.player.findUnique({
-      where: { id: req.playerId },
+      where: { id: req.playerId! },
     });
 
     if (!player || !player.regionId) {
@@ -60,7 +60,7 @@ router.get('/state', async (req: Request, res: Response) => {
     }
 
     // T-0823: Check opt-out
-    const optedOut = DataPipelineService.isPlayerOptedOut(req.playerId);
+    const optedOut = DataPipelineService.isPlayerOptedOut(req.playerId!);
 
     const worldState = await WeatherService.getWorldState(player.regionId);
     if (!worldState) {
@@ -75,13 +75,13 @@ router.get('/state', async (req: Request, res: Response) => {
       }
     } else {
       worldState.modifiers = DataPipelineService.getPlayerModifiers(
-        req.playerId,
+        req.playerId!,
         worldState.modifiers,
       );
     }
 
     // T-0789: Record weather achievement
-    WeatherService.recordWeatherAchievement(req.playerId, worldState.weather.condition);
+    WeatherService.recordWeatherAchievement(req.playerId!, worldState.weather.condition);
 
     res.json(worldState);
   } catch (err) {
@@ -94,7 +94,7 @@ router.get('/state', async (req: Request, res: Response) => {
 router.get('/forecast', async (req: Request, res: Response) => {
   try {
     const player = await prisma.player.findUnique({
-      where: { id: req.playerId },
+      where: { id: req.playerId! },
     });
 
     if (!player || !player.regionId) {
@@ -116,7 +116,7 @@ router.get('/forecast', async (req: Request, res: Response) => {
 router.get('/weather-history', async (req: Request, res: Response) => {
   try {
     const player = await prisma.player.findUnique({
-      where: { id: req.playerId },
+      where: { id: req.playerId! },
     });
 
     if (!player || !player.regionId) {
@@ -152,7 +152,7 @@ router.get('/weather-compare', async (req: Request, res: Response) => {
 
 // T-0789: Weather achievements
 router.get('/weather-achievements', (req: Request, res: Response) => {
-  const achievements = WeatherService.getWeatherAchievements(req.playerId);
+  const achievements = WeatherService.getWeatherAchievements(req.playerId!);
   res.json(achievements);
 });
 
@@ -160,7 +160,7 @@ router.get('/weather-achievements', (req: Request, res: Response) => {
 router.get('/weather-alerts', async (req: Request, res: Response) => {
   try {
     const player = await prisma.player.findUnique({
-      where: { id: req.playerId },
+      where: { id: req.playerId! },
     });
 
     if (!player || !player.regionId) {
@@ -256,7 +256,7 @@ router.post('/data-pipeline/config/:source', (req: Request, res: Response) => {
   const { source } = req.params;
   const { enabled } = req.body;
   if (typeof enabled === 'boolean') {
-    DataPipelineService.setSourceEnabled(source, enabled);
+    DataPipelineService.setSourceEnabled(source as string, enabled);
   }
   res.json({ success: true });
 });
@@ -264,19 +264,19 @@ router.post('/data-pipeline/config/:source', (req: Request, res: Response) => {
 // T-0823: Real-world data opt-out toggle
 router.post('/data-pipeline/opt-out', (req: Request, res: Response) => {
   const { optOut } = req.body;
-  DataPipelineService.setPlayerOptOut(req.playerId, !!optOut);
+  DataPipelineService.setPlayerOptOut(req.playerId!, !!optOut);
   res.json({ optedOut: !!optOut });
 });
 
 router.get('/data-pipeline/opt-out', (req: Request, res: Response) => {
-  res.json({ optedOut: DataPipelineService.isPlayerOptedOut(req.playerId) });
+  res.json({ optedOut: DataPipelineService.isPlayerOptedOut(req.playerId!) });
 });
 
 // T-0860: Per-modifier toggle
 router.post('/data-pipeline/modifiers/:modifier', (req: Request, res: Response) => {
   const { modifier } = req.params;
   const { enabled } = req.body;
-  DataPipelineService.setModifierEnabled(req.playerId, modifier, !!enabled);
+  DataPipelineService.setModifierEnabled(req.playerId!, modifier as string, !!enabled);
   res.json({ success: true });
 });
 
@@ -285,14 +285,14 @@ router.get('/modifier-summary', async (req: Request, res: Response) => {
   try {
     const snapshot = await DataPipelineService.getSnapshot();
     const modifiers = DataPipelineService.getPlayerModifiers(
-      req.playerId,
+      req.playerId!,
       snapshot.modifierSummary,
     );
 
     // T-0832: Compound effects
     const conditions = new Set<string>();
     // Add weather condition if available
-    const player = await prisma.player.findUnique({ where: { id: req.playerId } });
+    const player = await prisma.player.findUnique({ where: { id: req.playerId! } });
     if (player?.regionId) {
       const worldState = await WeatherService.getWorldState(player.regionId);
       if (worldState) {
@@ -394,7 +394,7 @@ router.get('/data-pipeline/privacy', (_req: Request, res: Response) => {
 router.post('/weather/refresh', async (req: Request, res: Response) => {
   try {
     const player = await prisma.player.findUnique({
-      where: { id: req.playerId },
+      where: { id: req.playerId! },
     });
 
     if (!player || !player.regionId) {
@@ -414,7 +414,7 @@ router.post('/weather/refresh', async (req: Request, res: Response) => {
 router.get('/expedition-modifiers', async (req: Request, res: Response) => {
   try {
     const player = await prisma.player.findUnique({
-      where: { id: req.playerId },
+      where: { id: req.playerId! },
     });
 
     if (!player || !player.regionId) {

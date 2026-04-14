@@ -273,7 +273,7 @@ export class ItemService {
       if (!guildData) continue;
 
       let meta: Record<string, unknown> = {};
-      try { if (guildData.metadata) meta = JSON.parse(guildData.metadata); } catch { /* empty */ }
+      try { if ((guildData as any).metadata) meta = JSON.parse((guildData as any).metadata); } catch { /* empty */ }
 
       const durMap: Record<string, number> = (meta.equipmentDurability as Record<string, number>) || {};
       const current = durMap[templateId] ?? template.durability;
@@ -290,7 +290,7 @@ export class ItemService {
       meta.equipmentDurability = durMap;
       await prisma.guild.update({
         where: { id: guildId },
-        data: { metadata: JSON.stringify(meta) },
+        data: { metadata: JSON.stringify(meta) } as any,
       });
     }
 
@@ -306,7 +306,7 @@ export class ItemService {
     if (!guild) throw new Error('Guild not found');
 
     let meta: Record<string, unknown> = {};
-    try { if (guild.metadata) meta = JSON.parse(guild.metadata); } catch { /* empty */ }
+    try { if ((guild as any).metadata) meta = JSON.parse((guild as any).metadata); } catch { /* empty */ }
 
     const durMap: Record<string, number> = (meta.equipmentDurability as Record<string, number>) || {};
     const current = durMap[templateId] ?? template.durability;
@@ -424,7 +424,7 @@ export class ItemService {
 
     await prisma.item.update({
       where: { id: itemId },
-      data: { metadata: JSON.stringify(meta) },
+      data: { metadata: JSON.stringify(meta) } as any,
     });
 
     return { locked: !!meta.locked };
@@ -492,7 +492,7 @@ export class ItemService {
 
     const updated = await prisma.item.update({
       where: { id: itemId },
-      data: { metadata: JSON.stringify(meta) },
+      data: { metadata: JSON.stringify(meta) } as any,
     });
 
     return { item: { ...updated, metadata: meta } };
@@ -639,7 +639,7 @@ export class ItemService {
     if (!guild) throw new Error('Guild not found');
 
     let meta: Record<string, unknown> = {};
-    try { if (guild.metadata) meta = JSON.parse(guild.metadata); } catch { /* empty */ }
+    try { if ((guild as any).metadata) meta = JSON.parse((guild as any).metadata); } catch { /* empty */ }
 
     const loadouts: Array<{ id: string; name: string; heroId: string; slots: Record<string, string | null> }> =
       (meta.equipmentLoadouts as any[]) || [];
@@ -656,7 +656,7 @@ export class ItemService {
 
     await prisma.guild.update({
       where: { id: guildId },
-      data: { metadata: JSON.stringify(meta) },
+      data: { metadata: JSON.stringify(meta) } as any,
     });
 
     return loadout;
@@ -756,7 +756,7 @@ export class ItemService {
     const levelBonus = guild.level * 10;
 
     let meta: Record<string, unknown> = {};
-    try { if (guild.metadata) meta = JSON.parse(guild.metadata); } catch { /* empty */ }
+    try { if ((guild as any).metadata) meta = JSON.parse((guild as any).metadata); } catch { /* empty */ }
     const storageUpgrades = (meta.storageUpgrades as number) || 0;
 
     const max = baseCapacity + levelBonus + storageUpgrades * 25;
@@ -769,7 +769,7 @@ export class ItemService {
     if (!guild) throw new Error('Guild not found');
 
     let meta: Record<string, unknown> = {};
-    try { if (guild.metadata) meta = JSON.parse(guild.metadata); } catch { /* empty */ }
+    try { if ((guild as any).metadata) meta = JSON.parse((guild as any).metadata); } catch { /* empty */ }
 
     const storageUpgrades = ((meta.storageUpgrades as number) || 0);
     const cost = 50 + storageUpgrades * 25;

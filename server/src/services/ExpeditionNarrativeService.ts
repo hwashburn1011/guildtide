@@ -221,7 +221,7 @@ interface HeroData {
 function getPartyStatAverage(heroes: HeroData[], stat: string): number {
   let total = 0;
   for (const hero of heroes) {
-    const s = hero.stats as Record<string, number | undefined>;
+    const s = hero.stats as unknown as Record<string, number | undefined>;
     total += (s[stat] ?? 10) + hero.level * 2;
   }
   return total / Math.max(heroes.length, 1);

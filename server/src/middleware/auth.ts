@@ -89,7 +89,7 @@ export function generateTokens(playerId: string, role: UserRole = 'user') {
   const accessToken = jwt.sign(
     { playerId, role } as AuthPayload,
     config.jwtSecret,
-    { expiresIn: config.jwtExpiresIn },
+    { expiresIn: config.jwtExpiresIn as string & jwt.SignOptions['expiresIn'] },
   );
 
   const refreshToken = randomBytes(40).toString('hex');

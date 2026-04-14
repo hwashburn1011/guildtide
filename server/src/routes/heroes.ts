@@ -62,7 +62,7 @@ router.get('/:id/detail', async (req: Request, res: Response) => {
   try {
     const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
-    const detail = await HeroProgressionService.getHeroDetail(req.params.id, guild.id);
+    const detail = await HeroProgressionService.getHeroDetail(req.params.id as string, guild.id);
     res.json(detail);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'detail_failed', message: err.message });
@@ -92,7 +92,7 @@ router.post('/:id/assign', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { assignment } = req.body;
-    const hero = await HeroService.assign(req.params.id, assignment ?? null, guild.id);
+    const hero = await HeroService.assign(req.params.id as string, assignment ?? null, guild.id);
     res.json(hero);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'assign_failed', message: err.message });
@@ -106,7 +106,7 @@ router.post('/:id/dismiss', async (req: Request, res: Response) => {
     const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
-    const result = await HeroProgressionService.dismiss(req.params.id, guild.id);
+    const result = await HeroProgressionService.dismiss(req.params.id as string, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'dismiss_failed', message: err.message });
@@ -121,7 +121,7 @@ router.post('/:id/xp', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { amount, source } = req.body;
-    const result = await HeroProgressionService.awardXP(req.params.id, amount || 0, source || 'manual');
+    const result = await HeroProgressionService.awardXP(req.params.id as string, amount || 0, source || 'manual');
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'xp_failed', message: err.message });
@@ -133,7 +133,7 @@ router.post('/:id/xp', async (req: Request, res: Response) => {
 router.post('/:id/skills/unlock', async (req: Request, res: Response) => {
   try {
     const { skillId } = req.body;
-    const result = await HeroProgressionService.unlockSkill(req.params.id, skillId);
+    const result = await HeroProgressionService.unlockSkill(req.params.id as string, skillId);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'skill_failed', message: err.message });
@@ -147,7 +147,7 @@ router.post('/:id/skills/respec', async (req: Request, res: Response) => {
     const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
-    const result = await HeroProgressionService.respecSkills(req.params.id, guild.id);
+    const result = await HeroProgressionService.respecSkills(req.params.id as string, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'respec_failed', message: err.message });
@@ -157,7 +157,7 @@ router.post('/:id/skills/respec', async (req: Request, res: Response) => {
 
 // Get skill tree for role
 router.get('/skill-trees/:role', async (_req: Request, res: Response) => {
-  const tree = SKILL_TREES[_req.params.role as HeroRole];
+  const tree = SKILL_TREES[_req.params.role as string as HeroRole];
   if (!tree) { res.status(404).json({ error: 'not_found', message: 'No skill tree for this role' }); return; }
   res.json(tree);
 });
@@ -168,7 +168,7 @@ router.post('/:id/retire', async (req: Request, res: Response) => {
     const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
-    const result = await HeroProgressionService.retireHero(req.params.id, guild.id);
+    const result = await HeroProgressionService.retireHero(req.params.id as string, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'retire_failed', message: err.message });
@@ -183,7 +183,7 @@ router.post('/:id/train', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { stat } = req.body;
-    const result = await HeroProgressionService.startTraining(req.params.id, stat, guild.id);
+    const result = await HeroProgressionService.startTraining(req.params.id as string, stat, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'train_failed', message: err.message });
@@ -195,7 +195,7 @@ router.post('/:id/train', async (req: Request, res: Response) => {
 router.post('/:id/morale', async (req: Request, res: Response) => {
   try {
     const { delta } = req.body;
-    const result = await HeroProgressionService.adjustMorale(req.params.id, delta || 0);
+    const result = await HeroProgressionService.adjustMorale(req.params.id as string, delta || 0);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'morale_failed', message: err.message });
@@ -210,7 +210,7 @@ router.post('/:id/specialize', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { specializationId } = req.body;
-    const result = await HeroProgressionService.specialize(req.params.id, specializationId, guild.id);
+    const result = await HeroProgressionService.specialize(req.params.id as string, specializationId, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'specialize_failed', message: err.message });
@@ -225,7 +225,7 @@ router.post('/:id/evolve', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { evolutionId } = req.body;
-    const result = await HeroProgressionService.evolveClass(req.params.id, evolutionId, guild.id);
+    const result = await HeroProgressionService.evolveClass(req.params.id as string, evolutionId, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'evolve_failed', message: err.message });
@@ -240,7 +240,7 @@ router.post('/:id/nickname', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { nickname } = req.body;
-    const result = await HeroProgressionService.setNickname(req.params.id, nickname, guild.id);
+    const result = await HeroProgressionService.setNickname(req.params.id as string, nickname, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'nickname_failed', message: err.message });
@@ -254,7 +254,7 @@ router.post('/:id/favorite', async (req: Request, res: Response) => {
     const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
-    const result = await HeroProgressionService.toggleFavorite(req.params.id, guild.id);
+    const result = await HeroProgressionService.toggleFavorite(req.params.id as string, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'favorite_failed', message: err.message });
@@ -350,14 +350,14 @@ router.post('/batch/rest-all', async (req: Request, res: Response) => {
 
 // Get specializations for a role
 router.get('/specializations/:role', async (req: Request, res: Response) => {
-  const specs = SPECIALIZATIONS[req.params.role];
+  const specs = SPECIALIZATIONS[req.params.role as string];
   if (!specs) { res.status(404).json({ error: 'not_found', message: 'No specializations for this role' }); return; }
   res.json(specs);
 });
 
 // Get class evolutions for a role
 router.get('/evolutions/:role', async (req: Request, res: Response) => {
-  const evolutions = CLASS_EVOLUTIONS[req.params.role];
+  const evolutions = CLASS_EVOLUTIONS[req.params.role as string];
   if (!evolutions) { res.status(404).json({ error: 'not_found', message: 'No evolutions for this role' }); return; }
   res.json(evolutions);
 });
@@ -382,7 +382,7 @@ router.post('/:id/reroll', async (req: Request, res: Response) => {
     const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
-    const result = await HeroProgressionService.rerollStats(req.params.id, guild.id);
+    const result = await HeroProgressionService.rerollStats(req.params.id as string, guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'reroll_failed', message: err.message });
@@ -397,7 +397,7 @@ router.post('/:id/wishlist', async (req: Request, res: Response) => {
     if (!guild) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
 
     const { items } = req.body;
-    const result = await HeroProgressionService.setWishList(req.params.id, items || [], guild.id);
+    const result = await HeroProgressionService.setWishList(req.params.id as string, items || [], guild.id);
     res.json(result);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ error: 'wishlist_failed', message: err.message });

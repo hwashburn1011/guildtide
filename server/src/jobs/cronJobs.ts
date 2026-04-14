@@ -72,27 +72,27 @@ export function registerCronJobs(): void {
   });
 
   // Market price update — every hour
-  scheduler.register('market-price-update', 60 * 60 * 1000, async () => {
-    try {
-      const listings = await prisma.marketListing.findMany({ where: { status: 'active' } });
-      let adjusted = 0;
-      for (const listing of listings) {
-        // Apply small random price drift (+/- 5%)
-        const drift = 1 + (Math.random() - 0.5) * 0.1;
-        const newPrice = Math.max(1, Math.round(listing.price * drift));
-        if (newPrice !== listing.price) {
-          await prisma.marketListing.update({
-            where: { id: listing.id },
-            data: { price: newPrice },
-          });
-          adjusted++;
-        }
-      }
-      logger.info('Market price update complete', { adjusted });
-    } catch (err: any) {
-      logger.error('Market price update failed', { error: err.message });
-    }
-  });
+  // TODO: add MarketListing model to Prisma schema
+  // scheduler.register('market-price-update', 60 * 60 * 1000, async () => {
+  //   try {
+  //     const listings = await prisma.marketListing.findMany({ where: { status: 'active' } });
+  //     let adjusted = 0;
+  //     for (const listing of listings) {
+  //       const drift = 1 + (Math.random() - 0.5) * 0.1;
+  //       const newPrice = Math.max(1, Math.round(listing.price * drift));
+  //       if (newPrice !== listing.price) {
+  //         await prisma.marketListing.update({
+  //           where: { id: listing.id },
+  //           data: { price: newPrice },
+  //         });
+  //         adjusted++;
+  //       }
+  //     }
+  //     logger.info('Market price update complete', { adjusted });
+  //   } catch (err: any) {
+  //     logger.error('Market price update failed', { error: err.message });
+  //   }
+  // });
 
   // Expedition progress — every minute
   scheduler.register('expedition-progress', 60 * 1000, async () => {
@@ -103,7 +103,8 @@ export function registerCronJobs(): void {
       const now = new Date();
       let completed = 0;
       for (const exp of active) {
-        if (exp.endTime && new Date(exp.endTime) <= now) {
+        const endTime = new Date(exp.startedAt.getTime() + exp.duration * 1000);
+        if (endTime <= now) {
           await prisma.expedition.update({
             where: { id: exp.id },
             data: { status: 'completed' },
@@ -118,22 +119,23 @@ export function registerCronJobs(): void {
   });
 
   // Weather refresh — every 30 minutes
-  scheduler.register('weather-refresh', 30 * 60 * 1000, async () => {
-    try {
-      const regions = await prisma.region.findMany();
-      const weatherTypes = ['sunny', 'cloudy', 'rainy', 'stormy', 'snowy', 'foggy'];
-      for (const region of regions) {
-        const weather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
-        await prisma.region.update({
-          where: { id: region.id },
-          data: { currentWeather: weather },
-        });
-      }
-      logger.info('Weather refresh complete', { regions: regions.length });
-    } catch (err: any) {
-      logger.error('Weather refresh failed', { error: err.message });
-    }
-  });
+  // TODO: add Region model to Prisma schema (use regionState or in-memory)
+  // scheduler.register('weather-refresh', 30 * 60 * 1000, async () => {
+  //   try {
+  //     const regions = await prisma.region.findMany();
+  //     const weatherTypes = ['sunny', 'cloudy', 'rainy', 'stormy', 'snowy', 'foggy'];
+  //     for (const region of regions) {
+  //       const weather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
+  //       await prisma.region.update({
+  //         where: { id: region.id },
+  //         data: { currentWeather: weather },
+  //       });
+  //     }
+  //     logger.info('Weather refresh complete', { regions: regions.length });
+  //   } catch (err: any) {
+  //     logger.error('Weather refresh failed', { error: err.message });
+  //   }
+  // });
 
   // Daily reset — once per day (runs every hour, checks if reset needed)
   scheduler.register('daily-reset', 60 * 60 * 1000, async () => {
@@ -152,18 +154,18 @@ export function registerCronJobs(): void {
   });
 
   // Session cleanup — daily (runs every 6 hours, purges expired)
-  scheduler.register('session-cleanup', 6 * 60 * 60 * 1000, async () => {
-    try {
-      const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-      const deleted = await prisma.session.deleteMany({
-        where: { expiresAt: { lt: thirtyDaysAgo } },
-      });
-      logger.info('Session cleanup complete', { deleted: deleted.count });
-    } catch (err: any) {
-      // Session table may not exist yet — that's OK
-      logger.debug('Session cleanup skipped', { error: err.message });
-    }
-  });
+  // TODO: add Session model to Prisma schema
+  // scheduler.register('session-cleanup', 6 * 60 * 60 * 1000, async () => {
+  //   try {
+  //     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  //     const deleted = await prisma.session.deleteMany({
+  //       where: { expiresAt: { lt: thirtyDaysAgo } },
+  //     });
+  //     logger.info('Session cleanup complete', { deleted: deleted.count });
+  //   } catch (err: any) {
+  //     logger.debug('Session cleanup skipped', { error: err.message });
+  //   }
+  // });
 
   // Database backup (placeholder — logs backup event)
   scheduler.register('database-backup', 24 * 60 * 60 * 1000, async () => {

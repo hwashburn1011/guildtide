@@ -1199,7 +1199,7 @@ export class CombatService {
 
     for (const target of targetList) {
       const effectiveAccuracy = hero.accuracy + ability.accuracy - 80;
-      const targetEvasion = 'evasion' in target ? (target as CombatHero).evasion : 5;
+      const targetEvasion = 'evasion' in target ? (target as unknown as CombatHero).evasion : 5;
 
       // T-1247: Dodge check
       if (this.rollDodge(targetEvasion, effectiveAccuracy)) {
@@ -1222,7 +1222,7 @@ export class CombatService {
       );
 
       // T-1257: Row-based targeting — back row takes less melee damage
-      if (ability.damageType === 'physical' && 'row' in target && (target as CombatHero).row === 'back') {
+      if (ability.damageType === 'physical' && 'row' in target && (target as unknown as CombatHero).row === 'back') {
         damage = Math.round(damage * 0.7);
       }
 

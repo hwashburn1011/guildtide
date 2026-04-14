@@ -19,8 +19,9 @@ import type {
   ResourceSnapshot,
   ResourceForecast,
   ResourceAuditEntry,
-  ConversionRecipe,
+  ResourceAlert,
 } from '../../../shared/src/types';
+import type { ConversionRecipe } from '../../../shared/src/constants';
 import { IdleProgressService } from './IdleProgressService';
 import { WeatherService } from './WeatherService';
 import { CalendarService } from './CalendarService';

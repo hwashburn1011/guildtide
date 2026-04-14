@@ -50,8 +50,8 @@ router.get('/dashboard', authMiddleware, async (_req: Request, res: Response) =>
 
 router.get('/funnels/:funnelId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const steps = AnalyticsService.getFunnelAnalysis(req.params.funnelId);
-    res.json({ funnelId: req.params.funnelId, steps });
+    const steps = AnalyticsService.getFunnelAnalysis(req.params.funnelId as string);
+    res.json({ funnelId: req.params.funnelId as string, steps });
   } catch (err) {
     console.error('Funnel analysis error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
@@ -92,8 +92,8 @@ router.get('/segments', authMiddleware, async (_req: Request, res: Response) => 
 
 router.get('/churn/:playerId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const risk = AnalyticsService.getChurnRisk(req.params.playerId);
-    res.json({ playerId: req.params.playerId, churnRisk: risk });
+    const risk = AnalyticsService.getChurnRisk(req.params.playerId as string);
+    res.json({ playerId: req.params.playerId as string, churnRisk: risk });
   } catch (err) {
     console.error('Churn prediction error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
@@ -106,7 +106,7 @@ router.get('/churn/:playerId', authMiddleware, async (req: Request, res: Respons
 
 router.get('/ab-tests/:testId', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const results = AnalyticsService.getABTestResults(req.params.testId);
+    const results = AnalyticsService.getABTestResults(req.params.testId as string);
     res.json(results);
   } catch (err) {
     console.error('AB test results error:', err);

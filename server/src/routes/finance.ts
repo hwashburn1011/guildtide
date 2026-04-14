@@ -119,7 +119,7 @@ router.post('/ventures', async (req: Request, res: Response) => {
 // POST /ventures/:id/liquidate — Liquidate a venture
 router.post('/ventures/:id/liquidate', async (req: Request, res: Response) => {
   try {
-    const result = SapphireExchangeService.liquidateVenture(req.playerId!, req.params.id);
+    const result = SapphireExchangeService.liquidateVenture(req.playerId!, req.params.id as string);
     if (!result) {
       res.status(404).json({ error: 'not_found', message: 'Venture not found or already liquidated' });
       return;

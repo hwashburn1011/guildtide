@@ -161,7 +161,7 @@ router.get('/weather-forecast', async (req: Request, res: Response) => {
 // GET /leaderboard/:destinationId — fastest completion times
 router.get('/leaderboard/:destinationId', async (req: Request, res: Response) => {
   try {
-    const leaderboard = await ExpeditionService.getLeaderboard(req.params.destinationId);
+    const leaderboard = await ExpeditionService.getLeaderboard(req.params.destinationId as string);
     res.json(leaderboard);
   } catch (err) {
     console.error('Leaderboard error:', err);
@@ -181,7 +181,7 @@ router.get('/encounter-history/:destinationId', async (req: Request, res: Respon
     }
     const history = await ExpeditionService.getEncounterHistory(
       guild.id,
-      req.params.destinationId,
+      req.params.destinationId as string,
     );
     res.json(history);
   } catch (err) {
@@ -211,20 +211,20 @@ router.post('/party-power', async (req: Request, res: Response) => {
 
 // GET /recommend/:destinationId — get party recommendation
 router.get('/recommend/:destinationId', async (req: Request, res: Response) => {
-  const recommendation = ExpeditionService.getRecommendation(req.params.destinationId);
+  const recommendation = ExpeditionService.getRecommendation(req.params.destinationId as string);
   res.json(recommendation ?? { recommendedRoles: [], minimumPower: 0, tips: [] });
 });
 
 // GET /scout/:destinationId — scouting pre-check
 router.get('/scout/:destinationId', async (req: Request, res: Response) => {
   const scoutLevel = parseInt(req.query.scoutLevel as string) || 1;
-  const result = ExpeditionService.scoutDestination(req.params.destinationId, scoutLevel);
+  const result = ExpeditionService.scoutDestination(req.params.destinationId as string, scoutLevel);
   res.json(result ?? { revealedEncounters: [], estimatedDanger: 'Unknown' });
 });
 
 // GET /post-mortem/:destinationId — post-mortem analysis
 router.get('/post-mortem/:destinationId', async (req: Request, res: Response) => {
-  const analysis = ExpeditionService.getPostMortem(req.params.destinationId);
+  const analysis = ExpeditionService.getPostMortem(req.params.destinationId as string);
   res.json(analysis ?? {});
 });
 

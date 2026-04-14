@@ -35,7 +35,7 @@
  * T-1070: End-of-quarter financial summary event
  */
 import { FinancialDataService, type FinancialSnapshot } from './FinancialDataService';
-import { translateToFantasy, type SectorPerformance } from '../data/financialMappings';
+import { translateToFantasy, stockMarketToMerchantEffect, fearGreedToMerchantBehavior, goldPriceToEffect, type SectorPerformance } from '../data/financialMappings';
 
 // ---- Venture / Investment System (T-1038, T-1039) ----
 
@@ -339,7 +339,7 @@ export class SapphireExchangeService {
       'resource_split',
       `${fantasyResource} Bounty Split`,
       `A magical duplication event affects ${fantasyResource}! Quantities double but individual unit value halves.`,
-      { [`${resource}Quantity`: 2.0, [`${resource}UnitValue`]: 0.5 },
+      { [`${resource}Quantity`]: 2.0, [`${resource}UnitValue`]: 0.5 },
       24,
     );
   }

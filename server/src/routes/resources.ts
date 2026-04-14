@@ -396,9 +396,9 @@ router.post('/reserve', async (req: Request, res: Response) => {
 
     // Validate reserve amounts
     const resources = JSON.parse(guild.resources) as Record<ResourceType, number>;
-    for (const [res, amount] of Object.entries(reserves)) {
+    for (const [resKey, amount] of Object.entries(reserves)) {
       if (typeof amount !== 'number' || amount < 0) {
-        res.status(400).json({ error: 'validation', message: `Invalid reserve for ${res}` });
+        res.status(400).json({ error: 'validation', message: `Invalid reserve for ${resKey}` });
         return;
       }
     }
