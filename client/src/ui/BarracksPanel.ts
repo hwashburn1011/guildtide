@@ -149,7 +149,7 @@ export class BarracksPanel {
           maxValue: 100,
           fillColor: COLORS.success,
         });
-        container.add(bar.getContainer());
+        container.add(bar);
 
         y += cardH + 6;
       }
@@ -184,10 +184,10 @@ export class BarracksPanel {
           width: 70,
           height: 24,
           text: 'Train',
-          style: 'primary',
+          variant: 'primary',
           onClick: () => this.assignHero(hero.id),
         });
-        container.add(assignBtn.getContainer());
+        container.add(assignBtn);
 
         y += 28;
       }
@@ -197,12 +197,12 @@ export class BarracksPanel {
   private async assignHero(heroId: string): Promise<void> {
     try {
       await apiClient.assignHero(heroId, 'barracks');
-      NotificationSystem.getInstance(this.scene).showSuccess('Hero assigned to training!');
+      NotificationSystem.show(this.scene, 'Hero assigned to training!', 'success');
       this.modal?.destroy();
       this.modal = null;
       this.onRefresh();
     } catch {
-      NotificationSystem.getInstance(this.scene).showError('Failed to assign hero');
+      NotificationSystem.show(this.scene, 'Failed to assign hero', 'error');
     }
   }
 

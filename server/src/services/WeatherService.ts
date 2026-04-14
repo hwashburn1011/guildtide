@@ -362,7 +362,12 @@ export class WeatherService {
     temperature: number;
     modifiers: Record<string, number>;
   }>> {
-    const comparisons = [];
+    const comparisons: Array<{
+      regionId: string;
+      condition: string;
+      temperature: number;
+      modifiers: Record<string, number>;
+    }> = [];
     for (const regionId of regionIds) {
       const weather = await WeatherService.fetchWeather(regionId);
       const condition = classifyWeather(weather.condition, weather.temp);
@@ -371,7 +376,7 @@ export class WeatherService {
         regionId,
         condition,
         temperature: weather.temp,
-        modifiers,
+        modifiers: modifiers as unknown as Record<string, number>,
       });
     }
     return comparisons;

@@ -197,10 +197,10 @@ export class NpcMerchantPanel {
         width: 55,
         height: 22,
         text: 'Buy 10',
-        style: 'primary',
+        variant: 'primary',
         onClick: () => this.buyFromMerchant(merchant.id, item.resource, 10),
       });
-      container.add(buyBtn.getContainer());
+      container.add(buyBtn);
 
       y += 28;
     }
@@ -209,11 +209,11 @@ export class NpcMerchantPanel {
   private async buyFromMerchant(merchantId: string, resource: string, quantity: number): Promise<void> {
     try {
       await apiClient.buyFromMerchant(merchantId, resource, quantity);
-      NotificationSystem.getInstance(this.scene).showSuccess(`Bought ${quantity} ${resource}`);
+      NotificationSystem.show(this.scene, `Bought ${quantity} ${resource}`, 'success');
       this.onRefresh();
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Purchase failed';
-      NotificationSystem.getInstance(this.scene).showError(msg);
+      NotificationSystem.show(this.scene, msg, 'error');
     }
   }
 

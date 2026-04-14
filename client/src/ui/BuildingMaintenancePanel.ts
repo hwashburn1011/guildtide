@@ -137,10 +137,10 @@ export class BuildingMaintenancePanel {
         width: 160,
         height: 36,
         text: 'Pay Maintenance',
-        style: 'primary',
+        variant: 'primary',
         onClick: () => this.payMaintenance(building.type),
       });
-      container.add(payBtn.getContainer());
+      container.add(payBtn);
       y += 50;
     }
 
@@ -159,12 +159,10 @@ export class BuildingMaintenancePanel {
     const toggle = new UIToggle(this.scene, {
       x: 220,
       y: y - 2,
-      width: 50,
-      height: 24,
-      value: autoCollect,
+      isOn: autoCollect,
       onChange: (val) => this.toggleAutoCollect(building.type, val),
     });
-    container.add(toggle.getContainer());
+    container.add(toggle);
     y += 35;
 
     // Storage warning (T-0362)
@@ -208,12 +206,12 @@ export class BuildingMaintenancePanel {
   private async payMaintenance(buildingType: string): Promise<void> {
     try {
       await apiClient.payBuildingMaintenance(buildingType);
-      NotificationSystem.getInstance(this.scene).showSuccess('Maintenance paid!');
+      NotificationSystem.show(this.scene, 'Maintenance paid!', 'success');
       this.modal?.destroy();
       this.modal = null;
       this.onRefresh();
     } catch {
-      NotificationSystem.getInstance(this.scene).showError('Failed to pay maintenance');
+      NotificationSystem.show(this.scene, 'Failed to pay maintenance', 'error');
     }
   }
 
@@ -221,9 +219,9 @@ export class BuildingMaintenancePanel {
     try {
       await apiClient.toggleBuildingAutoCollect(buildingType, enabled);
       const msg = enabled ? 'Auto-collect enabled' : 'Auto-collect disabled';
-      NotificationSystem.getInstance(this.scene).showSuccess(msg);
+      NotificationSystem.show(this.scene, msg, 'success');
     } catch {
-      NotificationSystem.getInstance(this.scene).showError('Failed to toggle auto-collect');
+      NotificationSystem.show(this.scene, 'Failed to toggle auto-collect', 'error');
     }
   }
 

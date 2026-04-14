@@ -29,7 +29,7 @@ router.get('/players/search', async (req: Request, res: Response) => {
 // Get player public profile
 router.get('/players/:playerId/profile', async (req: Request, res: Response) => {
   try {
-    const profile = await SocialService.getPlayerProfile(req.params.playerId);
+    const profile = await SocialService.getPlayerProfile(req.params.playerId as string);
     if (!profile) {
       res.status(404).json({ error: 'not_found', message: 'Player not found' });
       return;
@@ -44,7 +44,7 @@ router.get('/players/:playerId/profile', async (req: Request, res: Response) => 
 // Get player card (shareable)
 router.get('/players/:playerId/card', async (req: Request, res: Response) => {
   try {
-    const card = await SocialService.getPlayerCard(req.params.playerId);
+    const card = await SocialService.getPlayerCard(req.params.playerId as string);
     if (!card) {
       res.status(404).json({ error: 'not_found', message: 'Player not found' });
       return;
@@ -60,8 +60,8 @@ router.get('/players/:playerId/card', async (req: Request, res: Response) => {
 router.get('/players/compare/:playerAId/:playerBId', async (req: Request, res: Response) => {
   try {
     const comparison = await SocialService.compareProfiles(
-      req.params.playerAId,
-      req.params.playerBId,
+      req.params.playerAId as string,
+      req.params.playerBId as string,
     );
     if (!comparison) {
       res.status(404).json({ error: 'not_found', message: 'Player not found' });
@@ -139,7 +139,7 @@ router.get('/friends/requests', (req: Request, res: Response) => {
 // Accept friend request
 router.post('/friends/request/:requestId/accept', (req: Request, res: Response) => {
   try {
-    SocialService.acceptFriendRequest(req.params.requestId, req.playerId!);
+    SocialService.acceptFriendRequest(req.params.requestId as string, req.playerId!);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -149,7 +149,7 @@ router.post('/friends/request/:requestId/accept', (req: Request, res: Response) 
 // Decline friend request
 router.post('/friends/request/:requestId/decline', (req: Request, res: Response) => {
   try {
-    SocialService.declineFriendRequest(req.params.requestId, req.playerId!);
+    SocialService.declineFriendRequest(req.params.requestId as string, req.playerId!);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -159,7 +159,7 @@ router.post('/friends/request/:requestId/decline', (req: Request, res: Response)
 // Remove friend
 router.delete('/friends/:friendId', (req: Request, res: Response) => {
   try {
-    SocialService.removeFriend(req.playerId!, req.params.friendId);
+    SocialService.removeFriend(req.playerId!, req.params.friendId as string);
     res.json({ success: true });
   } catch (err) {
     console.error('Remove friend error:', err);
@@ -199,8 +199,8 @@ router.get('/chat/:channel/:channelId', (req: Request, res: Response) => {
     const limit = parseInt(req.query.limit as string) || 50;
     const before = req.query.before as string;
     const messages = SocialService.getMessages(
-      req.params.channel as ChatChannel,
-      req.params.channelId,
+      req.params.channel as string as ChatChannel,
+      req.params.channelId as string,
       limit,
       before,
     );
@@ -251,7 +251,7 @@ router.get('/chat/conversations', (req: Request, res: Response) => {
 // Block player
 router.post('/block/:targetId', (req: Request, res: Response) => {
   try {
-    SocialService.blockPlayer(req.playerId!, req.params.targetId);
+    SocialService.blockPlayer(req.playerId!, req.params.targetId as string);
     res.json({ success: true });
   } catch (err) {
     console.error('Block player error:', err);
@@ -262,7 +262,7 @@ router.post('/block/:targetId', (req: Request, res: Response) => {
 // Unblock player
 router.delete('/block/:targetId', (req: Request, res: Response) => {
   try {
-    SocialService.unblockPlayer(req.playerId!, req.params.targetId);
+    SocialService.unblockPlayer(req.playerId!, req.params.targetId as string);
     res.json({ success: true });
   } catch (err) {
     console.error('Unblock player error:', err);
@@ -315,7 +315,7 @@ router.post('/trade', async (req: Request, res: Response) => {
 // Accept trade
 router.post('/trade/:tradeId/accept', async (req: Request, res: Response) => {
   try {
-    const trade = await SocialService.acceptTrade(req.params.tradeId, req.playerId!);
+    const trade = await SocialService.acceptTrade(req.params.tradeId as string, req.playerId!);
     res.json(trade);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -325,7 +325,7 @@ router.post('/trade/:tradeId/accept', async (req: Request, res: Response) => {
 // Decline trade
 router.post('/trade/:tradeId/decline', (req: Request, res: Response) => {
   try {
-    SocialService.declineTrade(req.params.tradeId, req.playerId!);
+    SocialService.declineTrade(req.params.tradeId as string, req.playerId!);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -383,7 +383,7 @@ router.get('/gifts', (req: Request, res: Response) => {
 // Claim gift
 router.post('/gift/:giftId/claim', (req: Request, res: Response) => {
   try {
-    const gift = SocialService.claimGift(req.params.giftId, req.playerId!);
+    const gift = SocialService.claimGift(req.params.giftId as string, req.playerId!);
     res.json(gift);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -424,7 +424,7 @@ router.get('/notifications', (req: Request, res: Response) => {
 // Mark notification as read
 router.post('/notifications/:notifId/read', (req: Request, res: Response) => {
   try {
-    SocialService.markNotificationRead(req.params.notifId, req.playerId!);
+    SocialService.markNotificationRead(req.params.notifId as string, req.playerId!);
     res.json({ success: true });
   } catch (err) {
     console.error('Mark notification read error:', err);
@@ -471,7 +471,7 @@ router.put('/notifications/prefs', (req: Request, res: Response) => {
 // Follow player
 router.post('/follow/:targetId', (req: Request, res: Response) => {
   try {
-    SocialService.followPlayer(req.playerId!, req.params.targetId);
+    SocialService.followPlayer(req.playerId!, req.params.targetId as string);
     res.json({ success: true });
   } catch (err) {
     console.error('Follow error:', err);
@@ -482,7 +482,7 @@ router.post('/follow/:targetId', (req: Request, res: Response) => {
 // Unfollow player
 router.delete('/follow/:targetId', (req: Request, res: Response) => {
   try {
-    SocialService.unfollowPlayer(req.playerId!, req.params.targetId);
+    SocialService.unfollowPlayer(req.playerId!, req.params.targetId as string);
     res.json({ success: true });
   } catch (err) {
     console.error('Unfollow error:', err);
@@ -573,7 +573,7 @@ router.post('/world-boss/:bossId/attack', (req: Request, res: Response) => {
   try {
     const { damage, allianceId } = req.body;
     const boss = SocialService.attackWorldBoss(
-      req.params.bossId, req.playerId!, allianceId ?? null, damage ?? 100,
+      req.params.bossId as string, req.playerId!, allianceId ?? null, damage ?? 100,
     );
     res.json(boss);
   } catch (err: any) {
@@ -584,7 +584,7 @@ router.post('/world-boss/:bossId/attack', (req: Request, res: Response) => {
 // Get world boss rewards
 router.get('/world-boss/:bossId/rewards', (req: Request, res: Response) => {
   try {
-    const rewards = SocialService.getWorldBossRewards(req.params.bossId);
+    const rewards = SocialService.getWorldBossRewards(req.params.bossId as string);
     res.json(rewards);
   } catch (err) {
     console.error('Get boss rewards error:', err);
@@ -626,7 +626,7 @@ router.post('/validate', (req: Request, res: Response) => {
 // Spectator check
 router.get('/spectate/:targetId', (req: Request, res: Response) => {
   try {
-    const canSpectate = SocialService.canSpectate(req.playerId!, req.params.targetId);
+    const canSpectate = SocialService.canSpectate(req.playerId!, req.params.targetId as string);
     res.json({ canSpectate });
   } catch (err) {
     console.error('Spectate check error:', err);

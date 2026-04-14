@@ -46,7 +46,7 @@ router.get('/mine', (req: Request, res: Response) => {
 // Get alliance by ID
 router.get('/:allianceId', (req: Request, res: Response) => {
   try {
-    const alliance = AllianceService.getAlliance(req.params.allianceId);
+    const alliance = AllianceService.getAlliance(req.params.allianceId as string);
     if (!alliance) {
       res.status(404).json({ error: 'not_found', message: 'Alliance not found' });
       return;
@@ -63,7 +63,7 @@ router.put('/:allianceId', async (req: Request, res: Response) => {
   try {
     const { description, rules } = req.body;
     const alliance = await AllianceService.updateAllianceDescription(
-      req.params.allianceId, req.playerId!, description, rules,
+      req.params.allianceId as string, req.playerId!, description, rules,
     );
     res.json(alliance);
   } catch (err: any) {
@@ -76,7 +76,7 @@ router.put('/:allianceId/emblem', async (req: Request, res: Response) => {
   try {
     const { emblem } = req.body;
     const alliance = await AllianceService.updateAllianceEmblem(
-      req.params.allianceId, req.playerId!, emblem,
+      req.params.allianceId as string, req.playerId!, emblem,
     );
     res.json(alliance);
   } catch (err: any) {
@@ -87,7 +87,7 @@ router.put('/:allianceId/emblem', async (req: Request, res: Response) => {
 // Leave alliance
 router.post('/:allianceId/leave', async (req: Request, res: Response) => {
   try {
-    await AllianceService.leaveAlliance(req.params.allianceId, req.playerId!);
+    await AllianceService.leaveAlliance(req.params.allianceId as string, req.playerId!);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -114,7 +114,7 @@ router.post('/:allianceId/invite', async (req: Request, res: Response) => {
   try {
     const { toPlayerId } = req.body;
     const invite = await AllianceService.invitePlayer(
-      req.params.allianceId, req.playerId!, toPlayerId,
+      req.params.allianceId as string, req.playerId!, toPlayerId,
     );
     res.json(invite);
   } catch (err: any) {
@@ -136,7 +136,7 @@ router.get('/invites/pending', (req: Request, res: Response) => {
 // Accept invite
 router.post('/invites/:inviteId/accept', async (req: Request, res: Response) => {
   try {
-    const alliance = await AllianceService.acceptInvite(req.params.inviteId, req.playerId!);
+    const alliance = await AllianceService.acceptInvite(req.params.inviteId as string, req.playerId!);
     res.json(alliance);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -146,7 +146,7 @@ router.post('/invites/:inviteId/accept', async (req: Request, res: Response) => 
 // Decline invite
 router.post('/invites/:inviteId/decline', (req: Request, res: Response) => {
   try {
-    AllianceService.declineInvite(req.params.inviteId, req.playerId!);
+    AllianceService.declineInvite(req.params.inviteId as string, req.playerId!);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -160,7 +160,7 @@ router.post('/invites/:inviteId/decline', (req: Request, res: Response) => {
 // Kick member
 router.post('/:allianceId/kick/:targetId', async (req: Request, res: Response) => {
   try {
-    await AllianceService.kickMember(req.params.allianceId, req.playerId!, req.params.targetId);
+    await AllianceService.kickMember(req.params.allianceId as string, req.playerId!, req.params.targetId as string);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -171,7 +171,7 @@ router.post('/:allianceId/kick/:targetId', async (req: Request, res: Response) =
 router.post('/:allianceId/promote/:targetId', async (req: Request, res: Response) => {
   try {
     const member = await AllianceService.promoteOfficer(
-      req.params.allianceId, req.playerId!, req.params.targetId,
+      req.params.allianceId as string, req.playerId!, req.params.targetId as string,
     );
     res.json(member);
   } catch (err: any) {
@@ -183,7 +183,7 @@ router.post('/:allianceId/promote/:targetId', async (req: Request, res: Response
 router.post('/:allianceId/demote/:targetId', async (req: Request, res: Response) => {
   try {
     const member = await AllianceService.demoteOfficer(
-      req.params.allianceId, req.playerId!, req.params.targetId,
+      req.params.allianceId as string, req.playerId!, req.params.targetId as string,
     );
     res.json(member);
   } catch (err: any) {
@@ -195,7 +195,7 @@ router.post('/:allianceId/demote/:targetId', async (req: Request, res: Response)
 router.get('/:allianceId/inactive', (req: Request, res: Response) => {
   try {
     const days = parseInt(req.query.days as string) || 14;
-    const inactive = AllianceService.getInactiveMembers(req.params.allianceId, days);
+    const inactive = AllianceService.getInactiveMembers(req.params.allianceId as string, days);
     res.json(inactive);
   } catch (err) {
     console.error('Get inactive error:', err);
@@ -207,7 +207,7 @@ router.get('/:allianceId/inactive', (req: Request, res: Response) => {
 router.post('/:allianceId/auto-kick', async (req: Request, res: Response) => {
   try {
     const { days } = req.body;
-    const kicked = await AllianceService.autoKickInactive(req.params.allianceId, days ?? 14);
+    const kicked = await AllianceService.autoKickInactive(req.params.allianceId as string, days ?? 14);
     res.json({ kicked });
   } catch (err) {
     console.error('Auto-kick error:', err);
@@ -223,7 +223,7 @@ router.post('/:allianceId/auto-kick', async (req: Request, res: Response) => {
 router.post('/:allianceId/treasury/deposit', async (req: Request, res: Response) => {
   try {
     const { resources } = req.body;
-    await AllianceService.depositTreasury(req.params.allianceId, req.playerId!, resources);
+    await AllianceService.depositTreasury(req.params.allianceId as string, req.playerId!, resources);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -234,7 +234,7 @@ router.post('/:allianceId/treasury/deposit', async (req: Request, res: Response)
 router.post('/:allianceId/treasury/withdraw', async (req: Request, res: Response) => {
   try {
     const { resources } = req.body;
-    await AllianceService.withdrawTreasury(req.params.allianceId, req.playerId!, resources);
+    await AllianceService.withdrawTreasury(req.params.allianceId as string, req.playerId!, resources);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -248,7 +248,7 @@ router.post('/:allianceId/treasury/withdraw', async (req: Request, res: Response
 // Get regional synergy
 router.get('/:allianceId/synergy', (req: Request, res: Response) => {
   try {
-    const synergy = AllianceService.calculateRegionalSynergy(req.params.allianceId);
+    const synergy = AllianceService.calculateRegionalSynergy(req.params.allianceId as string);
     res.json(synergy);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -262,9 +262,9 @@ router.get('/:allianceId/synergy', (req: Request, res: Response) => {
 // Get daily challenge
 router.get('/:allianceId/challenge', (req: Request, res: Response) => {
   try {
-    let challenge = AllianceService.getDailyChallenge(req.params.allianceId);
+    let challenge = AllianceService.getDailyChallenge(req.params.allianceId as string);
     if (!challenge) {
-      challenge = AllianceService.generateDailyChallenge(req.params.allianceId);
+      challenge = AllianceService.generateDailyChallenge(req.params.allianceId as string);
     }
     res.json(challenge);
   } catch (err) {
@@ -278,7 +278,7 @@ router.post('/:allianceId/events', (req: Request, res: Response) => {
   try {
     const { title, description, objective, target, durationHours } = req.body;
     const event = AllianceService.createAllianceEvent(
-      req.params.allianceId, req.playerId!,
+      req.params.allianceId as string, req.playerId!,
       title, description, objective, target, durationHours ?? 24,
     );
     res.json(event);
@@ -290,7 +290,7 @@ router.post('/:allianceId/events', (req: Request, res: Response) => {
 // Get alliance events
 router.get('/:allianceId/events', (req: Request, res: Response) => {
   try {
-    const events = AllianceService.getAllianceEvents(req.params.allianceId);
+    const events = AllianceService.getAllianceEvents(req.params.allianceId as string);
     res.json(events);
   } catch (err) {
     console.error('Get events error:', err);
@@ -301,7 +301,7 @@ router.get('/:allianceId/events', (req: Request, res: Response) => {
 // Participate in event
 router.post('/:allianceId/events/:eventId/participate', (req: Request, res: Response) => {
   try {
-    AllianceService.participateInEvent(req.params.allianceId, req.params.eventId, req.playerId!);
+    AllianceService.participateInEvent(req.params.allianceId as string, req.params.eventId as string, req.playerId!);
     res.json({ success: true });
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -317,7 +317,7 @@ router.post('/:allianceId/announcements', async (req: Request, res: Response) =>
   try {
     const { title, content, pinned } = req.body;
     const ann = await AllianceService.createAnnouncement(
-      req.params.allianceId, req.playerId!, title, content, pinned ?? false,
+      req.params.allianceId as string, req.playerId!, title, content, pinned ?? false,
     );
     res.json(ann);
   } catch (err: any) {
@@ -328,7 +328,7 @@ router.post('/:allianceId/announcements', async (req: Request, res: Response) =>
 // Get announcements
 router.get('/:allianceId/announcements', (req: Request, res: Response) => {
   try {
-    const anns = AllianceService.getAnnouncements(req.params.allianceId);
+    const anns = AllianceService.getAnnouncements(req.params.allianceId as string);
     res.json(anns);
   } catch (err) {
     console.error('Get announcements error:', err);
@@ -345,7 +345,7 @@ router.post('/:allianceId/recruitment', (req: Request, res: Response) => {
   try {
     const { description, minGuildLevel, tags } = req.body;
     const post = AllianceService.postRecruitment(
-      req.params.allianceId, req.playerId!, description, minGuildLevel ?? 1, tags ?? [],
+      req.params.allianceId as string, req.playerId!, description, minGuildLevel ?? 1, tags ?? [],
     );
     res.json(post);
   } catch (err: any) {
@@ -375,7 +375,7 @@ router.post('/:allianceId/calendar', (req: Request, res: Response) => {
   try {
     const { title, description, scheduledAt } = req.body;
     const entry = AllianceService.addCalendarEntry(
-      req.params.allianceId, req.playerId!, title, description, scheduledAt,
+      req.params.allianceId as string, req.playerId!, title, description, scheduledAt,
     );
     res.json(entry);
   } catch (err: any) {
@@ -386,7 +386,7 @@ router.post('/:allianceId/calendar', (req: Request, res: Response) => {
 // Get calendar
 router.get('/:allianceId/calendar', (req: Request, res: Response) => {
   try {
-    const calendar = AllianceService.getCalendar(req.params.allianceId);
+    const calendar = AllianceService.getCalendar(req.params.allianceId as string);
     res.json(calendar);
   } catch (err) {
     console.error('Get calendar error:', err);
@@ -401,7 +401,7 @@ router.get('/:allianceId/calendar', (req: Request, res: Response) => {
 // Get weekly report
 router.get('/:allianceId/report', (req: Request, res: Response) => {
   try {
-    const report = AllianceService.generateWeeklyReport(req.params.allianceId);
+    const report = AllianceService.generateWeeklyReport(req.params.allianceId as string);
     res.json(report);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -411,7 +411,7 @@ router.get('/:allianceId/report', (req: Request, res: Response) => {
 // Get stats dashboard
 router.get('/:allianceId/stats', (req: Request, res: Response) => {
   try {
-    const stats = AllianceService.getStatsDashboard(req.params.allianceId);
+    const stats = AllianceService.getStatsDashboard(req.params.allianceId as string);
     res.json(stats);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -421,7 +421,7 @@ router.get('/:allianceId/stats', (req: Request, res: Response) => {
 // Get alliance perks
 router.get('/:allianceId/perks', (req: Request, res: Response) => {
   try {
-    const alliance = AllianceService.getAlliance(req.params.allianceId);
+    const alliance = AllianceService.getAlliance(req.params.allianceId as string);
     if (!alliance) {
       res.status(404).json({ error: 'not_found', message: 'Alliance not found' });
       return;
@@ -437,7 +437,7 @@ router.get('/:allianceId/perks', (req: Request, res: Response) => {
 // Get donation leaderboard
 router.get('/:allianceId/donations', (req: Request, res: Response) => {
   try {
-    const donations = AllianceService.getDonationLeaderboard(req.params.allianceId);
+    const donations = AllianceService.getDonationLeaderboard(req.params.allianceId as string);
     res.json(donations);
   } catch (err) {
     console.error('Get donations error:', err);
@@ -479,7 +479,7 @@ router.post('/merge', async (req: Request, res: Response) => {
 router.post('/:allianceId/diplomacy', (req: Request, res: Response) => {
   try {
     const { type, otherAllianceId, durationDays } = req.body;
-    const pact = AllianceService.createPact(type, req.params.allianceId, otherAllianceId, durationDays ?? 30);
+    const pact = AllianceService.createPact(type, req.params.allianceId as string, otherAllianceId, durationDays ?? 30);
     res.json(pact);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -489,7 +489,7 @@ router.post('/:allianceId/diplomacy', (req: Request, res: Response) => {
 // Get diplomacy pacts
 router.get('/:allianceId/diplomacy', (req: Request, res: Response) => {
   try {
-    const pacts = AllianceService.getDiplomacyPacts(req.params.allianceId);
+    const pacts = AllianceService.getDiplomacyPacts(req.params.allianceId as string);
     res.json(pacts);
   } catch (err) {
     console.error('Get pacts error:', err);
@@ -516,7 +516,7 @@ router.get('/territory/map', (req: Request, res: Response) => {
 router.post('/territory/:regionId/contest', (req: Request, res: Response) => {
   try {
     const { allianceId, points } = req.body;
-    const territory = AllianceService.contestTerritory(req.params.regionId, allianceId, points ?? 10);
+    const territory = AllianceService.contestTerritory(req.params.regionId as string, allianceId, points ?? 10);
     res.json(territory);
   } catch (err) {
     console.error('Contest territory error:', err);
@@ -544,7 +544,7 @@ router.post('/wars/declare', async (req: Request, res: Response) => {
 // Get active wars
 router.get('/wars/active/:guildId', (req: Request, res: Response) => {
   try {
-    const wars = GuildWarService.getActiveWars(req.params.guildId);
+    const wars = GuildWarService.getActiveWars(req.params.guildId as string);
     res.json(wars);
   } catch (err) {
     console.error('Get active wars error:', err);
@@ -555,7 +555,7 @@ router.get('/wars/active/:guildId', (req: Request, res: Response) => {
 // Get war details
 router.get('/wars/:warId', (req: Request, res: Response) => {
   try {
-    const war = GuildWarService.getWar(req.params.warId);
+    const war = GuildWarService.getWar(req.params.warId as string);
     if (!war) {
       res.status(404).json({ error: 'not_found', message: 'War not found' });
       return;
@@ -571,7 +571,7 @@ router.get('/wars/:warId', (req: Request, res: Response) => {
 router.post('/wars/:warId/score', (req: Request, res: Response) => {
   try {
     const { guildId, points } = req.body;
-    const war = GuildWarService.addScore(req.params.warId, guildId, points);
+    const war = GuildWarService.addScore(req.params.warId as string, guildId, points);
     if (!war) {
       res.status(404).json({ error: 'not_found', message: 'War not found or inactive' });
       return;
@@ -586,7 +586,7 @@ router.post('/wars/:warId/score', (req: Request, res: Response) => {
 // Get war history
 router.get('/wars/history/:guildId', (req: Request, res: Response) => {
   try {
-    const history = GuildWarService.getWarHistory(req.params.guildId);
+    const history = GuildWarService.getWarHistory(req.params.guildId as string);
     res.json(history);
   } catch (err) {
     console.error('Get war history error:', err);
@@ -597,7 +597,7 @@ router.get('/wars/history/:guildId', (req: Request, res: Response) => {
 // Get war stats
 router.get('/wars/stats/:guildId', (req: Request, res: Response) => {
   try {
-    const stats = GuildWarService.getWarStats(req.params.guildId);
+    const stats = GuildWarService.getWarStats(req.params.guildId as string);
     res.json(stats);
   } catch (err) {
     console.error('Get war stats error:', err);
@@ -608,7 +608,7 @@ router.get('/wars/stats/:guildId', (req: Request, res: Response) => {
 // Distribute war rewards
 router.post('/wars/:warId/rewards', async (req: Request, res: Response) => {
   try {
-    const result = await GuildWarService.distributeRewards(req.params.warId);
+    const result = await GuildWarService.distributeRewards(req.params.warId as string);
     res.json(result);
   } catch (err) {
     console.error('Distribute rewards error:', err);
@@ -619,7 +619,7 @@ router.post('/wars/:warId/rewards', async (req: Request, res: Response) => {
 // Matchmaking
 router.get('/wars/matchmaking/:guildId', async (req: Request, res: Response) => {
   try {
-    const match = await AllianceService.findWarMatch(req.params.guildId);
+    const match = await AllianceService.findWarMatch(req.params.guildId as string);
     if (!match) {
       res.status(404).json({ error: 'not_found', message: 'No suitable opponent found' });
       return;
@@ -634,7 +634,7 @@ router.get('/wars/matchmaking/:guildId', async (req: Request, res: Response) => 
 // Alliance banner
 router.get('/:allianceId/banner', (req: Request, res: Response) => {
   try {
-    const banner = AllianceService.getAllianceBanner(req.params.allianceId);
+    const banner = AllianceService.getAllianceBanner(req.params.allianceId as string);
     res.json(banner);
   } catch (err) {
     console.error('Get banner error:', err);
@@ -650,9 +650,9 @@ router.get('/:allianceId/banner', (req: Request, res: Response) => {
 router.get('/:allianceId/research/tree', (req: Request, res: Response) => {
   try {
     const tree = AllianceResearchService.getResearchTree();
-    const completed = AllianceResearchService.getCompletedResearch(req.params.allianceId);
-    const available = AllianceResearchService.getAvailableResearch(req.params.allianceId);
-    const active = AllianceResearchService.getActiveResearch(req.params.allianceId);
+    const completed = AllianceResearchService.getCompletedResearch(req.params.allianceId as string);
+    const available = AllianceResearchService.getAvailableResearch(req.params.allianceId as string);
+    const active = AllianceResearchService.getActiveResearch(req.params.allianceId as string);
     res.json({ tree, completed, available, active });
   } catch (err) {
     console.error('Get research error:', err);
@@ -664,7 +664,7 @@ router.get('/:allianceId/research/tree', (req: Request, res: Response) => {
 router.post('/:allianceId/research/start', (req: Request, res: Response) => {
   try {
     const { nodeId } = req.body;
-    const research = AllianceResearchService.startResearch(req.params.allianceId, nodeId);
+    const research = AllianceResearchService.startResearch(req.params.allianceId as string, nodeId);
     res.json(research);
   } catch (err: any) {
     res.status(400).json({ error: 'validation', message: err.message });
@@ -674,7 +674,7 @@ router.post('/:allianceId/research/start', (req: Request, res: Response) => {
 // Complete research
 router.post('/:allianceId/research/complete', (req: Request, res: Response) => {
   try {
-    const node = AllianceResearchService.completeResearch(req.params.allianceId);
+    const node = AllianceResearchService.completeResearch(req.params.allianceId as string);
     if (!node) {
       res.status(400).json({ error: 'validation', message: 'No research to complete' });
       return;
@@ -689,7 +689,7 @@ router.post('/:allianceId/research/complete', (req: Request, res: Response) => {
 // Get research effects
 router.get('/:allianceId/research/effects', (req: Request, res: Response) => {
   try {
-    const effects = AllianceResearchService.getResearchEffects(req.params.allianceId);
+    const effects = AllianceResearchService.getResearchEffects(req.params.allianceId as string);
     res.json(effects);
   } catch (err) {
     console.error('Get research effects error:', err);
@@ -719,7 +719,7 @@ router.post('/joint-expedition/:expId/join', async (req: Request, res: Response)
   try {
     const { guildId, heroIds } = req.body;
     const expedition = await JointExpeditionService.joinExpedition(
-      req.params.expId, guildId, heroIds ?? [],
+      req.params.expId as string, guildId, heroIds ?? [],
     );
     res.json(expedition);
   } catch (err: any) {
@@ -730,7 +730,7 @@ router.post('/joint-expedition/:expId/join', async (req: Request, res: Response)
 // Get active joint expeditions for alliance
 router.get('/joint-expedition/active/:allianceId', (req: Request, res: Response) => {
   try {
-    const expeditions = JointExpeditionService.getActiveExpeditions(req.params.allianceId);
+    const expeditions = JointExpeditionService.getActiveExpeditions(req.params.allianceId as string);
     res.json(expeditions);
   } catch (err) {
     console.error('Get joint expeditions error:', err);
@@ -741,7 +741,7 @@ router.get('/joint-expedition/active/:allianceId', (req: Request, res: Response)
 // Get joint expedition details
 router.get('/joint-expedition/:expId', (req: Request, res: Response) => {
   try {
-    const expedition = JointExpeditionService.getExpedition(req.params.expId);
+    const expedition = JointExpeditionService.getExpedition(req.params.expId as string);
     if (!expedition) {
       res.status(404).json({ error: 'not_found', message: 'Expedition not found' });
       return;
@@ -756,7 +756,7 @@ router.get('/joint-expedition/:expId', (req: Request, res: Response) => {
 // Resolve joint expedition
 router.post('/joint-expedition/:expId/resolve', (req: Request, res: Response) => {
   try {
-    const expedition = JointExpeditionService.resolveExpedition(req.params.expId);
+    const expedition = JointExpeditionService.resolveExpedition(req.params.expId as string);
     if (!expedition) {
       res.status(404).json({ error: 'not_found', message: 'Expedition not found or not active' });
       return;

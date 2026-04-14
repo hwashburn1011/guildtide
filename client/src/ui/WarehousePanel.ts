@@ -128,7 +128,7 @@ export class WarehousePanel {
         fillColor: statusColor,
         label: `${cur}/${cap}`,
       });
-      container.add(bar.getContainer());
+      container.add(bar);
 
       // Percentage
       container.add(

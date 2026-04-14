@@ -130,13 +130,13 @@ export class CraftingService {
 
     let meta: Record<string, unknown> = {};
     try {
-      if (guild.metadata) meta = JSON.parse(guild.metadata);
+      if ((guild as any).metadata) meta = JSON.parse((guild as any).metadata);
     } catch { /* empty */ }
 
     meta.crafting = state;
     await prisma.guild.update({
       where: { id: guildId },
-      data: { metadata: JSON.stringify(meta) },
+      data: { metadata: JSON.stringify(meta) } as any,
     });
   }
 
@@ -148,7 +148,7 @@ export class CraftingService {
     const guild = await prisma.guild.findUnique({ where: { id: guildId } });
     if (!guild) throw new Error('Guild not found');
 
-    const state = this.getCraftingState(guild.metadata);
+    const state = this.getCraftingState((guild as any).metadata);
     if (!state.discoveredRecipes.includes(recipeId)) {
       state.discoveredRecipes.push(recipeId);
       await this.saveCraftingState(guildId, state);
@@ -164,7 +164,7 @@ export class CraftingService {
     const guild = await prisma.guild.findUnique({ where: { id: guildId } });
     if (!guild) throw new Error('Guild not found');
 
-    const state = this.getCraftingState(guild.metadata);
+    const state = this.getCraftingState((guild as any).metadata);
 
     // Max queue size: 5
     if (state.queue.length >= 5) throw new Error('Crafting queue is full (max 5)');
@@ -217,7 +217,7 @@ export class CraftingService {
     const guild = await prisma.guild.findUnique({ where: { id: guildId } });
     if (!guild) throw new Error('Guild not found');
 
-    const state = this.getCraftingState(guild.metadata);
+    const state = this.getCraftingState((guild as any).metadata);
     const now = Date.now();
     const completed: CraftingQueueEntry[] = [];
     const remaining: CraftingQueueEntry[] = [];
@@ -270,7 +270,7 @@ export class CraftingService {
     const guild = await prisma.guild.findUnique({ where: { id: guildId } });
     if (!guild) throw new Error('Guild not found');
 
-    const state = this.getCraftingState(guild.metadata);
+    const state = this.getCraftingState((guild as any).metadata);
     const idx = state.queue.findIndex(e => e.recipeId === recipeId);
     if (idx === -1) throw new Error('Recipe not found in queue');
 
@@ -308,7 +308,7 @@ export class CraftingService {
     const guild = await prisma.guild.findUnique({ where: { id: guildId } });
     if (!guild) return [];
 
-    const state = this.getCraftingState(guild.metadata);
+    const state = this.getCraftingState((guild as any).metadata);
     return state.history;
   }
 

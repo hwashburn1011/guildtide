@@ -14,7 +14,7 @@ router.use(authMiddleware);
 // T-1071, T-1084: Get world map overview (all regions with fog-of-war)
 router.get('/map', async (req: Request, res: Response) => {
   try {
-    const overview = RegionService.getMapOverview(req.playerId);
+    const overview = RegionService.getMapOverview(req.playerId as string);
     const dayNight = RegionService.getDayNightOverlay();
     const legend = RegionService.getMapLegend();
     res.json({ regions: overview, dayNight, legend });
@@ -27,7 +27,7 @@ router.get('/map', async (req: Request, res: Response) => {
 // T-1082: Get full region detail
 router.get('/detail/:regionId', async (req: Request, res: Response) => {
   try {
-    const detail = RegionService.getRegionDetail(req.playerId, req.params.regionId);
+    const detail = RegionService.getRegionDetail(req.playerId as string, req.params.regionId as string);
     if (!detail) {
       res.status(404).json({ error: 'not_found', message: 'Region not found' });
       return;
@@ -42,11 +42,11 @@ router.get('/detail/:regionId', async (req: Request, res: Response) => {
 // T-1083, T-1085: Discover a region
 router.post('/discover/:regionId', async (req: Request, res: Response) => {
   try {
-    const player = await prisma.player.findUnique({ where: { id: req.playerId } });
-    const guild = await prisma.guild.findFirst({ where: { playerId: req.playerId } });
+    const player = await prisma.player.findUnique({ where: { id: req.playerId as string } });
+    const guild = await prisma.guild.findFirst({ where: { playerId: req.playerId as string } });
     const guildLevel = guild?.level || 1;
 
-    const result = RegionService.discoverRegion(req.playerId, req.params.regionId, guildLevel);
+    const result = RegionService.discoverRegion(req.playerId as string, req.params.regionId as string, guildLevel);
     res.json(result);
   } catch (err) {
     console.error('Region discover error:', err);
@@ -57,7 +57,7 @@ router.post('/discover/:regionId', async (req: Request, res: Response) => {
 // T-1112: Discover hidden region
 router.post('/discover-hidden/:regionId', async (req: Request, res: Response) => {
   try {
-    const result = RegionService.discoverHiddenRegion(req.playerId, req.params.regionId);
+    const result = RegionService.discoverHiddenRegion(req.playerId as string, req.params.regionId as string);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: 'server', message: 'Internal server error' });
@@ -68,7 +68,7 @@ router.post('/discover-hidden/:regionId', async (req: Request, res: Response) =>
 router.post('/travel', async (req: Request, res: Response) => {
   try {
     const { fromRegionId, toRegionId, speedBonus } = req.body;
-    const result = RegionService.startTravel(req.playerId, fromRegionId, toRegionId, speedBonus || 0);
+    const result = RegionService.startTravel(req.playerId as string, fromRegionId, toRegionId, speedBonus || 0);
     res.json(result);
   } catch (err) {
     console.error('Travel error:', err);
@@ -78,7 +78,7 @@ router.post('/travel', async (req: Request, res: Response) => {
 
 // T-1128: Get travel status (for map animation)
 router.get('/travel/status', (req: Request, res: Response) => {
-  const status = RegionService.getTravelStatus(req.playerId);
+  const status = RegionService.getTravelStatus(req.playerId as string);
   res.json({ travel: status });
 });
 
@@ -86,7 +86,7 @@ router.get('/travel/status', (req: Request, res: Response) => {
 router.post('/outpost', async (req: Request, res: Response) => {
   try {
     const { regionId, buildingType } = req.body;
-    const result = RegionService.buildOutpost(req.playerId, regionId, buildingType);
+    const result = RegionService.buildOutpost(req.playerId as string, regionId, buildingType);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: 'server', message: 'Internal server error' });
@@ -95,46 +95,46 @@ router.post('/outpost', async (req: Request, res: Response) => {
 
 // T-1094: Get outpost production
 router.get('/outpost/:regionId/production', (req: Request, res: Response) => {
-  const production = RegionService.getOutpostProduction(req.playerId, req.params.regionId);
+  const production = RegionService.getOutpostProduction(req.playerId as string, req.params.regionId as string);
   res.json({ production });
 });
 
 // T-1100, T-1101: Get faction reputation
 router.get('/factions/:regionId', (req: Request, res: Response) => {
-  const factions = RegionService.getFactionReputation(req.playerId, req.params.regionId);
+  const factions = RegionService.getFactionReputation(req.playerId as string, req.params.regionId as string);
   res.json({ factions });
 });
 
 // T-1102: Change faction reputation
 router.post('/factions/:regionId/:factionId/reputation', (req: Request, res: Response) => {
   const { delta } = req.body;
-  const newRep = RegionService.changeFactionReputation(req.playerId, req.params.regionId, req.params.factionId, delta || 0);
+  const newRep = RegionService.changeFactionReputation(req.playerId as string, req.params.regionId as string, req.params.factionId as string, delta || 0);
   res.json({ reputation: newRep });
 });
 
 // T-1121: Advance exploration
 router.post('/explore/:regionId', (req: Request, res: Response) => {
   const { amount } = req.body;
-  const result = RegionService.advanceExploration(req.playerId, req.params.regionId, amount || 5);
+  const result = RegionService.advanceExploration(req.playerId as string, req.params.regionId as string, amount || 5);
   res.json(result);
 });
 
 // T-1131: Claim region
 router.post('/claim/:regionId', (req: Request, res: Response) => {
-  const result = RegionService.claimRegion(req.playerId, req.params.regionId);
+  const result = RegionService.claimRegion(req.playerId as string, req.params.regionId as string);
   res.json(result);
 });
 
 // T-1132: Get defense mission
 router.get('/defense/:regionId', (req: Request, res: Response) => {
-  const mission = RegionService.getDefenseMission(req.playerId, req.params.regionId);
+  const mission = RegionService.getDefenseMission(req.playerId as string, req.params.regionId as string);
   res.json({ mission });
 });
 
 // T-1135: Set/remove trade embargo
 router.post('/embargo/:regionId', (req: Request, res: Response) => {
   const { active } = req.body;
-  RegionService.setEmbargo(req.playerId, req.params.regionId, !!active);
+  RegionService.setEmbargo(req.playerId as string, req.params.regionId as string, !!active);
   res.json({ success: true });
 });
 
@@ -155,7 +155,7 @@ router.get('/compare', async (req: Request, res: Response) => {
 
 // T-1098: Region achievements
 router.get('/achievements', (req: Request, res: Response) => {
-  const achievements = RegionService.getRegionAchievements(req.playerId);
+  const achievements = RegionService.getRegionAchievements(req.playerId as string);
   res.json(achievements);
 });
 
@@ -169,7 +169,7 @@ router.get('/search', (req: Request, res: Response) => {
 // T-1106: Weather overlay for all regions
 router.get('/weather-overlay', async (req: Request, res: Response) => {
   try {
-    const discovered = RegionService.getDiscoveredRegions(req.playerId);
+    const discovered = RegionService.getDiscoveredRegions(req.playerId as string);
     const overlay = await RegionService.getWeatherOverlay(discovered);
     res.json({ overlay });
   } catch (err) {
@@ -179,29 +179,29 @@ router.get('/weather-overlay', async (req: Request, res: Response) => {
 
 // T-1116: Map pins
 router.get('/pins', (req: Request, res: Response) => {
-  res.json({ pins: RegionService.getPins(req.playerId) });
+  res.json({ pins: RegionService.getPins(req.playerId as string) });
 });
 
 router.post('/pins', (req: Request, res: Response) => {
   const { x, y, label, color } = req.body;
-  const pin = RegionService.addPin(req.playerId, x, y, label || 'Pin', color || '#ffd700');
+  const pin = RegionService.addPin(req.playerId as string, x, y, label || 'Pin', color || '#ffd700');
   res.json({ pin });
 });
 
 router.delete('/pins/:pinId', (req: Request, res: Response) => {
-  const removed = RegionService.removePin(req.playerId, req.params.pinId);
+  const removed = RegionService.removePin(req.playerId as string, req.params.pinId as string);
   res.json({ success: removed });
 });
 
 // T-1119: Region population
 router.get('/population/:regionId', (req: Request, res: Response) => {
-  const pop = RegionService.getRegionPopulation(req.params.regionId);
+  const pop = RegionService.getRegionPopulation(req.params.regionId as string);
   res.json(pop);
 });
 
 // T-1125: Region gallery
 router.get('/gallery', (req: Request, res: Response) => {
-  const gallery = RegionService.getRegionGallery(req.playerId);
+  const gallery = RegionService.getRegionGallery(req.playerId as string);
   res.json({ gallery });
 });
 
@@ -253,19 +253,19 @@ router.get('/tutorial', (_req: Request, res: Response) => {
 
 // T-1114: Political map overlay showing faction territories
 router.get('/political-overlay', (req: Request, res: Response) => {
-  const overlay = RegionService.getPoliticalOverlay(req.playerId);
+  const overlay = RegionService.getPoliticalOverlay(req.playerId as string);
   res.json({ overlay });
 });
 
 // T-1120: Active event indicators per region
 router.get('/event-indicators', (req: Request, res: Response) => {
-  const indicators = RegionService.getActiveEventIndicators(req.playerId);
+  const indicators = RegionService.getActiveEventIndicators(req.playerId as string);
   res.json({ indicators });
 });
 
 // T-1126: Map share/export
 router.get('/export', (req: Request, res: Response) => {
-  const data = RegionService.getMapExportData(req.playerId);
+  const data = RegionService.getMapExportData(req.playerId as string);
   res.json(data);
 });
 

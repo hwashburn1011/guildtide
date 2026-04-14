@@ -126,8 +126,8 @@ router.get('/capacity', async (req: Request, res: Response) => {
 // GET /price-estimate/:templateId — market price estimate
 router.get('/price-estimate/:templateId', async (req: Request, res: Response) => {
   try {
-    const price = ItemService.estimatePrice(req.params.templateId);
-    res.json({ templateId: req.params.templateId, estimatedPrice: price });
+    const price = ItemService.estimatePrice(req.params.templateId as string);
+    res.json({ templateId: req.params.templateId as string, estimatedPrice: price });
   } catch (err) {
     console.error('Price estimate error:', err);
     res.status(500).json({ error: 'server', message: 'Internal server error' });
@@ -172,7 +172,7 @@ router.get('/recipes', async (_req: Request, res: Response) => {
 // GET /recipes/:recipeId/sources — material sources for a recipe
 router.get('/recipes/:recipeId/sources', async (req: Request, res: Response) => {
   try {
-    const sources = CraftingService.getMaterialSources(req.params.recipeId);
+    const sources = CraftingService.getMaterialSources(req.params.recipeId as string);
     res.json(sources);
   } catch (err) {
     console.error('Material sources error:', err);
@@ -186,7 +186,7 @@ router.get('/crafting-state', async (req: Request, res: Response) => {
     const guild = await getGuild(req, res);
     if (!guild) return;
 
-    const state = CraftingService.getCraftingState(guild.metadata);
+    const state = CraftingService.getCraftingState((guild as any).metadata);
     res.json(state);
   } catch (err) {
     console.error('Crafting state error:', err);
@@ -365,7 +365,7 @@ router.post('/auto-equip', async (req: Request, res: Response) => {
 // GET /gear-score/:heroId — gear score for hero
 router.get('/gear-score/:heroId', async (req: Request, res: Response) => {
   try {
-    const hero = await prisma.hero.findUnique({ where: { id: req.params.heroId } });
+    const hero = await prisma.hero.findUnique({ where: { id: req.params.heroId as string } });
     if (!hero) {
       res.status(404).json({ error: 'not_found', message: 'Hero not found' });
       return;
@@ -383,7 +383,7 @@ router.get('/gear-score/:heroId', async (req: Request, res: Response) => {
 // GET /set-bonuses/:heroId — active set bonuses for hero
 router.get('/set-bonuses/:heroId', async (req: Request, res: Response) => {
   try {
-    const hero = await prisma.hero.findUnique({ where: { id: req.params.heroId } });
+    const hero = await prisma.hero.findUnique({ where: { id: req.params.heroId as string } });
     if (!hero) {
       res.status(404).json({ error: 'not_found', message: 'Hero not found' });
       return;
@@ -405,7 +405,7 @@ router.get('/recommended/:heroId', async (req: Request, res: Response) => {
     const guild = await getGuild(req, res);
     if (!guild) return;
 
-    const recommendations = await ItemService.getRecommendedGear(guild.id, req.params.heroId);
+    const recommendations = await ItemService.getRecommendedGear(guild.id, req.params.heroId as string);
     res.json(recommendations);
   } catch (err) {
     if (err instanceof Error) {
@@ -870,7 +870,7 @@ router.post('/discover-from-expedition', async (req: Request, res: Response) => 
 
     // Randomly discover a recipe based on expedition destination
     const allRecipes = CraftingService.getAllRecipes();
-    const state = CraftingService.getCraftingState(guild.metadata);
+    const state = CraftingService.getCraftingState((guild as any).metadata);
     const undiscovered = allRecipes.filter(r => !state.discoveredRecipes.includes(r.id));
 
     if (undiscovered.length === 0) {
@@ -971,7 +971,7 @@ router.post('/randomize-stats', async (req: Request, res: Response) => {
 // GET /card/:templateId — get item detail card data for sharing
 router.get('/card/:templateId', async (req: Request, res: Response) => {
   try {
-    const template = ITEM_TEMPLATES.find(t => t.id === req.params.templateId);
+    const template = ITEM_TEMPLATES.find(t => t.id === req.params.templateId as string);
     if (!template) {
       res.status(404).json({ error: 'not_found', message: 'Template not found' });
       return;
@@ -1020,7 +1020,7 @@ router.post('/list-auction', async (req: Request, res: Response) => {
 
     // Store auction listing in guild metadata
     let meta: Record<string, unknown> = {};
-    try { if (guild.metadata) meta = JSON.parse(guild.metadata); } catch { /* empty */ }
+    try { if ((guild as any).metadata) meta = JSON.parse((guild as any).metadata); } catch { /* empty */ }
 
     const auctions: any[] = (meta.itemAuctions as any[]) || [];
     auctions.push({
@@ -1038,7 +1038,7 @@ router.post('/list-auction', async (req: Request, res: Response) => {
     meta.itemAuctions = auctions;
     await prisma.guild.update({
       where: { id: guild.id },
-      data: { metadata: JSON.stringify(meta) },
+      data: { metadata: JSON.stringify(meta) } as any,
     });
 
     res.json({ message: 'Item listed on auction house!' });

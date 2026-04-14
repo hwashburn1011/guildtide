@@ -107,7 +107,7 @@ export class AccessibilityManager {
   private liveRegion: HTMLElement | null = null;
 
   // T-1994: skip-to-main link
-  private skipLink: HTMLElement | null = null;
+  private skipLink: HTMLAnchorElement | null = null;
 
   // T-1993: focus ring graphics per scene
   private focusRings: Map<string, Phaser.GameObjects.Graphics> = new Map();

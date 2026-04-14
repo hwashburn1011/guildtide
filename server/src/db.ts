@@ -16,27 +16,28 @@ export const prisma = new PrismaClient({
 // Prisma middleware for query timeout protection
 // ---------------------------------------------------------------------------
 
-prisma.$use(async (params, next) => {
-  const start = Date.now();
-  const timeoutMs = config.dbQueryTimeout;
-
-  const result = await Promise.race([
-    next(params),
-    new Promise((_, reject) =>
-      setTimeout(
-        () => reject(new Error(`Query timeout after ${timeoutMs}ms: ${params.model}.${params.action}`)),
-        timeoutMs,
-      ),
-    ),
-  ]);
-
-  const duration = Date.now() - start;
-  if (duration > 500) {
-    console.warn(`[DB] Slow query: ${params.model}.${params.action} took ${duration}ms`);
-  }
-
-  return result;
-});
+// TODO: Prisma 6 removed $use middleware — re-implement with Prisma extensions if needed
+// prisma.$use(async (params, next) => {
+//   const start = Date.now();
+//   const timeoutMs = config.dbQueryTimeout;
+//
+//   const result = await Promise.race([
+//     next(params),
+//     new Promise((_, reject) =>
+//       setTimeout(
+//         () => reject(new Error(`Query timeout after ${timeoutMs}ms: ${params.model}.${params.action}`)),
+//         timeoutMs,
+//       ),
+//     ),
+//   ]);
+//
+//   const duration = Date.now() - start;
+//   if (duration > 500) {
+//     console.warn(`[DB] Slow query: ${params.model}.${params.action} took ${duration}ms`);
+//   }
+//
+//   return result;
+// });
 
 // ---------------------------------------------------------------------------
 // Soft delete helper — mark records as deleted instead of removing

@@ -58,7 +58,7 @@ async function saveNarrativeState(guildId: string, state: NarrativeState): Promi
 // T-1324, T-1325, T-1326: Get lore codex with search/filter
 router.get('/lore', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
     const category = req.query.category as LoreCategory | undefined;
@@ -81,11 +81,11 @@ router.get('/lore', async (req: Request, res: Response) => {
 // T-1325: Lore entry detail
 router.get('/lore/:id', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
     const entries = NarrativeService.searchLore(state, {});
-    const entry = entries.find(e => e.id === req.params.id);
+    const entry = entries.find(e => e.id === (req.params.id as string));
     if (!entry) { res.status(404).json({ error: 'not_found', message: 'Lore entry not found' }); return; }
     const discovered = state.discoveredLoreIds.includes(entry.id);
     res.json({ ...entry, discovered, text: discovered ? entry.text : '???' });
@@ -98,7 +98,7 @@ router.get('/lore/:id', async (req: Request, res: Response) => {
 // T-1370: Lore completion stats
 router.get('/lore-completion', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(NarrativeService.getLoreCompletion(loaded.state));
   } catch (err) {
@@ -110,7 +110,7 @@ router.get('/lore-completion', async (req: Request, res: Response) => {
 // Discover lore entry
 router.post('/lore/:id/discover', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const result = NarrativeService.discoverLore(state, req.params.id as string);
@@ -127,10 +127,10 @@ router.post('/lore/:id/discover', async (req: Request, res: Response) => {
 // T-1344: Quest log
 router.get('/quests', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
-    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId! } });
     const guildLevel = (guild as any)?.level ?? 1;
     const active = Object.keys(state.activeQuestProgress).map(qId => {
       const quest = NarrativeService['getCurrentStage'](state, qId) ? { id: qId, ...(require('../data/questLines').getQuestLineById(qId) ?? {}) } : null;
@@ -148,7 +148,7 @@ router.get('/quests', async (req: Request, res: Response) => {
 // T-1345: Quest progress
 router.get('/quests/:questId/progress', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
     const stage = NarrativeService['getCurrentStage'](state, req.params.questId as string);
@@ -163,7 +163,7 @@ router.get('/quests/:questId/progress', async (req: Request, res: Response) => {
 // Start quest
 router.post('/quests/:questId/start', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const questId = req.params.questId as string;
@@ -184,7 +184,7 @@ router.post('/quests/:questId/start', async (req: Request, res: Response) => {
 // T-1345: Update quest objective
 router.post('/quests/:questId/progress', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const { objectiveId, progress } = req.body;
@@ -200,7 +200,7 @@ router.post('/quests/:questId/progress', async (req: Request, res: Response) => 
 // T-1346: Turn in quest
 router.post('/quests/:questId/turn-in', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const rewards = NarrativeService.turnInQuest(state, req.params.questId as string);
@@ -216,7 +216,7 @@ router.post('/quests/:questId/turn-in', async (req: Request, res: Response) => {
 // T-1349: Quest markers
 router.get('/quest-markers', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(NarrativeService.getQuestMarkers(loaded.state));
   } catch (err) {
@@ -230,7 +230,7 @@ router.get('/quest-markers', async (req: Request, res: Response) => {
 // T-1333-1335: Get NPC dialog
 router.get('/npc/:npcId/dialog', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const nodeId = req.query.nodeId as string | undefined;
     const node = NarrativeService.getNpcDialog(loaded.state, req.params.npcId as string, nodeId);
@@ -251,7 +251,7 @@ router.get('/npc/:npcId/dialog', async (req: Request, res: Response) => {
 // T-1337, T-1373: Choose dialog option
 router.post('/npc/:npcId/dialog', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const { nodeId, choiceIndex } = req.body;
@@ -290,7 +290,7 @@ router.post('/npc/:npcId/dialog', async (req: Request, res: Response) => {
 // T-1338: Give gift
 router.post('/npc/:npcId/gift', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const { resource, amount } = req.body;
@@ -321,7 +321,7 @@ router.get('/npcs', async (_req: Request, res: Response) => {
 // T-1329, T-1330: Pattern journal and check
 router.get('/patterns', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(NarrativeService.getPatternJournal(loaded.state));
   } catch (err) {
@@ -333,7 +333,7 @@ router.get('/patterns', async (req: Request, res: Response) => {
 // T-1327: Check patterns against current conditions
 router.post('/patterns/check', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const { conditions } = req.body;
@@ -351,7 +351,7 @@ router.post('/patterns/check', async (req: Request, res: Response) => {
 // T-1351, T-1353: World history timeline
 router.get('/timeline', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(NarrativeService.getTimeline(loaded.state));
   } catch (err) {
@@ -365,7 +365,7 @@ router.get('/timeline', async (req: Request, res: Response) => {
 // T-1356: Prophecy display
 router.get('/prophecies', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(NarrativeService.getProphecies(loaded.state));
   } catch (err) {
@@ -379,7 +379,7 @@ router.get('/prophecies', async (req: Request, res: Response) => {
 // T-1359: Rumor log
 router.get('/rumors', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(loaded.state.rumorLog.map((r, i) => ({
       index: i, text: r.text, verified: r.verified, npcId: r.npcId,
@@ -396,7 +396,7 @@ router.get('/rumors', async (req: Request, res: Response) => {
 // T-1378: Book collection
 router.get('/books', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
     const allBooks = NarrativeService.getAllBooks();
@@ -415,7 +415,7 @@ router.get('/books', async (req: Request, res: Response) => {
 // T-1379: Read a book
 router.get('/books/:bookId', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const result = NarrativeService.readBook(state, req.params.bookId as string);
@@ -431,7 +431,7 @@ router.get('/books/:bookId', async (req: Request, res: Response) => {
 // T-1380: Discover a book
 router.post('/books/:bookId/discover', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const result = NarrativeService.discoverBook(state, req.params.bookId as string);
@@ -448,7 +448,7 @@ router.post('/books/:bookId/discover', async (req: Request, res: Response) => {
 // T-1367, T-1368: Mythology research and gallery
 router.get('/mythology', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const entries = NarrativeService.searchLore(loaded.state, { category: 'mythology', discoveredOnly: true });
     res.json(entries.map(e => ({ id: e.id, title: e.title, text: e.text, illustration: `myth_${e.id}` })));
@@ -461,7 +461,7 @@ router.get('/mythology', async (req: Request, res: Response) => {
 // T-1367: Research mythology at temple
 router.post('/mythology/research', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const entry = NarrativeService.researchMythology(state);
@@ -478,7 +478,7 @@ router.post('/mythology/research', async (req: Request, res: Response) => {
 // T-1376: Easter egg collection
 router.get('/easter-eggs', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
     const allEggs = NarrativeService.getAllEasterEggs();
@@ -503,10 +503,10 @@ router.get('/easter-eggs', async (req: Request, res: Response) => {
 // T-1374: Journal quick-reference
 router.get('/journal', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state } = loaded;
-    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId } });
+    const guild = await prisma.guild.findUnique({ where: { playerId: req.playerId! } });
     const guildLevel = (guild as any)?.level ?? 1;
     const loreCompletion = NarrativeService.getLoreCompletion(state);
     const activeQuests = Object.keys(state.activeQuestProgress);
@@ -543,7 +543,7 @@ router.get('/journal', async (req: Request, res: Response) => {
 // T-1377: Narrative recap
 router.get('/recap', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     const { state, guildId } = loaded;
     const recap = NarrativeService.getRecap(state);
@@ -558,7 +558,7 @@ router.get('/recap', async (req: Request, res: Response) => {
 // T-1371: Narrative achievements
 router.get('/achievements', async (req: Request, res: Response) => {
   try {
-    const loaded = await loadNarrativeState(req.playerId);
+    const loaded = await loadNarrativeState(req.playerId!);
     if (!loaded) { res.status(404).json({ error: 'not_found', message: 'No guild found' }); return; }
     res.json(loaded.state.narrativeAchievements);
   } catch (err) {

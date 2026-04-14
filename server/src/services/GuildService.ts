@@ -197,7 +197,7 @@ export class GuildService {
         totalResearchCompleted: 0,
         totalMarketTrades: 0,
         guildAgeDays: 0,
-        loginStreak: guild?.loginStreak ?? 0,
+        loginStreak: 0,
       };
     }
 

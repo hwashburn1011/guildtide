@@ -119,7 +119,7 @@ export class MinePanel {
       fillColor: veinRichness > 60 ? COLORS.success : veinRichness > 30 ? COLORS.warning : COLORS.danger,
       label: `${veinRichness}%`,
     });
-    container.add(veinBar.getContainer());
+    container.add(veinBar);
     y += 35;
 
     // Gem discovery section
@@ -163,7 +163,7 @@ export class MinePanel {
       fillColor: 0x9b59b6,
       label: `${gemChance}% discovery rate`,
     });
-    container.add(gemBar.getContainer());
+    container.add(gemBar);
     y += 35;
 
     // Specialization info

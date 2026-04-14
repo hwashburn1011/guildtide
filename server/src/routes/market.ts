@@ -157,7 +157,7 @@ router.post('/merchants/:id/buy', async (req: Request, res: Response) => {
       res.status(400).json({ error: 'validation', message: 'resource and quantity are required' });
       return;
     }
-    const result = await MarketService.buyFromMerchant(req.playerId!, req.params.id, resource, quantity);
+    const result = await MarketService.buyFromMerchant(req.playerId!, req.params.id as string, resource, quantity);
     res.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Merchant trade failed';
@@ -203,7 +203,7 @@ router.post('/auctions/:id/bid', async (req: Request, res: Response) => {
       res.status(400).json({ error: 'validation', message: 'amount is required' });
       return;
     }
-    const result = MarketAnalyticsService.placeBid(req.params.id, req.playerId!, amount);
+    const result = MarketAnalyticsService.placeBid(req.params.id as string, req.playerId!, amount);
     if (!result) {
       res.status(400).json({ error: 'bid_failed', message: 'Bid rejected (expired, too low, or not found)' });
       return;

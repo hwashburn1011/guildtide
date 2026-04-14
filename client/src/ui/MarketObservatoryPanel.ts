@@ -74,7 +74,7 @@ export class MarketObservatoryPanel {
     container.removeAll(true);
 
     // Tab buttons
-    const tabs: Array<{ key: typeof this.currentTab; label: string }> = [
+    const tabs: Array<{ key: 'insights' | 'advisor' | 'research' | 'calendar'; label: string }> = [
       { key: 'insights', label: 'Insights' },
       { key: 'advisor', label: 'Advisor' },
       { key: 'research', label: 'Research' },
@@ -135,7 +135,7 @@ export class MarketObservatoryPanel {
     container.add(
       this.scene.add.text(10, y, 'Financial Insights', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -193,7 +193,7 @@ export class MarketObservatoryPanel {
     container.add(
       this.scene.add.text(10, y, 'Economic Advisor', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -272,7 +272,7 @@ export class MarketObservatoryPanel {
     container.add(
       this.scene.add.text(10, y, 'Economic Research Tree', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );
@@ -328,7 +328,7 @@ export class MarketObservatoryPanel {
     container.add(
       this.scene.add.text(10, y, 'Sector Rotation Calendar', {
         fontFamily: FONTS.primary,
-        fontSize: `${FONTS.sizes.subheading}px`,
+        fontSize: `${FONTS.sizes.heading}px`,
         color: COLORS.textPrimary,
       }),
     );

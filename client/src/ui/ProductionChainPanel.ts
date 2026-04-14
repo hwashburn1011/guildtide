@@ -88,7 +88,7 @@ export class ProductionChainPanel {
     );
     y += 30;
 
-    const builtTypes = new Set(buildings.filter(b => b.level > 0).map(b => b.type));
+    const builtTypes = new Set<string>(buildings.filter(b => b.level > 0).map(b => b.type as string));
 
     for (const chain of chains) {
       const isActive = chain.steps.every(step => builtTypes.has(step.building));
@@ -182,7 +182,7 @@ export class ProductionChainPanel {
           fillColor: efficiency > 70 ? COLORS.success : efficiency > 40 ? COLORS.warning : COLORS.danger,
           label: `${Math.round(efficiency)}%`,
         });
-        container.add(effBar.getContainer());
+        container.add(effBar);
       }
 
       y += cardH + 10;
